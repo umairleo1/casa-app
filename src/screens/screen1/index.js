@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
     fontFamily: fonts.RobotoRegular,
+    color: colors.darkWhite,
   },
 });
