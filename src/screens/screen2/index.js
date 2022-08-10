@@ -16,6 +16,7 @@ export default function Screen2() {
         style={{height: '30%', width: '100%'}}
         resizeMode="contain"
       />
+
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Text style={styles.text}>Welcome to Casa Verse 2</Text>
       </TouchableOpacity>
