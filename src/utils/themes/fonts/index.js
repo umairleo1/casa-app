@@ -12,11 +12,14 @@ const fonts = {
   RobotoRegular: 'Roboto-Regular',
   RobotoThin: 'Roboto-Thin',
   RobotoThinItalic: 'Roboto-ThinItalic',
+
+  //Poppinss
   PoppinsRegular: 'Poppins-Regular',
   PoppinsLight: 'Poppins-Light',
   PoppinsMedium: 'Poppins-Medium',
   PoppinsBold: 'Poppins-Bold',
   PoppinsThin: 'Poppins-Thin',
+  Montserrat: 'Montserrat',
 };
 
 export default fonts;

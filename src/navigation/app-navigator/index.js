@@ -3,11 +3,10 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import SCREEN from 'utils/constants';
-import Screen1 from 'screens/screen1';
-import Screen2 from 'screens/screen2';
-
+import Signup from 'src/screens/auth/signup';
+import Login from 'src/screens/auth/login';
 const Stack = createStackNavigator();
-const {SCREEN1, SCREEN2} = SCREEN;
+const {SIGNUP, LOGIN} = SCREEN;
 
 export default function AppNavigator() {
   return (
@@ -15,8 +14,8 @@ export default function AppNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name={SCREEN1} component={Screen1} />
-      <Stack.Screen name={SCREEN2} component={Screen2} />
+      <Stack.Screen name={SIGNUP} component={Signup} />
+      <Stack.Screen name={LOGIN} component={Login} />
     </Stack.Navigator>
   );
 }
