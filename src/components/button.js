@@ -7,11 +7,11 @@ import {
 } from 'react-native-responsive-screen';
 import fonts from 'src/utils/themes/fonts';
 
-export default function Button({text, onPress, disabled}) {
+export default function Button({text, onPress, disabled, backgroundColor}) {
   return (
     <>
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, {backgroundColor: backgroundColor}]}
         onPress={onPress}
         disabled={disabled}>
         <Text style={styles.buttonText}>{text}</Text>
@@ -28,10 +28,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    flex: 1,
     justifyContent: 'center',
     height: hp(7),
-    backgroundColor: colors.buttonColor,
+    // backgroundColor: colors.buttonColor,
     borderRadius: 2,
     marginBottom: 10,
     alignItems: 'center',

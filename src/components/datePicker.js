@@ -10,6 +10,8 @@ export default function Datepicker({
   showDatePicker,
   isVisible,
   date,
+  error,
+  onChange,
 }) {
   return (
     <>
@@ -18,11 +20,17 @@ export default function Datepicker({
           <Text style={styles.dateText}>{date}</Text>
           <Icon name="calendar-month-outline" size={19} color="#BBBBBB" />
         </TouchableOpacity>
+        {error ? (
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        ) : null}
         <DateTimePickerModal
           isVisible={isVisible}
           mode="date"
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
+          onChange={onChange}
         />
       </View>
     </>
@@ -42,5 +50,14 @@ const styles = StyleSheet.create({
   dateText: {
     color: colors.placeholderColor,
     borderColor: colors.innerBorder,
+  },
+  errorText: {
+    color: colors.redColor,
+    fontSize: 12,
+  },
+  errorContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

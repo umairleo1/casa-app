@@ -1,12 +1,15 @@
-import {TextInput, StyleSheet} from 'react-native';
+import {TextInput, StyleSheet, View, Text} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
 
 export default function Input({
   onChangeText,
-  text,
+  value,
   placeholder,
   secureTextEntry,
+  error,
+  onChange,
+  onBlur,
 }) {
   return (
     <>
@@ -15,9 +18,16 @@ export default function Input({
         style={styles.input}
         placeholder={placeholder}
         onChangeText={onChangeText}
-        value={text}
+        onChange={onChange}
+        value={value}
         secureTextEntry={secureTextEntry}
+        onBlur={onBlur}
       />
+      {error ? (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      ) : null}
     </>
   );
 }
@@ -29,5 +39,14 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     padding: 10,
     borderColor: colors.innerBorder,
+  },
+  errorText: {
+    color: colors.redColor,
+    fontSize: 12,
+  },
+  errorContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });

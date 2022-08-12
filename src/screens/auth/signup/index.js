@@ -1,10 +1,10 @@
-import {Text, View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
+import React from 'react';
 import Background from 'src/components/background';
 import {styles} from './styles';
 import SignupForm from './signupForm';
 
-export default function Signup() {
+export default function Signup({navigation}) {
   return (
     <>
       <Background
@@ -13,18 +13,21 @@ export default function Signup() {
         description="We are the best and biggest social network with 5 billion active users
       all around the world.Share you thoughts, write blog posts,show your
       favourite music via Stopify,earn badges and much more!">
-        <View style={styles.mainView}>
-          <View style={styles.buttonView}>
-            <TouchableOpacity style={styles.signupButton}>
-              <Text style={styles.signup}>Sign Up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.signupButton}>
-              <Text style={styles.signup}>Login</Text>
-            </TouchableOpacity>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.mainView}>
+            <View style={styles.buttonView}>
+              <TouchableOpacity style={styles.signupButton}>
+                <Text style={styles.signup}>Sign Up</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.loginButton}
+                onPress={() => navigation.navigate('LOGIN')}>
+                <Text style={styles.login}>Login</Text>
+              </TouchableOpacity>
+            </View>
+            <SignupForm />
           </View>
-
-          <SignupForm />
-        </View>
+        </ScrollView>
       </Background>
     </>
   );

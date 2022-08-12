@@ -7,11 +7,7 @@ import {
 } from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   mainView: {
-    flex: 1,
     marginTop: 20,
     borderRadius: 2,
     backgroundColor: colors.whiteColor,
@@ -23,7 +19,22 @@ export const styles = StyleSheet.create({
     lineHeight: 16,
     fontFamily: fonts.RobotoRegular,
   },
+  login: {
+    fontSize: 17,
+    color: colors.disable,
+    lineHeight: 16,
+    fontFamily: fonts.RobotoRegular,
+  },
   signupButton: {
+    backgroundColor: colors.whiteColor,
+    width: '50%',
+    height: 67,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRightWidth: 1,
+    borderColor: colors.disable,
+  },
+  loginButton: {
     backgroundColor: colors.inactive,
     width: '50%',
     height: 67,
@@ -32,5 +43,7 @@ export const styles = StyleSheet.create({
   },
   buttonView: {
     flexDirection: 'row',
+    borderBottomWidth: 0.5,
+    borderColor: colors.disable,
   },
 });

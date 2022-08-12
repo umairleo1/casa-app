@@ -9,5 +9,8 @@ const colors = {
   placeholderColor: '#BBBBBB',
   checkboxColor: '#C5CBDB',
   buttonColor: '#0A2540',
+  redColor: 'red',
+  disable: '#C0C4D8',
+  grey: 'grey',
 };
 export default colors;

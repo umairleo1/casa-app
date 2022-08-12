@@ -11,13 +11,18 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   mainView: {
-    flex: 1,
     marginTop: 20,
     borderRadius: 2,
     backgroundColor: colors.whiteColor,
     marginBottom: hp(1),
   },
   signup: {
+    fontSize: 17,
+    color: colors.disable,
+    lineHeight: 16,
+    fontFamily: fonts.RobotoRegular,
+  },
+  login: {
     fontSize: 17,
     color: colors.black,
     lineHeight: 16,
@@ -30,7 +35,18 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  loginButton: {
+    backgroundColor: colors.white,
+    width: '50%',
+    height: 67,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderLeftWidth: 1,
+    borderColor: colors.disable,
+  },
   buttonView: {
     flexDirection: 'row',
+    borderBottomWidth: 0.5,
+    borderColor: colors.disable,
   },
 });

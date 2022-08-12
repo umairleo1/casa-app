@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     flexDirection: 'row',
-    width: wp(150),
     marginTop: hp(1),
   },
   title: {
@@ -53,5 +52,10 @@ const styles = StyleSheet.create({
   },
   view: {
     flexDirection: 'row',
+  },
+  forgotPassword: {
+    color: colors.black,
+    fontSize: hp(1.8),
+    lineHeight: 16,
   },
 });
