@@ -7,7 +7,12 @@ import {
 } from 'react-native-responsive-screen';
 import fonts from 'src/utils/themes/fonts';
 
-export default function Button({text, onPress, disabled, backgroundColor}) {
+export default function FollowButton({
+  text,
+  onPress,
+  disabled,
+  backgroundColor,
+}) {
   return (
     <>
       <TouchableOpacity
@@ -29,10 +34,12 @@ const styles = StyleSheet.create({
   },
   button: {
     justifyContent: 'center',
-    height: hp(7),
-    borderRadius: 2,
+    height: 40,
+    width: 100,
+    borderRadius: 4,
     marginBottom: 10,
     alignItems: 'center',
+    alignSelf: 'center',
     marginTop: hp(1),
   },
 });

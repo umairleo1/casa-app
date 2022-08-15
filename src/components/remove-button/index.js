@@ -7,7 +7,12 @@ import {
 } from 'react-native-responsive-screen';
 import fonts from 'src/utils/themes/fonts';
 
-export default function Button({text, onPress, disabled, backgroundColor}) {
+export default function RemoveButton({
+  text,
+  onPress,
+  disabled,
+  backgroundColor,
+}) {
   return (
     <>
       <TouchableOpacity
@@ -22,17 +27,15 @@ export default function Button({text, onPress, disabled, backgroundColor}) {
 const styles = StyleSheet.create({
   buttonText: {
     fontSize: hp(2),
-    color: colors.whiteColor,
-    lineHeight: hp(5),
+    color: colors.pureBlack,
     fontFamily: fonts.RobotoRegular,
-    textAlign: 'center',
+    fontWeight: 'bold',
   },
   button: {
     justifyContent: 'center',
-    height: hp(7),
-    borderRadius: 2,
-    marginBottom: 10,
+    height: 30,
+    width: 73,
+    borderRadius: 3,
     alignItems: 'center',
-    marginTop: hp(1),
   },
 });

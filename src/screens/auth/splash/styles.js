@@ -7,21 +7,16 @@ import {
 } from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
-  container: {
+  imageView: {
     flex: 1,
-    backgroundColor: colors.whiteColor,
-  },
-  headerView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
     alignItems: 'center',
-    marginHorizontal: 10,
+    justifyContent: 'center',
   },
-  text: {
-    fontSize: 22,
-    color: colors.black,
-    fontFamily: fonts.RobotoRegular,
-    fontWeight: 'bold',
+  imageBackground: {
+    flex: 1,
+  },
+  image: {
+    height: 63,
+    width: 227,
   },
 });

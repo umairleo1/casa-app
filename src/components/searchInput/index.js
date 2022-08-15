@@ -16,6 +16,9 @@ export default function SearchInput({
   editIcon,
   editIconSize,
   placeholderTextColor,
+  onPress,
+  editable,
+  editIconColor,
 }) {
   return (
     <>
@@ -35,12 +38,14 @@ export default function SearchInput({
           value={value}
           secureTextEntry={secureTextEntry}
           onBlur={onBlur}
+          editable={editable}
         />
         <Feather
           name={editIcon}
           size={editIconSize}
-          color={colors.placeholderColor}
+          color={editIconColor}
           style={{padding: 10, marginLeft: 10}}
+          onPress={onPress}
         />
       </View>
     </>

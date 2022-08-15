@@ -2,6 +2,8 @@ export default {
   // Auth
   LOGIN: 'LOGIN',
   SIGNUP: 'SIGNUP',
+  SPLASH: 'SPLASH',
+  FORGOT_PASSWORD: 'FORGOT_PASSWORD',
 
   SCREEN1: 'SCREEN1',
   SCREEN2: 'SCREEN2',
@@ -9,4 +11,14 @@ export default {
   //Settings
   SETTING: 'SETTING',
   PROFILE_SETTING: 'PROFILE_SETTING',
+
+  //Find People
+  FIND_PEOPLE: 'FIND_PEOPLE',
+
+  //Profile
+  PROFILE: 'PROFILE',
+  VIEW_PROFILE: 'VIEW_PROFILE',
+
+  //Bottom tab
+  BOTTOM_TAB: 'BOTTOM_TAB',
 };

@@ -1,0 +1,51 @@
+import {StyleSheet} from 'react-native';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import fonts from 'src/utils/themes/fonts';
+import colors from 'src/utils/themes/global-colors';
+
+export const styles = StyleSheet.create({
+  searchInputView: {
+    marginHorizontal: 20,
+    marginTop: 15,
+  },
+  plusIconView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: 5,
+    marginTop: 5,
+  },
+  name: {
+    flex: 1,
+    fontSize: 18,
+    lineHeight: 21,
+    color: colors.pureBlack,
+    fontFamily: fonts.RobotoRegular,
+    fontWeight: 'bold',
+  },
+  image: {
+    height: 160,
+    width: 150,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    overflow: 'hidden',
+  },
+  follower: {
+    flex: 1,
+    fontSize: 11,
+    marginHorizontal: 5,
+    color: colors.placeholderColor,
+    marginBottom: 5,
+  },
+  flatlistView: {
+    flex: 1,
+    marginTop: 10,
+    margin: 5,
+    marginBottom: 20,
+  },
+});

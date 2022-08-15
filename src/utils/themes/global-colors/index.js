@@ -1,6 +1,6 @@
 const colors = {
   whiteColor: '#FFFFFF',
-  pureBlack: '#000000',
+  pureBlack: '#323232',
   darkWhite: '#9F909E',
   black: '#0A2540',
   inactive: '#FAFBFD',
@@ -12,5 +12,8 @@ const colors = {
   redColor: 'red',
   disable: '#C0C4D8',
   grey: 'grey',
+  lightgrey: ' #7A7A7A',
+
+  removeColor: '#DBE1E7',
 };
 export default colors;

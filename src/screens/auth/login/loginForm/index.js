@@ -44,7 +44,7 @@ export default function LoginForm() {
             email: '',
             password: '',
           }}
-          onSubmit={() => navigation.navigate('SETTING')}
+          onSubmit={() => navigation.navigate('BOTTOM_TAB')}
           validationSchema={loginFormSchema}>
           {({
             handleSubmit,
@@ -76,16 +76,20 @@ export default function LoginForm() {
                   onPress={() => setUnChecked(!checked)}
                   tc1="Remeber Me"
                 />
-                <Pressable>
+                <Pressable
+                  onPress={() => navigation.navigate('FORGOT_PASSWORD')}>
                   <Text style={styles.forgotPassword}>Forgot Password?</Text>
                 </Pressable>
               </View>
-              <Button
-                text="Login"
-                onPress={handleSubmit}
-                disabled={!checked}
-                backgroundColor={!checked ? colors.grey : colors.buttonColor}
-              />
+
+              <View style={styles.buttonView}>
+                <Button
+                  text="Login"
+                  onPress={handleSubmit}
+                  disabled={!checked}
+                  backgroundColor={!checked ? colors.grey : colors.buttonColor}
+                />
+              </View>
             </>
           )}
         </Formik>

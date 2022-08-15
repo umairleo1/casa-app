@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.RobotoRegular,
     marginTop: 10,
     marginHorizontal: 15,
+    fontWeight: 'bold',
   },
   mainView: {
     marginHorizontal: 15,

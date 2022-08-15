@@ -10,7 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 export default function Settings() {
   const navigation = useNavigation();
   return (
-    <Header heading={'Settings'}>
+    <Header heading={'Settings'} onPressBack={() => navigation.goBack()}>
       <View style={styles.searchInputView}>
         <SearchInput
           placeholder={'Search for a Setting'}

@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.RobotoRegular,
     marginTop: 10,
     marginHorizontal: 15,
+    fontWeight: 'bold',
   },
   mainView: {
     marginHorizontal: 15,
@@ -30,5 +31,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  buttonView: {
+    marginTop: 80,
+    marginBottom: 10,
   },
 });
