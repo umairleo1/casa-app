@@ -5,8 +5,10 @@ import Header from 'src/components/headerView';
 import images from 'src/assets/images';
 import SearchInput from 'src/components/searchInput';
 import SettingSection from 'src/components/settingSection';
+import {useNavigation} from '@react-navigation/native';
 
 export default function Settings() {
+  const navigation = useNavigation();
   return (
     <Header heading={'Settings'}>
       <View style={styles.searchInputView}>
@@ -23,6 +25,7 @@ export default function Settings() {
           rightIcon={'arrow-right'}
           name={'Profile Settings'}
           rightIconSize={15}
+          onPress={() => navigation.navigate('PROFILE_SETTING')}
         />
       </View>
       <View style={styles.settingSectionView2}>

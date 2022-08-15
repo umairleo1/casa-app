@@ -18,7 +18,7 @@ export default function Login({navigation}) {
             <View style={styles.buttonView}>
               <TouchableOpacity
                 style={styles.signupButton}
-                onPress={() => navigation.navigate('SIGNUP')}>
+                onPress={() => navigation.goBack('SIGNUP')}>
                 <Text style={styles.signup}>Sign Up</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.loginButton}>

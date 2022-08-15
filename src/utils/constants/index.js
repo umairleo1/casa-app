@@ -8,4 +8,5 @@ export default {
 
   //Settings
   SETTING: 'SETTING',
+  PROFILE_SETTING: 'PROFILE_SETTING',
 };
