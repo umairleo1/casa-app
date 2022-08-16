@@ -6,13 +6,23 @@ import Button from 'src/components/button';
 import CheckBox from 'src/components/checkbox';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {useNavigation} from '@react-navigation/native';
+
 import colors from 'src/utils/themes/global-colors';
+
+import {showMessage} from 'react-native-flash-message';
+import {userService} from 'src/services/auth-service';
+import {useNavigation} from '@react-navigation/native';
+import authStorage from 'utils/async-storage/index';
+
+import {useDispatch} from 'react-redux';
+import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 
 // eslint-disable-next-line react/prop-types
 export default function LoginForm() {
-  const [checked, setUnChecked] = useState(false);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const [checked, setUnChecked] = useState(false);
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -34,6 +44,24 @@ export default function LoginForm() {
     [],
   );
 
+  const handleLogin = async value => {
+    try {
+      const result = await userService.login({
+        email: value.email,
+        password: value.password,
+      });
+
+      dispatch(setUserReduxToken(result.token));
+      authStorage.storeToken(result.token);
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
+  };
+
   return (
     <View style={{backgroundColor: 'transparent'}}>
       <ScrollView
@@ -47,7 +75,7 @@ export default function LoginForm() {
               email: '',
               password: '',
             }}
-            onSubmit={() => navigation.navigate('BOTTOM_TAB')}
+            onSubmit={value => handleLogin(value)}
             validationSchema={loginFormSchema}>
             {({
               handleSubmit,
@@ -64,6 +92,7 @@ export default function LoginForm() {
                   error={touched.email ? errors.email : ''}
                   onChangeText={handleChange('email')}
                   onBlur={() => setFieldTouched('email')}
+                  type="email-address"
                 />
                 <Input
                   placeholder={'Your Password'}

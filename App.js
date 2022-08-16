@@ -7,6 +7,11 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import CasaVerseNavigator from 'src/navigation';
 import colors from 'src/utils/themes/global-colors';
 
+import FlashMessage from 'react-native-flash-message';
+
+import {Store} from './src/redux/store/index';
+import {Provider} from 'react-redux';
+
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -16,13 +21,16 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={colors.whiteColor}
-      />
-      <CasaVerseNavigator />
-    </SafeAreaView>
+    <Provider store={Store}>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={colors.whiteColor}
+        />
+        <CasaVerseNavigator />
+        <FlashMessage position="top" />
+      </SafeAreaView>
+    </Provider>
   );
 };
 

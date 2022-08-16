@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import images from 'src/assets/images';
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 22,
-    fontFamily: fonts.Montserrat,
+    // fontFamily: fonts.Montserrat,
     color: colors.whiteColor,
     marginTop: 20,
   },

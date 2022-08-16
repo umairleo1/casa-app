@@ -37,22 +37,6 @@ export default function Signup() {
           <Tab.Screen name="Sign Up" component={SignupForm} />
           <Tab.Screen name="Login" component={Login} />
         </Tab.Navigator>
-        {/* <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={styles.mainView}>
-           
-            <View style={styles.buttonView}>
-              <TouchableOpacity style={styles.signupButton}>
-                <Text style={styles.signup}>Sign Up</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.loginButton}
-                onPress={() => navigation.navigate('LOGIN')}>
-                <Text style={styles.login}>Login</Text>
-              </TouchableOpacity>
-            </View>
-            <SignupForm />
-          </View>
-        </ScrollView> */}
       </Background>
     </>
   );

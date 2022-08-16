@@ -19,7 +19,7 @@ const fonts = {
   PoppinsMedium: 'Poppins-Medium',
   PoppinsBold: 'Poppins-Bold',
   PoppinsThin: 'Poppins-Thin',
-  Montserrat: 'Montserrat',
+  // Montserrat: 'Montserrat',
 };
 
 export default fonts;

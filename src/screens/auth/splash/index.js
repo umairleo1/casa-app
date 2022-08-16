@@ -3,9 +3,12 @@ import React, {useEffect} from 'react';
 import {styles} from './styles';
 import images from 'src/assets/images';
 import {useNavigation} from '@react-navigation/native';
+import SCREEN from 'utils/constants/index';
 
 export default function Splash() {
   const navigations = useNavigation();
+
+  const {SIGNUP} = SCREEN;
 
   useEffect(() => {
     getSplash();
@@ -13,7 +16,7 @@ export default function Splash() {
 
   const getSplash = () => {
     setTimeout(() => {
-      navigations.replace('SIGNUP');
+      navigations.replace(SIGNUP);
     }, 2000);
   };
 
