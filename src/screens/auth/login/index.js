@@ -1,10 +1,8 @@
-import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
-import {styles} from './styles';
-import Background from 'src/components/background';
+
 import LoginForm from './loginForm';
 
-export default function Login({navigation}) {
+export default function Login() {
   return (
     <>
       <LoginForm />

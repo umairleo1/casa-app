@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';

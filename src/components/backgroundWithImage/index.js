@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import {
   ImageBackground,
   StyleSheet,
-  View,
   Image,
   TouchableOpacity,
 } from 'react-native';

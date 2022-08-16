@@ -1,5 +1,5 @@
 import {View, Image, ImageBackground} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {styles} from './styles';
 import images from 'src/assets/images';
 import {useNavigation} from '@react-navigation/native';

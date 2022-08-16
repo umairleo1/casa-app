@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import {Text, StyleSheet, View} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 export default function PFF({
   postPoints,

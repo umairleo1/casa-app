@@ -54,7 +54,7 @@ export default function ViewProfile() {
         />
         <Text style={styles.name}>Maria Valdez</Text>
         <Text style={styles.description}>
-          hey I'm isai founder of synkbooks
+          hey I m isai founder of synkbooks
         </Text>
         <FollowButton text="Follow" backgroundColor={colors.buttonColor} />
 

@@ -1,13 +1,11 @@
-import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import Background from 'src/components/background';
-import {styles} from './styles';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import SignupForm from './signupForm';
 import Login from '../login';
 import colors from 'src/utils/themes/global-colors';
 
-export default function Signup({navigation}) {
+export default function Signup() {
   const Tab = createMaterialTopTabNavigator();
 
   return (
