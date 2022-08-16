@@ -1,4 +1,4 @@
-import {Text, View, ScrollView} from 'react-native';
+import {Text, View, ScrollView, Keyboard} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
@@ -10,11 +10,59 @@ import colors from 'src/utils/themes/global-colors';
 import BackgroundImageWithImage from 'src/components/backgroundWithImage';
 import images from 'src/assets/images';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {profileServices} from 'src/services/profile-services';
+import {setUserProfile} from 'src/redux/profile/profile-actions';
+import jwt_decode from 'jwt-decode';
+
+import {showMessage} from 'react-native-flash-message';
+
 export default function ProfileSetting() {
+  const dispatch = useDispatch();
+
   const [editFirstName, setEditFirstName] = useState(false);
   const [editLastName, setEditLastName] = useState(false);
   const [editPassword, setEditPassword] = useState(false);
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [bio, setBio] = useState('');
   const navigation = useNavigation();
+
+  const userData = useSelector(state => state?.profile?.userProfile);
+  const userToken = useSelector(state => state?.auth?.userToken);
+
+  const handleSave = async () => {
+    Keyboard.dismiss();
+
+    try {
+      const result = await profileServices.savePersonalInfo(
+        jwt_decode(userToken)?.userId,
+        {
+          firstName: firstName,
+          lastName: lastName,
+          password: password,
+          bio: bio,
+        },
+      );
+      console.log('here is the success ', result);
+
+      const res = await profileServices.getUserProfile(
+        jwt_decode(userToken)?.userId,
+      );
+
+      dispatch(setUserProfile(res));
+
+      showMessage({
+        message: 'Profile updated successfully',
+        type: 'success',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Header
       heading={'Profile Settings'}
@@ -29,7 +77,9 @@ export default function ProfileSetting() {
           <Text style={styles.text}>Personal Information</Text>
           <View style={styles.SearchInputView}>
             <SearchInput
-              placeholder={'First Name'}
+              placeholder={
+                userData.firstName == '' ? 'First Name' : userData.firstName
+              }
               editIcon={'edit-3'}
               editIconSize={16}
               editable={editFirstName}
@@ -37,11 +87,15 @@ export default function ProfileSetting() {
                 editFirstName ? colors.black : colors.placeholderColor
               }
               onPress={() => setEditFirstName(true)}
+              value={firstName}
+              onChangeText={setFirstName}
             />
           </View>
           <View style={styles.SearchInputView}>
             <SearchInput
-              placeholder={'Last Name'}
+              placeholder={
+                userData.lastName == '' ? 'Last Name' : userData.lastName
+              }
               editIcon={'edit-3'}
               editIconSize={16}
               editable={editLastName}
@@ -49,6 +103,8 @@ export default function ProfileSetting() {
                 editLastName ? colors.black : colors.placeholderColor
               }
               onPress={() => setEditLastName(true)}
+              value={lastName}
+              onChangeText={setLastName}
             />
           </View>
           <View style={styles.SearchInputView}>
@@ -61,16 +117,27 @@ export default function ProfileSetting() {
                 editPassword ? colors.black : colors.placeholderColor
               }
               onPress={() => setEditPassword(true)}
+              onChangeText={setPassword}
             />
           </View>
           <View style={styles.SearchInputView}>
-            <CommentBox placeholder={'Write your bio..'} />
+            <CommentBox
+              placeholder={
+                userData?.bio == '' ? 'Write your bio..' : userData?.bio
+              }
+              value={bio}
+              onChangeText={setBio}
+            />
           </View>
         </View>
       </ScrollView>
 
       <View style={styles.buttonView}>
-        <Button text="Save Changes" backgroundColor={colors.buttonColor} />
+        <Button
+          onPress={() => handleSave()}
+          text="Save Changes"
+          backgroundColor={colors.buttonColor}
+        />
       </View>
     </Header>
   );

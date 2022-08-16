@@ -34,7 +34,7 @@ export default function SearchInput({
           placeholderTextColor={placeholderTextColor}
           style={styles.input}
           placeholder={placeholder}
-          onChangeText={onChangeText}
+          onChangeText={value => onChangeText(value)}
           onChange={onChange}
           value={value}
           secureTextEntry={secureTextEntry}

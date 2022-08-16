@@ -8,11 +8,17 @@ import SCREEN from 'utils/constants';
 import ViewProfile from '../view-profile';
 
 import asyncStorage from 'utils/async-storage/index';
-import {useDispatch} from 'react-redux';
+
 import {handleLogout} from 'src/redux/auth/auth-actions';
+import {setUserProfile} from 'src/redux/profile/profile-actions';
+import {profileServices} from 'src/services/profile-services';
+
+import {useDispatch, useSelector} from 'react-redux';
+import jwt_decode from 'jwt-decode';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
 const Stacks = () => {
   return (
     <Stack.Navigator
@@ -27,6 +33,23 @@ const Stacks = () => {
 
 export default function BottomTab() {
   const dispatch = useDispatch();
+  const userToken = useSelector(state => state?.auth?.userToken);
+
+  const getUserData = async () => {
+    try {
+      const result = await profileServices.getUserProfile(
+        jwt_decode(userToken)?.userId,
+      );
+      // console.log('Here is the user', result);
+      dispatch(setUserProfile(result));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useState(() => {
+    getUserData();
+  }, []);
 
   function HomeScreen() {
     return (
