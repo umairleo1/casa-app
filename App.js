@@ -8,7 +8,9 @@ import CasaVerseNavigator from 'src/navigation';
 import colors from 'src/utils/themes/global-colors';
 
 import FlashMessage from 'react-native-flash-message';
-import authStorage from 'utils/async-storage/index';
+
+import {Store} from './src/redux/store/index';
+import {Provider} from 'react-redux';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -17,28 +19,18 @@ const App = () => {
     flex: 1,
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-  const [userToken, setUserToken] = React.useState('');
-
-  React.useEffect(() => {
-    restoreToken();
-    console.log(userToken);
-  }, []);
-
-  const restoreToken = async () => {
-    const user = await authStorage.getToken();
-    console.log('here is the user token', user);
-    if (user) setUserToken(user);
-  };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={colors.whiteColor}
-      />
-      <CasaVerseNavigator />
-      <FlashMessage position="top" />
-    </SafeAreaView>
+    <Provider store={Store}>
+      <SafeAreaView style={backgroundStyle}>
+        <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={colors.whiteColor}
+        />
+        <CasaVerseNavigator />
+        <FlashMessage position="top" />
+      </SafeAreaView>
+    </Provider>
   );
 };
 

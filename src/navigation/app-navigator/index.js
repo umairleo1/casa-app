@@ -6,26 +6,13 @@ import SCREEN from 'utils/constants';
 
 import Settings from 'src/screens/main/settings';
 import ProfileSetting from 'src/screens/main/settings/profile-settings';
-// import Splash from 'src/screens/auth/splash';
-// import ForgotPassword from 'src/screens/auth/forgotPassword';
-// import Signup from 'src/screens/auth/signup';
-// import Login from 'src/screens/auth/login';
+
 import FindPeople from 'src/screens/main/find-people';
 import Profile from 'src/screens/main/profile';
 import BottomTab from 'src/screens/main/tab';
 
 const Stack = createStackNavigator();
-const {
-  // SIGNUP,
-  // LOGIN,
-  // SPLASH,
-  // FORGOT_PASSWORD,
-  SETTING,
-  PROFILE_SETTING,
-  FIND_PEOPLE,
-  PROFILE,
-  BOTTOM_TAB,
-} = SCREEN;
+const {SETTING, PROFILE_SETTING, FIND_PEOPLE, PROFILE, BOTTOM_TAB} = SCREEN;
 
 export default function AppNavigator() {
   return (
@@ -33,10 +20,6 @@ export default function AppNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      {/* <Stack.Screen name={SPLASH} component={Splash} /> */}
-      {/* <Stack.Screen name={SIGNUP} component={Signup} />
-      <Stack.Screen name={LOGIN} component={Login} /> */}
-      {/* <Stack.Screen name={FORGOT_PASSWORD} component={ForgotPassword} /> */}
       <Stack.Screen name={BOTTOM_TAB} component={BottomTab} />
       <Stack.Screen name={SETTING} component={Settings} />
       <Stack.Screen name={PROFILE_SETTING} component={ProfileSetting} />

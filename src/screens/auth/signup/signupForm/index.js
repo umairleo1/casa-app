@@ -73,7 +73,7 @@ export default function SignupForm() {
           dob: moment(selectedDate).format('YYYY-MM-DD'),
           gender: values.gender,
         });
-        console.log('Here is the result ', result);
+
         showMessage({
           message: result.message,
           type: 'success',

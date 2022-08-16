@@ -14,9 +14,13 @@ import {userService} from 'src/services/auth-service';
 import {useNavigation} from '@react-navigation/native';
 import authStorage from 'utils/async-storage/index';
 
+import {useDispatch} from 'react-redux';
+import {setUserReduxToken} from 'src/redux/auth/auth-actions';
+
 // eslint-disable-next-line react/prop-types
 export default function LoginForm() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const [checked, setUnChecked] = useState(false);
 
@@ -46,12 +50,9 @@ export default function LoginForm() {
         email: value.email,
         password: value.password,
       });
-      console.log(result);
+
+      dispatch(setUserReduxToken(result.token));
       authStorage.storeToken(result.token);
-      showMessage({
-        message: result.message,
-        type: 'success',
-      });
     } catch (error) {
       console.log(error);
       showMessage({
