@@ -12,7 +12,6 @@ import ForgotPassword from 'src/screens/auth/forgotPassword';
 import FindPeople from 'src/screens/main/find-people';
 import Profile from 'src/screens/main/profile';
 import BottomTab from 'src/screens/main/tab';
-import ViewProfile from 'src/screens/main/view-profile';
 
 const Stack = createStackNavigator();
 const {
@@ -25,7 +24,6 @@ const {
   FIND_PEOPLE,
   PROFILE,
   BOTTOM_TAB,
-  VIEW_PROFILE,
 } = SCREEN;
 
 export default function AppNavigator() {
@@ -43,7 +41,6 @@ export default function AppNavigator() {
       <Stack.Screen name={FORGOT_PASSWORD} component={ForgotPassword} />
       <Stack.Screen name={FIND_PEOPLE} component={FindPeople} />
       <Stack.Screen name={PROFILE} component={Profile} />
-      <Stack.Screen name={VIEW_PROFILE} component={ViewProfile} />
     </Stack.Navigator>
   );
 }
