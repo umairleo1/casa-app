@@ -7,7 +7,8 @@ import LoginForm from './loginForm';
 export default function Login({navigation}) {
   return (
     <>
-      <Background
+      <LoginForm />
+      {/* <Background
         heading="LOGO"
         title="Welcome to the Biggest Social Network in the World"
         description="We are the best and biggest social network with 5 billion active users
@@ -28,7 +29,7 @@ export default function Login({navigation}) {
             <LoginForm />
           </View>
         </ScrollView>
-      </Background>
+      </Background> */}
     </>
   );
 }

@@ -34,7 +34,6 @@ export default function AppNavigator() {
       screenOptions={{
         headerShown: false,
       }}>
-      {/* <Stack.Screen name={VIEW_PROFILE} component={ViewProfile} /> */}
       <Stack.Screen name={SPLASH} component={Splash} />
       <Stack.Screen name={SIGNUP} component={Signup} />
       <Stack.Screen name={LOGIN} component={Login} />
@@ -44,6 +43,7 @@ export default function AppNavigator() {
       <Stack.Screen name={FORGOT_PASSWORD} component={ForgotPassword} />
       <Stack.Screen name={FIND_PEOPLE} component={FindPeople} />
       <Stack.Screen name={PROFILE} component={Profile} />
+      <Stack.Screen name={VIEW_PROFILE} component={ViewProfile} />
     </Stack.Navigator>
   );
 }

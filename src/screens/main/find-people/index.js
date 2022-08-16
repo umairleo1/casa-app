@@ -5,8 +5,11 @@ import Header from 'src/components/headerView';
 import SearchInput from 'src/components/searchInput';
 import colors from 'src/utils/themes/global-colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {useNavigation} from '@react-navigation/native';
 
 export default function FindPeople() {
+  const navigation = useNavigation();
+
   const dummyData = [
     {
       text: 'Jose Diaz',
@@ -43,7 +46,7 @@ export default function FindPeople() {
   const listItem = ({item}) => {
     return (
       <View style={styles.flatlistView}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('VIEW_PROFILE')}>
           <Image source={item.image} style={styles.image} />
         </TouchableOpacity>
         <View style={styles.plusIconView}>

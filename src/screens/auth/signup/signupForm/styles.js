@@ -19,4 +19,7 @@ export const styles = StyleSheet.create({
     borderColor: colors.borderColor,
     marginTop: 12,
   },
+  scrollView: {
+    backgroundColor: colors.whiteColor,
+  },
 });

@@ -13,7 +13,7 @@ export default function Splash() {
 
   const getSplash = () => {
     setTimeout(() => {
-      navigations.navigate('SIGNUP');
+      navigations.replace('SIGNUP');
     }, 2000);
   };
 
