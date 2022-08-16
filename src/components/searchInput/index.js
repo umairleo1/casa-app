@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import {TextInput, StyleSheet, View} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function SearchInput({
   onChangeText,
@@ -12,6 +14,12 @@ export default function SearchInput({
   onBlur,
   icon,
   iconSize,
+  editIcon,
+  editIconSize,
+  placeholderTextColor,
+  onPress,
+  editable,
+  editIconColor,
 }) {
   return (
     <>
@@ -23,7 +31,7 @@ export default function SearchInput({
           style={{padding: 10, marginLeft: 10}}
         />
         <TextInput
-          placeholderTextColor={colors.black}
+          placeholderTextColor={placeholderTextColor}
           style={styles.input}
           placeholder={placeholder}
           onChangeText={onChangeText}
@@ -31,6 +39,14 @@ export default function SearchInput({
           value={value}
           secureTextEntry={secureTextEntry}
           onBlur={onBlur}
+          editable={editable}
+        />
+        <Feather
+          name={editIcon}
+          size={editIconSize}
+          color={editIconColor}
+          style={{padding: 10, marginLeft: 10}}
+          onPress={onPress}
         />
       </View>
     </>
@@ -45,6 +61,7 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     backgroundColor: '#fff',
     fontSize: 16,
+    height: 40,
   },
   searchView: {
     flexDirection: 'row',

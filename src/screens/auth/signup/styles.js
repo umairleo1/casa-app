@@ -1,10 +1,7 @@
 import {StyleSheet} from 'react-native';
 import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
   mainView: {
@@ -18,6 +15,7 @@ export const styles = StyleSheet.create({
     color: colors.black,
     lineHeight: 16,
     fontFamily: fonts.RobotoRegular,
+    fontWeight: 'bold',
   },
   login: {
     fontSize: 17,
@@ -33,6 +31,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRightWidth: 1,
     borderColor: colors.disable,
+    borderTopLeftRadius: 2,
   },
   loginButton: {
     backgroundColor: colors.inactive,
@@ -40,6 +39,7 @@ export const styles = StyleSheet.create({
     height: 67,
     alignItems: 'center',
     justifyContent: 'center',
+    borderTopRightRadius: 2,
   },
   buttonView: {
     flexDirection: 'row',

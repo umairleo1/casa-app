@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {TextInput, StyleSheet, View, Text} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
@@ -10,6 +11,7 @@ export default function Input({
   error,
   onChange,
   onBlur,
+  editable,
 }) {
   return (
     <>
@@ -22,6 +24,7 @@ export default function Input({
         value={value}
         secureTextEntry={secureTextEntry}
         onBlur={onBlur}
+        editable={editable}
       />
       {error ? (
         <View style={styles.errorContainer}>

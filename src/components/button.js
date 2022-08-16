@@ -1,10 +1,8 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 import colors from 'src/utils/themes/global-colors';
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import fonts from 'src/utils/themes/fonts';
 
 export default function Button({text, onPress, disabled, backgroundColor}) {
@@ -30,7 +28,6 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     height: hp(7),
-    // backgroundColor: colors.buttonColor,
     borderRadius: 2,
     marginBottom: 10,
     alignItems: 'center',

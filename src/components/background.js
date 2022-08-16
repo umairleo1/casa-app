@@ -4,6 +4,7 @@ import images from 'src/assets/images';
 import colors from 'src/utils/themes/global-colors';
 import fonts from 'src/utils/themes/fonts';
 
+// eslint-disable-next-line react/prop-types
 export default function Background({children, heading, title, description}) {
   return (
     <ImageBackground source={images.background} style={styles.container}>
