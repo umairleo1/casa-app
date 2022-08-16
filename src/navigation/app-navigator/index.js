@@ -6,7 +6,6 @@ import SCREEN from 'utils/constants';
 
 import Settings from 'src/screens/main/settings';
 import ProfileSetting from 'src/screens/main/settings/profile-settings';
-
 import FindPeople from 'src/screens/main/find-people';
 import Profile from 'src/screens/main/profile';
 import BottomTab from 'src/screens/main/tab';
