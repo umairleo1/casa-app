@@ -8,6 +8,7 @@ import CasaVerseNavigator from 'src/navigation';
 import colors from 'src/utils/themes/global-colors';
 
 import FlashMessage from 'react-native-flash-message';
+import authStorage from 'utils/async-storage/index';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -15,6 +16,18 @@ const App = () => {
   const backgroundStyle = {
     flex: 1,
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+  const [userToken, setUserToken] = React.useState('');
+
+  React.useEffect(() => {
+    restoreToken();
+    console.log(userToken);
+  }, []);
+
+  const restoreToken = async () => {
+    const user = await authStorage.getToken();
+    console.log('here is the user token', user);
+    if (user) setUserToken(user);
   };
 
   return (

@@ -11,9 +11,13 @@ import colors from 'src/utils/themes/global-colors';
 
 import {showMessage} from 'react-native-flash-message';
 import {userService} from 'src/services/auth-service';
+import {useNavigation} from '@react-navigation/native';
+import authStorage from 'utils/async-storage/index';
 
 // eslint-disable-next-line react/prop-types
 export default function LoginForm() {
+  const navigation = useNavigation();
+
   const [checked, setUnChecked] = useState(false);
 
   const passwordRegex =
@@ -43,6 +47,7 @@ export default function LoginForm() {
         password: value.password,
       });
       console.log(result);
+      authStorage.storeToken(result.token);
       showMessage({
         message: result.message,
         type: 'success',
@@ -103,8 +108,7 @@ export default function LoginForm() {
                     tc1="Remeber Me"
                   />
                   <Pressable
-                  // onPress={() => navigation.navigate('FORGOT_PASSWORD')}
-                  >
+                    onPress={() => navigation.navigate('FORGOT_PASSWORD')}>
                     <Text style={styles.forgotPassword}>Forgot Password?</Text>
                   </Pressable>
                 </View>

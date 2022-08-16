@@ -11,6 +11,7 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import colors from 'src/utils/themes/global-colors';
 import {userService} from 'src/services/auth-service';
+import {useNavigation} from '@react-navigation/native';
 
 import {showMessage} from 'react-native-flash-message';
 
@@ -18,6 +19,8 @@ export default function SignupForm() {
   const [checked, setUnChecked] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
+
+  const navigation = useNavigation();
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -75,6 +78,7 @@ export default function SignupForm() {
           message: result.message,
           type: 'success',
         });
+        navigation.navigate('Login');
       } catch (error) {
         console.log('errorrr  ', error);
         showMessage({
