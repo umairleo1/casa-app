@@ -10,11 +10,14 @@ import moment from 'moment';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import colors from 'src/utils/themes/global-colors';
+import {userService} from 'src/services/auth-service';
+
+import {showMessage} from 'react-native-flash-message';
 
 export default function SignupForm() {
   const [checked, setUnChecked] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [selectedDate, setSelectedDate] = useState();
+  const [selectedDate, setSelectedDate] = useState('');
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -51,8 +54,35 @@ export default function SignupForm() {
     [],
   );
 
-  const handleSignup = () => {
-    alert('signup done');
+  const handleSignup = async values => {
+    if (selectedDate == '') {
+      showMessage({
+        message: 'Dob must not be empty',
+        type: 'danger',
+      });
+    } else {
+      try {
+        const result = await userService.signup({
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          password: values.password,
+          dob: moment(selectedDate).format('YYYY-MM-DD'),
+          gender: values.gender,
+        });
+        console.log('Here is the result ', result);
+        showMessage({
+          message: result.message,
+          type: 'success',
+        });
+      } catch (error) {
+        console.log('errorrr  ', error);
+        showMessage({
+          message: error.errMsg,
+          type: 'danger',
+        });
+      }
+    }
   };
 
   return (
@@ -69,7 +99,7 @@ export default function SignupForm() {
             birthDate: '',
             gender: '',
           }}
-          onSubmit={() => handleSignup()}
+          onSubmit={values => handleSignup(values)}
           validationSchema={signupFormSchema}>
           {({
             handleSubmit,
@@ -100,6 +130,7 @@ export default function SignupForm() {
                 error={touched.email ? errors.email : ''}
                 onChangeText={handleChange('email')}
                 onBlur={() => setFieldTouched('email')}
+                type="email-address"
               />
               <Input
                 placeholder={'Your Password'}

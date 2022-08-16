@@ -10,7 +10,7 @@ export default function CasaVerseNavigator() {
   return (
     <>
       <NavigationContainer>
-        {true ? <AppNavigator /> : <AuthNavigator />}
+        {false ? <AuthNavigator /> : <AppNavigator />}
       </NavigationContainer>
     </>
   );

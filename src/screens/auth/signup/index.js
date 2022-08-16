@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 import Background from 'src/components/background';

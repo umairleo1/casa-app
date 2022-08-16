@@ -7,6 +7,8 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import CasaVerseNavigator from 'src/navigation';
 import colors from 'src/utils/themes/global-colors';
 
+import FlashMessage from 'react-native-flash-message';
+
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -22,6 +24,7 @@ const App = () => {
         backgroundColor={colors.whiteColor}
       />
       <CasaVerseNavigator />
+      <FlashMessage position="top" />
     </SafeAreaView>
   );
 };

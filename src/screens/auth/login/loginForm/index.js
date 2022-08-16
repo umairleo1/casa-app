@@ -6,13 +6,15 @@ import Button from 'src/components/button';
 import CheckBox from 'src/components/checkbox';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {useNavigation} from '@react-navigation/native';
+
 import colors from 'src/utils/themes/global-colors';
+
+import {showMessage} from 'react-native-flash-message';
+import {userService} from 'src/services/auth-service';
 
 // eslint-disable-next-line react/prop-types
 export default function LoginForm() {
   const [checked, setUnChecked] = useState(false);
-  const navigation = useNavigation();
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -34,6 +36,26 @@ export default function LoginForm() {
     [],
   );
 
+  const handleLogin = async value => {
+    try {
+      const result = await userService.login({
+        email: value.email,
+        password: value.password,
+      });
+      console.log(result);
+      showMessage({
+        message: result.message,
+        type: 'success',
+      });
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
+  };
+
   return (
     <>
       <Text style={styles.text}>Login to your Account</Text>
@@ -44,7 +66,7 @@ export default function LoginForm() {
             email: '',
             password: '',
           }}
-          onSubmit={() => navigation.navigate('SETTING')}
+          onSubmit={value => handleLogin(value)}
           validationSchema={loginFormSchema}>
           {({
             handleSubmit,
@@ -61,6 +83,7 @@ export default function LoginForm() {
                 error={touched.email ? errors.email : ''}
                 onChangeText={handleChange('email')}
                 onBlur={() => setFieldTouched('email')}
+                type="email-address"
               />
               <Input
                 placeholder={'Your Password'}
