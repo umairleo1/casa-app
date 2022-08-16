@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
     color: colors.black,
     lineHeight: 16,
     fontFamily: fonts.RobotoRegular,
+    fontWeight: 'bold',
   },
   login: {
     fontSize: 17,
@@ -30,6 +31,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRightWidth: 1,
     borderColor: colors.disable,
+    borderTopLeftRadius: 2,
   },
   loginButton: {
     backgroundColor: colors.inactive,
@@ -37,6 +39,7 @@ export const styles = StyleSheet.create({
     height: 67,
     alignItems: 'center',
     justifyContent: 'center',
+    borderTopRightRadius: 2,
   },
   buttonView: {
     flexDirection: 'row',

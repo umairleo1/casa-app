@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
 import fonts from 'src/utils/themes/fonts';
@@ -10,9 +10,10 @@ export default function SettingSection({
   name,
   leftIcon,
   rightIconSize,
+  onPress,
 }) {
   return (
-    <View style={styles.mainView}>
+    <TouchableOpacity style={styles.mainView} onPress={onPress}>
       <View style={styles.view}>
         <Image source={leftIcon} style={styles.leftImage} />
         <Text style={styles.text}>{name}</Text>
@@ -22,7 +23,7 @@ export default function SettingSection({
         size={rightIconSize}
         color={colors.black}
       />
-    </View>
+    </TouchableOpacity>
   );
 }
 

@@ -18,5 +18,6 @@ export const styles = StyleSheet.create({
     fontSize: 22,
     color: colors.black,
     fontFamily: fonts.RobotoRegular,
+    fontWeight: 'bold',
   },
 });

@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.RobotoRegular,
     marginTop: 10,
     marginHorizontal: 15,
+    fontWeight: 'bold',
   },
   mainView: {
     marginHorizontal: 15,
@@ -17,5 +18,8 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.borderColor,
     marginTop: 12,
+  },
+  scrollView: {
+    backgroundColor: colors.whiteColor,
   },
 });

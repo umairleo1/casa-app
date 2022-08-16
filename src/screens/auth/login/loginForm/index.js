@@ -1,4 +1,4 @@
-import {Text, View, Pressable} from 'react-native';
+import {Text, View, Pressable, ScrollView} from 'react-native';
 import React, {useState, useMemo} from 'react';
 import {styles} from './styles';
 import Input from 'src/components/textinput';
@@ -57,62 +57,73 @@ export default function LoginForm() {
   };
 
   return (
-    <>
-      <Text style={styles.text}>Login to your Account</Text>
-      <View style={styles.borderLine} />
-      <View style={styles.mainView}>
-        <Formik
-          initialValues={{
-            email: '',
-            password: '',
-          }}
-          onSubmit={value => handleLogin(value)}
-          validationSchema={loginFormSchema}>
-          {({
-            handleSubmit,
-            errors,
-            handleChange,
-            values,
-            touched,
-            setFieldTouched,
-          }) => (
-            <>
-              <Input
-                placeholder={'Your Email'}
-                value={values.email}
-                error={touched.email ? errors.email : ''}
-                onChangeText={handleChange('email')}
-                onBlur={() => setFieldTouched('email')}
-                type="email-address"
-              />
-              <Input
-                placeholder={'Your Password'}
-                secureTextEntry={true}
-                value={values.password}
-                error={touched.password ? errors.password : ''}
-                onChangeText={handleChange('password')}
-                onBlur={() => setFieldTouched('password')}
-              />
-              <View style={styles.forgotPasswordView}>
-                <CheckBox
-                  isChecked={checked}
-                  onPress={() => setUnChecked(!checked)}
-                  tc1="Remeber Me"
+    <View style={{backgroundColor: 'transparent'}}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollView}>
+        <Text style={styles.text}>Login to your Account</Text>
+        <View style={styles.borderLine} />
+        <View style={styles.mainView}>
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
+            }}
+            onSubmit={value => handleLogin(value)}
+            validationSchema={loginFormSchema}>
+            {({
+              handleSubmit,
+              errors,
+              handleChange,
+              values,
+              touched,
+              setFieldTouched,
+            }) => (
+              <>
+                <Input
+                  placeholder={'Your Email'}
+                  value={values.email}
+                  error={touched.email ? errors.email : ''}
+                  onChangeText={handleChange('email')}
+                  onBlur={() => setFieldTouched('email')}
+                  type="email-address"
                 />
-                <Pressable>
-                  <Text style={styles.forgotPassword}>Forgot Password?</Text>
-                </Pressable>
-              </View>
-              <Button
-                text="Login"
-                onPress={handleSubmit}
-                disabled={!checked}
-                backgroundColor={!checked ? colors.grey : colors.buttonColor}
-              />
-            </>
-          )}
-        </Formik>
-      </View>
-    </>
+                <Input
+                  placeholder={'Your Password'}
+                  secureTextEntry={true}
+                  value={values.password}
+                  error={touched.password ? errors.password : ''}
+                  onChangeText={handleChange('password')}
+                  onBlur={() => setFieldTouched('password')}
+                />
+                <View style={styles.forgotPasswordView}>
+                  <CheckBox
+                    isChecked={checked}
+                    onPress={() => setUnChecked(!checked)}
+                    tc1="Remeber Me"
+                  />
+                  <Pressable
+                  // onPress={() => navigation.navigate('FORGOT_PASSWORD')}
+                  >
+                    <Text style={styles.forgotPassword}>Forgot Password?</Text>
+                  </Pressable>
+                </View>
+
+                <View style={styles.buttonView}>
+                  <Button
+                    text="Login"
+                    onPress={handleSubmit}
+                    disabled={!checked}
+                    backgroundColor={
+                      !checked ? colors.grey : colors.buttonColor
+                    }
+                  />
+                </View>
+              </>
+            )}
+          </Formik>
+        </View>
+      </ScrollView>
+    </View>
   );
 }

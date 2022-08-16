@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
     color: colors.black,
     lineHeight: 16,
     fontFamily: fonts.RobotoRegular,
+    fontWeight: 'bold',
   },
   signupButton: {
     backgroundColor: colors.inactive,
@@ -31,6 +32,7 @@ export const styles = StyleSheet.create({
     height: 67,
     alignItems: 'center',
     justifyContent: 'center',
+    borderTopLeftRadius: 2,
   },
   loginButton: {
     backgroundColor: colors.white,

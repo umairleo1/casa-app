@@ -12,6 +12,7 @@ export default function Input({
   onChange,
   onBlur,
   type,
+  editable,
 }) {
   return (
     <>
@@ -26,6 +27,7 @@ export default function Input({
         onBlur={onBlur}
         keyboardType={type}
         autoCapitalize={type == 'email-address' ? 'none' : 'sentences'}
+        editable={editable}
       />
       {error ? (
         <View style={styles.errorContainer}>
