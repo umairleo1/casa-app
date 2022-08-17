@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   button: {
     justifyContent: 'center',
-    height: hp(7),
+    height: 50,
     borderRadius: 2,
     marginBottom: 10,
     alignItems: 'center',

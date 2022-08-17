@@ -39,7 +39,7 @@ export default function Input({
 }
 const styles = StyleSheet.create({
   input: {
-    height: 40,
+    height: 50,
     marginTop: 12,
     borderWidth: 1,
     borderRadius: 2,
