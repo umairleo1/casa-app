@@ -17,7 +17,7 @@ export default function Signup() {
       all around the world.Share you thoughts, write blog posts,show your
       favourite music via Stopify,earn badges and much more!">
         <Tab.Navigator
-          style={{marginTop: 20, bottom: 10}}
+          style={{marginTop: 20}}
           sceneContainerStyle={{backgroundColor: 'transparent'}}
           screenOptions={{
             tabBarStyle: {

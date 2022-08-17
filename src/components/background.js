@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     marginHorizontal: 20,
+    marginBottom: 5,
   },
   text: {
     fontSize: 22,
