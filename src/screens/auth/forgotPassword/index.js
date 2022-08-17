@@ -5,12 +5,17 @@ import {Text, View} from 'react-native';
 import Background from 'src/components/background';
 import Button from 'src/components/button';
 import Input from 'src/components/textinput';
+import {userService} from 'src/services/auth-service';
 import colors from 'src/utils/themes/global-colors';
 import * as Yup from 'yup';
 import {styles} from './styles';
 
+import {showMessage} from 'react-native-flash-message';
+
 export default function ForgotPassword() {
   const navigation = useNavigation();
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const forgotPasswordSchema = useMemo(
     () =>
@@ -22,8 +27,20 @@ export default function ForgotPassword() {
     [],
   );
 
-  const handleLogin = () => {
-    navigation.navigate('OTP');
+  const handleLogin = async email => {
+    try {
+      setIsLoading(true);
+      await userService.forgotPassword(email);
+      navigation.navigate('OTP', {mail: email.email});
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -65,6 +82,7 @@ favourite music via Stopify,earn badges and much more!">
                     text="Forgot Password"
                     onPress={handleSubmit}
                     backgroundColor={colors.buttonColor}
+                    loader={isLoading}
                   />
                 </View>
               </>

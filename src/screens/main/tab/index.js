@@ -1,4 +1,4 @@
-import {Text, TouchableOpacity} from 'react-native';
+import {Text} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FindPeople from '../find-people';
@@ -7,9 +7,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SCREEN from 'utils/constants';
 import ViewProfile from '../view-profile';
 
-import asyncStorage from 'utils/async-storage/index';
-
-import {handleLogout} from 'src/redux/auth/auth-actions';
 import {setUserProfile} from 'src/redux/profile/profile-actions';
 import {profileServices} from 'src/services/profile-services';
 
@@ -55,18 +52,6 @@ export default function BottomTab() {
     return (
       <>
         <Text>homeeeeeeeeeeee</Text>
-        <TouchableOpacity
-          onPress={() => {
-            asyncStorage.removeToken(), dispatch(handleLogout(''));
-          }}
-          style={{
-            height: 50,
-            backgroundColor: 'red',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text>Logout</Text>
-        </TouchableOpacity>
       </>
     );
   }

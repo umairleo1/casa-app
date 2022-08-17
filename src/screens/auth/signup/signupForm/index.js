@@ -19,6 +19,7 @@ export default function SignupForm() {
   const [checked, setUnChecked] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const navigation = useNavigation();
 
@@ -65,6 +66,7 @@ export default function SignupForm() {
       });
     } else {
       try {
+        setIsLoading(true);
         const result = await userService.signup({
           firstName: values.firstName,
           lastName: values.lastName,
@@ -79,12 +81,13 @@ export default function SignupForm() {
           type: 'success',
         });
         navigation.navigate('Login');
+        setIsLoading(false);
       } catch (error) {
-        console.log('errorrr  ', error);
         showMessage({
           message: error.errMsg,
           type: 'danger',
         });
+        setIsLoading(false);
       }
     }
   };
@@ -173,6 +176,7 @@ export default function SignupForm() {
                     tc3="of the app"
                   />
                   <Button
+                    loader={isLoading}
                     text="Complete Registration!"
                     disabled={!checked}
                     onPress={handleSubmit}

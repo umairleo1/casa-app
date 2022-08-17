@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {Keyboard, Text, View} from 'react-native';
 import React, {useMemo} from 'react';
 import Background from 'src/components/background';
 import {styles} from './styles';
@@ -7,10 +7,17 @@ import Button from 'src/components/button';
 import * as Yup from 'yup';
 import colors from 'src/utils/themes/global-colors';
 import {Formik} from 'formik';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+
+import {showMessage} from 'react-native-flash-message';
+import {userService} from 'src/services/auth-service';
 
 export default function ResetPassword() {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -31,15 +38,32 @@ export default function ResetPassword() {
             is: val => (val && val.length > 0 ? true : false),
             then: Yup.string().oneOf(
               [Yup.ref('password')],
-              'Both password shoul11 be the same',
+              'Both passwords must be same',
             ),
           }),
       }),
     [],
   );
 
-  const handleReset = () => {
-    navigation.navigate('Login');
+  const handleReset = async value => {
+    Keyboard.dismiss();
+    try {
+      setIsLoading(true);
+      await userService.resetPassword({
+        otp: route.params.otp,
+        userId: route.params.id,
+        password: value.password,
+      });
+      navigation.navigate('Login');
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+      setIsLoading(false);
+    }
   };
   return (
     <Background
@@ -86,6 +110,7 @@ export default function ResetPassword() {
                     text="Reset Password"
                     onPress={handleSubmit}
                     backgroundColor={colors.buttonColor}
+                    loader={isLoading}
                   />
                 </View>
               </>
