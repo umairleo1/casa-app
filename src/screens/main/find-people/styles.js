@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
   },
   flatlistView: {
     flex: 1,
-    marginTop: 10,
+    top: 25,
     margin: 5,
     marginBottom: 20,
   },

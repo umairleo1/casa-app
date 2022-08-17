@@ -29,6 +29,22 @@ export default function ViewProfile() {
         'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
       postImage: require('../../../assets/images/viewProfile/postImage.png'),
     },
+    {
+      text: 'Maria Valdez',
+      mail: 'March 4 at 2:00pm',
+      userImage: require('../../../assets/images/findpeople/people.png'),
+      content:
+        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
+      postImage: require('../../../assets/images/viewProfile/postImage.png'),
+    },
+    {
+      text: 'Maria Valdez',
+      mail: 'March 4 at 2:00pm',
+      userImage: require('../../../assets/images/findpeople/people.png'),
+      content:
+        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
+      postImage: require('../../../assets/images/viewProfile/postImage.png'),
+    },
   ];
   const getProfile = async value => {
     try {
