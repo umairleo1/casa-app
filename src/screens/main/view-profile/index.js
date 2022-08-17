@@ -1,15 +1,19 @@
 import {Text, View, FlatList, ScrollView, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 import BackgroundImageWithImage from 'src/components/backgroundWithImage';
 import PFF from 'src/components/pFF/Iindex';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import jwt_decode from 'jwt-decode';
 import {useNavigation} from '@react-navigation/native';
 
 import images from 'src/assets/images';
 import colors from 'src/utils/themes/global-colors';
 import FollowButton from 'src/components/followButton';
+
+import {profileServices} from 'src/services/profile-services';
+import {showMessage} from 'react-native-flash-message';
 
 export default function ViewProfile() {
   const navigation = useNavigation();
@@ -23,7 +27,43 @@ export default function ViewProfile() {
         'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
       postImage: require('../../../assets/images/viewProfile/postImage.png'),
     },
+    {
+      text: 'Maria Valdez',
+      mail: 'March 4 at 2:00pm',
+      userImage: require('../../../assets/images/findpeople/people.png'),
+      content:
+        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
+      postImage: require('../../../assets/images/viewProfile/postImage.png'),
+    },
+    {
+      text: 'Maria Valdez',
+      mail: 'March 4 at 2:00pm',
+      userImage: require('../../../assets/images/findpeople/people.png'),
+      content:
+        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
+      postImage: require('../../../assets/images/viewProfile/postImage.png'),
+    },
   ];
+  const getProfile = async () => {
+    try {
+      const res = await profileServices.getUserProfile(
+        jwt_decode(
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmZjZGE3YjliYjY0NWUzZDhjNGEwNjUiLCJpYXQiOjE2NjA3Mzk1NTcsImV4cCI6MTY5MjI5NzE1N30.ZFhCXgsuf24JoBY_kyertPJENiKmO6aIJjfxf-SvAhk',
+        ),
+      );
+
+      console.log('result', res);
+    } catch (error) {
+      console.log('error', error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   const listItem = ({item}) => {
     return (

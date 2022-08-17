@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
   view: {
     backgroundColor: colors.whiteColor,
     borderRadius: 3,
+    marginTop: 20,
   },
 
   resetPassword: {

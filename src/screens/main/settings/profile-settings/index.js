@@ -1,5 +1,13 @@
-import {Text, View, ScrollView, Keyboard} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  Keyboard,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
 import React, {useState} from 'react';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 import {useNavigation} from '@react-navigation/native';
@@ -16,7 +24,8 @@ import {setUserProfile} from 'src/redux/profile/profile-actions';
 import jwt_decode from 'jwt-decode';
 
 import {showMessage} from 'react-native-flash-message';
-
+import EditProfileModal from 'src/components/edit-profile-menu';
+let cameraIs = false;
 export default function ProfileSetting() {
   const dispatch = useDispatch();
 
@@ -28,6 +37,10 @@ export default function ProfileSetting() {
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [bio, setBio] = useState('');
+
+  const [imageModal, setImageModal] = useState(false);
+  const [setImageUri] = useState('');
+
   const navigation = useNavigation();
 
   const userData = useSelector(state => state?.profile?.userProfile);
@@ -48,9 +61,7 @@ export default function ProfileSetting() {
       );
       console.log('here is the success ', result);
 
-      const res = await profileServices.getUserProfile(
-        jwt_decode(userToken)?.userId,
-      );
+      const res = await profileServices.getUserProfile();
 
       dispatch(setUserProfile(res));
 
@@ -63,6 +74,68 @@ export default function ProfileSetting() {
     }
   };
 
+  const imagePickerFromGallery = () => {
+    setImageModal(false);
+    if (!cameraIs) {
+      cameraIs = true;
+      let options = {
+        mediaType: 'photo',
+        selectionLimit: 1,
+        includeBase64: true,
+      };
+      launchImageLibrary(options, res => {
+        if (res.didCancel) {
+          cameraIs = false;
+        } else if (res.errorMessage) {
+          cameraIs = false;
+        } else {
+          console.log('res', res.assets[0].uri);
+          setImageUri(res?.assets[0]?.uri);
+          // updateProfilePhoto(res.assets[0].base64);
+          //setEdit(false);
+          cameraIs = false;
+        }
+      });
+    }
+  };
+
+  const imagePickerFromCamera = async () => {
+    setImageModal(false);
+
+    const granted =
+      Platform.OS == 'ios' ||
+      (await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+        title: 'App Camera Permission',
+        message: 'App needs access to your camera',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      }));
+    if (granted) {
+      if (!cameraIs) {
+        cameraIs = true;
+
+        let options = {
+          mediaType: 'photo',
+          includeBase64: true,
+        };
+        launchCamera(options, res => {
+          if (res.didCancel) {
+            cameraIs = false;
+          } else if (res.errorMessage) {
+            cameraIs = false;
+          } else {
+            if (res.assets) {
+              // updateProfilePhoto(res.assets[0].base64);
+              // setEdit(false);
+            }
+            cameraIs = false;
+          }
+        });
+      }
+    }
+  };
+
   return (
     <Header
       heading={'Profile Settings'}
@@ -72,13 +145,16 @@ export default function ProfileSetting() {
           imageBackGround={images.viewProfile}
           editImage={images.editImage}
           image={images.people}
+          onPressImage={() => setImageModal(true)}
         />
         <View style={styles.view}>
           <Text style={styles.text}>Personal Information</Text>
           <View style={styles.SearchInputView}>
             <SearchInput
               placeholder={
-                userData?.firstName == '' ? 'First Name' : userData.firstName
+                userData?.user?.firstName == ''
+                  ? 'First Name'
+                  : userData?.user?.firstName
               }
               editIcon={'edit-3'}
               editIconSize={16}
@@ -94,7 +170,9 @@ export default function ProfileSetting() {
           <View style={styles.SearchInputView}>
             <SearchInput
               placeholder={
-                userData.lastName == '' ? 'Last Name' : userData.lastName
+                userData?.user.lastName == ''
+                  ? 'Last Name'
+                  : userData?.user.lastName
               }
               editIcon={'edit-3'}
               editIconSize={16}
@@ -123,7 +201,9 @@ export default function ProfileSetting() {
           <View style={styles.SearchInputView}>
             <CommentBox
               placeholder={
-                userData?.bio == '' ? 'Write your bio..' : userData?.bio
+                userData?.user?.bio == ''
+                  ? 'Write your bio..'
+                  : userData?.user?.bio
               }
               value={bio}
               onChangeText={setBio}
@@ -139,6 +219,12 @@ export default function ProfileSetting() {
           backgroundColor={colors.buttonColor}
         />
       </View>
+      <EditProfileModal
+        iconPress={() => setImageModal(false)}
+        visible={imageModal}
+        onPressGallery={() => imagePickerFromGallery()}
+        onPressPhoto={() => imagePickerFromCamera()}
+      />
     </Header>
   );
 }
