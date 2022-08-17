@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import {Formik} from 'formik';
 import React, {useMemo} from 'react';
 import {Text, View} from 'react-native';
@@ -9,6 +10,8 @@ import * as Yup from 'yup';
 import {styles} from './styles';
 
 export default function ForgotPassword() {
+  const navigation = useNavigation();
+
   const forgotPasswordSchema = useMemo(
     () =>
       Yup.object({
@@ -18,6 +21,10 @@ export default function ForgotPassword() {
       }),
     [],
   );
+
+  const handleLogin = () => {
+    navigation.navigate('OTP');
+  };
 
   return (
     <Background
@@ -33,9 +40,8 @@ favourite music via Stopify,earn badges and much more!">
           <Formik
             initialValues={{
               email: '',
-              password: '',
             }}
-            // onSubmit={value => handleLogin(value)}
+            onSubmit={value => handleLogin(value)}
             validationSchema={forgotPasswordSchema}>
             {({
               handleSubmit,
@@ -58,7 +64,6 @@ favourite music via Stopify,earn badges and much more!">
                   <Button
                     text="Forgot Password"
                     onPress={handleSubmit}
-                    // disabled={!checked}
                     backgroundColor={colors.buttonColor}
                   />
                 </View>

@@ -6,7 +6,7 @@ import colors from 'src/utils/themes/global-colors';
 export const styles = StyleSheet.create({
   text: {
     color: colors.black,
-    fontSize: 12,
+    fontSize: hp(2),
     fontFamily: fonts.RobotoRegular,
     marginTop: 10,
     marginHorizontal: 15,
@@ -23,11 +23,12 @@ export const styles = StyleSheet.create({
   forgotPassword: {
     fontSize: hp(1.8),
     color: colors.black,
+    marginTop: 8,
   },
   forgotPasswordView: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   buttonView: {
     marginTop: 80,

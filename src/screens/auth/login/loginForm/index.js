@@ -103,11 +103,11 @@ export default function LoginForm() {
                   onBlur={() => setFieldTouched('password')}
                 />
                 <View style={styles.forgotPasswordView}>
-                  <CheckBox
+                  {/* <CheckBox
                     isChecked={checked}
                     onPress={() => setUnChecked(!checked)}
                     tc1="Remeber Me"
-                  />
+                  /> */}
                   <Pressable
                     onPress={() => navigation.navigate('FORGOT_PASSWORD')}>
                     <Text style={styles.forgotPassword}>Forgot Password?</Text>
@@ -118,10 +118,7 @@ export default function LoginForm() {
                   <Button
                     text="Login"
                     onPress={handleSubmit}
-                    disabled={!checked}
-                    backgroundColor={
-                      !checked ? colors.grey : colors.buttonColor
-                    }
+                    backgroundColor={colors.buttonColor}
                   />
                 </View>
               </>

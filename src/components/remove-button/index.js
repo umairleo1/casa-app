@@ -24,10 +24,9 @@ export default function RemoveButton({
 }
 const styles = StyleSheet.create({
   buttonText: {
-    fontSize: hp(2),
+    fontSize: hp(1.5),
     color: colors.pureBlack,
     fontFamily: fonts.RobotoRegular,
-    fontWeight: 'bold',
   },
   button: {
     justifyContent: 'center',

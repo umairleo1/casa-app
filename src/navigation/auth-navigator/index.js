@@ -7,9 +7,11 @@ import Splash from 'src/screens/auth/splash';
 import Login from 'screens/auth/login';
 import Signup from 'screens/auth/signup';
 import ForgotPassword from 'src/screens/auth/forgotPassword';
+import Otp from 'src/screens/auth/otp';
+import ResetPassword from 'src/screens/auth/resetPassword';
 
 const Stack = createStackNavigator();
-const {LOGIN, SIGNUP, SPLASH, FORGOT_PASSWORD} = SCREEN;
+const {LOGIN, SIGNUP, SPLASH, FORGOT_PASSWORD, OTP, RESET_PASSWORD} = SCREEN;
 
 export default function AuthNavigator() {
   return (
@@ -21,6 +23,8 @@ export default function AuthNavigator() {
       <Stack.Screen name={LOGIN} component={Login} />
       <Stack.Screen name={SIGNUP} component={Signup} />
       <Stack.Screen name={FORGOT_PASSWORD} component={ForgotPassword} />
+      <Stack.Screen name={OTP} component={Otp} />
+      <Stack.Screen name={RESET_PASSWORD} component={ResetPassword} />
     </Stack.Navigator>
   );
 }
