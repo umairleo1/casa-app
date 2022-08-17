@@ -23,7 +23,11 @@ const onError = function (error) {
   }
 
   return Promise.reject({
-    errMsg: !error?.response ? 'Network Issue!' : error?.response?.data?.error,
+    errMsg: !error?.response
+      ? 'Network Issue!'
+      : error?.response?.data?.error
+      ? error?.response?.data?.error
+      : 'Invalid Error',
     status: error?.response?.status,
   });
 };

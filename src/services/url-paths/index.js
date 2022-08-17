@@ -9,6 +9,9 @@ const API_URLS = {
   //Profile
   GET_PROFILE: '/api/profile/getUserProfile/',
   SAVE_PERSONAL_INFO: '/api/profile/updatePersonalInfo/',
+  GET_FOLLOWING: '/api/following/following',
+  UNFOLLOW: 'api/following/unfollow/',
+  GET_FOLLOWERS: 'api/following/followers',
 };
 
 export {API_URLS};
