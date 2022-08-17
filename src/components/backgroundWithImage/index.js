@@ -13,6 +13,7 @@ export default function BackgroundImageWithImage({
   image,
   editImage,
   editBackGround,
+  onPressImage,
 }) {
   return (
     <>
@@ -25,7 +26,9 @@ export default function BackgroundImageWithImage({
             <Image source={editImage} />
           </TouchableOpacity>
         )}
-        <Image source={image} style={styles.roundView} />
+        <TouchableOpacity style={styles.roundViewMain} onPress={onPressImage}>
+          <Image source={image} style={styles.roundView} />
+        </TouchableOpacity>
       </ImageBackground>
     </>
   );
@@ -38,6 +41,16 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 5,
     borderColor: colors.whiteColor,
+    width: 113,
+    height: 113,
+    zIndex: 1,
+
+    position: 'absolute',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  roundViewMain: {
+    borderRadius: 100,
     width: 113,
     height: 113,
     zIndex: 1,

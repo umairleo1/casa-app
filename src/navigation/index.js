@@ -28,7 +28,7 @@ export default function CasaVerseNavigator() {
   return (
     <>
       <NavigationContainer>
-        {userToken !== '' ? <AppNavigator /> : <AuthNavigator />}
+        {!userToken !== '' ? <AppNavigator /> : <AuthNavigator />}
       </NavigationContainer>
     </>
   );
