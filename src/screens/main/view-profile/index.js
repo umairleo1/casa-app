@@ -15,11 +15,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {profileServices} from 'src/services/profile-services';
 import {showMessage} from 'react-native-flash-message';
 
-export default function ViewProfile() {
-  const userToken = useSelector(state => state?.auth?.userToken);
-  const dispatch = useDispatch();
+export default function ViewProfile({route}) {
   const navigation = useNavigation();
-
+  const [data, setData] = React.useState([]);
   const dummyData = [
     {
       text: 'Maria Valdez',
@@ -48,13 +46,9 @@ export default function ViewProfile() {
   ];
   const getProfile = async value => {
     try {
-      const res = await profileServices.getUserProfile(
-        jwt_decode(
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmZjZGE3YjliYjY0NWUzZDhjNGEwNjUiLCJpYXQiOjE2NjA3Mzk1NTcsImV4cCI6MTY5MjI5NzE1N30.ZFhCXgsuf24JoBY_kyertPJENiKmO6aIJjfxf-SvAhk',
-        ),
-      );
+      const res = await profileServices.getUserProfile(route?.params?.id);
 
-      console.log('result', res);
+      setData(res);
     } catch (error) {
       console.log('error', error);
       showMessage({
@@ -97,18 +91,23 @@ export default function ViewProfile() {
           imageBackGround={images.viewProfile}
           image={images.people}
         />
-        <Text style={styles.name}>Maria Valdez</Text>
+        <Text style={styles.name}>
+          {data?.user?.firstName + ' ' + data?.user?.lastName}
+        </Text>
         <Text style={styles.description}>
           hey I m isai founder of synkbooks
         </Text>
-        <FollowButton text="Follow" backgroundColor={colors.buttonColor} />
+        <FollowButton
+          text={data?.isFollowing ? 'Following' : 'Follow'}
+          backgroundColor={colors.buttonColor}
+        />
 
         <PFF
           postName={'Posts'}
-          postPoints={`1.5k`}
-          followersPoint={200}
+          postPoints={data?.totalPosts}
+          followersPoint={data?.totalFollowers}
           followersName={'Followers'}
-          followingPoints={230}
+          followingPoints={data?.totalFollowing}
           followingName={'Following'}
         />
         <FlatList
