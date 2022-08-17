@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import images from 'src/assets/images';

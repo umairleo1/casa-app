@@ -1,4 +1,4 @@
-import {Text} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FindPeople from '../find-people';
@@ -7,8 +7,18 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SCREEN from 'utils/constants';
 import ViewProfile from '../view-profile';
 
+import asyncStorage from 'utils/async-storage/index';
+
+import {handleLogout} from 'src/redux/auth/auth-actions';
+import {setUserProfile} from 'src/redux/profile/profile-actions';
+import {profileServices} from 'src/services/profile-services';
+
+import {useDispatch, useSelector} from 'react-redux';
+import jwt_decode from 'jwt-decode';
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
 const Stacks = () => {
   return (
     <Stack.Navigator
@@ -22,8 +32,43 @@ const Stacks = () => {
 };
 
 export default function BottomTab() {
+  const dispatch = useDispatch();
+  const userToken = useSelector(state => state?.auth?.userToken);
+
+  const getUserData = async () => {
+    try {
+      const result = await profileServices.getUserProfile(
+        jwt_decode(userToken)?.userId,
+      );
+      // console.log('Here is the user', result);
+      dispatch(setUserProfile(result));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useState(() => {
+    getUserData();
+  }, []);
+
   function HomeScreen() {
-    return <Text>homeeeeeeeeeeee</Text>;
+    return (
+      <>
+        <Text>homeeeeeeeeeeee</Text>
+        <TouchableOpacity
+          onPress={() => {
+            asyncStorage.removeToken(), dispatch(handleLogout(''));
+          }}
+          style={{
+            height: 50,
+            backgroundColor: 'red',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text>Logout</Text>
+        </TouchableOpacity>
+      </>
+    );
   }
 
   function SettingsScreen() {

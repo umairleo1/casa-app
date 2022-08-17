@@ -11,6 +11,7 @@ export default function Input({
   error,
   onChange,
   onBlur,
+  type,
   editable,
 }) {
   return (
@@ -24,6 +25,8 @@ export default function Input({
         value={value}
         secureTextEntry={secureTextEntry}
         onBlur={onBlur}
+        keyboardType={type}
+        autoCapitalize={type == 'email-address' ? 'none' : 'sentences'}
         editable={editable}
       />
       {error ? (
