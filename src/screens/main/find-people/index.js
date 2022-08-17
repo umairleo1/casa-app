@@ -82,7 +82,8 @@ export default function FindPeople() {
   const listItem = ({item}) => {
     return (
       <View style={styles.flatlistView}>
-        <TouchableOpacity onPress={() => navigation.navigate('VIEW_PROFILE')}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('VIEW_PROFILE', {id: item._id})}>
           <Image
             source={
               item?.profileImage ? {uri: item?.profileImage} : defaultImage
