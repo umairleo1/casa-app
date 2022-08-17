@@ -1,16 +1,22 @@
 import {Text, View, FlatList, ScrollView, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 import BackgroundImageWithImage from 'src/components/backgroundWithImage';
 import PFF from 'src/components/pFF/Iindex';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import jwt_decode from 'jwt-decode';
 
 import images from 'src/assets/images';
 import colors from 'src/utils/themes/global-colors';
 import FollowButton from 'src/components/followButton';
+import {useDispatch, useSelector} from 'react-redux';
+import {profileServices} from 'src/services/profile-services';
+import {showMessage} from 'react-native-flash-message';
 
 export default function ViewProfile() {
+  const userToken = useSelector(state => state?.auth?.userToken);
+  const dispatch = useDispatch();
   const dummyData = [
     {
       text: 'Maria Valdez',
@@ -21,6 +27,26 @@ export default function ViewProfile() {
       postImage: require('../../../assets/images/viewProfile/postImage.png'),
     },
   ];
+  const getProfile = async value => {
+    try {
+      const res = await profileServices.getUserProfile(
+        jwt_decode(
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmZjZGE3YjliYjY0NWUzZDhjNGEwNjUiLCJpYXQiOjE2NjA3Mzk1NTcsImV4cCI6MTY5MjI5NzE1N30.ZFhCXgsuf24JoBY_kyertPJENiKmO6aIJjfxf-SvAhk',
+        ),
+      );
+
+      console.log('result', res);
+    } catch (error) {
+      console.log('error', error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   const listItem = ({item}) => {
     return (
