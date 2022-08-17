@@ -77,10 +77,6 @@ export default function BottomTab() {
     );
   }
 
-  function SettingsScreen() {
-    return <Text>setingggggggggggg</Text>;
-  }
-
   return (
     <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen
