@@ -6,5 +6,6 @@ const images = {
   people: require('./findpeople/people.png'),
   viewProfile: require('./viewProfile/background.png'),
   editImage: require('./settings/edit.png'),
+  appLogo: require('./splash/splashLogo.png'),
 };
 export default images;
