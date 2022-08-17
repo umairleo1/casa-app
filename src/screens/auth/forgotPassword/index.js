@@ -6,6 +6,7 @@ import Background from 'src/components/background';
 import Button from 'src/components/button';
 import Input from 'src/components/textinput';
 import colors from 'src/utils/themes/global-colors';
+import images from 'src/assets/images';
 import * as Yup from 'yup';
 import {styles} from './styles';
 
@@ -28,7 +29,7 @@ export default function ForgotPassword() {
 
   return (
     <Background
-      heading="LOGO"
+      image={images.appLogo}
       title="Welcome to the Biggest Social Network in the World"
       description="We are the best and biggest social network with 5 billion active users
 all around the world.Share you thoughts, write blog posts,show your

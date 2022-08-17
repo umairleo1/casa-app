@@ -6,8 +6,14 @@ import Profile from '../profile';
 import {createStackNavigator} from '@react-navigation/stack';
 import SCREEN from 'utils/constants';
 import ViewProfile from '../view-profile';
+import Notification from '../notification';
 
 import asyncStorage from 'utils/async-storage/index';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import {handleLogout} from 'src/redux/auth/auth-actions';
 import {setUserProfile} from 'src/redux/profile/profile-actions';
@@ -76,20 +82,57 @@ export default function BottomTab() {
   }
 
   return (
-    <Tab.Navigator
-      screenOptions={{headerShown: false, tabBarIconStyle: {display: 'none'}}}>
+    <Tab.Navigator screenOptions={{headerShown: false}}>
       <Tab.Screen
         name="Home"
         component={HomeScreen}
-        // options={{
-        //   // tabBarLabel: 'Home',
-        //   tabBarIcon: () => <HomeIcon />,
-        // }}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color, size}) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
+        }}
       />
-      <Tab.Screen name="Find People" component={Stacks} />
-      <Tab.Screen name="Add Post" component={HomeScreen} />
-      <Tab.Screen name="Notification" component={SettingsScreen} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen
+        name="Find People"
+        component={Stacks}
+        options={{
+          tabBarLabel: 'Find People',
+          tabBarIcon: ({color, size}) => (
+            <FontAwesome name="group" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Add Post"
+        component={HomeScreen}
+        options={{
+          tabBarLabel: 'Add Post',
+          tabBarIcon: ({color, size}) => (
+            <AntDesign name="pluscircle" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          tabBarLabel: 'Notification',
+          tabBarIcon: ({color, size}) => (
+            <Feather name="bell" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({color, size}) => (
+            <Ionicons name="person-outline" color={color} size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
