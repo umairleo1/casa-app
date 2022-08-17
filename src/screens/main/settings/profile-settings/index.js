@@ -153,7 +153,7 @@ export default function ProfileSetting() {
           <View style={styles.SearchInputView}>
             <SearchInput
               placeholder={
-                userData.firstName == '' ? 'First Name' : userData.firstName
+                userData?.firstName == '' ? 'First Name' : userData.firstName
               }
               editIcon={'edit-3'}
               editIconSize={16}

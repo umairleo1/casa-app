@@ -78,7 +78,14 @@ export default function BottomTab() {
   return (
     <Tab.Navigator
       screenOptions={{headerShown: false, tabBarIconStyle: {display: 'none'}}}>
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        // options={{
+        //   // tabBarLabel: 'Home',
+        //   tabBarIcon: () => <HomeIcon />,
+        // }}
+      />
       <Tab.Screen name="Find People" component={Stacks} />
       <Tab.Screen name="Add Post" component={HomeScreen} />
       <Tab.Screen name="Notification" component={SettingsScreen} />

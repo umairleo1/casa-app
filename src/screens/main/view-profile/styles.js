@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
   },
   mainContainer: {
     marginBottom: 10,
-    marginVertical: 10,
+    // marginVertical: 10,
   },
   content: {
     fontSize: 11,

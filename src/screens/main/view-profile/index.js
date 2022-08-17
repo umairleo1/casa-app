@@ -6,6 +6,7 @@ import BackgroundImageWithImage from 'src/components/backgroundWithImage';
 import PFF from 'src/components/pFF/Iindex';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import jwt_decode from 'jwt-decode';
+import {useNavigation} from '@react-navigation/native';
 
 import images from 'src/assets/images';
 import colors from 'src/utils/themes/global-colors';
@@ -17,6 +18,8 @@ import {showMessage} from 'react-native-flash-message';
 export default function ViewProfile() {
   const userToken = useSelector(state => state?.auth?.userToken);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const dummyData = [
     {
       text: 'Maria Valdez',
@@ -72,7 +75,7 @@ export default function ViewProfile() {
   };
 
   return (
-    <Header feather={'setting'}>
+    <Header onPressBack={() => navigation.goBack()} feather={'setting'}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <BackgroundImageWithImage
           imageBackGround={images.viewProfile}
