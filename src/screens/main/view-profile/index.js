@@ -5,12 +5,15 @@ import Header from 'src/components/headerView';
 import BackgroundImageWithImage from 'src/components/backgroundWithImage';
 import PFF from 'src/components/pFF/Iindex';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from '@react-navigation/native';
 
 import images from 'src/assets/images';
 import colors from 'src/utils/themes/global-colors';
 import FollowButton from 'src/components/followButton';
 
 export default function ViewProfile() {
+  const navigation = useNavigation();
+
   const dummyData = [
     {
       text: 'Maria Valdez',
@@ -46,7 +49,7 @@ export default function ViewProfile() {
   };
 
   return (
-    <Header feather={'setting'}>
+    <Header onPressBack={() => navigation.goBack()} feather={'setting'}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <BackgroundImageWithImage
           imageBackGround={images.viewProfile}

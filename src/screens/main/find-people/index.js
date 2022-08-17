@@ -107,7 +107,7 @@ export default function FindPeople() {
 
   return (
     <>
-      <Header heading={'Find People'}>
+      <Header onPressBack={() => navigation.goBack()} heading={'Find People'}>
         <View style={styles.searchInputView}>
           <SearchInput
             placeholder={'Search...'}

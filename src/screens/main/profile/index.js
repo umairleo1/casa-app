@@ -10,7 +10,10 @@ export default function Profile() {
   const navigation = useNavigation();
 
   return (
-    <Header feather={'setting'} onPress={() => navigation.navigate('SETTING')}>
+    <Header
+      feather={'setting'}
+      onPressBack={() => navigation.goBack()}
+      onPress={() => navigation.navigate('SETTING')}>
       <Tab.Navigator>
         <Tab.Screen name="Followers" component={Followers} />
         <Tab.Screen name="Following" component={Following} />
