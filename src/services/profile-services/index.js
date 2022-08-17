@@ -24,7 +24,9 @@ const unFollowApiApi = id => {
 const removeFollowersApi = id => {
   return client.put(`${API_URLS.REMOVE_FOLLOWERS}${id}`);
 };
-
+const updateProfilePicture = (id, obj) => {
+  return client.put(`${API_URLS.UPDATE_PROFILE_PICTURE}${id}`, obj);
+};
 export const profileServices = {
   getUserProfile,
   savePersonalInfo,
@@ -32,4 +34,5 @@ export const profileServices = {
   unFollowApiApi,
   getFollowersApi,
   removeFollowersApi,
+  updateProfilePicture,
 };
