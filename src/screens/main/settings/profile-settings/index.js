@@ -39,7 +39,7 @@ export default function ProfileSetting() {
   const [bio, setBio] = useState('');
 
   const [imageModal, setImageModal] = useState(false);
-  const [imageUri, setImageUri] = useState('');
+  const [coverPhoto, setCoverPhoto] = useState(false);
 
   const navigation = useNavigation();
 
@@ -75,6 +75,58 @@ export default function ProfileSetting() {
       console.log(error);
     }
   };
+  const updateProfilePicture = async base64Image => {
+    Keyboard.dismiss();
+
+    try {
+      const result = await profileServices.updateProfilePicture(
+        jwt_decode(userToken)?.userId,
+        {
+          profileImage: `data:image/jpeg;base64,${base64Image}`,
+        },
+      );
+      console.log('here is the success  Profile ', result);
+
+      const res = await profileServices.getUserProfile(
+        jwt_decode(userToken)?.userId,
+      );
+
+      dispatch(setUserProfile(res));
+
+      showMessage({
+        message: 'Profile updated successfully',
+        type: 'success',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const updateCoverPicture = async base64Image => {
+    Keyboard.dismiss();
+
+    try {
+      const result = await profileServices.updateProfilePicture(
+        jwt_decode(userToken)?.userId,
+        {
+          coverImage: `data:image/jpeg;base64,${base64Image}`,
+        },
+      );
+      console.log('here is the success cover Profile ', result);
+
+      const res = await profileServices.getUserProfile(
+        jwt_decode(userToken)?.userId,
+      );
+
+      dispatch(setUserProfile(res));
+
+      showMessage({
+        message: 'Profile updated successfully',
+        type: 'success',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const imagePickerFromGallery = () => {
     setImageModal(false);
     if (!cameraIs) {
@@ -90,10 +142,11 @@ export default function ProfileSetting() {
         } else if (res.errorMessage) {
           cameraIs = false;
         } else {
-          console.log('res', res.assets[0].uri);
-          setImageUri(res?.assets[0]?.uri);
-          // updateProfilePhoto(res.assets[0].base64);
-          //setEdit(false);
+          if (coverPhoto) {
+            updateCoverPicture(res.assets[0].base64);
+          } else {
+            updateProfilePicture(res.assets[0].base64);
+          }
           cameraIs = false;
         }
       });
@@ -127,8 +180,11 @@ export default function ProfileSetting() {
             cameraIs = false;
           } else {
             if (res.assets) {
-              // updateProfilePhoto(res.assets[0].base64);
-              // setEdit(false);
+              if (coverPhoto) {
+                updateCoverPicture(res.assets[0].base64);
+              } else {
+                updateProfilePicture(res.assets[0].base64);
+              }
             }
             cameraIs = false;
           }
@@ -146,7 +202,14 @@ export default function ProfileSetting() {
           imageBackGround={images.viewProfile}
           editImage={images.editImage}
           image={images.people}
-          onPressImage={() => setImageModal(true)}
+          editBackGround={() => {
+            setCoverPhoto(true);
+            setImageModal(true);
+          }}
+          onPressProfileImage={() => {
+            setCoverPhoto(false);
+            setImageModal(true);
+          }}
         />
         <View style={styles.view}>
           <Text style={styles.text}>Personal Information</Text>

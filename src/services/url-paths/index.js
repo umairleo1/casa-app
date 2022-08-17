@@ -13,6 +13,7 @@ const API_URLS = {
   UNFOLLOW: 'api/following/unfollow/',
   GET_FOLLOWERS: 'api/following/followers',
   REMOVE_FOLLOWERS: 'api/following/unfollow/follower/',
+  UPDATE_PROFILE_PICTURE: 'api/profile/updateProfilePicture/',
 };
 
 export {API_URLS};
