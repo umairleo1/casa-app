@@ -21,10 +21,15 @@ const unFollowApiApi = id => {
   return client.put(`${API_URLS.UNFOLLOW}${id}`);
 };
 
+const removeFollowersApi = id => {
+  return client.put(`${API_URLS.REMOVE_FOLLOWERS}${id}`);
+};
+
 export const profileServices = {
   getUserProfile,
   savePersonalInfo,
   getFollowingApi,
   unFollowApiApi,
   getFollowersApi,
+  removeFollowersApi,
 };

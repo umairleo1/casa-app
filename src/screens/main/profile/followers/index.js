@@ -25,6 +25,16 @@ export default function Followers() {
     }
   };
 
+  const removeFollowers = async id => {
+    try {
+      const result = await profileServices.removeFollowersApi(id);
+      console.log('Here are the followers ', result);
+      getFollowers();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onRefresh = async () => {
     try {
       setRefreshing(true);
@@ -56,7 +66,11 @@ export default function Followers() {
             <Text style={styles.mail}>{item?.email}</Text>
           </View>
         </View>
-        <RemoveButton backgroundColor={colors.removeColor} text={'Remove'} />
+        <RemoveButton
+          onPress={() => removeFollowers(item?._id)}
+          backgroundColor={colors.removeColor}
+          text={'Remove'}
+        />
       </View>
     );
   };
