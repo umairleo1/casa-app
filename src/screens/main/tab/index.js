@@ -58,7 +58,7 @@ export default function BottomTab() {
   function HomeScreen() {
     return (
       <>
-        <Text>homeeeeeeeeeeee</Text>
+        <Text>home</Text>
       </>
     );
   }

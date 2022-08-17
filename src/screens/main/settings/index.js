@@ -44,9 +44,7 @@ export default function Settings() {
       <View style={styles.settingSectionView2}>
         <SettingSection
           leftIcon={images.promoCode}
-          rightIcon={'arrow-right'}
           name={'Logout'}
-          rightIconSize={15}
           onPress={() => {
             asyncStorage.removeToken(), dispatch(handleLogout(''));
           }}
