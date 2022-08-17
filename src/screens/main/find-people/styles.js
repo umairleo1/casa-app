@@ -6,7 +6,7 @@ import colors from 'src/utils/themes/global-colors';
 export const styles = StyleSheet.create({
   searchInputView: {
     marginHorizontal: 20,
-    marginTop: 15,
+    marginVertical: 15,
   },
   plusIconView: {
     flexDirection: 'row',
