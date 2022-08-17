@@ -108,6 +108,8 @@ export default function ViewProfile({route}) {
           followersName={'Followers'}
           followingPoints={data?.totalFollowing}
           followingName={'Following'}
+          onPressFollowing={() => navigation.navigate('Following')}
+          onPressFollower={() => navigation.navigate('Followers')}
         />
         <FlatList
           data={dummyData}
