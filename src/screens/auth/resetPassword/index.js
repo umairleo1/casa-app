@@ -28,7 +28,7 @@ export default function ResetPassword() {
           .required('Confirm Password is required')
           .min(8)
           .when('password', {
-            is: (val: any) => (val && val.length > 0 ? true : false),
+            is: val => (val && val.length > 0 ? true : false),
             then: Yup.string().oneOf(
               [Yup.ref('password')],
               'Both password shoul11 be the same',

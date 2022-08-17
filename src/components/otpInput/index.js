@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import OTPInputView from '@twotalltotems/react-native-otp-input';

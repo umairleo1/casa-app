@@ -1,9 +1,8 @@
 import {Text, View, Pressable, ScrollView} from 'react-native';
-import React, {useState, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {styles} from './styles';
 import Input from 'src/components/textinput';
 import Button from 'src/components/button';
-import CheckBox from 'src/components/checkbox';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 
@@ -21,8 +20,6 @@ import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 export default function LoginForm() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
-  const [checked, setUnChecked] = useState(false);
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
