@@ -5,19 +5,18 @@ import Header from 'src/components/headerView';
 import BackgroundImageWithImage from 'src/components/backgroundWithImage';
 import PFF from 'src/components/pFF/Iindex';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import jwt_decode from 'jwt-decode';
 import {useNavigation} from '@react-navigation/native';
 
 import images from 'src/assets/images';
 import colors from 'src/utils/themes/global-colors';
 import FollowButton from 'src/components/followButton';
-import {useDispatch, useSelector} from 'react-redux';
 import {profileServices} from 'src/services/profile-services';
 import {showMessage} from 'react-native-flash-message';
 
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
   const [data, setData] = React.useState([]);
+
   const dummyData = [
     {
       text: 'Maria Valdez',

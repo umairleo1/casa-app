@@ -13,7 +13,7 @@ export default function BackgroundImageWithImage({
   image,
   editImage,
   editBackGround,
-  onPressImage,
+  onPressProfileImage,
 }) {
   return (
     <>
@@ -26,7 +26,9 @@ export default function BackgroundImageWithImage({
             <Image source={editImage} />
           </TouchableOpacity>
         )}
-        <TouchableOpacity style={styles.roundViewMain} onPress={onPressImage}>
+        <TouchableOpacity
+          style={styles.roundViewMain}
+          onPress={onPressProfileImage}>
           <Image source={image} style={styles.roundView} />
         </TouchableOpacity>
       </ImageBackground>
