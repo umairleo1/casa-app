@@ -12,12 +12,12 @@
 		04738B0E32A1429A94F5F380 /* index.js in Resources */ = {isa = PBXBuildFile; fileRef = 130CA1F7423A4FA1B0D77BC2 /* index.js */; };
 		0C80B921A6F3F58F76C31292 /* libPods-CasaVerse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-CasaVerse.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
-		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1592CF84E3EE43328B0C745E /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8C778783E4840C9B43238CB /* Poppins-Medium.ttf */; };
 		237D5032A96D4BD0854F43B2 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5206554FB74F4988A312560B /* Poppins-Bold.ttf */; };
 		28A259A6A483468FAED7B3BC /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0DCC12A56AB44578EFF2DA2 /* Roboto-Medium.ttf */; };
 		418E4CA7B75247088020FC7B /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EBB3220C88794D749E1C16D9 /* Roboto-MediumItalic.ttf */; };
+		4725E50028ACC95800344232 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		5D1F452D65FD4C8B881E6052 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 54F183E20D44468AA167FA12 /* Poppins-Thin.ttf */; };
 		638FA8C178EC4031BE70C1FF /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F90870F9F254528A8C76164 /* Roboto-Thin.ttf */; };
 		6866A4CA739B4EAA9B061626 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BB11C54105E403A9AE6305B /* Poppins-Regular.ttf */; };
@@ -48,37 +48,37 @@
 		00E356EE1AD99517003FC87E /* CasaVerseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CasaVerseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* CasaVerseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CasaVerseTests.m; sourceTree = "<group>"; };
-		00EABD9FB54F475CB4BF3119 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
-		0F727214F3FD4B0B8212F7D0 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
-		130CA1F7423A4FA1B0D77BC2 /* index.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = index.js; path = ../src/utils/themes/fonts/index.js; sourceTree = "<group>"; };
+		00EABD9FB54F475CB4BF3119 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
+		0F727214F3FD4B0B8212F7D0 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
+		130CA1F7423A4FA1B0D77BC2 /* index.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = index.js; path = ../src/utils/themes/fonts/index.js; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* CasaVerse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CasaVerse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = CasaVerse/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = CasaVerse/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = CasaVerse/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = CasaVerse/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = CasaVerse/main.m; sourceTree = "<group>"; };
-		16CAC291353A47D39B932478 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../src/utils/themes/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
+		16CAC291353A47D39B932478 /* Roboto-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Light.ttf"; path = "../src/utils/themes/fonts/Roboto-Light.ttf"; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-CasaVerse-CasaVerseTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CasaVerse-CasaVerseTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2BB11C54105E403A9AE6305B /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../src/utils/themes/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
-		3980ECE136DB451FA71D78E9 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
+		2BB11C54105E403A9AE6305B /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../src/utils/themes/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		3980ECE136DB451FA71D78E9 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-ThinItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-CasaVerse.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CasaVerse.debug.xcconfig"; path = "Target Support Files/Pods-CasaVerse/Pods-CasaVerse.debug.xcconfig"; sourceTree = "<group>"; };
-		5206554FB74F4988A312560B /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../src/utils/themes/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
-		546C38C8C58F46AF9C03ADCD /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../src/utils/themes/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
-		54F183E20D44468AA167FA12 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Thin.ttf"; path = "../src/utils/themes/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; };
+		5206554FB74F4988A312560B /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../src/utils/themes/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		546C38C8C58F46AF9C03ADCD /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../src/utils/themes/fonts/Roboto-Italic.ttf"; sourceTree = "<group>"; };
+		54F183E20D44468AA167FA12 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Thin.ttf"; path = "../src/utils/themes/fonts/Poppins-Thin.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-CasaVerse.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CasaVerse.release.xcconfig"; path = "Target Support Files/Pods-CasaVerse/Pods-CasaVerse.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-CasaVerse-CasaVerseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CasaVerse-CasaVerseTests.debug.xcconfig"; path = "Target Support Files/Pods-CasaVerse-CasaVerseTests/Pods-CasaVerse-CasaVerseTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-CasaVerse.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CasaVerse.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E7176C9094F4B4AB56C5DAA /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/utils/themes/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
-		69B4DD0D72964B7696152882 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/utils/themes/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
-		74C1452884754B0BAC03F1C9 /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../src/utils/themes/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
+		5E7176C9094F4B4AB56C5DAA /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/utils/themes/fonts/Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		69B4DD0D72964B7696152882 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/utils/themes/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		74C1452884754B0BAC03F1C9 /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../src/utils/themes/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = CasaVerse/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-CasaVerse-CasaVerseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CasaVerse-CasaVerseTests.release.xcconfig"; path = "Target Support Files/Pods-CasaVerse-CasaVerseTests/Pods-CasaVerse-CasaVerseTests.release.xcconfig"; sourceTree = "<group>"; };
-		9F90870F9F254528A8C76164 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../src/utils/themes/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
-		A0DCC12A56AB44578EFF2DA2 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/utils/themes/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
-		A26513EBC8BD4B95945A1B5C /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/utils/themes/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
-		B8C778783E4840C9B43238CB /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../src/utils/themes/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
-		CCD1131BE65F49F1A9C129F1 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
-		EBB3220C88794D749E1C16D9 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
+		9F90870F9F254528A8C76164 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../src/utils/themes/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
+		A0DCC12A56AB44578EFF2DA2 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/utils/themes/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		A26513EBC8BD4B95945A1B5C /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/utils/themes/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
+		B8C778783E4840C9B43238CB /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../src/utils/themes/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		CCD1131BE65F49F1A9C129F1 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
+		EBB3220C88794D749E1C16D9 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -165,7 +165,6 @@
 				130CA1F7423A4FA1B0D77BC2 /* index.js */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -306,7 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
-				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				4725E50028ACC95800344232 /* Images.xcassets in Resources */,
 				F121BE745FF347F7B9422CC7 /* Roboto-Black.ttf in Resources */,
 				8777B916577A4028B5053A9C /* Roboto-BlackItalic.ttf in Resources */,
 				C037B09983D04D9599853C9D /* Roboto-Bold.ttf in Resources */,
@@ -565,6 +564,7 @@
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-CasaVerse.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
@@ -582,6 +582,7 @@
 				PRODUCT_NAME = CasaVerse;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -591,6 +592,7 @@
 			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-CasaVerse.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = CasaVerse/Info.plist;
@@ -606,6 +608,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = CasaVerse;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

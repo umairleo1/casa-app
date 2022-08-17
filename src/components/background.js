@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 22,
-    fontFamily: fonts.Montserrat,
+    // fontFamily: fonts.Montserrat,
     color: colors.whiteColor,
     marginTop: 20,
   },
