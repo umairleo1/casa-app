@@ -1,13 +1,24 @@
 import {Formik} from 'formik';
-import React from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import React, {useMemo} from 'react';
+import {Text, View} from 'react-native';
 import Background from 'src/components/background';
 import Button from 'src/components/button';
 import Input from 'src/components/textinput';
 import colors from 'src/utils/themes/global-colors';
+import * as Yup from 'yup';
 import {styles} from './styles';
 
 export default function ForgotPassword() {
+  const forgotPasswordSchema = useMemo(
+    () =>
+      Yup.object({
+        email: Yup.string()
+          .required('Email is required')
+          .email('Email format is incorrect'),
+      }),
+    [],
+  );
+
   return (
     <Background
       heading="LOGO"
@@ -19,22 +30,41 @@ favourite music via Stopify,earn badges and much more!">
         <Text style={styles.forgotPassword}>Forgot Password</Text>
         <View style={styles.borderLine} />
         <View style={styles.inputView}>
-          <Input
-            placeholder={'Your Email'}
-            // value={values.email}
-            // error={touched.email ? errors.email : ''}
-            // onChangeText={handleChange('email')}
-            // onBlur={() => setFieldTouched('email')}
-            type="email-address"
-          />
-          <View style={styles.buttonView}>
-            <Button
-              text="Forgot Password"
-              // onPress={handleSubmit}
-              // disabled={!checked}
-              backgroundColor={colors.buttonColor}
-            />
-          </View>
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
+            }}
+            // onSubmit={value => handleLogin(value)}
+            validationSchema={forgotPasswordSchema}>
+            {({
+              handleSubmit,
+              errors,
+              handleChange,
+              values,
+              touched,
+              setFieldTouched,
+            }) => (
+              <>
+                <Input
+                  placeholder={'Your Email'}
+                  value={values.email}
+                  error={touched.email ? errors.email : ''}
+                  onChangeText={handleChange('email')}
+                  onBlur={() => setFieldTouched('email')}
+                  type="email-address"
+                />
+                <View style={styles.buttonView}>
+                  <Button
+                    text="Forgot Password"
+                    onPress={handleSubmit}
+                    // disabled={!checked}
+                    backgroundColor={colors.buttonColor}
+                  />
+                </View>
+              </>
+            )}
+          </Formik>
         </View>
       </View>
     </Background>
