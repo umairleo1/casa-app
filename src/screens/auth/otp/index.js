@@ -5,11 +5,45 @@ import OtpInput from 'src/components/otpInput';
 import Button from 'src/components/button';
 import {styles} from './styles';
 import colors from 'src/utils/themes/global-colors';
+import {useNavigation, useRoute} from '@react-navigation/native';
+
+import {showMessage} from 'react-native-flash-message';
+import {userService} from 'src/services/auth-service';
 import images from 'src/assets/images';
-import {useNavigation} from '@react-navigation/native';
 
 export default function Otp() {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [otp, setOtp] = React.useState('');
+
+  const handleOtp = async () => {
+    if (otp.length < 4) {
+      showMessage({
+        message: otp.length == 0 ? 'OTP is required' : 'zinvalid OTP length',
+        type: 'danger',
+      });
+    } else {
+      try {
+        setIsLoading(true);
+        const result = await userService.otpVerification({
+          email: route?.params?.mail,
+          otp: otp,
+        });
+        console.log(result);
+        navigation.navigate('RESET_PASSWORD', {id: result.userId, otp: otp});
+        setIsLoading(false);
+      } catch (error) {
+        showMessage({
+          message: error.errMsg,
+          type: 'danger',
+        });
+        setIsLoading(false);
+      }
+    }
+  };
+
   return (
     <Background
       image={images.appLogo}
@@ -18,12 +52,14 @@ export default function Otp() {
       all around the world.Share you thoughts, write blog posts,show your
       favourite music via Stopify,earn badges and much more!">
       <View style={styles.view}>
-        <OtpInput count={4} />
+        <OtpInput onCodeChange={setOtp} count={4} />
+
         <View style={styles.buttonView}>
           <Button
             text="Reset Password"
-            onPress={() => navigation.navigate('RESET_PASSWORD')}
+            onPress={() => handleOtp()}
             backgroundColor={colors.buttonColor}
+            loader={isLoading}
           />
         </View>
       </View>

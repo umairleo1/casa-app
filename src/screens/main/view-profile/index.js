@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {Text, View, FlatList, ScrollView, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import {styles} from './styles';
@@ -43,7 +44,7 @@ export default function ViewProfile({route}) {
       postImage: require('../../../assets/images/viewProfile/postImage.png'),
     },
   ];
-  const getProfile = async value => {
+  const getProfile = async () => {
     try {
       const res = await profileServices.getUserProfile(route?.params?.id);
 

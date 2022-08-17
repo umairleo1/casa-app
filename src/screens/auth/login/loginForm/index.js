@@ -21,6 +21,8 @@ export default function LoginForm() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -43,6 +45,7 @@ export default function LoginForm() {
 
   const handleLogin = async value => {
     try {
+      setIsLoading(true);
       const result = await userService.login({
         email: value.email,
         password: value.password,
@@ -50,12 +53,14 @@ export default function LoginForm() {
 
       dispatch(setUserReduxToken(result.token));
       authStorage.storeToken(result.token);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
       showMessage({
         message: error.errMsg,
         type: 'danger',
       });
+      setIsLoading(false);
     }
   };
 
@@ -116,6 +121,7 @@ export default function LoginForm() {
                     text="Login"
                     onPress={handleSubmit}
                     backgroundColor={colors.buttonColor}
+                    loader={isLoading}
                   />
                 </View>
               </>

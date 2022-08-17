@@ -7,8 +7,13 @@ import SearchInput from 'src/components/searchInput';
 import SettingSection from 'src/components/settingSection';
 import {useNavigation} from '@react-navigation/native';
 
+import asyncStorage from 'utils/async-storage/index';
+import {useDispatch} from 'react-redux';
+import {handleLogout} from 'src/redux/auth/auth-actions';
+
 export default function Settings() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
     <Header heading={'Settings'} onPressBack={() => navigation.goBack()}>
       <View style={styles.searchInputView}>
@@ -34,6 +39,17 @@ export default function Settings() {
           rightIcon={'arrow-right'}
           name={'Promo Code'}
           rightIconSize={15}
+        />
+      </View>
+      <View style={styles.settingSectionView2}>
+        <SettingSection
+          leftIcon={images.promoCode}
+          rightIcon={'arrow-right'}
+          name={'Logout'}
+          rightIconSize={15}
+          onPress={() => {
+            asyncStorage.removeToken(), dispatch(handleLogout(''));
+          }}
         />
       </View>
     </Header>

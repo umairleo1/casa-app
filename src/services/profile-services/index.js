@@ -1,9 +1,8 @@
 import client from '../client';
 import {API_URLS} from '../url-paths';
 
-const getUserProfile = id => {
-  console.log('id', id);
-  return client.get(`${API_URLS.GET_PROFILE + '?id='}${id}`);
+const getUserProfile = () => {
+  return client.get(API_URLS.GET_PROFILE);
 };
 
 const savePersonalInfo = (id, obj) => {

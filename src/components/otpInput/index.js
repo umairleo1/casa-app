@@ -11,7 +11,7 @@ export default function OtpInput({count, code, onCodeChange}) {
         style={{width: '100%', height: 200}}
         pinCount={count}
         code={code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
-        onCodeChanged={onCodeChange}
+        onCodeChanged={code => onCodeChange(code)}
         placeholderCharacter={'0'}
         placeholderTextColor={styles.placeholderTextColor}
         autoFocusOnLoad

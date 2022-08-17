@@ -2,6 +2,9 @@ const API_URLS = {
   //Auth constants
   SIGNUP: '/api/auth/signup',
   LOGIN: '/api/auth/login',
+  FORGOT_PASSWORD: '/api/auth/forget-password',
+  OTP_VERIFICATION: '/api/auth/otp-varification',
+  RESET_PASSWORD: '/api/auth/password-reset',
 
   //Find People
   FIND_PEOPLE: '/api/people/find-people',

@@ -61,9 +61,7 @@ export default function ProfileSetting() {
       );
       console.log('here is the success ', result);
 
-      const res = await profileServices.getUserProfile(
-        jwt_decode(userToken)?.userId,
-      );
+      const res = await profileServices.getUserProfile();
 
       dispatch(setUserProfile(res));
 
@@ -216,7 +214,9 @@ export default function ProfileSetting() {
           <View style={styles.SearchInputView}>
             <SearchInput
               placeholder={
-                userData?.firstName == '' ? 'First Name' : userData.firstName
+                userData?.user?.firstName == ''
+                  ? 'First Name'
+                  : userData?.user?.firstName
               }
               editIcon={'edit-3'}
               editIconSize={16}
@@ -232,7 +232,9 @@ export default function ProfileSetting() {
           <View style={styles.SearchInputView}>
             <SearchInput
               placeholder={
-                userData.lastName == '' ? 'Last Name' : userData.lastName
+                userData?.user.lastName == ''
+                  ? 'Last Name'
+                  : userData?.user.lastName
               }
               editIcon={'edit-3'}
               editIconSize={16}
@@ -261,7 +263,9 @@ export default function ProfileSetting() {
           <View style={styles.SearchInputView}>
             <CommentBox
               placeholder={
-                userData?.bio == '' ? 'Write your bio..' : userData?.bio
+                userData?.user?.bio == ''
+                  ? 'Write your bio..'
+                  : userData?.user?.bio
               }
               value={bio}
               onChangeText={setBio}
