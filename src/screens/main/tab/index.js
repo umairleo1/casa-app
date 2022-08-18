@@ -1,5 +1,5 @@
 import {Text} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FindPeople from '../find-people';
 import Profile from '../profile';
@@ -19,6 +19,7 @@ import {profileServices} from 'src/services/profile-services';
 
 import {useDispatch, useSelector} from 'react-redux';
 import jwt_decode from 'jwt-decode';
+import AuthContext from 'src/utils/auth-context';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -38,14 +39,14 @@ const Stacks = () => {
 export default function BottomTab() {
   const dispatch = useDispatch();
   const userToken = useSelector(state => state?.auth?.userToken);
-
+  const authContext = useContext(AuthContext);
   const getUserData = async () => {
     try {
       const result = await profileServices.getUserProfile(
         jwt_decode(userToken)?.userId,
       );
       // console.log('Here is the user', result);
-      dispatch(setUserProfile(result));
+      authContext.setUserData(result);
     } catch (error) {
       console.log(error);
     }

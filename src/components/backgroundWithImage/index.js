@@ -5,8 +5,9 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import colors from 'src/utils/themes/global-colors';
+import ActivityIndicator from '../loader/activity-indicator';
 
 export default function BackgroundImageWithImage({
   imageBackGround,
@@ -15,21 +16,35 @@ export default function BackgroundImageWithImage({
   editBackGround,
   onPressProfileImage,
 }) {
+  const [profileLoader, setProfileLoader] = useState(false);
+  const [coverLoader, setCoverLoader] = useState(false);
+  console.log('image', image);
   return (
     <>
       <ImageBackground
         style={styles.imageBackground}
-        resizeMode={'stretch'}
-        source={imageBackGround}>
+        resizeMode={'cover'}
+        source={{uri: imageBackGround}}
+        onLoadStart={() => setCoverLoader(true)}
+        onLoadEnd={() => setCoverLoader(false)}>
         {editImage && (
-          <TouchableOpacity style={styles.edit} onPress={editBackGround}>
-            <Image source={editImage} />
-          </TouchableOpacity>
+          <>
+            <ActivityIndicator fontSize={20} visible={coverLoader} />
+            <TouchableOpacity style={styles.edit} onPress={editBackGround}>
+              <Image source={editImage} />
+            </TouchableOpacity>
+          </>
         )}
         <TouchableOpacity
           style={styles.roundViewMain}
           onPress={onPressProfileImage}>
-          <Image source={image} style={styles.roundView} />
+          <ActivityIndicator fontSize={20} visible={profileLoader} />
+          <Image
+            source={{uri: image}}
+            style={styles.roundView}
+            onLoadStart={() => setProfileLoader(true)}
+            onLoadEnd={() => setProfileLoader(false)}
+          />
         </TouchableOpacity>
       </ImageBackground>
     </>
@@ -60,6 +75,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignSelf: 'center',
+    borderWidth: 5,
+    borderColor: colors.whiteColor,
   },
   edit: {
     alignSelf: 'flex-end',
