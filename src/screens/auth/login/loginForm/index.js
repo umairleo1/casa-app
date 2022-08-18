@@ -50,6 +50,7 @@ export default function LoginForm() {
       const result = await userService.login({
         email: value.email,
         password: value.password,
+        fcmToken: '123',
       });
 
       dispatch(setUserReduxToken(result.token));

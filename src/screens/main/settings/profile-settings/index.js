@@ -6,7 +6,7 @@ import {
   PermissionsAndroid,
   Platform,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
@@ -25,9 +25,14 @@ import jwt_decode from 'jwt-decode';
 
 import {showMessage} from 'react-native-flash-message';
 import EditProfileModal from 'src/components/edit-profile-menu';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
+import AuthContext from 'src/utils/auth-context';
+import {useIsFocused} from '@react-navigation/native';
 let cameraIs = false;
 export default function ProfileSetting() {
-  const dispatch = useDispatch();
+  const focused = useIsFocused();
+  const authContext = useContext(AuthContext);
+  const [loader, setLoader] = useState(false);
 
   const [editFirstName, setEditFirstName] = useState(false);
   const [editLastName, setEditLastName] = useState(false);
@@ -43,12 +48,22 @@ export default function ProfileSetting() {
 
   const navigation = useNavigation();
 
-  const userData = useSelector(state => state?.profile?.userProfile);
   const userToken = useSelector(state => state?.auth?.userToken);
+
+  useEffect(() => {
+    getUserOnFocus();
+  }, [focused]);
+
+  const getUserOnFocus = async () => {
+    const res = await profileServices.getUserProfile();
+    console.log('ressss', res);
+
+    authContext.setUserData(res);
+  };
 
   const handleSave = async () => {
     Keyboard.dismiss();
-
+    setLoader(true);
     try {
       const result = await profileServices.savePersonalInfo(
         jwt_decode(userToken)?.userId,
@@ -62,20 +77,21 @@ export default function ProfileSetting() {
       console.log('here is the success ', result);
 
       const res = await profileServices.getUserProfile();
+      authContext.setUserData(res);
 
-      dispatch(setUserProfile(res));
-
+      setLoader(false);
       showMessage({
         message: 'Profile updated successfully',
         type: 'success',
       });
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
   const updateProfilePicture = async base64Image => {
     Keyboard.dismiss();
-
+    setLoader(true);
     try {
       const result = await profileServices.updateProfilePicture(
         jwt_decode(userToken)?.userId,
@@ -85,23 +101,29 @@ export default function ProfileSetting() {
       );
       console.log('here is the success  Profile ', result);
 
-      const res = await profileServices.getUserProfile(
-        jwt_decode(userToken)?.userId,
-      );
+      const res = await profileServices.getUserProfile();
+      console.log('res', res);
 
-      dispatch(setUserProfile(res));
-
+      authContext.setUserData({
+        ...res,
+        user: {
+          ...res.user,
+          profileImage: res.user.profileImage + '?a=' + Math.random(),
+        },
+      });
+      setLoader(false);
       showMessage({
         message: 'Profile updated successfully',
         type: 'success',
       });
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
   const updateCoverPicture = async base64Image => {
     Keyboard.dismiss();
-
+    setLoader(true);
     try {
       const result = await profileServices.updateProfilePicture(
         jwt_decode(userToken)?.userId,
@@ -111,17 +133,21 @@ export default function ProfileSetting() {
       );
       console.log('here is the success cover Profile ', result);
 
-      const res = await profileServices.getUserProfile(
-        jwt_decode(userToken)?.userId,
-      );
-
-      dispatch(setUserProfile(res));
-
+      const res = await profileServices.getUserProfile();
+      authContext.setUserData({
+        ...res,
+        user: {
+          ...res.user,
+          coverImage: res.user.coverImage + '?a=' + Math.random(),
+        },
+      });
+      setLoader(false);
       showMessage({
         message: 'Profile updated successfully',
         type: 'success',
       });
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
@@ -196,11 +222,12 @@ export default function ProfileSetting() {
       <Header
         heading={'Profile Settings'}
         onPressBack={() => navigation.goBack()}>
+        <ActivityIndicator visible={loader} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <BackgroundImageWithImage
-            imageBackGround={images.viewProfile}
+            imageBackGround={authContext?.userData?.user?.coverImage}
             editImage={images.editImage}
-            image={images.people}
+            image={authContext?.userData?.user?.profileImage}
             editBackGround={() => {
               setCoverPhoto(true);
               setImageModal(true);
@@ -210,8 +237,114 @@ export default function ProfileSetting() {
               setImageModal(true);
             }}
           />
-
           <View style={styles.view}>
+            <Text style={styles.text}>Personal Information</Text>
+            <View style={styles.SearchInputView}>
+              <SearchInput
+                placeholder={
+                  authContext?.userData?.user?.firstName == ''
+                    ? 'First Name'
+                    : authContext?.userData?.user?.firstName
+                }
+                editIcon={'edit-3'}
+                editIconSize={16}
+                editable={editFirstName}
+                placeholderTextColor={
+                  editPassword ? colors.black : colors.placeholderColor
+                }
+                editIconColor={
+                  editFirstName ? colors.black : colors.placeholderColor
+                }
+                onPress={() => {
+                  editFirstName
+                    ? setEditFirstName(false)
+                    : !editFirstName
+                    ? setEditFirstName(true)
+                    : editFirstName;
+                }}
+                value={firstName}
+                onChangeText={setFirstName}
+                borderColor={
+                  editFirstName ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+            <View style={styles.SearchInputView}>
+              <SearchInput
+                placeholder={
+                  authContext?.userData?.user.lastName == ''
+                    ? 'Last Name'
+                    : authContext?.userData?.user.lastName
+                }
+                editIcon={'edit-3'}
+                editIconSize={16}
+                editable={editLastName}
+                placeholderTextColor={
+                  editLastName ? colors.black : colors.placeholderColor
+                }
+                editIconColor={
+                  editLastName ? colors.black : colors.placeholderColor
+                }
+                onPress={() => {
+                  editLastName
+                    ? setEditLastName(false)
+                    : !editLastName
+                    ? setEditLastName(true)
+                    : editLastName;
+                }}
+                value={lastName}
+                onChangeText={setLastName}
+                borderColor={
+                  editLastName ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+            <View style={styles.SearchInputView}>
+              <SearchInput
+                placeholder={'Password'}
+                editIcon={'edit-3'}
+                editIconSize={16}
+                editable={editPassword}
+                placeholderTextColor={
+                  editPassword ? colors.black : colors.placeholderColor
+                }
+                editIconColor={
+                  editPassword ? colors.black : colors.placeholderColor
+                }
+                onPress={() => {
+                  editPassword
+                    ? setEditPassword(false)
+                    : !editPassword
+                    ? setEditPassword(true)
+                    : editPassword;
+                }}
+                onChangeText={setPassword}
+                borderColor={
+                  editPassword ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+            <View style={styles.SearchInputView}>
+              <CommentBox
+                placeholder={
+                  authContext?.userData?.user?.bio == ''
+                    ? 'Write your bio..'
+                    : authContext?.userData?.user?.bio
+                }
+                value={bio}
+                onChangeText={setBio}
+                placeholderTextColor={
+                  bio.length > 0 ? colors.black : colors.placeholderColor
+                }
+                borderColor={
+                  bio.length > 0 ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+          </View>
+        </ScrollView>
+
+        {/* <View style={styles.view}>
             <Text style={styles.text}>Personal Information</Text>
             <View style={styles.SearchInputView}>
               <SearchInput
@@ -316,7 +449,7 @@ export default function ProfileSetting() {
               />
             </View>
           </View>
-        </ScrollView>
+        </ScrollView> */}
 
         <EditProfileModal
           iconPress={() => setImageModal(false)}
