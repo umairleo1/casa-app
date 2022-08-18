@@ -20,19 +20,23 @@ export default function SearchInput({
   onPress,
   editable,
   editIconColor,
+  borderColor,
+  disableColor,
 }) {
   return (
     <>
-      <View style={styles.searchView}>
-        <AntDesign
-          name={icon}
-          size={iconSize}
-          color={colors.black}
-          style={{padding: 10, marginLeft: 10}}
-        />
+      <View style={[styles.searchView, {borderColor: borderColor}]}>
+        {icon && (
+          <AntDesign
+            name={icon}
+            size={iconSize}
+            color={colors.black}
+            style={{padding: 10, marginLeft: 10}}
+          />
+        )}
         <TextInput
           placeholderTextColor={placeholderTextColor}
-          style={styles.input}
+          style={[styles.input, {color: disableColor}]}
           placeholder={placeholder}
           onChangeText={value => onChangeText(value)}
           onChange={onChange}
@@ -58,7 +62,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 10,
     paddingBottom: 10,
-    paddingLeft: 0,
+    paddingLeft: 10,
     backgroundColor: '#fff',
     fontSize: 16,
     height: 40,
@@ -67,7 +71,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: colors.innerBorder,
+    // borderColor: colors.innerBorder,
     borderWidth: 1,
     borderRadius: 2,
   },
