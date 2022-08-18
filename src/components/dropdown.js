@@ -33,13 +33,14 @@ export default function Dropdown({selectedValue, onValueChange, error}) {
 }
 const styles = StyleSheet.create({
   picker: {
-    height: 40,
+    // height: 40,
   },
   pickerView: {
     borderWidth: 1,
     borderRadius: 2,
     borderColor: colors.innerBorder,
     marginTop: 12,
+    // backgroundColor: 'red',
   },
   errorText: {
     color: colors.redColor,

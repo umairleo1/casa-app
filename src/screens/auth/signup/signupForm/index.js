@@ -4,7 +4,6 @@ import {styles} from './styles';
 import Input from 'src/components/textinput';
 import Dropdown from 'src/components/dropdown';
 import Button from 'src/components/button';
-
 import Datepicker from 'src/components/datePicker';
 import moment from 'moment';
 import {Formik} from 'formik';
@@ -181,10 +180,7 @@ export default function SignupForm() {
                     text="Complete Registration!"
                     // disabled={!checked}
                     onPress={handleSubmit}
-                    backgroundColor={
-                      // !checked ? colors.grey :
-                      colors.buttonColor
-                    }
+                    backgroundColor={colors.buttonColor}
                   />
                 </>
               )}
