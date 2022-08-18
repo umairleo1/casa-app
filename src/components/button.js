@@ -1,18 +1,36 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+  View,
+} from 'react-native';
 import colors from 'src/utils/themes/global-colors';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import fonts from 'src/utils/themes/fonts';
 
-export default function Button({text, onPress, disabled, backgroundColor}) {
+export default function Button({
+  text,
+  onPress,
+  disabled,
+  backgroundColor,
+  loader,
+}) {
   return (
     <>
       <TouchableOpacity
-        style={[styles.button, {backgroundColor: backgroundColor}]}
+        style={[
+          styles.button,
+          {backgroundColor: backgroundColor, flexDirection: 'row'},
+        ]}
         onPress={onPress}
         disabled={disabled}>
         <Text style={styles.buttonText}>{text}</Text>
+        <View style={{marginLeft: 20}}>
+          {loader && <ActivityIndicator color={colors.whiteColor} />}
+        </View>
       </TouchableOpacity>
     </>
   );
@@ -27,7 +45,7 @@ const styles = StyleSheet.create({
   },
   button: {
     justifyContent: 'center',
-    height: hp(7),
+    height: 50,
     borderRadius: 2,
     marginBottom: 10,
     alignItems: 'center',

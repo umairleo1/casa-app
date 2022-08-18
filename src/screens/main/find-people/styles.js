@@ -6,7 +6,7 @@ import colors from 'src/utils/themes/global-colors';
 export const styles = StyleSheet.create({
   searchInputView: {
     marginHorizontal: 20,
-    marginTop: 15,
+    marginTop: 1,
   },
   plusIconView: {
     flexDirection: 'row',
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
   },
   image: {
     height: 160,
-    width: 150,
+    width: '100%',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderTopRightRadius: 10,
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
   },
   flatlistView: {
     flex: 1,
-    marginTop: 10,
+    top: 25,
     margin: 5,
     marginBottom: 20,
   },

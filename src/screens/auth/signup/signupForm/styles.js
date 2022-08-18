@@ -1,11 +1,12 @@
 import {StyleSheet} from 'react-native';
 import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
   text: {
     color: colors.black,
-    fontSize: 12,
+    fontSize: hp(2),
     fontFamily: fonts.RobotoRegular,
     marginTop: 10,
     marginHorizontal: 15,

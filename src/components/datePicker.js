@@ -13,12 +13,20 @@ export default function Datepicker({
   date,
   error,
   onChange,
+  placeholder,
 }) {
   return (
     <>
       <View>
         <TouchableOpacity onPress={showDatePicker} style={styles.dateView}>
-          <Text style={styles.dateText}>{date}</Text>
+          <Text
+            style={{
+              ...styles.dateText,
+              color: placeholder ? colors.placeholderColor : colors.pureBlack,
+            }}>
+            {date}
+          </Text>
+
           <Icon name="calendar-month-outline" size={19} color="#BBBBBB" />
         </TouchableOpacity>
         {error ? (
@@ -49,7 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   dateText: {
-    color: colors.placeholderColor,
+    color: colors.pureBlack,
     borderColor: colors.innerBorder,
   },
   errorText: {

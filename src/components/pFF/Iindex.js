@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-import {Text, StyleSheet, View} from 'react-native';
+import {Text, StyleSheet, View, Touchable} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default function PFF({
   postPoints,
@@ -10,6 +11,8 @@ export default function PFF({
   followersName,
   followingName,
   followingPoints,
+  onPressFollowing,
+  onPressFollower,
 }) {
   return (
     <>
@@ -19,17 +22,20 @@ export default function PFF({
           <Text style={styles.name}>{postName}</Text>
         </View>
         <View style={styles.verticalLine}></View>
-
-        <View style={styles.insideView}>
-          <Text style={styles.postPoints}>{followersPoint}</Text>
-          <Text style={styles.name}>{followersName}</Text>
-        </View>
+        <TouchableOpacity onPress={onPressFollower}>
+          <View style={styles.insideView}>
+            <Text style={styles.postPoints}>{followersPoint}</Text>
+            <Text style={styles.name}>{followersName}</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.verticalLine}></View>
 
-        <View style={styles.insideView}>
-          <Text style={styles.postPoints}>{followingPoints}</Text>
-          <Text style={styles.name}>{followingName}</Text>
-        </View>
+        <TouchableOpacity onPress={onPressFollowing}>
+          <View style={styles.insideView}>
+            <Text style={styles.postPoints}>{followingPoints}</Text>
+            <Text style={styles.name}>{followingName}</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </>
   );

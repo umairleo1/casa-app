@@ -19,6 +19,7 @@ export default function SignupForm() {
   const [checked, setUnChecked] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const navigation = useNavigation();
 
@@ -65,6 +66,7 @@ export default function SignupForm() {
       });
     } else {
       try {
+        setIsLoading(true);
         const result = await userService.signup({
           firstName: values.firstName,
           lastName: values.lastName,
@@ -79,12 +81,14 @@ export default function SignupForm() {
           type: 'success',
         });
         navigation.navigate('Login');
+        setIsLoading(false);
       } catch (error) {
-        console.log('errorrr  ', error);
+        console.log(error);
         showMessage({
           message: error.errMsg,
           type: 'danger',
         });
+        setIsLoading(false);
       }
     }
   };
@@ -95,7 +99,7 @@ export default function SignupForm() {
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}>
-          <Text style={styles.text}>Register to Company</Text>
+          <Text style={styles.text}>Register to Casaverse</Text>
           <View style={styles.borderLine} />
           <View style={styles.mainView}>
             <Formik
@@ -158,6 +162,7 @@ export default function SignupForm() {
                         ? moment(selectedDate).format('MM/DD/YYYY')
                         : 'Your Birthday'
                     }`}
+                    placeholder={!selectedDate}
                     error={touched.birthDate ? errors.birthDate : ''}
                   />
                   <Dropdown
@@ -165,19 +170,21 @@ export default function SignupForm() {
                     onValueChange={handleChange('gender')}
                     error={touched.gender ? errors.gender : ''}
                   />
-                  <CheckBox
+                  {/* <CheckBox
                     isChecked={checked}
                     onPress={() => setUnChecked(!checked)}
                     tc1="I accept the"
                     tc2="Terms and Conditions"
                     tc3="of the app"
-                  />
+                  /> */}
                   <Button
+                    loader={isLoading}
                     text="Complete Registration!"
-                    disabled={!checked}
+                    // disabled={!checked}
                     onPress={handleSubmit}
                     backgroundColor={
-                      !checked ? colors.grey : colors.buttonColor
+                      // !checked ? colors.grey :
+                      colors.buttonColor
                     }
                   />
                 </>
