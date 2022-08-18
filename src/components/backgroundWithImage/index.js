@@ -24,11 +24,7 @@ export default function BackgroundImageWithImage({
       <ImageBackground
         style={styles.imageBackground}
         resizeMode={'cover'}
-        source={
-          imageBackGround || coverLoader
-            ? {uri: imageBackGround}
-            : images.background
-        }
+        source={imageBackGround ? {uri: imageBackGround} : images.background}
         onLoadStart={() => setCoverLoader(true)}
         onLoadEnd={() => setCoverLoader(false)}>
         {editImage && (
