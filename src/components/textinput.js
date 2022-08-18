@@ -2,7 +2,6 @@
 import {TextInput, StyleSheet, View, Text} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function Input({
   onChangeText,
@@ -14,8 +13,6 @@ export default function Input({
   onBlur,
   type,
   editable,
-  eyeIcon,
-  onPressEye,
 }) {
   return (
     <>

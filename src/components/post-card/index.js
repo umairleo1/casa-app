@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {StyleSheet, View, Image} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import {TextInput, StyleSheet, View, Pressable} from 'react-native';
+import {TextInput, StyleSheet, View} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';

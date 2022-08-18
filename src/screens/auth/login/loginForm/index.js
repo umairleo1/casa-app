@@ -20,7 +20,7 @@ import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 export default function LoginForm() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [passwordVisible, setPasswordVisible] = useState(true);
+  const [passwordVisible] = useState(true);
 
   const [isLoading, setIsLoading] = React.useState(false);
 

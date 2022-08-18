@@ -1,17 +1,13 @@
 /* eslint-disable react/prop-types */
 import {Text, View, FlatList, ScrollView, Image} from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 import PostStatus from 'src/components/post-card';
-import images from 'src/assets/images';
 import colors from 'src/utils/themes/global-colors';
-import FollowButton from 'src/components/followButton';
-import {profileServices} from 'src/services/profile-services';
-import {showMessage} from 'react-native-flash-message';
 
 export default function Home() {
   const navigation = useNavigation();

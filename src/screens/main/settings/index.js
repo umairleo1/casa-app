@@ -1,9 +1,8 @@
-import {TouchableOpacity, View, Text} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 import images from 'src/assets/images';
-import SearchInput from 'src/components/searchInput';
 import SettingSection from 'src/components/settingSection';
 import {useNavigation} from '@react-navigation/native';
 
