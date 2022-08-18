@@ -21,6 +21,7 @@ export default function SearchInput({
   editable,
   editIconColor,
   borderColor,
+  disableColor,
 }) {
   return (
     <>
@@ -35,7 +36,7 @@ export default function SearchInput({
         )}
         <TextInput
           placeholderTextColor={placeholderTextColor}
-          style={styles.input}
+          style={[styles.input, {color: disableColor}]}
           placeholder={placeholder}
           onChangeText={value => onChangeText(value)}
           onChange={onChange}

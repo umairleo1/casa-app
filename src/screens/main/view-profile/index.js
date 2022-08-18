@@ -17,6 +17,7 @@ import {showMessage} from 'react-native-flash-message';
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
   const [data, setData] = React.useState([]);
+  const [loder, setLoader] = React.useState(false);
 
   const dummyData = [
     {
@@ -47,7 +48,7 @@ export default function ViewProfile({route}) {
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
     try {
-      const res = await profileServices.getUserProfile(route?.params?.id);
+      const res = await profileServices.getUserProfileById(route?.params?.id);
       console.log('res', res);
       setData(res);
     } catch (error) {
@@ -61,7 +62,34 @@ export default function ViewProfile({route}) {
   useEffect(() => {
     getProfile();
   }, []);
+  const onPressFollowBtn = async () => {
+    setLoader(true);
+    try {
+      if (data?.isFollowing) {
+        const result = await profileServices.unFollowApiApi(route?.params?.id);
+        console.log('unFollowApiApi==>', result);
+        const res = await profileServices.getUserProfileById(route?.params?.id);
+        console.log('resisF', res);
+        setData(res);
+        setLoader(false);
+      } else {
+        const result = await profileServices.followTo(route?.params?.id);
+        console.log('getFollowingApi==>', result);
+        const res = await profileServices.getUserProfileById(route?.params?.id);
+        setData(res);
+        console.log('!resisF', res);
+        setLoader(false);
+      }
 
+      //getFollowing();
+    } catch (error) {
+      setLoader(false);
+      console.log('error', error);
+      const res = await profileServices.getUserProfileById(route?.params?.id);
+      console.log('catchres', res);
+      setData(res);
+    }
+  };
   const listItem = ({item}) => {
     return (
       <View style={styles.mainContainer}>
@@ -98,9 +126,12 @@ export default function ViewProfile({route}) {
         <Text style={styles.description}>
           hey I m isai founder of synkbooks
         </Text>
+
         <FollowButton
+          onPress={() => onPressFollowBtn()}
           text={data?.isFollowing ? 'Following' : 'Follow'}
           backgroundColor={colors.buttonColor}
+          loder={loder}
         />
 
         <PFF
@@ -110,8 +141,12 @@ export default function ViewProfile({route}) {
           followersName={'Followers'}
           followingPoints={data?.totalFollowing}
           followingName={'Following'}
-          onPressFollowing={() => navigation.navigate('Following')}
-          onPressFollower={() => navigation.navigate('Followers')}
+          onPressFollowing={() =>
+            navigation.navigate('Following', {id: route?.params?.id})
+          }
+          onPressFollower={() =>
+            navigation.navigate('Followers', {id: route?.params?.id})
+          }
         />
         <FlatList
           data={dummyData}
