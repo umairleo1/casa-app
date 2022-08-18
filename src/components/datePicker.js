@@ -27,7 +27,12 @@ export default function Datepicker({
             {date}
           </Text>
 
-          <Icon name="calendar-month-outline" size={19} color="#BBBBBB" />
+          <Icon
+            name="calendar-month-outline"
+            size={19}
+            color="#BBBBBB"
+            style={{paddingTop: 5}}
+          />
         </TouchableOpacity>
         {error ? (
           <View style={styles.errorContainer}>
@@ -47,7 +52,7 @@ export default function Datepicker({
 }
 const styles = StyleSheet.create({
   dateView: {
-    height: 40,
+    height: 55,
     marginTop: 12,
     borderWidth: 1,
     borderRadius: 2,
@@ -59,6 +64,7 @@ const styles = StyleSheet.create({
   dateText: {
     color: colors.pureBlack,
     borderColor: colors.innerBorder,
+    paddingTop: 5,
   },
   errorText: {
     color: colors.redColor,

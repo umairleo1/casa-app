@@ -28,6 +28,22 @@ export default function ForgotPassword() {
     [],
   );
 
+  const handleLogin = async email => {
+    try {
+      setIsLoading(true);
+      await userService.forgotPassword(email);
+      navigation.navigate('OTP', {mail: email.email});
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Background
       image={images.appLogo}
@@ -43,7 +59,7 @@ favourite music via Stopify,earn badges and much more!">
             initialValues={{
               email: '',
             }}
-            // onSubmit={value => handleLogin(value)}
+            onSubmit={value => handleLogin(value)}
             validationSchema={forgotPasswordSchema}>
             {({
               handleSubmit,

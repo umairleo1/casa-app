@@ -182,10 +182,7 @@ export default function SignupForm() {
                     text="Complete Registration!"
                     // disabled={!checked}
                     onPress={handleSubmit}
-                    backgroundColor={
-                      // !checked ? colors.grey :
-                      colors.buttonColor
-                    }
+                    backgroundColor={colors.buttonColor}
                   />
                 </>
               )}

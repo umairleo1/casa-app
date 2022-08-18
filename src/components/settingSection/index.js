@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: fonts.RobotoRegular,
     marginLeft: 15,
+    fontWeight: 'bold',
   },
   mainView: {
     flexDirection: 'row',

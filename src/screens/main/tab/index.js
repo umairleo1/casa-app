@@ -7,10 +7,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SCREEN from 'utils/constants';
 import ViewProfile from '../view-profile';
 import Notification from '../notification';
+import Home from '../home';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -19,6 +19,7 @@ import {profileServices} from 'src/services/profile-services';
 
 import {useDispatch, useSelector} from 'react-redux';
 import jwt_decode from 'jwt-decode';
+import colors from 'src/utils/themes/global-colors';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -64,12 +65,17 @@ export default function BottomTab() {
   }
 
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: colors.buttonColor,
+      }}>
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={Home}
         options={{
           tabBarLabel: 'Home',
+
           tabBarIcon: ({color, size}) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
@@ -101,7 +107,7 @@ export default function BottomTab() {
         options={{
           tabBarLabel: 'Notification',
           tabBarIcon: ({color, size}) => (
-            <Feather name="bell" color={color} size={size} />
+            <FontAwesome name="bell" color={color} size={size} />
           ),
         }}
       />
@@ -111,7 +117,7 @@ export default function BottomTab() {
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (
-            <Ionicons name="person-outline" color={color} size={size} />
+            <Ionicons name="person" color={color} size={size} />
           ),
         }}
       />

@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {TouchableOpacity, View, Text} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
@@ -10,20 +10,22 @@ import {useNavigation} from '@react-navigation/native';
 import asyncStorage from 'utils/async-storage/index';
 import {useDispatch} from 'react-redux';
 import {handleLogout} from 'src/redux/auth/auth-actions';
+import Button from 'src/components/button';
+import colors from 'src/utils/themes/global-colors';
 
 export default function Settings() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   return (
     <Header heading={'Settings'} onPressBack={() => navigation.goBack()}>
-      <View style={styles.searchInputView}>
+      {/* <View style={styles.searchInputView}>
         <SearchInput
           placeholder={'Search for a Setting'}
           icon={'search1'}
           iconSize={24}
+          borderColor={colors.innerBorder}
         />
-      </View>
-
+      </View> */}
       <View style={styles.settingSectionView}>
         <SettingSection
           leftIcon={images.profile}
@@ -41,10 +43,11 @@ export default function Settings() {
           rightIconSize={15}
         />
       </View>
-      <View style={styles.settingSectionView2}>
-        <SettingSection
-          leftIcon={images.promoCode}
-          name={'Logout'}
+
+      <View style={styles.logoutButtonView}>
+        <Button
+          text="Logout"
+          backgroundColor={colors.buttonColor}
           onPress={() => {
             asyncStorage.removeToken(), dispatch(handleLogout(''));
           }}
