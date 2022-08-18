@@ -45,9 +45,10 @@ export default function ViewProfile({route}) {
     },
   ];
   const getProfile = async () => {
+    console.log('route?.params?.id', route?.params?.id);
     try {
       const res = await profileServices.getUserProfile(route?.params?.id);
-
+      console.log('res', res);
       setData(res);
     } catch (error) {
       console.log('error', error);
@@ -88,8 +89,8 @@ export default function ViewProfile({route}) {
     <Header onPressBack={() => navigation.goBack()} feather={'setting'}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <BackgroundImageWithImage
-          imageBackGround={images.viewProfile}
-          image={images.people}
+          imageBackGround={data?.user?.coverImage}
+          image={data?.user?.profileImage}
         />
         <Text style={styles.name}>
           {data?.user?.firstName + ' ' + data?.user?.lastName}

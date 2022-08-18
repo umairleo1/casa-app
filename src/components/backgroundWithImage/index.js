@@ -18,7 +18,7 @@ export default function BackgroundImageWithImage({
 }) {
   const [profileLoader, setProfileLoader] = useState(false);
   const [coverLoader, setCoverLoader] = useState(false);
-  console.log('image', image);
+
   return (
     <>
       <ImageBackground
