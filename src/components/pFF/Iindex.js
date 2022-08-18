@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import {Text, StyleSheet, View, Touchable} from 'react-native';
+import {Text, StyleSheet, View} from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';

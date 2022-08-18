@@ -4,7 +4,7 @@ import {styles} from './styles';
 import Input from 'src/components/textinput';
 import Dropdown from 'src/components/dropdown';
 import Button from 'src/components/button';
-import CheckBox from 'src/components/checkbox';
+
 import Datepicker from 'src/components/datePicker';
 import moment from 'moment';
 import {Formik} from 'formik';
@@ -16,7 +16,6 @@ import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 
 export default function SignupForm() {
-  const [checked, setUnChecked] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isLoading, setIsLoading] = React.useState(false);
