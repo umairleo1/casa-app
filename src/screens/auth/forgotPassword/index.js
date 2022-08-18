@@ -19,6 +19,10 @@ export default function ForgotPassword() {
     [],
   );
 
+  const handleForgot = () => {
+    alert('fkfjkjk');
+  };
+
   return (
     <Background
       heading="LOGO"
@@ -35,7 +39,7 @@ favourite music via Stopify,earn badges and much more!">
               email: '',
               password: '',
             }}
-            // onSubmit={value => handleLogin(value)}
+            onSubmit={value => handleForgot(value)}
             validationSchema={forgotPasswordSchema}>
             {({
               handleSubmit,
