@@ -47,7 +47,7 @@ export default function ViewProfile({route}) {
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
     try {
-      const res = await profileServices.getUserProfile(route?.params?.id);
+      const res = await profileServices.getUserProfileById(route?.params?.id);
       console.log('res', res);
       setData(res);
     } catch (error) {
@@ -61,7 +61,21 @@ export default function ViewProfile({route}) {
   useEffect(() => {
     getProfile();
   }, []);
+  const onPressFollowBtn = async () => {
+    try {
+      if (data?.isFollowing) {
+        const result = await profileServices.unFollowApiApi(route?.params?.id);
+        console.log('unFollowApiApi==>', result);
+      } else {
+        const result = await profileServices.followTo(route?.params?.id);
+        console.log('getFollowingApi==>', result);
+      }
 
+      //getFollowing();
+    } catch (error) {
+      console.log('eeror', error);
+    }
+  };
   const listItem = ({item}) => {
     return (
       <View style={styles.mainContainer}>
@@ -99,6 +113,7 @@ export default function ViewProfile({route}) {
           hey I m isai founder of synkbooks
         </Text>
         <FollowButton
+          onPress={() => onPressFollowBtn()}
           text={data?.isFollowing ? 'Following' : 'Follow'}
           backgroundColor={colors.buttonColor}
         />
