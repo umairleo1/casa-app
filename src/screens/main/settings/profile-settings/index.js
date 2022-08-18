@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Text,
   View,
@@ -218,89 +219,246 @@ export default function ProfileSetting() {
   };
 
   return (
-    <Header
-      heading={'Profile Settings'}
-      onPressBack={() => navigation.goBack()}>
-      <ActivityIndicator visible={loader} />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <BackgroundImageWithImage
-          imageBackGround={authContext?.userData?.user?.coverImage}
-          editImage={images.editImage}
-          image={authContext?.userData?.user?.profileImage}
-          editBackGround={() => {
-            setCoverPhoto(true);
-            setImageModal(true);
-          }}
-          onPressProfileImage={() => {
-            setCoverPhoto(false);
-            setImageModal(true);
-          }}
-        />
-        <View style={styles.view}>
-          <Text style={styles.text}>Personal Information</Text>
-          <View style={styles.SearchInputView}>
-            <SearchInput
-              placeholder={
-                authContext?.userData?.user?.firstName == ''
-                  ? 'First Name'
-                  : authContext?.userData?.user?.firstName
-              }
-              editIcon={'edit-3'}
-              editIconSize={16}
-              editable={editFirstName}
-              editIconColor={
-                editFirstName ? colors.black : colors.placeholderColor
-              }
-              onPress={() => setEditFirstName(true)}
-              value={firstName}
-              onChangeText={setFirstName}
-            />
+    <>
+      <Header
+        heading={'Profile Settings'}
+        onPressBack={() => navigation.goBack()}>
+        <ActivityIndicator visible={loader} />
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <BackgroundImageWithImage
+            imageBackGround={authContext?.userData?.user?.coverImage}
+            editImage={images.editImage}
+            image={authContext?.userData?.user?.profileImage}
+            editBackGround={() => {
+              setCoverPhoto(true);
+              setImageModal(true);
+            }}
+            onPressProfileImage={() => {
+              setCoverPhoto(false);
+              setImageModal(true);
+            }}
+          />
+          <View style={styles.view}>
+            <Text style={styles.text}>Personal Information</Text>
+            <View style={styles.SearchInputView}>
+              <SearchInput
+                placeholder={
+                  authContext?.userData?.user?.firstName == ''
+                    ? 'First Name'
+                    : authContext?.userData?.user?.firstName
+                }
+                editIcon={'edit-3'}
+                editIconSize={16}
+                editable={editFirstName}
+                placeholderTextColor={
+                  editPassword ? colors.black : colors.placeholderColor
+                }
+                editIconColor={
+                  editFirstName ? colors.black : colors.placeholderColor
+                }
+                onPress={() => {
+                  editFirstName
+                    ? setEditFirstName(false)
+                    : !editFirstName
+                    ? setEditFirstName(true)
+                    : editFirstName;
+                }}
+                value={firstName}
+                onChangeText={setFirstName}
+                borderColor={
+                  editFirstName ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+            <View style={styles.SearchInputView}>
+              <SearchInput
+                placeholder={
+                  authContext?.userData?.user.lastName == ''
+                    ? 'Last Name'
+                    : authContext?.userData?.user.lastName
+                }
+                editIcon={'edit-3'}
+                editIconSize={16}
+                editable={editLastName}
+                placeholderTextColor={
+                  editLastName ? colors.black : colors.placeholderColor
+                }
+                editIconColor={
+                  editLastName ? colors.black : colors.placeholderColor
+                }
+                onPress={() => {
+                  editLastName
+                    ? setEditLastName(false)
+                    : !editLastName
+                    ? setEditLastName(true)
+                    : editLastName;
+                }}
+                value={lastName}
+                onChangeText={setLastName}
+                borderColor={
+                  editLastName ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+            <View style={styles.SearchInputView}>
+              <SearchInput
+                placeholder={'Password'}
+                editIcon={'edit-3'}
+                editIconSize={16}
+                editable={editPassword}
+                placeholderTextColor={
+                  editPassword ? colors.black : colors.placeholderColor
+                }
+                editIconColor={
+                  editPassword ? colors.black : colors.placeholderColor
+                }
+                onPress={() => {
+                  editPassword
+                    ? setEditPassword(false)
+                    : !editPassword
+                    ? setEditPassword(true)
+                    : editPassword;
+                }}
+                onChangeText={setPassword}
+                borderColor={
+                  editPassword ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+            <View style={styles.SearchInputView}>
+              <CommentBox
+                placeholder={
+                  authContext?.userData?.user?.bio == ''
+                    ? 'Write your bio..'
+                    : authContext?.userData?.user?.bio
+                }
+                value={bio}
+                onChangeText={setBio}
+                placeholderTextColor={
+                  bio.length > 0 ? colors.black : colors.placeholderColor
+                }
+                borderColor={
+                  bio.length > 0 ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
           </View>
-          <View style={styles.SearchInputView}>
-            <SearchInput
-              placeholder={
-                authContext?.userData?.user.lastName == ''
-                  ? 'Last Name'
-                  : authContext?.userData?.user.lastName
-              }
-              editIcon={'edit-3'}
-              editIconSize={16}
-              editable={editLastName}
-              editIconColor={
-                editLastName ? colors.black : colors.placeholderColor
-              }
-              onPress={() => setEditLastName(true)}
-              value={lastName}
-              onChangeText={setLastName}
-            />
-          </View>
-          <View style={styles.SearchInputView}>
-            <SearchInput
-              placeholder={'Password'}
-              editIcon={'edit-3'}
-              editIconSize={16}
-              editable={editPassword}
-              editIconColor={
-                editPassword ? colors.black : colors.placeholderColor
-              }
-              onPress={() => setEditPassword(true)}
-              onChangeText={setPassword}
-            />
-          </View>
-          <View style={styles.SearchInputView}>
-            <CommentBox
-              placeholder={
-                authContext?.userData?.user?.bio == ''
-                  ? 'Write your bio..'
-                  : authContext?.userData?.user?.bio
-              }
-              value={bio}
-              onChangeText={setBio}
-            />
-          </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
 
+        {/* <View style={styles.view}>
+            <Text style={styles.text}>Personal Information</Text>
+            <View style={styles.SearchInputView}>
+              <SearchInput
+                placeholder={
+                  userData?.user?.firstName == ''
+                    ? 'First Name'
+                    : userData?.user?.firstName
+                }
+                editIcon={'edit-3'}
+                placeholderTextColor={
+                  editFirstName ? colors.black : colors.placeholderColor
+                }
+                editIconSize={16}
+                editable={editFirstName}
+                editIconColor={
+                  editFirstName ? colors.black : colors.placeholderColor
+                }
+                onPress={() => {
+                  editFirstName
+                    ? setEditFirstName(false)
+                    : !editFirstName
+                    ? setEditFirstName(true)
+                    : editFirstName;
+                }}
+                value={firstName}
+                onChangeText={setFirstName}
+                borderColor={
+                  editFirstName ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+            <View style={styles.SearchInputView}>
+              <SearchInput
+                placeholder={
+                  userData?.user.lastName == ''
+                    ? 'Last Name'
+                    : userData?.user.lastName
+                }
+                editIcon={'edit-3'}
+                editIconSize={16}
+                editable={editLastName}
+                placeholderTextColor={
+                  editLastName ? colors.black : colors.placeholderColor
+                }
+                editIconColor={
+                  editLastName ? colors.black : colors.placeholderColor
+                }
+                onPress={() => {
+                  editLastName
+                    ? setEditLastName(false)
+                    : !editLastName
+                    ? setEditLastName(true)
+                    : editLastName;
+                }}
+                value={lastName}
+                onChangeText={setLastName}
+                borderColor={
+                  editLastName ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+            <View style={styles.SearchInputView}>
+              <SearchInput
+                placeholder={'Password'}
+                editIcon={'edit-3'}
+                editIconSize={16}
+                editable={editPassword}
+                placeholderTextColor={
+                  editPassword ? colors.black : colors.placeholderColor
+                }
+                editIconColor={
+                  editPassword ? colors.black : colors.placeholderColor
+                }
+                onPress={() => {
+                  editPassword
+                    ? setEditPassword(false)
+                    : !editPassword
+                    ? setEditPassword(true)
+                    : editPassword;
+                }}
+                onChangeText={setPassword}
+                borderColor={
+                  editPassword ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+            <View style={styles.SearchInputView}>
+              <CommentBox
+                placeholder={
+                  userData?.user?.bio == ''
+                    ? 'Write your bio..'
+                    : userData?.user?.bio
+                }
+                value={bio}
+                onChangeText={setBio}
+                placeholderTextColor={
+                  bio.length > 0 ? colors.black : colors.placeholderColor
+                }
+                borderColor={
+                  bio.length > 0 ? colors.pureBlack : colors.innerBorder
+                }
+              />
+            </View>
+          </View>
+        </ScrollView> */}
+
+        <EditProfileModal
+          iconPress={() => setImageModal(false)}
+          visible={imageModal}
+          onPressGallery={() => imagePickerFromGallery()}
+          onPressPhoto={() => imagePickerFromCamera()}
+        />
+      </Header>
       <View style={styles.buttonView}>
         <Button
           onPress={() => handleSave()}
@@ -308,12 +466,6 @@ export default function ProfileSetting() {
           backgroundColor={colors.buttonColor}
         />
       </View>
-      <EditProfileModal
-        iconPress={() => setImageModal(false)}
-        visible={imageModal}
-        onPressGallery={() => imagePickerFromGallery()}
-        onPressPhoto={() => imagePickerFromCamera()}
-      />
-    </Header>
+    </>
   );
 }

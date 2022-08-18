@@ -24,6 +24,7 @@ export const styles = StyleSheet.create({
   },
   inputView: {
     marginHorizontal: 15,
+    // marginTop: hp(5),
     marginTop: hp(1),
   },
   forgotPassword: {

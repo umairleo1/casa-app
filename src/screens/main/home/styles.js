@@ -1,17 +1,16 @@
 import {StyleSheet} from 'react-native';
-
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import colors from 'src/utils/themes/global-colors';
 
 export const styles = StyleSheet.create({
   Container: {
     flex: 1,
-    backgroundColor: colors.whiteColor,
   },
   name: {
     fontSize: 26,
     color: colors.pureBlack,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: hp(10),
     textAlign: 'center',
   },
   description: {
@@ -24,24 +23,18 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 15,
+    marginVertical: 10,
   },
   image: {
-    borderRadius: 2,
+    borderRadius: 42 / 2,
     height: 42,
     width: 42,
-  },
-  notiImage: {
-    borderRadius: 22 / 2,
-    height: 22,
-    width: 22,
   },
   flatlistName: {
     fontSize: 15,
     lineHeight: 18,
     color: colors.pureBlack,
     fontWeight: 'bold',
-    marginHorizontal: 5,
   },
   mail: {
     fontSize: 12,
@@ -54,10 +47,6 @@ export const styles = StyleSheet.create({
   },
   flatlistView3: {
     marginHorizontal: 10,
-  },
-  flatlistView4: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   mainContainer: {
     marginBottom: 10,
@@ -80,14 +69,5 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 3,
     backgroundColor: 'red',
-  },
-  time: {
-    fontSize: 14,
-    color: '#7A7A7A',
-  },
-  day: {
-    fontSize: 12,
-    marginTop: 10,
-    color: colors.pureBlack,
   },
 });

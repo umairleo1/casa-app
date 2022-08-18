@@ -1,5 +1,5 @@
 import {Text, View, Pressable, ScrollView} from 'react-native';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {styles} from './styles';
 import Input from 'src/components/textinput';
 import Button from 'src/components/button';
@@ -20,6 +20,7 @@ import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 export default function LoginForm() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const [passwordVisible] = useState(true);
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -99,11 +100,13 @@ export default function LoginForm() {
                 />
                 <Input
                   placeholder={'Your Password'}
-                  secureTextEntry={true}
+                  secureTextEntry={passwordVisible}
                   value={values.password}
                   error={touched.password ? errors.password : ''}
                   onChangeText={handleChange('password')}
                   onBlur={() => setFieldTouched('password')}
+                  // eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
+                  // onPressEye={() => setPasswordVisible(!passwordVisible)}
                 />
                 <View style={styles.forgotPasswordView}>
                   {/* <CheckBox
