@@ -17,6 +17,7 @@ import {showMessage} from 'react-native-flash-message';
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
   const [data, setData] = React.useState([]);
+  const [loder, setLoader] = React.useState(false);
 
   const dummyData = [
     {
@@ -62,18 +63,31 @@ export default function ViewProfile({route}) {
     getProfile();
   }, []);
   const onPressFollowBtn = async () => {
+    setLoader(true);
     try {
       if (data?.isFollowing) {
         const result = await profileServices.unFollowApiApi(route?.params?.id);
         console.log('unFollowApiApi==>', result);
+        const res = await profileServices.getUserProfileById(route?.params?.id);
+        console.log('resisF', res);
+        setData(res);
+        setLoader(false);
       } else {
         const result = await profileServices.followTo(route?.params?.id);
         console.log('getFollowingApi==>', result);
+        const res = await profileServices.getUserProfileById(route?.params?.id);
+        setData(res);
+        console.log('!resisF', res);
+        setLoader(false);
       }
 
       //getFollowing();
     } catch (error) {
-      console.log('eeror', error);
+      setLoader(false);
+      console.log('error', error);
+      const res = await profileServices.getUserProfileById(route?.params?.id);
+      console.log('catchres', res);
+      setData(res);
     }
   };
   const listItem = ({item}) => {
@@ -112,10 +126,12 @@ export default function ViewProfile({route}) {
         <Text style={styles.description}>
           hey I m isai founder of synkbooks
         </Text>
+
         <FollowButton
           onPress={() => onPressFollowBtn()}
           text={data?.isFollowing ? 'Following' : 'Follow'}
           backgroundColor={colors.buttonColor}
+          loder={loder}
         />
 
         <PFF
