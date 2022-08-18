@@ -24,14 +24,15 @@ export default function BackgroundImageWithImage({
       <ImageBackground
         style={styles.imageBackground}
         resizeMode={'cover'}
-        source={{uri: imageBackGround}}
+        source={imageBackGround}
+        // source={{uri: imageBackGround}}
         onLoadStart={() => setCoverLoader(true)}
         onLoadEnd={() => setCoverLoader(false)}>
         {editImage && (
           <>
             <ActivityIndicator fontSize={20} visible={coverLoader} />
             <TouchableOpacity style={styles.edit} onPress={editBackGround}>
-              <Image source={editImage} />
+              {/* <Image source={editImage} /> */}
             </TouchableOpacity>
           </>
         )}
@@ -40,7 +41,8 @@ export default function BackgroundImageWithImage({
           onPress={onPressProfileImage}>
           <ActivityIndicator fontSize={20} visible={profileLoader} />
           <Image
-            source={{uri: image}}
+            source={image}
+            // source={{uri: image}}
             style={styles.roundView}
             onLoadStart={() => setProfileLoader(true)}
             onLoadEnd={() => setProfileLoader(false)}

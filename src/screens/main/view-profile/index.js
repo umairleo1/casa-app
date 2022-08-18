@@ -88,8 +88,8 @@ export default function ViewProfile({route}) {
     <Header onPressBack={() => navigation.goBack()} feather={'setting'}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <BackgroundImageWithImage
-          imageBackGround={images.viewProfile}
-          image={images.people}
+          imageBackGround={images?.viewProfile}
+          image={images?.people}
         />
         <Text style={styles.name}>
           {data?.user?.firstName + ' ' + data?.user?.lastName}

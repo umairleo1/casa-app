@@ -20,7 +20,7 @@ import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 export default function LoginForm() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [passwordVisible] = useState(true);
+  const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -105,8 +105,8 @@ export default function LoginForm() {
                   error={touched.password ? errors.password : ''}
                   onChangeText={handleChange('password')}
                   onBlur={() => setFieldTouched('password')}
-                  // eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
-                  // onPressEye={() => setPasswordVisible(!passwordVisible)}
+                  eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
+                  onPressEye={() => setPasswordVisible(!passwordVisible)}
                 />
                 <View style={styles.forgotPasswordView}>
                   {/* <CheckBox
