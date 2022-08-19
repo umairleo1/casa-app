@@ -70,11 +70,13 @@ export default function Following({route}) {
             <Text style={styles.mail}>{item?.email}</Text>
           </View>
         </View>
-        <RemoveButton
-          onPress={() => unFollow(item?._id)}
-          backgroundColor={colors.removeColor}
-          text={'Unfollow'}
-        />
+        {!route?.params?.id && (
+          <RemoveButton
+            onPress={() => unFollow(item?._id)}
+            backgroundColor={colors.removeColor}
+            text={'Unfollow'}
+          />
+        )}
       </View>
     );
   };

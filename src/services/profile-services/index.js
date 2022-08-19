@@ -5,7 +5,7 @@ const getUserProfile = () => {
   return client.get(API_URLS.GET_PROFILE);
 };
 const getUserProfileById = id => {
-  return client.get(`${API_URLS.GET_PROFILE}?id=${id}`);
+  return client.get(`${API_URLS.GET_PROFILE}?id=${id || ''}`);
 };
 
 const savePersonalInfo = (id, obj) => {

@@ -9,7 +9,7 @@ import CasaVerseNavigator from 'src/navigation';
 import colors from 'src/utils/themes/global-colors';
 import {Store} from 'src/redux/store/index';
 import AuthContext from 'src/utils/auth-context';
-import ErrorBoundary from 'src/components/error-boundaries';
+// import ErrorBoundary from 'src/components/error-boundaries';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -23,20 +23,20 @@ const App = () => {
   LogBox.ignoreAllLogs(true);
 
   return (
-    <ErrorBoundary>
-      <Provider store={Store}>
-        <AuthContext.Provider value={{user, setUser, userData, setUserData}}>
-          <SafeAreaView style={backgroundStyle}>
-            <StatusBar
-              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-              backgroundColor={colors.whiteColor}
-            />
-            <CasaVerseNavigator />
-            <FlashMessage position="top" />
-          </SafeAreaView>
-        </AuthContext.Provider>
-      </Provider>
-    </ErrorBoundary>
+    // <ErrorBoundary>
+    <Provider store={Store}>
+      <AuthContext.Provider value={{user, setUser, userData, setUserData}}>
+        <SafeAreaView style={backgroundStyle}>
+          <StatusBar
+            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            backgroundColor={colors.whiteColor}
+          />
+          <CasaVerseNavigator />
+          <FlashMessage position="top" />
+        </SafeAreaView>
+      </AuthContext.Provider>
+    </Provider>
+    // </ErrorBoundary>
   );
 };
 

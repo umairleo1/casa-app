@@ -26,16 +26,29 @@ import AuthContext from 'src/utils/auth-context';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const Stacks = () => {
+const FindPeopleStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Find" component={FindPeople} />
+      <Stack.Screen name={SCREEN.SEARCH_PEOPLE} component={FindPeople} />
       <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} />
+      {/* <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} /> */}
 
-      {/* <Stack.Screen name={'Profile'} component={Profile} /> */}
+      <Stack.Screen name={'Profile'} component={Profile} />
+    </Stack.Navigator>
+  );
+};
+const ProfileStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name={SCREEN.USER_PROFILE} component={ViewProfile} />
+
+      <Stack.Screen name={'Profile'} component={Profile} />
     </Stack.Navigator>
   );
 };
@@ -88,7 +101,7 @@ export default function BottomTab() {
       />
       <Tab.Screen
         name="Find People"
-        component={Stacks}
+        component={FindPeopleStack}
         options={{
           tabBarLabel: 'Find People',
           tabBarIcon: ({color, size}) => (
@@ -118,7 +131,7 @@ export default function BottomTab() {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={ProfileStack}
         options={{
           // unmountOnBlur: true,
           tabBarLabel: 'Profile',

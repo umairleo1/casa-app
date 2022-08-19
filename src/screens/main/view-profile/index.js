@@ -48,11 +48,13 @@ export default function ViewProfile({route}) {
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
     try {
-      const res = await profileServices.getUserProfileById(route?.params?.id);
-      console.log('res', res);
+      const res = await profileServices.getUserProfileById(
+        route?.params?.id || '',
+      );
+      console.log('res-------------', res);
       setData(res);
     } catch (error) {
-      console.log('error', error);
+      console.log('error -------', error);
       showMessage({
         message: error.errMsg,
         type: 'danger',
@@ -67,16 +69,22 @@ export default function ViewProfile({route}) {
     setLoader(true);
     try {
       if (data?.isFollowing) {
-        const result = await profileServices.unFollowApiApi(route?.params?.id);
+        const result = await profileServices.unFollowApiApi(
+          route?.params?.id || '',
+        );
         console.log('unFollowApiApi==>', result);
-        const res = await profileServices.getUserProfileById(route?.params?.id);
+        const res = await profileServices.getUserProfileById(
+          route?.params?.id || '',
+        );
         console.log('resisF', res);
         setData(res);
         setLoader(false);
       } else {
-        const result = await profileServices.followTo(route?.params?.id);
+        const result = await profileServices.followTo(route?.params?.id || '');
         console.log('getFollowingApi==>', result);
-        const res = await profileServices.getUserProfileById(route?.params?.id);
+        const res = await profileServices.getUserProfileById(
+          route?.params?.id || '',
+        );
         setData(res);
         console.log('!resisF', res);
         setLoader(false);
@@ -86,7 +94,9 @@ export default function ViewProfile({route}) {
     } catch (error) {
       setLoader(false);
       console.log('error', error);
-      const res = await profileServices.getUserProfileById(route?.params?.id);
+      const res = await profileServices.getUserProfileById(
+        route?.params?.id || '',
+      );
       console.log('catchres', res);
       setData(res);
     }
@@ -144,13 +154,13 @@ export default function ViewProfile({route}) {
           followingName={'Following'}
           onPressFollowing={() =>
             navigation.navigate('Profile', {
-              id: route?.params?.id,
+              id: route?.params?.id || '',
               initial: 'Following',
             })
           }
           onPressFollower={() =>
             navigation.navigate('Profile', {
-              id: route?.params?.id,
+              id: route?.params?.id || '',
               initial: 'Followers',
             })
           }

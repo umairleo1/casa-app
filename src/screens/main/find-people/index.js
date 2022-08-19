@@ -15,6 +15,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
 import {peopleServices} from 'src/services/people-services';
 import images from 'src/assets/images';
+import {profileServices} from 'src/services/profile-services';
 
 export default function FindPeople() {
   const navigation = useNavigation();
@@ -80,6 +81,38 @@ export default function FindPeople() {
     }
   };
 
+  const onPressFollowBtn = async data => {
+    // setLoader(true);
+    console.log('+++++++++++', data);
+    try {
+      if (data?.follow) {
+        const result = await profileServices.unFollowApiApi(data._id || '');
+        console.log('unFollowApiApi==>', result);
+        const res = await profileServices.getUserProfileById(data._id || '');
+        console.log('resisF', res);
+
+        // setData(res);
+        // setLoader(false);
+      } else {
+        const result = await profileServices.followTo(data?._id || '');
+        console.log('getFollowingApi==>', result);
+        const res = await profileServices.getUserProfileById(data?._id || '');
+        // setData(res);
+        console.log('!resisF', res);
+        // setLoader(false);
+      }
+
+      //getFollowing();
+    } catch (error) {
+      // setLoader(false);
+      console.log('error', error);
+      const res = await profileServices.getUserProfileById(data?._id || '');
+      console.log('catchres', res);
+      // setData(res);
+    }
+    findPeople();
+  };
+
   const listItem = ({item}) => {
     return (
       <View style={styles.flatlistView}>
@@ -96,7 +129,10 @@ export default function FindPeople() {
         <View style={styles.plusIconView}>
           <Text
             style={styles.name}>{`${item?.firstName} ${item?.lastName}`}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              onPressFollowBtn(item);
+            }}>
             <FontAwesome5
               name={item.follow ? 'check' : 'plus'}
               size={16}
