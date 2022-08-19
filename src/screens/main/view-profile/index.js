@@ -44,7 +44,6 @@ export default function ViewProfile({route}) {
       postImage: require('../../../assets/images/viewProfile/postImage.png'),
     },
   ];
-
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
     try {
@@ -62,7 +61,6 @@ export default function ViewProfile({route}) {
   useEffect(() => {
     getProfile();
   }, []);
-
   const onPressFollowBtn = async () => {
     setLoader(true);
     try {
@@ -124,8 +122,8 @@ export default function ViewProfile({route}) {
         <Text style={styles.name}>
           {data?.user?.firstName + ' ' + data?.user?.lastName}
         </Text>
-        <Text style={[styles.description, {marginHorizontal: 20}]}>
-          {data?.user?.bio}
+        <Text style={styles.description}>
+          hey I m isai founder of synkbooks
         </Text>
 
         <FollowButton
@@ -143,16 +141,10 @@ export default function ViewProfile({route}) {
           followingPoints={data?.totalFollowing}
           followingName={'Following'}
           onPressFollowing={() =>
-            navigation.navigate('Profile', {
-              id: route?.params?.id,
-              initial: 'Following',
-            })
+            navigation.navigate('Following', {id: route?.params?.id})
           }
           onPressFollower={() =>
-            navigation.navigate('Profile', {
-              id: route?.params?.id,
-              initial: 'Followers',
-            })
+            navigation.navigate('Followers', {id: route?.params?.id})
           }
         />
         <FlatList

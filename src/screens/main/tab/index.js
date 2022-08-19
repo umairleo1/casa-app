@@ -118,7 +118,7 @@ export default function BottomTab() {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
+        component={ViewProfile}
         options={{
           // unmountOnBlur: true,
           tabBarLabel: 'Profile',
