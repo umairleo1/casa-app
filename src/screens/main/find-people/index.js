@@ -14,6 +14,7 @@ import colors from 'src/utils/themes/global-colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
 import {peopleServices} from 'src/services/people-services';
+import images from 'src/assets/images';
 
 export default function FindPeople() {
   const navigation = useNavigation();
@@ -27,7 +28,7 @@ export default function FindPeople() {
     availablePages: 1,
   });
 
-  const defaultImage = require('assets/images/findpeople/people2.png');
+  const defaultImage = images.people;
 
   React.useEffect(() => {
     findPeople();
@@ -89,6 +90,7 @@ export default function FindPeople() {
               item?.profileImage ? {uri: item?.profileImage} : defaultImage
             }
             style={styles.image}
+            // on
           />
         </TouchableOpacity>
         <View style={styles.plusIconView}>

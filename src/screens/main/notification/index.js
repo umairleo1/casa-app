@@ -1,117 +1,65 @@
-import {Text, View, Image, SectionList} from 'react-native';
+import {Text, View, Image, FlatList, RefreshControl} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
+import {profileServices} from 'src/services/profile-services';
+import images from 'src/assets/images';
+import moment from 'moment';
 
 export default function Notification() {
-  const dummyData = [
-    {
-      date: 'Today',
-      data: [
-        {
-          notiImage: require('../../../assets/images/findpeople/people2.png'),
-          mail: 'and 18 others like your post',
-          name: 'Jose, Luis',
-          userImage: require('../../../assets/images/findpeople/people.png'),
-          content:
-            'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-          postImage: require('../../../assets/images/viewProfile/postImage.png'),
-          time: '3 min ago',
-        },
-        {
-          notiImage: require('../../../assets/images/findpeople/people2.png'),
-          mail: 'and 18 others like your post',
-          name: 'Jose, Luis',
-          userImage: require('../../../assets/images/findpeople/people.png'),
-          content:
-            'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-          postImage: require('../../../assets/images/viewProfile/postImage.png'),
-          time: '3 min ago',
-        },
-        {
-          notiImage: require('../../../assets/images/findpeople/people2.png'),
-          mail: 'and 18 others like your post',
-          name: 'Jose, Luis',
-          userImage: require('../../../assets/images/findpeople/people.png'),
-          content:
-            'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-          postImage: require('../../../assets/images/viewProfile/postImage.png'),
-          time: '3 min ago',
-        },
-        {
-          notiImage: require('../../../assets/images/findpeople/people2.png'),
-          mail: 'and 18 others like your post',
-          name: 'Jose, Luis',
-          userImage: require('../../../assets/images/findpeople/people.png'),
-          content:
-            'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-          postImage: require('../../../assets/images/viewProfile/postImage.png'),
-          time: '3 min ago',
-        },
-        {
-          notiImage: require('../../../assets/images/findpeople/people2.png'),
-          mail: 'and 18 others like your post',
-          name: 'Jose, Luis',
-          userImage: require('../../../assets/images/findpeople/people.png'),
-          content:
-            'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-          postImage: require('../../../assets/images/viewProfile/postImage.png'),
-          time: '3 min ago',
-        },
-        {
-          notiImage: require('../../../assets/images/findpeople/people2.png'),
-          mail: 'and 18 others like your post',
-          name: 'Jose, Luis',
-          userImage: require('../../../assets/images/findpeople/people.png'),
-          content:
-            'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-          postImage: require('../../../assets/images/viewProfile/postImage.png'),
-          time: '3 min ago',
-        },
-      ],
-    },
-    {
-      date: 'Yesterday',
-      data: [
-        {
-          notiImage: require('../../../assets/images/findpeople/people2.png'),
-          mail: 'and 18 others like your post',
-          name: 'Jose, Luis',
-          userImage: require('../../../assets/images/findpeople/people.png'),
-          content:
-            'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-          postImage: require('../../../assets/images/viewProfile/postImage.png'),
-          time: '3 min ago',
-        },
-        {
-          notiImage: require('../../../assets/images/findpeople/people2.png'),
-          mail: 'and 18 others like your post',
-          name: 'Jose, Luis',
-          userImage: require('../../../assets/images/findpeople/people.png'),
-          content:
-            'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-          postImage: require('../../../assets/images/viewProfile/postImage.png'),
-          time: '3 min ago',
-        },
-      ],
-    },
-  ];
+  const [notification, setNotification] = React.useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const dummyImg = images.people;
+
+  React.useEffect(() => {
+    getNotifications();
+  }, []);
+
+  const getNotifications = async () => {
+    try {
+      const result = await profileServices.getNotificationApi('1', '25');
+      setNotification(result);
+      console.log('Here are the notifications ', result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onRefresh = async () => {
+    try {
+      setRefreshing(true);
+      const result = await profileServices.getNotificationApi('1', '25');
+      setNotification(result);
+      setRefreshing(false);
+    } catch (error) {
+      console.log(error);
+      setRefreshing(false);
+    }
+  };
 
   const listItem = ({item}) => {
     return (
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
           <View style={styles.flatlistView2}>
-            <Image source={item.userImage} style={styles.image} />
+            <Image
+              source={item?.picture ? item?.picture : dummyImg}
+              style={styles.image}
+            />
             <View style={styles.flatlistView3}>
               <View style={styles.flatlistView4}>
-                <Image source={item.notiImage} style={styles.notiImage} />
-                <Text style={styles.flatlistName}>{item?.name}</Text>
+                <Image
+                  source={item?.picture ? item?.picture : dummyImg}
+                  style={styles.notiImage}
+                />
+                <Text style={styles.flatlistName}>{item?.title}</Text>
               </View>
-              <Text style={styles.mail}>{item?.mail}</Text>
+              <Text style={styles.mail}>{item?.message}</Text>
             </View>
           </View>
-          <Text style={styles.time}>{item.time}</Text>
+          <Text style={styles.time}>
+            {moment(item?.createdAt).format('DD MMM')}
+          </Text>
         </View>
       </View>
     );
@@ -131,18 +79,20 @@ export default function Notification() {
   return (
     <View style={styles.Container}>
       <Header heading={'Notification'}>
-        <SectionList
-          sections={[...dummyData]}
+        <FlatList
+          data={notification.notifications}
           renderItem={listItem}
-          renderSectionHeader={({section}) => (
-            <Text style={styles.day}>{section.date}</Text>
-          )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item._id}
           contentContainerStyle={{
             marginHorizontal: 20,
             marginTop: 15,
           }}
+          showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={ItemDivider}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          // ListEmptyComponent={<Text>No Notifications Yet</Text>}
         />
       </Header>
     </View>

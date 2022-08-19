@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {Text, View, Image, FlatList, RefreshControl} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
@@ -5,10 +6,10 @@ import RemoveButton from 'src/components/remove-button';
 import colors from 'src/utils/themes/global-colors';
 import {profileServices} from 'src/services/profile-services';
 
-export default function Followers() {
+export default function Followers({route}) {
   const [followers, setFollowers] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
-
+  console.log('route', route?.params?.id);
   const defaultImage = require('assets/images/findpeople/people.png');
 
   React.useEffect(() => {
