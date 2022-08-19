@@ -20,7 +20,7 @@ import {userService} from 'src/services/auth-service';
 import {useNavigation} from '@react-navigation/native';
 import authStorage from 'utils/async-storage/index';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 
 // eslint-disable-next-line react/prop-types
@@ -30,6 +30,7 @@ export default function LoginForm() {
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isLoading, setIsLoading] = React.useState(false);
+  const fcmToken = useSelector(state => state?.auth?.fcmToken);
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -57,11 +58,12 @@ export default function LoginForm() {
       const result = await userService.login({
         email: value.email,
         password: value.password,
-        fcmToken: '123',
+        fcmToken,
       });
 
       dispatch(setUserReduxToken(result.token));
       authStorage.storeToken(result.token);
+      authStorage.storeFcmToken(fcmToken);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

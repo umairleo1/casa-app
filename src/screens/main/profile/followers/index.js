@@ -5,20 +5,22 @@ import {styles} from './styles';
 import RemoveButton from 'src/components/remove-button';
 import colors from 'src/utils/themes/global-colors';
 import {profileServices} from 'src/services/profile-services';
+import {useRoute} from '@react-navigation/native';
 
-export default function Followers({route}) {
+export default function Followers() {
+  const route = useRoute();
   const [followers, setFollowers] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
-  console.log('route', route?.params?.id);
+
   const defaultImage = require('assets/images/findpeople/people.png');
 
   React.useEffect(() => {
-    getFollowers();
+    getFollowers(route?.params?.id ? route?.params?.id : '');
   }, []);
 
-  const getFollowers = async () => {
+  const getFollowers = async id => {
     try {
-      const result = await profileServices.getFollowersApi('1', '25');
+      const result = await profileServices.getFollowersApi('1', '25', id);
       console.log('Here are the followers ', result);
       setFollowers(result.followers);
     } catch (error) {
@@ -39,7 +41,11 @@ export default function Followers({route}) {
   const onRefresh = async () => {
     try {
       setRefreshing(true);
-      const result = await profileServices.getFollowersApi('1', '25');
+      const result = await profileServices.getFollowersApi(
+        '1',
+        '25',
+        route?.params?.id ? route?.params?.id : '',
+      );
       console.log('Here are the followers ', result);
       setFollowers(result.followers);
       setRefreshing(false);
@@ -67,11 +73,13 @@ export default function Followers({route}) {
             <Text style={styles.mail}>{item?.email}</Text>
           </View>
         </View>
-        <RemoveButton
-          onPress={() => removeFollowers(item?._id)}
-          backgroundColor={colors.removeColor}
-          text={'Remove'}
-        />
+        {!route?.params?.id && (
+          <RemoveButton
+            onPress={() => removeFollowers(item?._id)}
+            backgroundColor={colors.removeColor}
+            text={'Remove'}
+          />
+        )}
       </View>
     );
   };

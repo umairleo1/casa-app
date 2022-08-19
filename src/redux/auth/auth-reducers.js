@@ -11,6 +11,12 @@ export default function (state = INITIAL_STATE, action) {
         userToken: action.payload,
       };
     }
+    case Actions.SET_FCM_TOKEN: {
+      return {
+        ...state,
+        fcmToken: action.payload,
+      };
+    }
 
     case Actions.LOGOUT: {
       return {

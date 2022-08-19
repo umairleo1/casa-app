@@ -8,7 +8,6 @@ import PFF from 'src/components/pFF/Iindex';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 
-import images from 'src/assets/images';
 import colors from 'src/utils/themes/global-colors';
 import FollowButton from 'src/components/followButton';
 import {profileServices} from 'src/services/profile-services';
@@ -45,6 +44,7 @@ export default function ViewProfile({route}) {
       postImage: require('../../../assets/images/viewProfile/postImage.png'),
     },
   ];
+
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
     try {
@@ -62,6 +62,7 @@ export default function ViewProfile({route}) {
   useEffect(() => {
     getProfile();
   }, []);
+
   const onPressFollowBtn = async () => {
     setLoader(true);
     try {
@@ -117,13 +118,15 @@ export default function ViewProfile({route}) {
     <Header onPressBack={() => navigation.goBack()} feather={'setting'}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <BackgroundImageWithImage
-          imageBackGround={images.viewProfile}
-          image={images.people}
+          imageBackGround={data?.user?.coverImage}
+          image={data?.user?.profileImage}
         />
         <Text style={styles.name}>
           {data?.user?.firstName + ' ' + data?.user?.lastName}
         </Text>
-        <Text style={styles.description}>{data.user.bio}</Text>
+        <Text style={[styles.description, {marginHorizontal: 20}]}>
+          {data?.user?.bio}
+        </Text>
 
         <FollowButton
           onPress={() => onPressFollowBtn()}
@@ -140,10 +143,16 @@ export default function ViewProfile({route}) {
           followingPoints={data?.totalFollowing}
           followingName={'Following'}
           onPressFollowing={() =>
-            navigation.navigate('Following', {id: route?.params?.id})
+            navigation.navigate('Profile', {
+              id: route?.params?.id,
+              initial: 'Following',
+            })
           }
           onPressFollower={() =>
-            navigation.navigate('Followers', {id: route?.params?.id})
+            navigation.navigate('Profile', {
+              id: route?.params?.id,
+              initial: 'Followers',
+            })
           }
         />
         <FlatList

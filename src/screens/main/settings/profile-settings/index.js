@@ -163,6 +163,7 @@ export default function ProfileSetting() {
         mediaType: 'photo',
         selectionLimit: 1,
         includeBase64: true,
+        quality: 0.5,
       };
       launchImageLibrary(options, res => {
         if (res.didCancel) {
@@ -200,6 +201,7 @@ export default function ProfileSetting() {
         let options = {
           mediaType: 'photo',
           includeBase64: true,
+          quality: 0.5,
         };
         launchCamera(options, res => {
           if (res.didCancel) {

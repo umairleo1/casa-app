@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {Text, View, Image, FlatList, RefreshControl} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
@@ -5,19 +6,20 @@ import RemoveButton from 'src/components/remove-button';
 import colors from 'src/utils/themes/global-colors';
 import {profileServices} from 'src/services/profile-services';
 
-export default function Following() {
+export default function Following({route}) {
   const [following, setFolowings] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const defaultImage = require('assets/images/findpeople/people.png');
+  console.log('following id ', route?.params?.id);
 
   React.useEffect(() => {
-    getFollowing();
+    getFollowing(route?.params?.id ? route?.params?.id : '');
   }, []);
 
-  const getFollowing = async () => {
+  const getFollowing = async id => {
     try {
-      const result = await profileServices.getFollowingApi();
+      const result = await profileServices.getFollowingApi(id);
       // console.log('Here are the followings ', result);
       setFolowings(result.following);
     } catch (error) {
@@ -38,7 +40,9 @@ export default function Following() {
   const onRefresh = async () => {
     try {
       setRefreshing(true);
-      const result = await profileServices.getFollowingApi();
+      const result = await profileServices.getFollowingApi(
+        route?.params?.id ? route?.params?.id : '',
+      );
       console.log('Here are the followings ', result);
       setFolowings(result.following);
       setRefreshing(false);
