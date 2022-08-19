@@ -18,6 +18,7 @@ export default function SignupForm() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isLoading, setIsLoading] = React.useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(true);
 
   const navigation = useNavigation();
 
@@ -144,11 +145,13 @@ export default function SignupForm() {
                   />
                   <Input
                     placeholder={'Your Password'}
-                    secureTextEntry={true}
+                    secureTextEntry={passwordVisible}
                     value={values.password}
                     error={touched.password ? errors.password : ''}
                     onChangeText={handleChange('password')}
                     onBlur={() => setFieldTouched('password')}
+                    eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
+                    onPressEye={() => setPasswordVisible(!passwordVisible)}
                   />
                   <Datepicker
                     handleConfirm={handleConfirm}
