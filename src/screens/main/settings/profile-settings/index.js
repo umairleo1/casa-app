@@ -459,7 +459,6 @@ export default function ProfileSetting() {
             </View>
           </View>
         </ScrollView> */}
-
         <EditProfileModal
           iconPress={() => setImageModal(false)}
           visible={imageModal}

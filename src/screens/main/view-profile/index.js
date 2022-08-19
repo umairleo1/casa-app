@@ -123,9 +123,7 @@ export default function ViewProfile({route}) {
         <Text style={styles.name}>
           {data?.user?.firstName + ' ' + data?.user?.lastName}
         </Text>
-        <Text style={styles.description}>
-          hey I m isai founder of synkbooks
-        </Text>
+        <Text style={styles.description}>{data.user.bio}</Text>
 
         <FollowButton
           onPress={() => onPressFollowBtn()}
