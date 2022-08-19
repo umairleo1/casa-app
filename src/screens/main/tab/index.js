@@ -34,6 +34,8 @@ const Stacks = () => {
       }}>
       <Stack.Screen name="Find" component={FindPeople} />
       <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} />
+
+      {/* <Stack.Screen name={'Profile'} component={Profile} /> */}
     </Stack.Navigator>
   );
 };
@@ -70,6 +72,7 @@ export default function BottomTab() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        unmountOnBlur: true,
         tabBarActiveTintColor: colors.buttonColor,
       }}>
       <Tab.Screen
@@ -117,6 +120,7 @@ export default function BottomTab() {
         name="Profile"
         component={Profile}
         options={{
+          // unmountOnBlur: true,
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="person" color={color} size={size} />

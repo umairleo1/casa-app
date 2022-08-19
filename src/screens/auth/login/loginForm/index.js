@@ -63,6 +63,7 @@ export default function LoginForm() {
 
       dispatch(setUserReduxToken(result.token));
       authStorage.storeToken(result.token);
+      authStorage.storeFcmToken(fcmToken);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

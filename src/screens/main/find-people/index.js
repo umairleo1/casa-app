@@ -14,6 +14,7 @@ import colors from 'src/utils/themes/global-colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
 import {peopleServices} from 'src/services/people-services';
+import images from 'src/assets/images';
 
 export default function FindPeople() {
   const navigation = useNavigation();
@@ -27,7 +28,7 @@ export default function FindPeople() {
     availablePages: 1,
   });
 
-  const defaultImage = require('assets/images/findpeople/people2.png');
+  const defaultImage = images.people;
 
   React.useEffect(() => {
     findPeople();
@@ -40,7 +41,7 @@ export default function FindPeople() {
         '1',
         limit.limit,
       );
-      // console.log('here are the peoples ', result, ' ', result.users.length);
+      console.log('here are the peoples ', result, ' ', result.users.length);
       setPeoples(result?.users);
       setLimit({...limit, availablePages: result?.totalPages});
     } catch (error) {
@@ -89,18 +90,23 @@ export default function FindPeople() {
               item?.profileImage ? {uri: item?.profileImage} : defaultImage
             }
             style={styles.image}
+            // on
           />
         </TouchableOpacity>
         <View style={styles.plusIconView}>
           <Text
             style={styles.name}>{`${item?.firstName} ${item?.lastName}`}</Text>
           <TouchableOpacity>
-            <FontAwesome5 name="plus" size={16} color={colors.black} />
+            <FontAwesome5
+              name={item.follow ? 'check' : 'plus'}
+              size={16}
+              color={colors.black}
+            />
           </TouchableOpacity>
         </View>
         <Text style={styles.follower}>
-          {item?.followers}
-          {peoples.length} Followers
+          {item?.totalFollowers ? item?.totalFollowers : 0} Follower
+          {item?.totalFollowers > 1 && 's'}
         </Text>
       </View>
     );
