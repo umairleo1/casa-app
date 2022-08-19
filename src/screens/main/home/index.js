@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {Text, View, FlatList, ScrollView, Image} from 'react-native';
 import React from 'react';
