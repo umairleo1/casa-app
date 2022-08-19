@@ -107,7 +107,7 @@ export default function SignupForm() {
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={{flex: 1}}>
-            <Text style={styles.text}>Register to Casaverse</Text>
+            <Text style={styles.text}>Register to Casa App</Text>
             <View style={styles.borderLine} />
             <View style={styles.mainView}>
               <Formik

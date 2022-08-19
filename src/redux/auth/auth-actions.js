@@ -7,6 +7,13 @@ export const setUserReduxToken = item => dispatch => {
   });
 };
 
+export const setFcmTokenRedux = item => dispatch => {
+  dispatch({
+    type: Actions.SET_FCM_TOKEN,
+    payload: item,
+  });
+};
+
 export const handleLogout = item => dispatch => {
   dispatch({
     type: Actions.LOGOUT,

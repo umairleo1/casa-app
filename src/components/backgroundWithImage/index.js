@@ -31,7 +31,7 @@ export default function BackgroundImageWithImage({
           <>
             <ActivityIndicator fontSize={20} visible={coverLoader} />
             <TouchableOpacity style={styles.edit} onPress={editBackGround}>
-              {/* <Image source={editImage} /> */}
+              <Image source={editImage} />
             </TouchableOpacity>
           </>
         )}
