@@ -6,9 +6,9 @@ import FindPeople from '../find-people';
 import Profile from '../profile';
 import {createStackNavigator} from '@react-navigation/stack';
 import SCREEN from 'utils/constants';
-import ViewProfile from '../view-profile';
 import Notification from '../notification';
 import Home from '../home';
+import ViewProfile from '../view-profile';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -33,7 +33,7 @@ const Stacks = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="Find" component={FindPeople} />
-      <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} />
+      {/* <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} /> */}
     </Stack.Navigator>
   );
 };
@@ -114,8 +114,8 @@ export default function BottomTab() {
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="ViewProfile"
+        component={ViewProfile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (

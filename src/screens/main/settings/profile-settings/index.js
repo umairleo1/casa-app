@@ -335,21 +335,12 @@ export default function ProfileSetting() {
                 }
                 value={bio}
                 onChangeText={setBio}
-                placeholderTextColor={
-                  bio.length > 0 ? colors.black : colors.placeholderColor
-                }
+                placeholderTextColor={colors.black}
                 borderColor={
                   bio.length > 0 ? colors.pureBlack : colors.innerBorder
                 }
               />
             </View>
-          </View>
-          <View style={styles.buttonView}>
-            <Button
-              onPress={() => handleSave()}
-              text="Save Changes"
-              backgroundColor={colors.buttonColor}
-            />
           </View>
         </ScrollView>
 
@@ -467,6 +458,13 @@ export default function ProfileSetting() {
           onPressPhoto={() => imagePickerFromCamera()}
         />
       </Header>
+      <View style={styles.buttonView}>
+        <Button
+          onPress={() => handleSave()}
+          text="Save Changes"
+          backgroundColor={colors.buttonColor}
+        />
+      </View>
     </>
   );
 }
