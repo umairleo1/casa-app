@@ -80,10 +80,12 @@ export default function Following() {
         data={following}
         renderItem={listItem}
         keyExtractor={item => item.id}
-        contentContainerStyle={{
-          marginHorizontal: 20,
-          marginTop: 15,
-        }}
+        style={{marginBottom: 10, marginHorizontal: 20, marginTop: 15}}
+        // contentContainerStyle={{
+        //   marginHorizontal: 20,
+        //   marginTop: 15,
+        //   // backgroundColor: 'red',
+        // }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

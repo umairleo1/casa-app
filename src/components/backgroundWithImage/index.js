@@ -8,7 +8,7 @@ import {
 import React, {useState} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import ActivityIndicator from '../loader/activity-indicator';
-import images from '../../assets/images/index';
+// import images from '../../assets/images/index';
 export default function BackgroundImageWithImage({
   imageBackGround,
   image,
