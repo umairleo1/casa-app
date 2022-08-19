@@ -54,7 +54,10 @@ export default function ProfileSetting() {
   useEffect(() => {
     getUserOnFocus();
   }, [focused]);
-
+  useEffect(() => {
+    setFirstName(authContext?.userData?.user?.firstName);
+    setLastName(authContext?.userData?.user?.lastName);
+  }, []);
   const getUserOnFocus = async () => {
     const res = await profileServices.getUserProfile();
     console.log('ressss', res);
@@ -242,11 +245,7 @@ export default function ProfileSetting() {
             <Text style={styles.text}>Personal Information</Text>
             <View style={styles.SearchInputView}>
               <SearchInput
-                placeholder={
-                  authContext?.userData?.user?.firstName == ''
-                    ? 'First Name'
-                    : authContext?.userData?.user?.firstName
-                }
+                placeholder={'First Name'}
                 editIcon={'edit-3'}
                 editIconSize={16}
                 editable={editFirstName}
@@ -254,6 +253,9 @@ export default function ProfileSetting() {
                   editPassword ? colors.black : colors.placeholderColor
                 }
                 editIconColor={
+                  editFirstName ? colors.black : colors.placeholderColor
+                }
+                disableColor={
                   editFirstName ? colors.black : colors.placeholderColor
                 }
                 onPress={() => {
@@ -272,11 +274,7 @@ export default function ProfileSetting() {
             </View>
             <View style={styles.SearchInputView}>
               <SearchInput
-                placeholder={
-                  authContext?.userData?.user.lastName == ''
-                    ? 'Last Name'
-                    : authContext?.userData?.user.lastName
-                }
+                placeholder={'Last Name'}
                 editIcon={'edit-3'}
                 editIconSize={16}
                 editable={editLastName}
@@ -284,6 +282,9 @@ export default function ProfileSetting() {
                   editLastName ? colors.black : colors.placeholderColor
                 }
                 editIconColor={
+                  editLastName ? colors.black : colors.placeholderColor
+                }
+                disableColor={
                   editLastName ? colors.black : colors.placeholderColor
                 }
                 onPress={() => {
@@ -342,6 +343,13 @@ export default function ProfileSetting() {
                 }
               />
             </View>
+          </View>
+          <View style={styles.buttonView}>
+            <Button
+              onPress={() => handleSave()}
+              text="Save Changes"
+              backgroundColor={colors.buttonColor}
+            />
           </View>
         </ScrollView>
 
@@ -459,13 +467,6 @@ export default function ProfileSetting() {
           onPressPhoto={() => imagePickerFromCamera()}
         />
       </Header>
-      <View style={styles.buttonView}>
-        <Button
-          onPress={() => handleSave()}
-          text="Save Changes"
-          backgroundColor={colors.buttonColor}
-        />
-      </View>
     </>
   );
 }

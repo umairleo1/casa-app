@@ -1,4 +1,10 @@
-import {Text, View, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {styles} from './styles';
 import Input from 'src/components/textinput';
@@ -98,97 +104,94 @@ export default function SignupForm() {
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}>
-          <Text style={styles.text}>Register to Casaverse</Text>
-          <View style={styles.borderLine} />
-          <View style={styles.mainView}>
-            <Formik
-              initialValues={{
-                firstName: '',
-                lastName: '',
-                email: '',
-                password: '',
-                birthDate: '',
-                gender: '',
-              }}
-              onSubmit={values => handleSignup(values)}
-              validationSchema={signupFormSchema}>
-              {({
-                handleSubmit,
-                errors,
-                handleChange,
-                values,
-                touched,
-                setFieldTouched,
-              }) => (
-                <>
-                  <Input
-                    placeholder={'First Name'}
-                    value={values.firstName}
-                    error={touched.firstName ? errors.firstName : ''}
-                    onChangeText={handleChange('firstName')}
-                    onBlur={() => setFieldTouched('firstName')}
-                  />
-                  <Input
-                    placeholder={'Last Name'}
-                    value={values.lastName}
-                    error={touched.lastName ? errors.lastName : ''}
-                    onChangeText={handleChange('lastName')}
-                    onBlur={() => setFieldTouched('lastName')}
-                  />
-                  <Input
-                    placeholder={'Your Email'}
-                    value={values.email}
-                    error={touched.email ? errors.email : ''}
-                    onChangeText={handleChange('email')}
-                    onBlur={() => setFieldTouched('email')}
-                    type="email-address"
-                  />
-                  <Input
-                    placeholder={'Your Password'}
-                    secureTextEntry={passwordVisible}
-                    value={values.password}
-                    error={touched.password ? errors.password : ''}
-                    onChangeText={handleChange('password')}
-                    onBlur={() => setFieldTouched('password')}
-                    eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
-                    onPressEye={() => setPasswordVisible(!passwordVisible)}
-                  />
-                  <Datepicker
-                    handleConfirm={handleConfirm}
-                    hideDatePicker={hideDatePicker}
-                    showDatePicker={showDatePicker}
-                    isVisible={isDatePickerVisible}
-                    date={` ${
-                      selectedDate
-                        ? moment(selectedDate).format('MM/DD/YYYY')
-                        : 'Your Birthday'
-                    }`}
-                    placeholder={!selectedDate}
-                    error={touched.birthDate ? errors.birthDate : ''}
-                  />
-                  <Dropdown
-                    selectedValue={values.gender}
-                    onValueChange={handleChange('gender')}
-                    error={touched.gender ? errors.gender : ''}
-                  />
-                  {/* <CheckBox
-                    isChecked={checked}
-                    onPress={() => setUnChecked(!checked)}
-                    tc1="I accept the"
-                    tc2="Terms and Conditions"
-                    tc3="of the app"
-                  /> */}
-                  <Button
-                    loader={isLoading}
-                    text="Complete Registration!"
-                    // disabled={!checked}
-                    onPress={handleSubmit}
-                    backgroundColor={colors.buttonColor}
-                  />
-                </>
-              )}
-            </Formik>
-          </View>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{flex: 1}}>
+            <Text style={styles.text}>Register to Casaverse</Text>
+            <View style={styles.borderLine} />
+            <View style={styles.mainView}>
+              <Formik
+                initialValues={{
+                  firstName: '',
+                  lastName: '',
+                  email: '',
+                  password: '',
+                  birthDate: '',
+                  gender: '',
+                }}
+                onSubmit={values => handleSignup(values)}
+                validationSchema={signupFormSchema}>
+                {({
+                  handleSubmit,
+                  errors,
+                  handleChange,
+                  values,
+                  touched,
+                  setFieldTouched,
+                }) => (
+                  <>
+                    <Input
+                      placeholder={'First Name'}
+                      value={values.firstName}
+                      error={touched.firstName ? errors.firstName : ''}
+                      onChangeText={handleChange('firstName')}
+                      onBlur={() => setFieldTouched('firstName')}
+                    />
+                    <Input
+                      placeholder={'Last Name'}
+                      value={values.lastName}
+                      error={touched.lastName ? errors.lastName : ''}
+                      onChangeText={handleChange('lastName')}
+                      onBlur={() => setFieldTouched('lastName')}
+                    />
+                    <Input
+                      placeholder={'Your Email'}
+                      value={values.email}
+                      error={touched.email ? errors.email : ''}
+                      onChangeText={handleChange('email')}
+                      onBlur={() => setFieldTouched('email')}
+                      type="email-address"
+                    />
+                    <Input
+                      placeholder={'Your Password'}
+                      secureTextEntry={passwordVisible}
+                      value={values.password}
+                      error={touched.password ? errors.password : ''}
+                      onChangeText={handleChange('password')}
+                      onBlur={() => setFieldTouched('password')}
+                      eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
+                      onPressEye={() => setPasswordVisible(!passwordVisible)}
+                    />
+                    <Datepicker
+                      handleConfirm={handleConfirm}
+                      hideDatePicker={hideDatePicker}
+                      showDatePicker={showDatePicker}
+                      isVisible={isDatePickerVisible}
+                      date={` ${
+                        selectedDate
+                          ? moment(selectedDate).format('MM/DD/YYYY')
+                          : 'Your Birthday'
+                      }`}
+                      placeholder={!selectedDate}
+                      error={touched.birthDate ? errors.birthDate : ''}
+                    />
+                    <Dropdown
+                      selectedValue={values.gender}
+                      onValueChange={handleChange('gender')}
+                      error={touched.gender ? errors.gender : ''}
+                    />
+
+                    <Button
+                      loader={isLoading}
+                      text="Complete Registration!"
+                      onPress={handleSubmit}
+                      backgroundColor={colors.buttonColor}
+                    />
+                  </>
+                )}
+              </Formik>
+            </View>
+          </KeyboardAvoidingView>
         </ScrollView>
       </View>
     </>

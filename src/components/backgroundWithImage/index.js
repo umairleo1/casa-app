@@ -8,7 +8,7 @@ import {
 import React, {useState} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import ActivityIndicator from '../loader/activity-indicator';
-
+import images from '../../assets/images/index';
 export default function BackgroundImageWithImage({
   imageBackGround,
   image,
@@ -18,14 +18,13 @@ export default function BackgroundImageWithImage({
 }) {
   const [profileLoader, setProfileLoader] = useState(false);
   const [coverLoader, setCoverLoader] = useState(false);
-  console.log('image', image);
+
   return (
     <>
       <ImageBackground
         style={styles.imageBackground}
         resizeMode={'cover'}
-        source={imageBackGround}
-        // source={{uri: imageBackGround}}
+        source={{uri: imageBackGround}}
         onLoadStart={() => setCoverLoader(true)}
         onLoadEnd={() => setCoverLoader(false)}>
         {editImage && (
@@ -41,8 +40,7 @@ export default function BackgroundImageWithImage({
           onPress={onPressProfileImage}>
           <ActivityIndicator fontSize={20} visible={profileLoader} />
           <Image
-            source={image}
-            // source={{uri: image}}
+            source={{uri: image}}
             style={styles.roundView}
             onLoadStart={() => setProfileLoader(true)}
             onLoadEnd={() => setProfileLoader(false)}
@@ -55,6 +53,7 @@ export default function BackgroundImageWithImage({
 const styles = StyleSheet.create({
   imageBackground: {
     height: 200,
+    backgroundColor: 'grey',
   },
   roundView: {
     borderRadius: 100,
