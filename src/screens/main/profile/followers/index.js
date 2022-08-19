@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {Text, View, Image, FlatList, RefreshControl} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
@@ -80,10 +81,11 @@ export default function Followers({route}) {
         data={followers}
         renderItem={listItem}
         keyExtractor={item => item.id}
-        contentContainerStyle={{
-          marginHorizontal: 20,
-          marginTop: 15,
-        }}
+        style={{marginBottom: 10, marginHorizontal: 20, marginTop: 15}}
+        // contentContainerStyle={{
+        //   marginHorizontal: 20,
+        //   marginTop: 15,
+        // }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

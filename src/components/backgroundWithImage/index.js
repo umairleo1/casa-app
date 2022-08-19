@@ -8,7 +8,7 @@ import {
 import React, {useState} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import ActivityIndicator from '../loader/activity-indicator';
-import images from '../../assets/images/index';
+// import images from '../../assets/images/index';
 export default function BackgroundImageWithImage({
   imageBackGround,
   image,
@@ -24,14 +24,14 @@ export default function BackgroundImageWithImage({
       <ImageBackground
         style={styles.imageBackground}
         resizeMode={'cover'}
-        source={imageBackGround ? {uri: imageBackGround} : images.background}
+        source={{uri: imageBackGround}}
         onLoadStart={() => setCoverLoader(true)}
         onLoadEnd={() => setCoverLoader(false)}>
         {editImage && (
           <>
             <ActivityIndicator fontSize={20} visible={coverLoader} />
             <TouchableOpacity style={styles.edit} onPress={editBackGround}>
-              <Image source={editImage} />
+              {/* <Image source={editImage} /> */}
             </TouchableOpacity>
           </>
         )}
@@ -40,7 +40,7 @@ export default function BackgroundImageWithImage({
           onPress={onPressProfileImage}>
           <ActivityIndicator fontSize={20} visible={profileLoader} />
           <Image
-            source={image ? {uri: image} : images.people}
+            source={{uri: image}}
             style={styles.roundView}
             onLoadStart={() => setProfileLoader(true)}
             onLoadEnd={() => setProfileLoader(false)}

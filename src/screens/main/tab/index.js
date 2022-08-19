@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FindPeople from '../find-people';
@@ -60,9 +60,9 @@ export default function BottomTab() {
 
   function HomeScreen() {
     return (
-      <>
-        <Text>home</Text>
-      </>
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <Text style={{textAlign: 'center', fontSize: 25}}>Coming Soon</Text>
+      </View>
     );
   }
 
