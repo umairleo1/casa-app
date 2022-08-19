@@ -58,7 +58,6 @@ export default function SignupForm() {
             passwordRegex,
             'Atleast have one digit, one captial letter and one special character.',
           ),
-        gender: Yup.string().required('Gender is required'),
       }),
     [],
   );
@@ -107,7 +106,7 @@ export default function SignupForm() {
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={{flex: 1}}>
-            <Text style={styles.text}>Register to Casaverse</Text>
+            <Text style={styles.text}>Register to Casa App</Text>
             <View style={styles.borderLine} />
             <View style={styles.mainView}>
               <Formik
@@ -117,7 +116,6 @@ export default function SignupForm() {
                   email: '',
                   password: '',
                   birthDate: '',
-                  gender: '',
                 }}
                 onSubmit={values => handleSignup(values)}
                 validationSchema={signupFormSchema}>
@@ -175,11 +173,11 @@ export default function SignupForm() {
                       placeholder={!selectedDate}
                       error={touched.birthDate ? errors.birthDate : ''}
                     />
-                    <Dropdown
+                    {/* <Dropdown
                       selectedValue={values.gender}
                       onValueChange={handleChange('gender')}
                       error={touched.gender ? errors.gender : ''}
-                    />
+                    /> */}
 
                     <Button
                       loader={isLoading}

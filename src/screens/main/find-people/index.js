@@ -16,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {peopleServices} from 'src/services/people-services';
 import images from 'src/assets/images';
 import {profileServices} from 'src/services/profile-services';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function FindPeople() {
   const navigation = useNavigation();
@@ -23,6 +24,8 @@ export default function FindPeople() {
   const [search, setSearch] = React.useState('');
   const [peoples, setPeoples] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [loder, setLoader] = React.useState(false);
+
   const [limit, setLimit] = React.useState({
     currentPage: 1,
     limit: 25,
@@ -37,6 +40,7 @@ export default function FindPeople() {
 
   const findPeople = async () => {
     try {
+      setLoader(true);
       const result = await peopleServices.findPeopleApi(
         search,
         '1',
@@ -45,7 +49,9 @@ export default function FindPeople() {
       console.log('here are the peoples ', result, ' ', result.users.length);
       setPeoples(result?.users);
       setLimit({...limit, availablePages: result?.totalPages});
+      setLoader(false);
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
@@ -150,6 +156,7 @@ export default function FindPeople() {
 
   return (
     <>
+      <ActivityIndicator visible={loder} />
       <Header onPressBack={() => navigation.goBack()} heading={'Find People'}>
         <View style={styles.searchInputView}>
           <SearchInput

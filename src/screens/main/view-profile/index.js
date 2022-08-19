@@ -44,7 +44,6 @@ export default function ViewProfile({route}) {
       postImage: require('../../../assets/images/viewProfile/postImage.png'),
     },
   ];
-
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
     try {
@@ -64,7 +63,6 @@ export default function ViewProfile({route}) {
   useEffect(() => {
     getProfile();
   }, []);
-
   const onPressFollowBtn = async () => {
     setLoader(true);
     try {
@@ -125,26 +123,27 @@ export default function ViewProfile({route}) {
   };
 
   return (
-    <Header onPressBack={() => navigation.goBack()} feather={'setting'}>
+    <Header
+      onPressBack={() => navigation.goBack()}
+      feather={'setting'}
+      onPress={() => navigation.navigate('SETTING')}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <BackgroundImageWithImage
           imageBackGround={data?.user?.coverImage}
           image={data?.user?.profileImage}
         />
         <Text style={styles.name}>
-          {data?.user?.firstName + ' ' + data?.user?.lastName}
+          {(data?.user?.firstName || '') + ' ' + (data?.user?.lastName || '')}
         </Text>
-        <Text style={[styles.description, {marginHorizontal: 20}]}>
-          {data?.user?.bio}
-        </Text>
-
-        <FollowButton
-          onPress={() => onPressFollowBtn()}
-          text={data?.isFollowing ? 'Following' : 'Follow'}
-          backgroundColor={colors.buttonColor}
-          loder={loder}
-        />
-
+        <Text style={styles.description}>{data?.user?.bio}</Text>
+        {route?.params?.id && (
+          <FollowButton
+            onPress={() => onPressFollowBtn()}
+            text={data?.isFollowing ? 'Following' : 'Follow'}
+            backgroundColor={colors.buttonColor}
+            loder={loder}
+          />
+        )}
         <PFF
           postName={'Posts'}
           postPoints={data?.totalPosts}
@@ -165,7 +164,11 @@ export default function ViewProfile({route}) {
             })
           }
         />
-        <FlatList
+
+        <Text style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
+          No Post Yet
+        </Text>
+        {/* <FlatList
           data={dummyData}
           renderItem={listItem}
           keyExtractor={item => item.id}
@@ -174,7 +177,7 @@ export default function ViewProfile({route}) {
             marginTop: 15,
           }}
           showsVerticalScrollIndicator={false}
-        />
+        /> */}
       </ScrollView>
     </Header>
   );

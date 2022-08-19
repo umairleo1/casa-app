@@ -12,8 +12,12 @@ const savePersonalInfo = (id, obj) => {
   return client.put(`${API_URLS.SAVE_PERSONAL_INFO}${id}`, obj);
 };
 
-const getFollowingApi = () => {
-  return client.get(API_URLS.GET_FOLLOWING);
+// const getFollowingApi = () => {
+//   return client.get(API_URLS.GET_FOLLOWING);
+// };
+
+const getFollowingApi = (page, limit, id) => {
+  return client.get(API_URLS.GET_FOLLOWING, {params: {page, limit, id}});
 };
 
 const getFollowersApi = (page, limit, id) => {

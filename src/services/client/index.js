@@ -1,7 +1,6 @@
 import axios from 'axios';
 import asyncStorage from 'utils/async-storage/index';
 
-console.log('CONFIG', process.env.API_URL);
 const request = axios.create({
   // baseURL: 'http://192.168.100.53:3000',
   baseURL: 'http://3.111.170.45:3000/',
