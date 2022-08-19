@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FindPeople from '../find-people';
@@ -34,6 +34,8 @@ const Stacks = () => {
       }}>
       <Stack.Screen name="Find" component={FindPeople} />
       <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} />
+
+      {/* <Stack.Screen name={'Profile'} component={Profile} /> */}
     </Stack.Navigator>
   );
 };
@@ -60,9 +62,9 @@ export default function BottomTab() {
 
   function HomeScreen() {
     return (
-      <>
-        <Text>home</Text>
-      </>
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <Text style={{textAlign: 'center', fontSize: 25}}>Coming Soon</Text>
+      </View>
     );
   }
 
@@ -70,6 +72,7 @@ export default function BottomTab() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        unmountOnBlur: true,
         tabBarActiveTintColor: colors.buttonColor,
       }}>
       <Tab.Screen
@@ -117,6 +120,7 @@ export default function BottomTab() {
         name="Profile"
         component={Profile}
         options={{
+          // unmountOnBlur: true,
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="person" color={color} size={size} />

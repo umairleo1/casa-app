@@ -41,7 +41,7 @@ export default function FindPeople() {
         '1',
         limit.limit,
       );
-      // console.log('here are the peoples ', result, ' ', result.users.length);
+      console.log('here are the peoples ', result, ' ', result.users.length);
       setPeoples(result?.users);
       setLimit({...limit, availablePages: result?.totalPages});
     } catch (error) {
@@ -97,12 +97,16 @@ export default function FindPeople() {
           <Text
             style={styles.name}>{`${item?.firstName} ${item?.lastName}`}</Text>
           <TouchableOpacity>
-            <FontAwesome5 name="plus" size={16} color={colors.black} />
+            <FontAwesome5
+              name={item.follow ? 'check' : 'plus'}
+              size={16}
+              color={colors.black}
+            />
           </TouchableOpacity>
         </View>
         <Text style={styles.follower}>
-          {item?.followers}
-          {peoples.length} Followers
+          {item?.totalFollowers ? item?.totalFollowers : 0} Follower
+          {item?.totalFollowers > 1 && 's'}
         </Text>
       </View>
     );

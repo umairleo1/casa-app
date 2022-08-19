@@ -5,6 +5,7 @@ const API_URLS = {
   FORGOT_PASSWORD: '/api/auth/forget-password',
   OTP_VERIFICATION: '/api/auth/otp-varification',
   RESET_PASSWORD: '/api/auth/password-reset',
+  LOGOUT: '/api/auth/logout',
 
   //Find People
   FIND_PEOPLE: '/api/people/find-people',
@@ -15,7 +16,7 @@ const API_URLS = {
   GET_FOLLOWING: '/api/following/following',
   UNFOLLOW: 'api/following/unfollow/',
   GET_FOLLOWERS: 'api/following/followers',
-  REMOVE_FOLLOWERS: 'api/following/unfollow/follower/',
+  REMOVE_FOLLOWERS: 'api/following/remove/follower/',
   UPDATE_PROFILE_PICTURE: 'api/profile/updateProfilePicture/',
   FOLLOW_TO: 'api/following/follow/',
   GET_NOTIFICATIONS: '/api/notification',

@@ -11,10 +11,28 @@ import {useDispatch} from 'react-redux';
 import {handleLogout} from 'src/redux/auth/auth-actions';
 import Button from 'src/components/button';
 import colors from 'src/utils/themes/global-colors';
+import {profileServices} from 'src/services/profile-services';
 
 export default function Settings() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const fcm = asyncStorage.getfcmToken();
+
+  const logout = async () => {
+    console.log('here is the fcm token ', fcm?._W);
+    try {
+      const result = await profileServices.logoutApi({
+        notificationToken: fcm?._W,
+      });
+      console.log(result);
+      asyncStorage.removeToken();
+      dispatch(handleLogout(''));
+      asyncStorage.removeFcmToken();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Header heading={'Settings'} onPressBack={() => navigation.goBack()}>
       {/* <View style={styles.searchInputView}>
@@ -48,7 +66,7 @@ export default function Settings() {
           text="Logout"
           backgroundColor={colors.buttonColor}
           onPress={() => {
-            asyncStorage.removeToken(), dispatch(handleLogout(''));
+            logout();
           }}
         />
       </View>

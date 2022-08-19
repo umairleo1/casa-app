@@ -16,8 +16,8 @@ const getFollowingApi = () => {
   return client.get(API_URLS.GET_FOLLOWING);
 };
 
-const getFollowersApi = () => {
-  return client.get(API_URLS.GET_FOLLOWERS);
+const getFollowersApi = (page, limit, id) => {
+  return client.get(API_URLS.GET_FOLLOWERS, {params: {page, limit, id}});
 };
 
 const unFollowApiApi = id => {
@@ -38,6 +38,10 @@ const getNotificationApi = (page, limit) => {
   return client.get(API_URLS.GET_NOTIFICATIONS, {params: {limit, page}});
 };
 
+const logoutApi = obj => {
+  return client.post(API_URLS.LOGOUT, obj);
+};
+
 export const profileServices = {
   getUserProfileById,
   getUserProfile,
@@ -49,4 +53,5 @@ export const profileServices = {
   updateProfilePicture,
   followTo,
   getNotificationApi,
+  logoutApi,
 };
