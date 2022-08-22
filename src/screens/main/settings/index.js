@@ -58,6 +58,7 @@ export default function Settings() {
           rightIcon={'arrow-right'}
           name={'Promo Code'}
           rightIconSize={15}
+          onPress={() => navigation.navigate('PROMO_CODE')}
         />
       </View>
 

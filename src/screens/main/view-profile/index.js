@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {Text, View, FlatList, ScrollView, Image} from 'react-native';
+import {Text, View, ScrollView, Image} from 'react-native';
 import React, {useEffect} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
