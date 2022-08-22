@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     color: colors.whiteColor,
     lineHeight: hp(5),
     fontFamily: fonts.RobotoRegular,
-    textAlign: 'center',
   },
   button: {
     justifyContent: 'center',

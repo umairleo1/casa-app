@@ -9,6 +9,7 @@ import SCREEN from 'utils/constants';
 import ViewProfile from '../view-profile';
 import Notification from '../notification';
 import Home from '../home';
+import AddPost from '../add-post';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -111,7 +112,7 @@ export default function BottomTab() {
       />
       <Tab.Screen
         name="Add Post"
-        component={HomeScreen}
+        component={AddPost}
         options={{
           tabBarLabel: 'Add Post',
           tabBarIcon: ({color, size}) => (
