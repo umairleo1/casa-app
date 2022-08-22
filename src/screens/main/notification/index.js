@@ -43,13 +43,13 @@ export default function Notification() {
         <View style={styles.flatlistView}>
           <View style={styles.flatlistView2}>
             <Image
-              source={item?.picture ? item?.picture : dummyImg}
+              source={item?.picture ? {uri: item?.picture} : dummyImg}
               style={styles.image}
             />
             <View style={styles.flatlistView3}>
               <View style={styles.flatlistView4}>
                 <Image
-                  source={item?.picture ? item?.picture : dummyImg}
+                  source={item?.picture ? {uri: item?.picture} : dummyImg}
                   style={styles.notiImage}
                 />
                 <Text style={styles.flatlistName}>{item?.title}</Text>
