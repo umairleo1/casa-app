@@ -5,10 +5,13 @@ import Header from 'src/components/headerView';
 import {profileServices} from 'src/services/profile-services';
 import images from 'src/assets/images';
 import moment from 'moment';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function Notification() {
   const [notification, setNotification] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [loder, setLoader] = React.useState(false);
+
   const dummyImg = images.people;
 
   React.useEffect(() => {
@@ -17,10 +20,13 @@ export default function Notification() {
 
   const getNotifications = async () => {
     try {
+      setLoader(true);
       const result = await profileServices.getNotificationApi('1', '25');
       setNotification(result);
       console.log('Here are the notifications ', result);
+      setLoader(false);
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
@@ -78,6 +84,7 @@ export default function Notification() {
   };
   return (
     <View style={styles.Container}>
+      <ActivityIndicator visible={loder} />
       <Header heading={'Notification'}>
         <FlatList
           data={notification.notifications}
@@ -87,6 +94,12 @@ export default function Notification() {
             marginHorizontal: 20,
             marginTop: 15,
           }}
+          ListEmptyComponent={
+            <View
+              style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+              <Text style={{fontSize: 15}}>No Notifications Yet</Text>
+            </View>
+          }
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={ItemDivider}
           refreshControl={

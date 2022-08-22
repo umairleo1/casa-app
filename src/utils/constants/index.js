@@ -16,10 +16,12 @@ export default {
 
   //Find People
   FIND_PEOPLE: 'FIND_PEOPLE',
+  SEARCH_PEOPLE: 'SEARCH_PEOPLE',
 
   //Profile
   PROFILE: 'PROFILE',
   VIEW_PROFILE: 'VIEW_PROFILE',
+  USER_PROFILE: 'USER_PROFILE',
 
   //Bottom tab
   BOTTOM_TAB: 'BOTTOM_TAB',

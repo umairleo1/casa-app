@@ -11,7 +11,7 @@ export default function Following({route}) {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const defaultImage = require('assets/images/findpeople/people.png');
-  console.log('following id ', route?.params?.id);
+  console.log('following id -------------', route?.params?.id);
 
   React.useEffect(() => {
     getFollowing(route?.params?.id ? route?.params?.id : '');
@@ -19,8 +19,8 @@ export default function Following({route}) {
 
   const getFollowing = async id => {
     try {
-      const result = await profileServices.getFollowingApi(id);
-      // console.log('Here are the followings ', result);
+      const result = await profileServices.getFollowingApi('1', '25', id);
+      console.log('Here are the followings LIshgsfcjbds cgjsdgcjdg ', result);
       setFolowings(result.following);
     } catch (error) {
       console.log(error);
@@ -41,6 +41,8 @@ export default function Following({route}) {
     try {
       setRefreshing(true);
       const result = await profileServices.getFollowingApi(
+        '1',
+        '25',
         route?.params?.id ? route?.params?.id : '',
       );
       console.log('Here are the followings ', result);

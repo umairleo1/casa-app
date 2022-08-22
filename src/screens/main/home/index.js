@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {Text, View, FlatList, ScrollView, Image} from 'react-native';
 import React from 'react';
@@ -47,20 +48,25 @@ export default function Home() {
   };
 
   return (
-    <Header onPressBack={() => navigation.goBack()}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <PostStatus postButtonText={'Post Status'} />
-        <FlatList
-          data={dummyData}
-          renderItem={listItem}
-          keyExtractor={item => item.id}
-          contentContainerStyle={{
-            marginHorizontal: 20,
-            marginTop: 15,
-          }}
-          showsVerticalScrollIndicator={false}
-        />
-      </ScrollView>
-    </Header>
+    <>
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <Text style={{fontSize: 25}}>Coming Soon</Text>
+      </View>
+    </>
+    // <Header onPressBack={() => navigation.goBack()}>
+    //   <ScrollView showsVerticalScrollIndicator={false}>
+    //     <PostStatus postButtonText={'Post Status'} />
+    //     <FlatList
+    //       data={dummyData}
+    //       renderItem={listItem}
+    //       keyExtractor={item => item.id}
+    //       contentContainerStyle={{
+    //         marginHorizontal: 20,
+    //         marginTop: 15,
+    //       }}
+    //       showsVerticalScrollIndicator={false}
+    //     />
+    //   </ScrollView>
+    // </Header>
   );
 }

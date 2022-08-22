@@ -15,6 +15,8 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
 import {peopleServices} from 'src/services/people-services';
 import images from 'src/assets/images';
+import {profileServices} from 'src/services/profile-services';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function FindPeople() {
   const navigation = useNavigation();
@@ -22,6 +24,8 @@ export default function FindPeople() {
   const [search, setSearch] = React.useState('');
   const [peoples, setPeoples] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [loder, setLoader] = React.useState(false);
+
   const [limit, setLimit] = React.useState({
     currentPage: 1,
     limit: 25,
@@ -36,6 +40,7 @@ export default function FindPeople() {
 
   const findPeople = async () => {
     try {
+      setLoader(true);
       const result = await peopleServices.findPeopleApi(
         search,
         '1',
@@ -44,7 +49,9 @@ export default function FindPeople() {
       console.log('here are the peoples ', result, ' ', result.users.length);
       setPeoples(result?.users);
       setLimit({...limit, availablePages: result?.totalPages});
+      setLoader(false);
     } catch (error) {
+      setLoader(false);
       console.log(error);
     }
   };
@@ -80,6 +87,38 @@ export default function FindPeople() {
     }
   };
 
+  const onPressFollowBtn = async data => {
+    // setLoader(true);
+    console.log('+++++++++++', data);
+    try {
+      if (data?.follow) {
+        const result = await profileServices.unFollowApiApi(data._id || '');
+        console.log('unFollowApiApi==>', result);
+        const res = await profileServices.getUserProfileById(data._id || '');
+        console.log('resisF', res);
+
+        // setData(res);
+        // setLoader(false);
+      } else {
+        const result = await profileServices.followTo(data?._id || '');
+        console.log('getFollowingApi==>', result);
+        const res = await profileServices.getUserProfileById(data?._id || '');
+        // setData(res);
+        console.log('!resisF', res);
+        // setLoader(false);
+      }
+
+      //getFollowing();
+    } catch (error) {
+      // setLoader(false);
+      console.log('error', error);
+      const res = await profileServices.getUserProfileById(data?._id || '');
+      console.log('catchres', res);
+      // setData(res);
+    }
+    findPeople();
+  };
+
   const listItem = ({item}) => {
     return (
       <View style={styles.flatlistView}>
@@ -96,7 +135,10 @@ export default function FindPeople() {
         <View style={styles.plusIconView}>
           <Text
             style={styles.name}>{`${item?.firstName} ${item?.lastName}`}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              onPressFollowBtn(item);
+            }}>
             <FontAwesome5
               name={item.follow ? 'check' : 'plus'}
               size={16}
@@ -114,6 +156,7 @@ export default function FindPeople() {
 
   return (
     <>
+      <ActivityIndicator visible={loder} />
       <Header onPressBack={() => navigation.goBack()} heading={'Find People'}>
         <View style={styles.searchInputView}>
           <SearchInput

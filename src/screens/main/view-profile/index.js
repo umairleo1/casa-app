@@ -44,15 +44,16 @@ export default function ViewProfile({route}) {
       postImage: require('../../../assets/images/viewProfile/postImage.png'),
     },
   ];
-
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
     try {
-      const res = await profileServices.getUserProfileById(route?.params?.id);
-      console.log('res', res);
+      const res = await profileServices.getUserProfileById(
+        route?.params?.id || '',
+      );
+      console.log('res-------------', res);
       setData(res);
     } catch (error) {
-      console.log('error', error);
+      console.log('error -------', error);
       showMessage({
         message: error.errMsg,
         type: 'danger',
@@ -62,21 +63,26 @@ export default function ViewProfile({route}) {
   useEffect(() => {
     getProfile();
   }, []);
-
   const onPressFollowBtn = async () => {
     setLoader(true);
     try {
       if (data?.isFollowing) {
-        const result = await profileServices.unFollowApiApi(route?.params?.id);
+        const result = await profileServices.unFollowApiApi(
+          route?.params?.id || '',
+        );
         console.log('unFollowApiApi==>', result);
-        const res = await profileServices.getUserProfileById(route?.params?.id);
+        const res = await profileServices.getUserProfileById(
+          route?.params?.id || '',
+        );
         console.log('resisF', res);
         setData(res);
         setLoader(false);
       } else {
-        const result = await profileServices.followTo(route?.params?.id);
+        const result = await profileServices.followTo(route?.params?.id || '');
         console.log('getFollowingApi==>', result);
-        const res = await profileServices.getUserProfileById(route?.params?.id);
+        const res = await profileServices.getUserProfileById(
+          route?.params?.id || '',
+        );
         setData(res);
         console.log('!resisF', res);
         setLoader(false);
@@ -86,7 +92,9 @@ export default function ViewProfile({route}) {
     } catch (error) {
       setLoader(false);
       console.log('error', error);
-      const res = await profileServices.getUserProfileById(route?.params?.id);
+      const res = await profileServices.getUserProfileById(
+        route?.params?.id || '',
+      );
       console.log('catchres', res);
       setData(res);
     }
@@ -115,26 +123,27 @@ export default function ViewProfile({route}) {
   };
 
   return (
-    <Header onPressBack={() => navigation.goBack()} feather={'setting'}>
+    <Header
+      onPressBack={() => navigation.goBack()}
+      feather={'setting'}
+      onPress={() => navigation.navigate('SETTING')}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <BackgroundImageWithImage
           imageBackGround={data?.user?.coverImage}
           image={data?.user?.profileImage}
         />
         <Text style={styles.name}>
-          {data?.user?.firstName + ' ' + data?.user?.lastName}
+          {(data?.user?.firstName || '') + ' ' + (data?.user?.lastName || '')}
         </Text>
-        <Text style={[styles.description, {marginHorizontal: 20}]}>
-          {data?.user?.bio}
-        </Text>
-
-        <FollowButton
-          onPress={() => onPressFollowBtn()}
-          text={data?.isFollowing ? 'Following' : 'Follow'}
-          backgroundColor={colors.buttonColor}
-          loder={loder}
-        />
-
+        <Text style={styles.description}>{data?.user?.bio}</Text>
+        {route?.params?.id && (
+          <FollowButton
+            onPress={() => onPressFollowBtn()}
+            text={data?.isFollowing ? 'Following' : 'Follow'}
+            backgroundColor={colors.buttonColor}
+            loder={loder}
+          />
+        )}
         <PFF
           postName={'Posts'}
           postPoints={data?.totalPosts}
@@ -144,18 +153,22 @@ export default function ViewProfile({route}) {
           followingName={'Following'}
           onPressFollowing={() =>
             navigation.navigate('Profile', {
-              id: route?.params?.id,
+              id: route?.params?.id || '',
               initial: 'Following',
             })
           }
           onPressFollower={() =>
             navigation.navigate('Profile', {
-              id: route?.params?.id,
+              id: route?.params?.id || '',
               initial: 'Followers',
             })
           }
         />
-        <FlatList
+
+        <Text style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
+          No Post Yet
+        </Text>
+        {/* <FlatList
           data={dummyData}
           renderItem={listItem}
           keyExtractor={item => item.id}
@@ -164,7 +177,7 @@ export default function ViewProfile({route}) {
             marginTop: 15,
           }}
           showsVerticalScrollIndicator={false}
-        />
+        /> */}
       </ScrollView>
     </Header>
   );
