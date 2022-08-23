@@ -1,8 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import fonts from 'src/utils/themes/fonts';
 import {RFValue} from 'react-native-responsive-fontsize';
 import colors from 'src/utils/themes/global-colors';
