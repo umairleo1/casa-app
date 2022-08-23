@@ -32,6 +32,7 @@ export default function AddPost() {
     source: '',
     type: '',
     description: '',
+    fileName: '',
   });
 
   const imagePickerFromGallery = () => {
@@ -40,7 +41,7 @@ export default function AddPost() {
       cameraIs = true;
       let options = {
         mediaType: 'mixed',
-        selectionLimit: 1,
+        selectionLimit: 8,
         includeBase64: true,
         quality: 0.5,
         videoQuality: Platform.OS == 'ios' ? 'low' : 'medium',
@@ -51,12 +52,13 @@ export default function AddPost() {
         } else if (res.errorMessage) {
           cameraIs = false;
         } else {
-          console.log(res.assets[0]);
+          console.log('Selected from gallery ', res.assets[0]);
 
           setAddPost({
             ...addPost,
             source: res.assets[0].uri,
             type: res.assets[0].type,
+            fileName: res.assets[0].fileName,
           });
           cameraIs = false;
         }
@@ -92,11 +94,12 @@ export default function AddPost() {
             cameraIs = false;
           } else {
             if (res.assets) {
-              // console.log(res.assets[0]);
+              console.log('reee', res.assets[0]);
               setAddPost({
                 ...addPost,
                 source: res.assets[0].uri,
                 type: res.assets[0].type,
+                fileName: res.assets[0].fileName,
               });
             }
             cameraIs = false;
@@ -107,6 +110,7 @@ export default function AddPost() {
   };
 
   const handleAddNewPost = async () => {
+    console.log({addPost});
     if (addPost.description == '' || addPost.source == '') {
       showMessage({
         message: 'Post and description must not be empty',
@@ -116,14 +120,26 @@ export default function AddPost() {
       let formdata = new FormData();
       try {
         setIsLoading(true);
-        formdata.append('myFiles[]', addPost.source);
+        // const res = await fetch(addPost.source);
+
+        // const name =
+        //   addPost.source.split('/')[addPost.source.split('/').length - 1];
+        // const blob = await res.blob();
+        // console.log('blob', blob);
+        formdata.append('myFiles', {
+          uri: addPost.source,
+          type: addPost.type,
+          name: addPost.type == 'video/mp4' ? 'video.mp4' : addPost.fileName,
+        });
         formdata.append('description', addPost.description);
+
         const result = await postServices.addPost(formdata);
         console.log('Success add post ', result);
         setAddPost({
           source: '',
           type: '',
           description: '',
+          fileName: '',
         });
         setIsLoading(false);
       } catch (error) {
