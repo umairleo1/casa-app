@@ -13,21 +13,44 @@ export default function UploadAddPost({
   preview,
   onClosePress,
 }) {
+  const RenderPreview = ({data}) => (
+    <View style={{height: '100%', width: '100%'}}>
+      <TouchableOpacity onPress={onClosePress} style={styles.closeIcon}>
+        <AntDesign name={'close'} size={12} color={colors.black} />
+      </TouchableOpacity>
+      <Image
+        style={{
+          height: '100%',
+          width: '100%',
+        }}
+        source={{uri: data?.uri}}
+        resizeMode="cover"
+      />
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      {preview.source ? (
+      {preview.length > 0 ? (
         <>
-          <TouchableOpacity onPress={onClosePress} style={styles.closeIcon}>
-            <AntDesign name={'close'} size={12} color={colors.black} />
-          </TouchableOpacity>
-          <Image
+          {/* <FlatList
+            data={preview}
+            horizontal
+            renderItem={({item}) => <RenderPreview data={item} />}
+            style={{width: '100%', height: '100%'}}
+          /> */}
+          <RenderPreview data={preview[0]} />
+
+          {/* <TouchableOpacity
             style={{
               height: '100%',
-              width: '100%',
-            }}
-            source={{uri: preview.source}}
-            resizeMode="cover"
-          />
+              width: '10%',
+              backgroundColor: '#3D3D3D10',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text style={styles.text}>+2</Text>
+          </TouchableOpacity> */}
         </>
       ) : (
         <>
@@ -46,6 +69,7 @@ export default function UploadAddPost({
 const styles = StyleSheet.create({
   container: {
     height: 185,
+
     marginHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',

@@ -28,12 +28,8 @@ export default function AddPost() {
 
   const [imageModal, setImageModal] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [addPost, setAddPost] = React.useState({
-    source: '',
-    type: '',
-    description: '',
-    fileName: '',
-  });
+  const [addPost, setAddPost] = React.useState([]);
+  const [description, setDescription] = React.useState('');
 
   const imagePickerFromGallery = () => {
     setImageModal(false);
@@ -52,14 +48,10 @@ export default function AddPost() {
         } else if (res.errorMessage) {
           cameraIs = false;
         } else {
-          console.log('Selected from gallery ', res.assets[0]);
+          console.log('Selected from gallery ', res.assets);
 
-          setAddPost({
-            ...addPost,
-            source: res.assets[0].uri,
-            type: res.assets[0].type,
-            fileName: res.assets[0].fileName,
-          });
+          setAddPost(res.assets);
+
           cameraIs = false;
         }
       });
@@ -94,13 +86,8 @@ export default function AddPost() {
             cameraIs = false;
           } else {
             if (res.assets) {
-              console.log('reee', res.assets[0]);
-              setAddPost({
-                ...addPost,
-                source: res.assets[0].uri,
-                type: res.assets[0].type,
-                fileName: res.assets[0].fileName,
-              });
+              console.log('reee', res.assets);
+              setAddPost(res.assets);
             }
             cameraIs = false;
           }
@@ -110,8 +97,7 @@ export default function AddPost() {
   };
 
   const handleAddNewPost = async () => {
-    console.log({addPost});
-    if (addPost.description == '' || addPost.source == '') {
+    if (description == '' || addPost.length == 0) {
       showMessage({
         message: 'Post and description must not be empty',
         type: 'danger',
@@ -120,27 +106,24 @@ export default function AddPost() {
       let formdata = new FormData();
       try {
         setIsLoading(true);
-        // const res = await fetch(addPost.source);
 
-        // const name =
-        //   addPost.source.split('/')[addPost.source.split('/').length - 1];
-        // const blob = await res.blob();
-        // console.log('blob', blob);
-        formdata.append('myFiles', {
-          uri: addPost.source,
-          type: addPost.type,
-          name: addPost.type == 'video/mp4' ? 'video.mp4' : addPost.fileName,
-        });
-        formdata.append('description', addPost.description);
+        for (var i = 0; i < addPost.length; i++) {
+          formdata.append('myFiles', {
+            uri: addPost[i]?.uri,
+            type: addPost[i]?.type,
+            name:
+              addPost[i]?.type == 'video/mp4'
+                ? 'video.mp4'
+                : addPost[i]?.fileName,
+          });
+        }
+
+        formdata.append('description', description);
 
         const result = await postServices.addPost(formdata);
         console.log('Success add post ', result);
-        setAddPost({
-          source: '',
-          type: '',
-          description: '',
-          fileName: '',
-        });
+        setAddPost([]);
+        setDescription('');
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -155,12 +138,14 @@ export default function AddPost() {
       <ScrollView>
         <View style={styles.mainView}>
           <UploadAddPost
-            image={addPost.source ? {uri: addPost.source} : images.uploadImage}
+            image={addPost?.uri ? {uri: addPost?.uri} : images.uploadImage}
             uploadImagetext={'Upload your image'}
             imageSize={'Max Size : 20 MB'}
             onPressUpload={() => setImageModal(true)}
             preview={addPost}
-            onClosePress={() => setAddPost({...addPost, source: '', type: ''})}
+            onClosePress={() => {
+              setAddPost([]), setDescription('');
+            }}
           />
         </View>
         <View style={styles.descriptionView}>
@@ -173,8 +158,8 @@ export default function AddPost() {
             placeholder="Your text goes here..."
             placeholderTextColor={colors.placeholderColor}
             multiline={true}
-            onChangeText={text => setAddPost({...addPost, description: text})}
-            value={addPost.description}
+            onChangeText={text => setDescription(text)}
+            value={description}
           />
         </View>
       </ScrollView>
