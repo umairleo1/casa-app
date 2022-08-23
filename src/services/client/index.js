@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 import axios from 'axios';
 import asyncStorage from 'utils/async-storage/index';
 
@@ -5,6 +6,7 @@ const request = axios.create({
   // baseURL: 'http://192.168.100.53:3000',
   baseURL: 'http://3.111.170.45:8080/',
   headers: {
+    'Content-Type': 'multipart/form-data',
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
