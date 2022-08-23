@@ -13,8 +13,15 @@ export const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     marginHorizontal: 10,
+    paddingVertical: 20,
   },
   text: {
+    fontSize: 22,
+    color: colors.black,
+    fontFamily: fonts.RobotoRegular,
+    fontWeight: 'bold',
+  },
+  heading: {
     fontSize: 22,
     color: colors.black,
     fontFamily: fonts.RobotoRegular,
