@@ -9,6 +9,8 @@ import React, {useState} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import ActivityIndicator from '../loader/activity-indicator';
 import images from '../../assets/images/index';
+import {EditIcon} from 'src/assets/svg/profile-settings';
+
 export default function BackgroundImageWithImage({
   imageBackGround,
   image,
@@ -31,7 +33,8 @@ export default function BackgroundImageWithImage({
           <>
             <ActivityIndicator fontSize={20} visible={coverLoader} />
             <TouchableOpacity style={styles.edit} onPress={editBackGround}>
-              <Image source={editImage} />
+              <EditIcon />
+              {/* <Image source={editImage} /> */}
             </TouchableOpacity>
           </>
         )}

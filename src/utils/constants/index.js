@@ -23,6 +23,9 @@ export default {
   VIEW_PROFILE: 'VIEW_PROFILE',
   USER_PROFILE: 'USER_PROFILE',
 
+  //Promo Code
+  PROMO_CODE: 'PROMO_CODE',
+
   //Bottom tab
   BOTTOM_TAB: 'BOTTOM_TAB',
 };

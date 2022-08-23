@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {Text, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';

@@ -8,10 +8,12 @@ import Settings from 'src/screens/main/settings';
 import ProfileSetting from 'src/screens/main/settings/profile-settings';
 import FindPeople from 'src/screens/main/find-people';
 import Profile from 'src/screens/main/profile';
+import PromoCode from 'src/screens/main/promo-code';
 import BottomTab from 'src/screens/main/tab';
 
 const Stack = createStackNavigator();
-const {SETTING, PROFILE_SETTING, FIND_PEOPLE, PROFILE, BOTTOM_TAB} = SCREEN;
+const {SETTING, PROFILE_SETTING, FIND_PEOPLE, PROFILE, BOTTOM_TAB, PROMO_CODE} =
+  SCREEN;
 
 export default function AppNavigator() {
   return (
@@ -25,6 +27,7 @@ export default function AppNavigator() {
 
       <Stack.Screen name={FIND_PEOPLE} component={FindPeople} />
       <Stack.Screen name={PROFILE} component={Profile} />
+      <Stack.Screen name={PROMO_CODE} component={PromoCode} />
     </Stack.Navigator>
   );
 }
