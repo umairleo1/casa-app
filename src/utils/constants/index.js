@@ -28,4 +28,10 @@ export default {
 
   //Bottom tab
   BOTTOM_TAB: 'BOTTOM_TAB',
+
+  //Comments
+  COMMENTS: 'COMMENTS',
+
+  //Add post
+  ADD_POST: 'ADD_POST',
 };
