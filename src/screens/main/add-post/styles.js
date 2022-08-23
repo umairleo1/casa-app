@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
     padding: 20,
   },
   descriptionView: {
-    // backgroundColor: 'green',
     borderTopWidth: 0.5,
     borderBottomWidth: 0.5,
     borderColor: '#E6ECF5',
@@ -26,7 +25,6 @@ export const styles = StyleSheet.create({
     marginLeft: 20,
   },
   textInputView: {
-    // backgroundColor: 'green',
     height: 150,
     marginTop: 18,
     marginHorizontal: 20,

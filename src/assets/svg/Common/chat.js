@@ -1,12 +1,14 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
-function SvgComponent(props) {
+function SvgComponent({props, onPress}) {
   return (
     <Svg
       width={20}
       height={19}
       viewBox="0 0 20 19"
+      onPress={onPress}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}>

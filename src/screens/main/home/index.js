@@ -1,14 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {
-  Text,
-  View,
-  FlatList,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import React from 'react';
+import {Text, View, FlatList, Image, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 
@@ -18,9 +11,12 @@ import PostStatus from 'src/components/post-card';
 import colors from 'src/utils/themes/global-colors';
 import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
+import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import PopUpModal from 'src/components/pop-up-modal';
 
 export default function Home() {
   const navigation = useNavigation();
+  const [popUpModal, setPopUpModal] = useState(false);
 
   const dummyData = [
     {
@@ -44,7 +40,7 @@ export default function Home() {
               <Text style={styles.mail}>{item.mail}</Text>
             </View>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setPopUpModal(true)}>
             <MaterialCommunityIcons
               name="dots-vertical"
               size={22}
@@ -61,7 +57,7 @@ export default function Home() {
                   source={item.postImage}
                   style={[
                     styles.postImage,
-                    {width: [0, 1].length > 1 ? `${100 / 2}%` : '100%'},
+                    {width: [0, 1].length > 1 ? `${100 / 1}%` : '100%'},
                   ]}
                 />
               )}
@@ -88,7 +84,7 @@ export default function Home() {
             <Image source={item.userImage} style={styles.likeImg} />
             <Image
               source={item.userImage}
-              style={[styles.likeImg, {marginLeft: -8}]}
+              style={[styles.likeImg, {marginLeft: wp(-2)}]}
             />
             <Image
               source={item.userImage}
@@ -102,7 +98,7 @@ export default function Home() {
             </View>
           </View>
           <View style={styles.row}>
-            <Chart />
+            <Chart onPress={() => navigation.navigate('COMMENTS')} />
             <Text style={[styles.text, {fontWeight: 'bold'}]}>6</Text>
           </View>
         </View>
@@ -124,6 +120,14 @@ export default function Home() {
           marginHorizontal: 20,
         }}
         showsVerticalScrollIndicator={false}
+      />
+      <PopUpModal
+        iconPress={() => setPopUpModal(false)}
+        visible={popUpModal}
+        onPressDelPost={() => alert('delete post')}
+        onPressEditPost={() => navigation.navigate('ADD_POST')}
+        deleteText={'Delete Post'}
+        editText={'Edit Post'}
       />
     </Header>
   );
