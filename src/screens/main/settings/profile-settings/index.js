@@ -29,7 +29,9 @@ import EditProfileModal from 'src/components/edit-profile-menu';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 import AuthContext from 'src/utils/auth-context';
 import {useIsFocused} from '@react-navigation/native';
+
 let cameraIs = false;
+
 export default function ProfileSetting() {
   const focused = useIsFocused();
   const authContext = useContext(AuthContext);
@@ -54,10 +56,12 @@ export default function ProfileSetting() {
   useEffect(() => {
     getUserOnFocus();
   }, [focused]);
+
   useEffect(() => {
     setFirstName(authContext?.userData?.user?.firstName);
     setLastName(authContext?.userData?.user?.lastName);
   }, []);
+
   const getUserOnFocus = async () => {
     const res = await profileServices.getUserProfile();
     console.log('ressss', res);
@@ -93,6 +97,7 @@ export default function ProfileSetting() {
       console.log(error);
     }
   };
+
   const updateProfilePicture = async base64Image => {
     Keyboard.dismiss();
     setLoader(true);
@@ -125,6 +130,7 @@ export default function ProfileSetting() {
       console.log(error);
     }
   };
+
   const updateCoverPicture = async base64Image => {
     Keyboard.dismiss();
     setLoader(true);
@@ -155,6 +161,7 @@ export default function ProfileSetting() {
       console.log(error);
     }
   };
+
   const imagePickerFromGallery = () => {
     setImageModal(false);
     if (!cameraIs) {

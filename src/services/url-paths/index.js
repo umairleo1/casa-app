@@ -20,6 +20,9 @@ const API_URLS = {
   UPDATE_PROFILE_PICTURE: 'api/profile/updateProfilePicture/',
   FOLLOW_TO: 'api/following/follow/',
   GET_NOTIFICATIONS: '/api/notification',
+
+  //Post
+  ADD_POST: '/api/post',
 };
 
 export {API_URLS};

@@ -15,6 +15,7 @@ export default function EditProfileModal({
   onPressPhoto,
   onPressGallery,
   iconPress,
+  title,
 }) {
   if (!visible) {
     return null;
@@ -23,7 +24,7 @@ export default function EditProfileModal({
   return (
     <View style={styles.overLay}>
       <View style={styles.view}>
-        <Text style={styles.heading}>Change Profile Image</Text>
+        <Text style={styles.heading}>{title || 'Change Profile Image'}</Text>
         <MaterialCommunityIcons
           name={'close'}
           size={28}

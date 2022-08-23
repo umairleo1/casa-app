@@ -7,5 +7,6 @@ const images = {
   viewProfile: require('./viewProfile/background.png'),
   editImage: require('./settings/edit.png'),
   appLogo: require('./splash/splashLogo.png'),
+  uploadImage: require('./addpost/defaultimage.png'),
 };
 export default images;
