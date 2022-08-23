@@ -14,6 +14,7 @@ export default function PostStatus({
 }) {
   return (
     <>
+      <View style={styles.borderLine} />
       <View style={styles.container}>
         <View style={styles.imageTextView}>
           <Image source={images.people} style={styles.image} />
@@ -41,7 +42,8 @@ export default function PostStatus({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 20,
+    marginTop: 20,
+    paddingBottom: '35%',
   },
   image: {
     borderRadius: 42 / 2,
@@ -53,11 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textInput: {
-    justifyContent: 'flex-start',
-    padding: 10,
     paddingLeft: 10,
-    height: 150,
-    textAlignVertical: 'top',
     fontSize: 13,
   },
   borderLine: {
@@ -68,7 +66,6 @@ const styles = StyleSheet.create({
   buttonView: {
     alignSelf: 'flex-end',
     height: 30,
-    width: 100,
     marginRight: 20,
     marginBottom: 10,
     marginTop: 10,

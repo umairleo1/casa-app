@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
-import {Text, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
+
 import colors from 'src/utils/themes/global-colors';
+import MultiChat from 'assets/svg/Common/multiChat';
 
 export default function Header({
   children,
@@ -12,16 +14,22 @@ export default function Header({
   onPress,
   feather,
   onPressBack,
+  leftText,
+  rightIcon,
 }) {
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
-        <AntDesign
-          name="arrowleft"
-          size={24}
-          color={colors.black}
-          onPress={onPressBack}
-        />
+        {leftText ? (
+          <Text style={styles.heading}>{leftText}</Text>
+        ) : (
+          <AntDesign
+            name="arrowleft"
+            size={24}
+            color={colors.black}
+            onPress={onPressBack}
+          />
+        )}
         <Text style={styles.text}>{heading}</Text>
         {feather ? (
           <Feather
@@ -32,6 +40,11 @@ export default function Header({
           />
         ) : (
           <Text></Text>
+        )}
+        {rightIcon && (
+          <TouchableOpacity>
+            <MultiChat />
+          </TouchableOpacity>
         )}
       </View>
       {children}

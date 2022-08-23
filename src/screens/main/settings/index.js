@@ -19,7 +19,6 @@ export default function Settings() {
   const fcm = asyncStorage.getfcmToken();
 
   const logout = async () => {
-    console.log('here is the fcm token ', fcm?._W);
     try {
       const result = await profileServices.logoutApi({
         notificationToken: fcm?._W,

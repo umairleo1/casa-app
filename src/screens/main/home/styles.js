@@ -1,5 +1,9 @@
 import {StyleSheet} from 'react-native';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
+import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
 
 export const styles = StyleSheet.create({
@@ -53,16 +57,16 @@ export const styles = StyleSheet.create({
     // marginVertical: 10,
   },
   content: {
-    fontSize: 11,
+    fontSize: wp(2.8),
     color: colors.pureBlack,
     textAlign: 'justify',
     marginTop: 10,
   },
   postImage: {
-    width: '100%',
     marginTop: 15,
     overflow: 'hidden',
     borderRadius: 3,
+    margin: 1,
   },
   followView: {
     width: 94,
@@ -70,4 +74,23 @@ export const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: 'red',
   },
+  footer: {
+    flexDirection: 'row',
+    paddingVertical: 15,
+    justifyContent: 'space-between',
+  },
+  text: {
+    fontFamily: fonts.RobotoRegular,
+    fontSize: wp(3.3),
+    marginLeft: 5,
+  },
+  likeImg: {
+    borderRadius: 22 / 2,
+    height: 22,
+    width: 22,
+    marginLeft: 5,
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  row: {flexDirection: 'row', alignItems: 'center'},
 });
