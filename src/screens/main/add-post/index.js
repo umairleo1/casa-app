@@ -97,7 +97,7 @@ export default function AddPost() {
   };
 
   const handleAddNewPost = async () => {
-    if (description == '' || addPost.length == 0) {
+    if (description == '') {
       showMessage({
         message: 'Post and description must not be empty',
         type: 'danger',

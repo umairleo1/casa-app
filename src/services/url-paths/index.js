@@ -23,6 +23,11 @@ const API_URLS = {
 
   //Post
   ADD_POST: '/api/post',
+  GET_MY_ALL_POSTS: '/api/post',
+  GET_USER_ALL_POSTS: '/api/post/getByUserId/',
+
+  //Home
+  ALL_FEEDS: '/api/post/allUsers',
 };
 
 export {API_URLS};

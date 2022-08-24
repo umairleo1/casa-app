@@ -80,6 +80,7 @@ export default function FindPeople() {
         limit.limit,
       );
       setPeoples(result?.users);
+      setLimit({...limit, availablePages: result?.totalPages});
       setRefreshing(false);
     } catch (error) {
       console.log(error);
@@ -183,6 +184,7 @@ export default function FindPeople() {
           onEndReached={() => {
             limit.currentPage <= limit.availablePages && loadMore();
           }}
+          onEndReachedThreshold={0.2}
         />
       </Header>
     </>
