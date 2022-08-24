@@ -7,7 +7,6 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import moment from 'moment';
@@ -27,6 +26,7 @@ import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
 import {postServices} from 'src/services/post-service';
 import images from 'src/assets/images';
+import PopUpModal from 'src/components/pop-up-modal';
 
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
@@ -34,6 +34,7 @@ export default function ViewProfile({route}) {
   const [loder, setLoader] = React.useState(false);
   const [myAllPosts, setAllPosts] = React.useState([]);
   const [userPosts, setUserPosts] = React.useState([]);
+  const [popUpModal, setPopUpModal] = React.useState(false);
 
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
@@ -146,7 +147,7 @@ export default function ViewProfile({route}) {
             </View>
           </View>
           {!route?.params?.id && (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setPopUpModal(true)}>
               <MaterialCommunityIcons
                 name="dots-vertical"
                 size={22}
@@ -270,6 +271,14 @@ export default function ViewProfile({route}) {
           }
         />
       </ScrollView>
+      <PopUpModal
+        iconPress={() => setPopUpModal(false)}
+        visible={popUpModal}
+        onPressDelPost={() => alert('delete post')}
+        onPressEditPost={() => navigation.navigate('ADD_POST')}
+        deleteText={'Delete Post'}
+        editText={'Edit Post'}
+      />
     </Header>
   );
 }
