@@ -12,6 +12,7 @@ import PromoCode from 'src/screens/main/promo-code';
 import Comments from 'src/screens/main/home/comments';
 import AddPost from 'src/screens/main/add-post';
 import BottomTab from 'src/screens/main/tab';
+import ChatTab from 'src/screens/main/chat-tab';
 
 const Stack = createStackNavigator();
 const {
@@ -23,6 +24,7 @@ const {
   PROMO_CODE,
   COMMENTS,
   ADD_POST,
+  CHAT_TAB,
 } = SCREEN;
 
 export default function AppNavigator() {
@@ -40,6 +42,7 @@ export default function AppNavigator() {
       <Stack.Screen name={PROMO_CODE} component={PromoCode} />
       <Stack.Screen name={COMMENTS} component={Comments} />
       <Stack.Screen name={ADD_POST} component={AddPost} />
+      <Stack.Screen name={CHAT_TAB} component={ChatTab} />
     </Stack.Navigator>
   );
 }

@@ -1,9 +1,18 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
+import React, {useRef} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import UploadButton from '../upload-button';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Slider from '../carosel-slider';
 
 export default function UploadAddPost({
   onPressUpload,
@@ -14,7 +23,7 @@ export default function UploadAddPost({
   onClosePress,
 }) {
   const RenderPreview = ({data}) => (
-    <View style={{height: '100%', width: '100%'}}>
+    <View style={{height: 185, width: 200, margin: 5}}>
       <TouchableOpacity onPress={onClosePress} style={styles.closeIcon}>
         <AntDesign name={'close'} size={12} color={colors.black} />
       </TouchableOpacity>
@@ -22,6 +31,8 @@ export default function UploadAddPost({
         style={{
           height: '100%',
           width: '100%',
+          borderRadius: 5,
+          overflow: 'hidden',
         }}
         source={{uri: data?.uri}}
         resizeMode="cover"
@@ -30,16 +41,21 @@ export default function UploadAddPost({
   );
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: preview.length > 0 ? 'transparent' : 'grey'},
+      ]}>
       {preview.length > 0 ? (
         <>
-          {/* <FlatList
+          <FlatList
             data={preview}
             horizontal
             renderItem={({item}) => <RenderPreview data={item} />}
-            style={{width: '100%', height: '100%'}}
-          /> */}
-          <RenderPreview data={preview[0]} />
+            showsHorizontalScrollIndicator={false}
+          />
+
+          {/* <RenderPreview data={preview[0]} /> */}
 
           {/* <TouchableOpacity
             style={{
@@ -68,8 +84,10 @@ export default function UploadAddPost({
 
 const styles = StyleSheet.create({
   container: {
-    height: 185,
-
+    // height: 200,
+    paddingTop: 10,
+    paddingBottom: 10,
+    // backgroundColor: 'grey',
     marginHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',
