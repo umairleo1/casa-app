@@ -1,106 +1,221 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {Text, View, FlatList, Image, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  RefreshControl,
+} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
 import PostStatus from 'src/components/post-card';
 import colors from 'src/utils/themes/global-colors';
 import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+
 import PopUpModal from 'src/components/pop-up-modal';
+import {postServices} from 'src/services/post-service';
+import {showMessage} from 'react-native-flash-message';
+import images from 'src/assets/images';
+import moment from 'moment';
+import {profileServices} from 'src/services/profile-services';
+import {setUserProfile} from 'src/redux/profile/profile-actions';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function Home() {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [popUpModal, setPopUpModal] = useState(false);
+  const [feeds, setFeeds] = React.useState([]);
+  const [limit, setLimit] = React.useState({
+    currentPage: 1,
+    limit: 25,
+    availablePages: 1,
+  });
+  const [refreshing, setRefreshing] = React.useState(false);
+  const userData = useSelector(state => state?.profile?.userProfile);
+  const [status, setStatus] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const dummyData = [
-    {
-      text: 'Maria Valdez',
-      mail: 'March 4 at 2:00pm',
-      userImage: require('../../../assets/images/findpeople/people.png'),
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-      postImage: require('../../../assets/images/viewProfile/postImage.png'),
-    },
-  ];
+  React.useEffect(() => {
+    getAllFeeds();
+    getUserProfile();
+  }, []);
+
+  const getUserProfile = async () => {
+    try {
+      const res = await profileServices.getUserProfile();
+      dispatch(setUserProfile(res));
+    } catch (error) {
+      console.log('error -------', error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
+  };
+
+  const getAllFeeds = async () => {
+    try {
+      setIsLoading(true);
+      const res = await postServices.getHomeAllPostApi(
+        limit.currentPage,
+        limit.limit,
+      );
+
+      setFeeds(res.posts);
+      setLimit({...limit, availablePages: res?.totalPages});
+      setIsLoading(false);
+    } catch (error) {
+      console.log('error -------', error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+      setIsLoading(false);
+    }
+  };
+
+  const loadMore = async () => {
+    setLimit({...limit, currentPage: limit.currentPage + 1});
+    try {
+      const result = await postServices.getHomeAllPostApi(
+        limit.currentPage + 1,
+        limit.limit,
+      );
+
+      setFeeds([...feeds, ...result.posts]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onRefresh = async () => {
+    try {
+      setRefreshing(true);
+      const res = await postServices.getHomeAllPostApi('1', limit.limit);
+      setFeeds(res.posts);
+      setLimit({...limit, availablePages: res?.totalPages});
+      setRefreshing(false);
+    } catch (error) {
+      console.log(error);
+      setRefreshing(false);
+    }
+  };
+
+  const handlePost = async () => {
+    if (status == '') {
+      showMessage({
+        message: 'Post must not be empty',
+        type: 'danger',
+      });
+    } else {
+      let formdata = new FormData();
+      try {
+        formdata.append('description', status);
+        await postServices.addPost(formdata);
+
+        getAllFeeds();
+        setStatus('');
+      } catch (error) {
+        console.log('error -------', error);
+        showMessage({
+          message: error.errMsg,
+          type: 'danger',
+        });
+      }
+    }
+  };
 
   const listItem = ({item}) => {
     return (
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
           <View style={styles.flatlistView2}>
-            <Image source={item.userImage} style={styles.image} />
+            <Image
+              source={
+                item?.postedBy?.profileImage
+                  ? {uri: item?.postedBy?.profileImage}
+                  : images.profile
+              }
+              style={styles.image}
+            />
             <View style={styles.flatlistView3}>
-              <Text style={styles.flatlistName}>{item.text}</Text>
-              <Text style={styles.mail}>{item.mail}</Text>
+              <Text style={styles.flatlistName}>
+                {item?.postedBy?.firstName + ' ' + item?.postedBy?.lastName}
+              </Text>
+              <Text style={styles.mail}>
+                {moment(item?.createdAt).format('MMM DD YYYY')}
+              </Text>
             </View>
           </View>
-          <TouchableOpacity onPress={() => setPopUpModal(true)}>
-            <MaterialCommunityIcons
-              name="dots-vertical"
-              size={22}
-              color={colors.placeholderColor}
+          {/* {userData?.user?._id == item?.postedBy?._id && (
+            <TouchableOpacity onPress={() => setPopUpModal(true)}>
+              <MaterialCommunityIcons
+                name="dots-vertical"
+                size={22}
+                color={colors.placeholderColor}
+              />
+            </TouchableOpacity>
+          )} */}
+        </View>
+        <Text style={styles.content}>{item?.description}</Text>
+        {item?.files?.length > 0 && (
+          <View style={styles.row}>
+            <Image
+              source={{uri: item?.files[0]?.url}}
+              style={[styles.postImage]}
+              resizeMode="cover"
             />
-          </TouchableOpacity>
-        </View>
-        <Text style={styles.content}>{item.content}</Text>
-        <View style={styles.row}>
-          {[0, 1, 2].map(index => (
-            <>
-              {index == 0 && (
-                <Image
-                  source={item.postImage}
-                  style={[
-                    styles.postImage,
-                    {width: [0, 1].length > 1 ? `${100 / 1}%` : '100%'},
-                  ]}
-                />
-              )}
-            </>
-          ))}
-          {/* {[0, 1, 2].map(index => (
-            <View style={{width: '50%'}}>
-              {index <= 2 && (
-                <Image
-                  source={item.postImage}
-                  style={[styles.postImage, {width: '100%', height: '50%'}]}
-                />
-              )}
-            </View>
-          ))} */}
-        </View>
+          </View>
+        )}
 
         <View style={styles.footer}>
           <View style={styles.row}>
             <TouchableOpacity>
               <Heart />
             </TouchableOpacity>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>18</Text>
-            <Image source={item.userImage} style={styles.likeImg} />
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>
+              {item?.postlikes}
+            </Text>
+            <Image source={images.people} style={styles.likeImg} />
             <Image
-              source={item.userImage}
-              style={[styles.likeImg, {marginLeft: wp(-2)}]}
+              source={images.people}
+              style={[styles.likeImg, {marginLeft: -8}]}
             />
             <Image
-              source={item.userImage}
+              source={images.people}
               style={[styles.likeImg, {marginLeft: -8}]}
             />
             <View style={{width: 130}}>
               <Text style={[styles.text]}>
-                <Text style={{fontWeight: 'bold'}}>Luis, Franco</Text>
-                <Text style={{color: '#BBBBBB'}}> and 18 more liked this</Text>
+                <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>
+                  {item?.likes[0]?.likesBy?.firstName}
+                  {item?.likes[1] && ', '}
+                  {item?.likes[1]?.likesBy?.firstName}
+                </Text>
+                {item?.likes?.length > 1 && (
+                  <Text style={[styles.likedMore, {color: '#BBBBBB'}]}>
+                    {' '}
+                    and {item?.postlikes - 2} more liked this.
+                  </Text>
+                )}
               </Text>
             </View>
           </View>
-          <View style={styles.row}>
-            <Chart onPress={() => navigation.navigate('COMMENTS')} />
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>6</Text>
-          </View>
+          <TouchableOpacity style={styles.row}>
+            <Chart />
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>
+              {item?.comments?.length}
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -111,15 +226,35 @@ export default function Home() {
       leftText="Company"
       rightIcon
       onPressBack={() => navigation.goBack()}>
+      <ActivityIndicator visible={isLoading} />
       <FlatList
-        data={dummyData}
-        ListHeaderComponent={<PostStatus postButtonText={'Post Status'} />}
+        data={feeds}
+        ListHeaderComponent={
+          <PostStatus
+            onPressPostButton={() => handlePost()}
+            postButtonText={'Post Status'}
+            onChangeText={setStatus}
+            value={status}
+          />
+        }
         renderItem={listItem}
         keyExtractor={item => item.id}
         contentContainerStyle={{
           marginHorizontal: 20,
         }}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <Text style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
+            No Feeds Yet
+          </Text>
+        }
+        onEndReached={() => {
+          limit.currentPage <= limit.availablePages && loadMore();
+        }}
+        onEndReachedThreshold={0.2}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
       <PopUpModal
         iconPress={() => setPopUpModal(false)}

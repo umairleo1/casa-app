@@ -67,6 +67,8 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 3,
     margin: 1,
+    height: 250,
+    width: '100%',
   },
   followView: {
     width: 94,

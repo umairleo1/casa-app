@@ -5,6 +5,7 @@ import colors from 'src/utils/themes/global-colors';
 import images from 'src/assets/images';
 import {TextInput} from 'react-native-gesture-handler';
 import PostStatusButton from '../post-status';
+import {useSelector} from 'react-redux';
 
 export default function PostStatus({
   value,
@@ -12,17 +13,26 @@ export default function PostStatus({
   onPressPostButton,
   postButtonText,
 }) {
+  const userData = useSelector(state => state?.profile?.userProfile);
   return (
     <>
       <View style={styles.borderLine} />
       <View style={styles.container}>
         <View style={styles.imageTextView}>
-          <Image source={images.people} style={styles.image} />
+          <Image
+            source={
+              userData?.user?.profileImage
+                ? {uri: userData?.user?.profileImage}
+                : images.people
+            }
+            style={styles.image}
+          />
           <TextInput
             placeholder="Share what you are thinking here..."
             style={styles.textInput}
             value={value}
-            onChangeText={onChangeText}
+            onChangeText={text => onChangeText(text)}
+            multiline
           />
         </View>
       </View>
@@ -57,6 +67,7 @@ const styles = StyleSheet.create({
   textInput: {
     paddingLeft: 10,
     fontSize: 13,
+    marginRight: 20,
   },
   borderLine: {
     borderWidth: 0.5,
