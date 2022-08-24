@@ -16,6 +16,7 @@ export default function Header({
   onPressBack,
   leftText,
   rightIcon,
+  onPressChat,
 }) {
   return (
     <View style={styles.container}>
@@ -42,7 +43,7 @@ export default function Header({
           <Text></Text>
         )}
         {rightIcon && (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onPressChat}>
             <MultiChat />
           </TouchableOpacity>
         )}

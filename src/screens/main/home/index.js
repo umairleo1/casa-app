@@ -225,6 +225,7 @@ export default function Home() {
     <Header
       leftText="Company"
       rightIcon
+      onPressChat={() => navigation.navigate('CHAT_TAB')}
       onPressBack={() => navigation.goBack()}>
       <ActivityIndicator visible={isLoading} />
       <FlatList

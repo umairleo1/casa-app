@@ -34,4 +34,7 @@ export default {
 
   //Add post
   ADD_POST: 'ADD_POST',
+
+  //Chat tab
+  CHAT_TAB: 'CHAT_TAB',
 };
