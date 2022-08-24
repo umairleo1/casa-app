@@ -27,6 +27,7 @@ import Chart from 'assets/svg/Common/chat';
 import {postServices} from 'src/services/post-service';
 import images from 'src/assets/images';
 import PopUpModal from 'src/components/pop-up-modal';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
@@ -35,6 +36,8 @@ export default function ViewProfile({route}) {
   const [myAllPosts, setAllPosts] = React.useState([]);
   const [userPosts, setUserPosts] = React.useState([]);
   const [popUpModal, setPopUpModal] = React.useState(false);
+  const [selectedPostId, setSelectedPostId] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
@@ -86,6 +89,24 @@ export default function ViewProfile({route}) {
     getMyAllPosts();
     route?.params?.id && getUsersAllPosts();
   }, []);
+
+  const deletePost = async id => {
+    try {
+      setIsLoading(true);
+      const result = await postServices.deletePostApi(id);
+      console.log(result);
+      // getMyAllPosts();
+      setSelectedPostId('');
+      setIsLoading(false);
+    } catch (error) {
+      console.log('error -------', error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+      setIsLoading(false);
+    }
+  };
 
   const onPressFollowBtn = async () => {
     setLoader(true);
@@ -147,7 +168,10 @@ export default function ViewProfile({route}) {
             </View>
           </View>
           {!route?.params?.id && (
-            <TouchableOpacity onPress={() => setPopUpModal(true)}>
+            <TouchableOpacity
+              onPress={() => {
+                setPopUpModal(true), setSelectedPostId(item?._id);
+              }}>
               <MaterialCommunityIcons
                 name="dots-vertical"
                 size={22}
@@ -216,6 +240,7 @@ export default function ViewProfile({route}) {
       onPressBack={() => navigation.goBack()}
       feather={'setting'}
       onPress={() => navigation.navigate('SETTING')}>
+      <ActivityIndicator visible={isLoading} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <BackgroundImageWithImage
           imageBackGround={data?.user?.coverImage}
@@ -274,8 +299,12 @@ export default function ViewProfile({route}) {
       <PopUpModal
         iconPress={() => setPopUpModal(false)}
         visible={popUpModal}
-        onPressDelPost={() => alert('delete post')}
-        onPressEditPost={() => navigation.navigate('ADD_POST')}
+        onPressDelPost={() => {
+          deletePost(selectedPostId), setPopUpModal(false);
+        }}
+        onPressEditPost={() => {
+          navigation.navigate('ADD_POST'), setSelectedPostId('');
+        }}
         deleteText={'Delete Post'}
         editText={'Edit Post'}
       />
