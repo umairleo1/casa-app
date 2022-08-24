@@ -1,4 +1,3 @@
-import {StyleSheet} from 'react-native';
 import React from 'react';
 import Header from 'src/components/headerView';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -36,5 +35,3 @@ export default function ChatTab() {
     </Header>
   );
 }
-
-const styles = StyleSheet.create({});

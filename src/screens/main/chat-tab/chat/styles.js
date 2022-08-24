@@ -4,7 +4,6 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
 
 export const styles = StyleSheet.create({
