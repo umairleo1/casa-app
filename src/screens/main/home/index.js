@@ -61,7 +61,7 @@ export default function Home() {
                   source={item.postImage}
                   style={[
                     styles.postImage,
-                    {width: [0, 1].length > 1 ? `${100 / 2}%` : '100%'},
+                    {width: [0, 1].length > 1 ? `${100 / 1}%` : '100%'},
                   ]}
                 />
               )}

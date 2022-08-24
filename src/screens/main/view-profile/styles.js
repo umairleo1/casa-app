@@ -1,6 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 import colors from 'src/utils/themes/global-colors';
+import fonts from 'src/utils/themes/fonts';
 
 export const styles = StyleSheet.create({
   Container: {
@@ -59,6 +64,8 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   postImage: {
+    // width: '100%',
+    height: 250,
     width: '100%',
     marginTop: 15,
     overflow: 'hidden',
@@ -69,5 +76,28 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 3,
     backgroundColor: 'red',
+  },
+  footer: {
+    flexDirection: 'row',
+    paddingVertical: 15,
+    justifyContent: 'space-between',
+  },
+  text: {
+    fontFamily: fonts.RobotoRegular,
+    fontSize: wp(3.3),
+    marginLeft: 5,
+  },
+  likeImg: {
+    borderRadius: 22 / 2,
+    height: 22,
+    width: 22,
+    marginLeft: 5,
+    borderWidth: 1,
+    borderColor: '#fff',
+  },
+  row: {flexDirection: 'row', alignItems: 'center'},
+  likedMore: {
+    fontFamily: fonts.RobotoRegular,
+    fontSize: wp(3.3),
   },
 });

@@ -10,6 +10,16 @@ const addPost = obj => {
   });
 };
 
+const getAllMyPostApi = () => {
+  return client.get(API_URLS.GET_MY_ALL_POSTS);
+};
+
+const getUsersAllPostApi = id => {
+  return client.get(`${API_URLS.GET_USER_ALL_POSTS}${id}`);
+};
+
 export const postServices = {
   addPost,
+  getAllMyPostApi,
+  getUsersAllPostApi,
 };
