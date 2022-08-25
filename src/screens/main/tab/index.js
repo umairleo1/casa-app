@@ -104,7 +104,7 @@ export default function BottomTab() {
         name="Find People"
         component={FindPeopleStack}
         options={{
-          tabBarLabel: 'Find People',
+          tabBarLabel: 'Mi Gente',
           tabBarIcon: ({color, size}) => (
             <FontAwesome name="group" color={color} size={size} />
           ),
