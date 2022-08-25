@@ -40,6 +40,7 @@ export const styles = StyleSheet.create({
   },
   mainContainer: {
     marginBottom: 10,
+    marginHorizontal: 20,
   },
   content: {
     fontSize: wp(2.8),
@@ -52,6 +53,8 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 3,
     margin: 1,
+    height: 250,
+    width: '100%',
   },
   followView: {
     width: 94,

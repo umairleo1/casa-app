@@ -15,5 +15,6 @@ const colors = {
   lightgrey: ' #7A7A7A',
 
   removeColor: '#DBE1E7',
+  danger: 'red',
 };
 export default colors;
