@@ -9,6 +9,7 @@ import {
 } from 'react-native-responsive-screen';
 import DefaultButton from 'src/components/default-button';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import MembersSheet from '../bottom-sheet';
 
 export default function GroupChat() {
   const refRBSheet = useRef();
@@ -59,7 +60,7 @@ export default function GroupChat() {
           <View style={styles.buttonsView}>
             <DefaultButton
               text={'Edit Group'}
-              // onPress={() => refRBSheet.current.open()}
+              onPress={() => refRBSheet.current.open()}
               buttonStyle={{
                 borderWidth: 1.5,
                 borderColor: colors.buttonColor,
@@ -126,13 +127,21 @@ export default function GroupChat() {
         closeOnPressMask={false}
         customStyles={{
           wrapper: {
-            backgroundColor: 'transparent',
+            backgroundColor: `rgba(0, 0, 0, 0.2)`,
+          },
+          container: {
+            backgroundColor: colors.whiteColor,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
           },
           draggableIcon: {
             backgroundColor: '#000',
           },
         }}>
-        <Text>hell i m hereeeeeee</Text>
+        <MembersSheet
+          rightText
+          onPressBack={() => refRBSheet.current.close()}
+        />
       </RBSheet>
     </View>
   );

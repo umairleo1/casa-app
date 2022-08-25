@@ -158,7 +158,7 @@ export default function FindPeople() {
   return (
     <>
       <ActivityIndicator visible={loder} />
-      <Header onPressBack={() => navigation.goBack()} heading={'Find People'}>
+      <Header onPressBack={() => navigation.goBack()} heading={'Mi Gente'}>
         <View style={styles.searchInputView}>
           <SearchInput
             placeholder={'Search...'}

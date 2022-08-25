@@ -27,4 +27,9 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.RobotoRegular,
     fontWeight: 'bold',
   },
+  image: {
+    height: 50,
+    width: 120,
+    marginTop: 5,
+  },
 });

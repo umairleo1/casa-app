@@ -37,4 +37,7 @@ export default {
 
   //Chat tab
   CHAT_TAB: 'CHAT_TAB',
+
+  //New Chat
+  NEW_CHAT: 'NEW_CHAT',
 };

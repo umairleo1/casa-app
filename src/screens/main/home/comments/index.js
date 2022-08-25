@@ -19,6 +19,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import CommentInput from 'src/components/comment-input';
+import images from 'src/assets/images';
 
 export default function Comments() {
   const navigation = useNavigation();
@@ -151,7 +152,7 @@ export default function Comments() {
 
   return (
     <Header
-      leftText="Company"
+      leftImage={images.blueAppLogo}
       rightIcon
       onPressBack={() => navigation.goBack()}>
       <ScrollView>
