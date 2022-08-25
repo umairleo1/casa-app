@@ -95,7 +95,7 @@ export default function ViewProfile({route}) {
       setIsLoading(true);
       const result = await postServices.deletePostApi(id);
       console.log(result);
-      // getMyAllPosts();
+      getMyAllPosts();
       setSelectedPostId('');
       setIsLoading(false);
     } catch (error) {
