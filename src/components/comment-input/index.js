@@ -31,7 +31,7 @@ export default function CommentInput({
           placeholderTextColor={colors.placeholderColor}
           style={styles.input}
           placeholder={placeholder}
-          onChangeText={onChangeText}
+          onChangeText={text => onChangeText(text)}
           onChange={onChange}
           value={value}
           secureTextEntry={secureTextEntry}

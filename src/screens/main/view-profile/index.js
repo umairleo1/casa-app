@@ -7,6 +7,7 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import moment from 'moment';
@@ -38,6 +39,7 @@ export default function ViewProfile({route}) {
   const [popUpModal, setPopUpModal] = React.useState(false);
   const [selectedPostId, setSelectedPostId] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const getProfile = async () => {
     console.log('route?.params?.id', route?.params?.id);
@@ -75,6 +77,19 @@ export default function ViewProfile({route}) {
       const res = await postServices.getUsersAllPostApi(route?.params?.id);
       console.log('user all posts-------------', res);
       setUserPosts(res.post);
+    } catch (error) {
+      console.log('error -------', error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
+  };
+  const onRefresh = async () => {
+    try {
+      const res = await postServices.getAllMyPostApi();
+      console.log('res my all posts-------------', res);
+      setAllPosts(res);
     } catch (error) {
       console.log('error -------', error);
       showMessage({
@@ -145,7 +160,23 @@ export default function ViewProfile({route}) {
     }
   };
 
-  const listItem = ({item}) => {
+  const ListItem = ({item}) => {
+    const [like, setLike] = React.useState(item?.isLiked);
+
+    const likePost = async id => {
+      try {
+        const result = await postServices.likePostApi(id);
+        console.log(result);
+        setLike(!like);
+      } catch (error) {
+        console.log(error);
+        showMessage({
+          message: error.errMsg,
+          type: 'danger',
+        });
+      }
+    };
+
     return (
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
@@ -193,8 +224,11 @@ export default function ViewProfile({route}) {
 
         <View style={styles.footer}>
           <View style={styles.row}>
-            <TouchableOpacity>
-              <Heart />
+            <TouchableOpacity
+              onPress={() => {
+                likePost(item._id);
+              }}>
+              <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>
               {item?.postlikes}
@@ -224,7 +258,15 @@ export default function ViewProfile({route}) {
               </Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.row}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('COMMENTS', {
+                data: item,
+                render: onRefresh,
+                isLiked: like,
+              });
+            }}
+            style={styles.row}>
             <Chart />
             <Text style={[styles.text, {fontWeight: 'bold'}]}>
               {item?.comments?.length}
@@ -281,7 +323,7 @@ export default function ViewProfile({route}) {
 
         <FlatList
           data={route?.params?.id ? userPosts : myAllPosts}
-          renderItem={listItem}
+          renderItem={({item}) => <ListItem item={item} />}
           keyExtractor={item => item.id}
           contentContainerStyle={{
             marginHorizontal: 20,
@@ -293,6 +335,9 @@ export default function ViewProfile({route}) {
               style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
               No Post Yet
             </Text>
+          }
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         />
       </ScrollView>

@@ -28,10 +28,20 @@ const getHomeAllPostApi = (page, limit) => {
   });
 };
 
+const addCommentApi = (id, obj) => {
+  return client.post(`${API_URLS.ADD_COMMENT}${id}`, obj);
+};
+
+const likePostApi = id => {
+  return client.post(`${API_URLS.LIKE_POST}${id}`);
+};
+
 export const postServices = {
   addPost,
   getAllMyPostApi,
   getUsersAllPostApi,
   getHomeAllPostApi,
   deletePostApi,
+  addCommentApi,
+  likePostApi,
 };
