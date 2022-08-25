@@ -11,7 +11,6 @@ import {
 import React from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
-import images from 'src/assets/images';
 import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
 
@@ -19,6 +18,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {showMessage} from 'react-native-flash-message';
 import CommentInput from 'src/components/comment-input';
+import images from 'src/assets/images';
 import moment from 'moment';
 import {postServices} from 'src/services/post-service';
 import colors from 'src/utils/themes/global-colors';
@@ -198,7 +198,7 @@ export default function Comments() {
 
   return (
     <Header
-      leftText="Company"
+      leftImage={images.blueAppLogo}
       rightIcon
       onPressBack={() => navigation.goBack()}>
       <ScrollView>

@@ -13,6 +13,7 @@ import Comments from 'src/screens/main/home/comments';
 import AddPost from 'src/screens/main/add-post';
 import BottomTab from 'src/screens/main/tab';
 import ChatTab from 'src/screens/main/chat-tab';
+import NewChat from 'src/screens/main/chat-tab/new-chat';
 
 const Stack = createStackNavigator();
 const {
@@ -25,6 +26,7 @@ const {
   COMMENTS,
   ADD_POST,
   CHAT_TAB,
+  NEW_CHAT,
 } = SCREEN;
 
 export default function AppNavigator() {
@@ -43,6 +45,7 @@ export default function AppNavigator() {
       <Stack.Screen name={COMMENTS} component={Comments} />
       <Stack.Screen name={ADD_POST} component={AddPost} />
       <Stack.Screen name={CHAT_TAB} component={ChatTab} />
+      <Stack.Screen name={NEW_CHAT} component={NewChat} />
     </Stack.Navigator>
   );
 }

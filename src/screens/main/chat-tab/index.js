@@ -6,12 +6,17 @@ import Chat from './chat';
 import GroupChat from './group-chat';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {useNavigation} from '@react-navigation/native';
 
 export default function ChatTab() {
   const Tab = createMaterialTopTabNavigator();
+  const navigation = useNavigation();
 
   return (
-    <Header heading="Chats">
+    <Header
+      heading="Chats"
+      newChatIcon
+      onPressNewChat={() => navigation.navigate('NEW_CHAT')}>
       <Tab.Navigator
         sceneContainerStyle={{backgroundColor: 'transparent'}}
         screenOptions={{

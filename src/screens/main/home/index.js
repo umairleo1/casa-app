@@ -241,7 +241,7 @@ export default function Home() {
 
   return (
     <Header
-      leftText="Company"
+      leftImage={images.blueAppLogo}
       rightIcon
       onPressChat={() => navigation.navigate('CHAT_TAB')}
       onPressBack={() => navigation.goBack()}>

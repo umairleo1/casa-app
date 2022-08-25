@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
+import {NewChatIcon} from 'src/assets/svg/chat';
 
 import colors from 'src/utils/themes/global-colors';
 import MultiChat from 'assets/svg/Common/multiChat';
@@ -14,15 +15,17 @@ export default function Header({
   onPress,
   feather,
   onPressBack,
-  leftText,
+  leftImage,
   rightIcon,
   onPressChat,
+  newChatIcon,
+  onPressNewChat,
 }) {
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
-        {leftText ? (
-          <Text style={styles.heading}>{leftText}</Text>
+        {leftImage ? (
+          <Image source={leftImage} style={styles.image} />
         ) : (
           <AntDesign
             name="arrowleft"
@@ -39,9 +42,12 @@ export default function Header({
             color={colors.black}
             onPress={onPress}
           />
+        ) : newChatIcon ? (
+          <NewChatIcon onPress={onPressNewChat} />
         ) : (
           <Text></Text>
         )}
+
         {rightIcon && (
           <TouchableOpacity onPress={onPressChat}>
             <MultiChat />
