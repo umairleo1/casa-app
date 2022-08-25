@@ -12,11 +12,10 @@ import React, {useState} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import PostStatus from 'src/components/post-card';
-import colors from 'src/utils/themes/global-colors';
+
 import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
 
@@ -28,6 +27,7 @@ import moment from 'moment';
 import {profileServices} from 'src/services/profile-services';
 import {setUserProfile} from 'src/redux/profile/profile-actions';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
+import colors from 'src/utils/themes/global-colors';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -134,7 +134,23 @@ export default function Home() {
     }
   };
 
-  const listItem = ({item}) => {
+  const ListItem = ({item}) => {
+    const [like, setLike] = useState(item?.isLiked);
+
+    const likePost = async id => {
+      try {
+        const result = await postServices.likePostApi(id);
+        console.log(result);
+        setLike(!like);
+      } catch (error) {
+        console.log(error);
+        showMessage({
+          message: error.errMsg,
+          type: 'danger',
+        });
+      }
+    };
+
     return (
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
@@ -156,15 +172,6 @@ export default function Home() {
               </Text>
             </View>
           </View>
-          {/* {userData?.user?._id == item?.postedBy?._id && (
-            <TouchableOpacity onPress={() => setPopUpModal(true)}>
-              <MaterialCommunityIcons
-                name="dots-vertical"
-                size={22}
-                color={colors.placeholderColor}
-              />
-            </TouchableOpacity>
-          )} */}
         </View>
         <Text style={styles.content}>{item?.description}</Text>
         {item?.files?.length > 0 && (
@@ -179,8 +186,11 @@ export default function Home() {
 
         <View style={styles.footer}>
           <View style={styles.row}>
-            <TouchableOpacity>
-              <Heart />
+            <TouchableOpacity
+              onPress={() => {
+                likePost(item._id);
+              }}>
+              <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>
               {item?.postlikes}
@@ -210,7 +220,15 @@ export default function Home() {
               </Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.row}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('COMMENTS', {
+                data: item,
+                render: onRefresh,
+                isLiked: like,
+              })
+            }
+            style={styles.row}>
             <Chart />
             <Text style={[styles.text, {fontWeight: 'bold'}]}>
               {item?.comments?.length}
@@ -238,7 +256,7 @@ export default function Home() {
             value={status}
           />
         }
-        renderItem={listItem}
+        renderItem={({item}) => <ListItem item={item} />}
         keyExtractor={item => item.id}
         contentContainerStyle={{
           marginHorizontal: 20,
