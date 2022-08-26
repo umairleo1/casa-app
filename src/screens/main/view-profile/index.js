@@ -16,7 +16,7 @@ import Header from 'src/components/headerView';
 import BackgroundImageWithImage from 'src/components/backgroundWithImage';
 import PFF from 'src/components/pFF/Iindex';
 
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 import colors from 'src/utils/themes/global-colors';
 import FollowButton from 'src/components/followButton';
@@ -32,6 +32,8 @@ import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
+  const focused = useIsFocused();
+
   const [data, setData] = React.useState([]);
   const [loder, setLoader] = React.useState(false);
   const [myAllPosts, setAllPosts] = React.useState([]);
@@ -42,7 +44,7 @@ export default function ViewProfile({route}) {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const getProfile = async () => {
-    console.log('route?.params?.id', route?.params?.id);
+    // console.log('route?.params?.id', route?.params?.id);
     try {
       const res = await profileServices.getUserProfileById(
         route?.params?.id || '',
@@ -103,7 +105,7 @@ export default function ViewProfile({route}) {
     getProfile();
     getMyAllPosts();
     route?.params?.id && getUsersAllPosts();
-  }, []);
+  }, [focused]);
 
   const deletePost = async id => {
     try {
@@ -161,13 +163,17 @@ export default function ViewProfile({route}) {
   };
 
   const ListItem = ({item}) => {
+    // console.log('check ==========> ', item);
     const [like, setLike] = React.useState(item?.isLiked);
+    const [increment, setIncrement] = React.useState(0);
 
     const likePost = async id => {
       try {
         const result = await postServices.likePostApi(id);
         console.log(result);
+        route?.params?.id ? getUsersAllPosts() : getMyAllPosts();
         setLike(!like);
+        setIncrement(like ? increment - 1 : increment + 1);
       } catch (error) {
         console.log(error);
         showMessage({

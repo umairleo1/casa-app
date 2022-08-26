@@ -12,7 +12,7 @@ import Header from 'src/components/headerView';
 import SearchInput from 'src/components/searchInput';
 import colors from 'src/utils/themes/global-colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
 import {peopleServices} from 'src/services/people-services';
 import images from 'src/assets/images';
 import {profileServices} from 'src/services/profile-services';
@@ -20,6 +20,7 @@ import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function FindPeople() {
   const navigation = useNavigation();
+  const focus = useIsFocused();
 
   const [search, setSearch] = React.useState('');
   const [peoples, setPeoples] = React.useState([]);
@@ -36,7 +37,7 @@ export default function FindPeople() {
 
   React.useEffect(() => {
     findPeople();
-  }, [search]);
+  }, [search, focus]);
 
   const findPeople = async () => {
     try {
