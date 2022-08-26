@@ -25,11 +25,6 @@ export default function Signup() {
     <View>
       <Background
         image={images.appLogo}
-        heightValue={
-          showSignUp
-            ? Dimensions.get('window').height * 0.03
-            : Dimensions.get('window').height * 0.18
-        }
         title="Welcome to a social networking app built for the community."
         description="We are a social networking app built for the collective community of people that are latino/a, hispanic, latinx, chicano, and so on.  Our main goal is toare, connect, and write about ideas that are centered in our individual, separate, and collective communities. Share your world with others as they share their world with you.">
         {/* <Tab.Navigator
@@ -62,6 +57,7 @@ export default function Signup() {
             height: 60,
             backgroundColor: '#fff',
             borderBottomWidth: 1,
+            borderBottomColor: '#E6ECF5',
           }}>
           <TouchableOpacity
             style={{
@@ -69,9 +65,15 @@ export default function Signup() {
               justifyContent: 'center',
               alignItems: 'center',
               borderRightWidth: 1,
+              borderRightColor: '#E6ECF5',
             }}
             onPress={() => setShowSignUp(true)}>
-            <Text style={{fontWeight: 'bold', fontSize: 17, color: '#0A2540'}}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 17,
+                color: showSignUp ? '#0A2540' : '#C0C4D8',
+              }}>
               Sign Up
             </Text>
           </TouchableOpacity>
@@ -81,10 +83,14 @@ export default function Signup() {
               width: '50%',
               justifyContent: 'center',
               alignItems: 'center',
-              borderRightWidth: 1,
             }}
             onPress={() => setShowSignUp(false)}>
-            <Text style={{fontWeight: 'bold', fontSize: 17, color: '#0A2540'}}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 17,
+                color: !showSignUp ? '#0A2540' : '#C0C4D8',
+              }}>
               Login
             </Text>
           </TouchableOpacity>
