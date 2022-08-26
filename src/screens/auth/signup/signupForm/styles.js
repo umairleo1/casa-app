@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
   },
   mainView: {
     marginHorizontal: 15,
+    flex: 1,
   },
   borderLine: {
     borderWidth: 1,

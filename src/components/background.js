@@ -1,5 +1,14 @@
 /* eslint-disable react/prop-types */
-import {ImageBackground, StyleSheet, Text, View, Image} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import React from 'react';
 import images from 'src/assets/images';
 import colors from 'src/utils/themes/global-colors';
@@ -7,16 +16,27 @@ import fonts from 'src/utils/themes/fonts';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 // eslint-disable-next-line react/prop-types
-export default function Background({children, image, title, description}) {
+export default function Background({
+  children,
+  image,
+  title,
+  description,
+  heightValue,
+}) {
   return (
-    <ImageBackground source={images.background} style={styles.container}>
-      <View style={styles.view}>
-        <Image source={image} style={styles.image} />
-        <Text style={styles.text2}>{title}</Text>
-        <Text style={styles.text3}>{description}</Text>
-        {children}
-      </View>
-    </ImageBackground>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ImageBackground source={images.background} style={styles.container}>
+          <View style={[styles.view, {marginBottom: heightValue}]}>
+            <Image source={image} style={styles.image} />
+            <Text style={styles.text2}>{title}</Text>
+            <Text style={styles.text3}>{description}</Text>
+            {children}
+          </View>
+        </ImageBackground>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
