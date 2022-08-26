@@ -50,14 +50,14 @@ export const styles = StyleSheet.create({
   },
   flatlistView2: {
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   flatlistView3: {
     marginHorizontal: 10,
   },
   flatlistView4: {
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   mainContainer: {
     marginBottom: 10,

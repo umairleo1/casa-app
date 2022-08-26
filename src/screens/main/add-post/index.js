@@ -19,6 +19,7 @@ import EditProfileModal from 'src/components/edit-profile-menu';
 import images from 'src/assets/images';
 import {postServices} from 'src/services/post-service';
 import {showMessage} from 'react-native-flash-message';
+
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 let cameraIs = false;

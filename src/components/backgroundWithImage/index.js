@@ -4,12 +4,17 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import React, {useState} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import ActivityIndicator from '../loader/activity-indicator';
 import images from '../../assets/images/index';
 import {EditIcon} from 'src/assets/svg/profile-settings';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 
 export default function BackgroundImageWithImage({
   imageBackGround,
@@ -17,40 +22,50 @@ export default function BackgroundImageWithImage({
   editImage,
   editBackGround,
   onPressProfileImage,
+  onPressZoomProfile,
+  onPressBackgroundZoom,
 }) {
   const [profileLoader, setProfileLoader] = useState(false);
   const [coverLoader, setCoverLoader] = useState(false);
 
   return (
     <>
-      <ImageBackground
-        style={styles.imageBackground}
-        resizeMode={'cover'}
-        source={imageBackGround ? {uri: imageBackGround} : images.background}
-        onLoadStart={() => setCoverLoader(true)}
-        onLoadEnd={() => setCoverLoader(false)}>
-        {editImage && (
-          <>
-            <ActivityIndicator fontSize={20} visible={coverLoader} />
-            <TouchableOpacity style={styles.edit} onPress={editBackGround}>
-              <EditIcon />
-              {/* <Image source={editImage} /> */}
-            </TouchableOpacity>
-          </>
-        )}
+      <Pressable onPress={onPressBackgroundZoom}>
+        <ImageBackground
+          style={styles.imageBackground}
+          resizeMode={'cover'}
+          source={imageBackGround ? {uri: imageBackGround} : images.background}
+          onLoadStart={() => setCoverLoader(true)}
+          onLoadEnd={() => setCoverLoader(false)}>
+          {editImage && (
+            <>
+              <ActivityIndicator fontSize={20} visible={coverLoader} />
+              <TouchableOpacity style={styles.edit} onPress={editBackGround}>
+                <EditIcon />
+                {/* <Image source={editImage} /> */}
+              </TouchableOpacity>
+            </>
+          )}
 
-        <TouchableOpacity
-          style={[styles.roundViewMain, {overflow: 'hidden'}]}
-          onPress={onPressProfileImage}>
-          <ActivityIndicator fontSize={20} visible={profileLoader} />
-          <Image
-            source={image ? {uri: image} : images.people}
-            style={styles.roundView}
-            onLoadStart={() => setProfileLoader(true)}
-            onLoadEnd={() => setProfileLoader(false)}
-          />
-        </TouchableOpacity>
-      </ImageBackground>
+          <TouchableOpacity
+            style={[styles.roundViewMain, {overflow: 'hidden'}]}
+            onPress={onPressZoomProfile}>
+            <ActivityIndicator fontSize={20} visible={profileLoader} />
+            <Image
+              source={image ? {uri: image} : images.people}
+              style={styles.roundView}
+              onLoadStart={() => setProfileLoader(true)}
+              onLoadEnd={() => setProfileLoader(false)}
+            />
+          </TouchableOpacity>
+        </ImageBackground>
+      </Pressable>
+
+      <TouchableOpacity
+        style={styles.profilePicIcon}
+        onPress={onPressProfileImage}>
+        <EditIcon />
+      </TouchableOpacity>
     </>
   );
 }
@@ -88,5 +103,13 @@ const styles = StyleSheet.create({
     bottom: 10,
     right: 10,
     position: 'absolute',
+  },
+  profilePicIcon: {
+    width: 40,
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginLeft: widthPercentageToDP(25),
+    marginTop: heightPercentageToDP(1),
+    // position: 'absolute',
   },
 });

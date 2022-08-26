@@ -190,7 +190,10 @@ export default function Home() {
               onPress={() => {
                 likePost(item._id);
               }}>
-              <Heart color={like ? colors.danger : '#BBB'} />
+              <Heart
+                color={like ? colors.danger : '#BBB'}
+                fillColor={like ? colors.danger : '#BBB'}
+              />
             </TouchableOpacity>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>
               {item?.postlikes}

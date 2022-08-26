@@ -104,7 +104,7 @@ export default function SignupForm() {
           style={styles.scrollView}>
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={{flex: 1}}>
+            keyboardVerticalOffset={300}>
             <Text style={styles.text}>Register to Casa App</Text>
             <View style={styles.borderLine} />
             <View style={styles.mainView}>

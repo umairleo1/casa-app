@@ -29,7 +29,7 @@ export default function PostStatus({
           />
           <TextInput
             placeholder="Share what you are thinking here..."
-            placeholderTextColor="#BBBBBB"
+            placeholderTextColor={colors.lightgrey}
             style={styles.textInput}
             value={value}
             onChangeText={text => onChangeText(text)}

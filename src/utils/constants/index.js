@@ -10,6 +10,9 @@ export default {
   SCREEN1: 'SCREEN1',
   SCREEN2: 'SCREEN2',
 
+  //Home
+  HOME: 'HOME',
+
   //Settings
   SETTING: 'SETTING',
   PROFILE_SETTING: 'PROFILE_SETTING',

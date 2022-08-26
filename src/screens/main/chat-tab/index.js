@@ -16,6 +16,7 @@ export default function ChatTab() {
     <Header
       heading="Chats"
       newChatIcon
+      onPressBack={() => navigation.navigate('HOME')}
       onPressNewChat={() => navigation.navigate('NEW_CHAT')}>
       <Tab.Navigator
         sceneContainerStyle={{backgroundColor: 'transparent'}}
@@ -24,7 +25,7 @@ export default function ChatTab() {
             height: hp(6.5),
           },
           tabBarLabelStyle: {
-            fontWeight: 'bold',
+            // fontWeight: 'bold',
             fontSize: RFValue(16),
           },
 
