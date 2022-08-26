@@ -26,6 +26,10 @@ import jwt_decode from 'jwt-decode';
 
 import {showMessage} from 'react-native-flash-message';
 import EditProfileModal from 'src/components/edit-profile-menu';
+import {
+  ZoomPicModal,
+  ZoomBackgroundPicModal,
+} from 'src/components/zoom-pic-modal';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 import AuthContext from 'src/utils/auth-context';
 import {useIsFocused} from '@react-navigation/native';
@@ -47,6 +51,9 @@ export default function ProfileSetting() {
   const [bio, setBio] = useState('');
 
   const [imageModal, setImageModal] = useState(false);
+  const [zoomPicModal, setZoomPicModal] = useState(false);
+  const [zoomBackPicModal, setZoomBackPicModal] = useState(false);
+
   const [coverPhoto, setCoverPhoto] = useState(false);
 
   const navigation = useNavigation();
@@ -249,6 +256,8 @@ export default function ProfileSetting() {
               setCoverPhoto(false);
               setImageModal(true);
             }}
+            onPressZoomProfile={() => setZoomPicModal(true)}
+            onPressBackgroundZoom={() => setZoomBackPicModal(true)}
           />
           <View style={styles.view}>
             <Text style={styles.text}>Personal Information</Text>
@@ -464,6 +473,18 @@ export default function ProfileSetting() {
           visible={imageModal}
           onPressGallery={() => imagePickerFromGallery()}
           onPressPhoto={() => imagePickerFromCamera()}
+        />
+        <ZoomPicModal
+          visible={zoomPicModal}
+          iconPress={() => setZoomPicModal(false)}
+          image={authContext?.userData?.user?.profileImage}
+          imageStyle={{height: '60%', width: '90%'}}
+        />
+        <ZoomBackgroundPicModal
+          visible={zoomBackPicModal}
+          iconPress={() => setZoomBackPicModal(false)}
+          image={authContext?.userData?.user?.coverImage}
+          imageStyle={{height: '60%', width: '90%'}}
         />
       </Header>
       <View style={styles.buttonView}>

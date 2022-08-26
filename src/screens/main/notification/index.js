@@ -1,4 +1,11 @@
-import {Text, View, Image, FlatList, RefreshControl} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  FlatList,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
@@ -6,6 +13,7 @@ import {profileServices} from 'src/services/profile-services';
 import images from 'src/assets/images';
 import moment from 'moment';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
+import colors from 'src/utils/themes/global-colors';
 
 export default function Notification() {
   const [notification, setNotification] = React.useState([]);
@@ -61,6 +69,34 @@ export default function Notification() {
                 <Text style={styles.flatlistName}>{item?.title}</Text>
               </View>
               <Text style={styles.mail}>{item?.message}</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <TouchableOpacity
+                  style={{
+                    // width: 61,
+                    backgroundColor: colors.whiteColor,
+                    borderRadius: 3,
+                    borderColor: colors.buttonColor,
+                    borderWidth: 1,
+                    marginTop: 8,
+                    paddingHorizontal: 5,
+                    padding: 3,
+                  }}>
+                  <Text style={{color: colors.buttonColor}}>Discrad</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{
+                    // width: 61,
+                    backgroundColor: colors.buttonColor,
+                    paddingHorizontal: 5,
+                    padding: 4,
+                    borderRadius: 3,
+                    marginTop: 8,
+                    marginLeft: 5,
+                  }}>
+                  <Text style={{color: colors.whiteColor}}>Follow Back</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
           <Text style={styles.time}>

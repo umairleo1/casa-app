@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Text,
   View,
@@ -98,98 +99,90 @@ export default function SignupForm() {
 
   return (
     <>
-      <View style={{backgroundColor: 'transparent'}}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          style={styles.scrollView}>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={{flex: 1}}>
-            <Text style={styles.text}>Register to Casa App</Text>
-            <View style={styles.borderLine} />
-            <View style={styles.mainView}>
-              <Formik
-                initialValues={{
-                  firstName: '',
-                  lastName: '',
-                  email: '',
-                  password: '',
-                  birthDate: '',
-                }}
-                onSubmit={values => handleSignup(values)}
-                validationSchema={signupFormSchema}>
-                {({
-                  handleSubmit,
-                  errors,
-                  handleChange,
-                  values,
-                  touched,
-                  setFieldTouched,
-                }) => (
-                  <>
-                    <Input
-                      placeholder={'First Name'}
-                      value={values.firstName}
-                      error={touched.firstName ? errors.firstName : ''}
-                      onChangeText={handleChange('firstName')}
-                      onBlur={() => setFieldTouched('firstName')}
-                    />
-                    <Input
-                      placeholder={'Last Name'}
-                      value={values.lastName}
-                      error={touched.lastName ? errors.lastName : ''}
-                      onChangeText={handleChange('lastName')}
-                      onBlur={() => setFieldTouched('lastName')}
-                    />
-                    <Input
-                      placeholder={'Your Email'}
-                      value={values.email}
-                      error={touched.email ? errors.email : ''}
-                      onChangeText={handleChange('email')}
-                      onBlur={() => setFieldTouched('email')}
-                      type="email-address"
-                    />
-                    <Input
-                      placeholder={'Your Password'}
-                      secureTextEntry={passwordVisible}
-                      value={values.password}
-                      error={touched.password ? errors.password : ''}
-                      onChangeText={handleChange('password')}
-                      onBlur={() => setFieldTouched('password')}
-                      eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
-                      onPressEye={() => setPasswordVisible(!passwordVisible)}
-                    />
-                    <Datepicker
-                      handleConfirm={handleConfirm}
-                      hideDatePicker={hideDatePicker}
-                      showDatePicker={showDatePicker}
-                      isVisible={isDatePickerVisible}
-                      date={` ${
-                        selectedDate
-                          ? moment(selectedDate).format('MM/DD/YYYY')
-                          : 'Your Birthday'
-                      }`}
-                      placeholder={!selectedDate}
-                      error={touched.birthDate ? errors.birthDate : ''}
-                    />
-                    {/* <Dropdown
+      <View style={styles.scrollView}>
+        <Text style={styles.text}>Register to Casa App</Text>
+        <View style={styles.borderLine} />
+        <View style={styles.mainView}>
+          <Formik
+            initialValues={{
+              firstName: '',
+              lastName: '',
+              email: '',
+              password: '',
+              birthDate: '',
+            }}
+            onSubmit={values => handleSignup(values)}
+            validationSchema={signupFormSchema}>
+            {({
+              handleSubmit,
+              errors,
+              handleChange,
+              values,
+              touched,
+              setFieldTouched,
+            }) => (
+              <>
+                <Input
+                  placeholder={'First Name'}
+                  value={values.firstName}
+                  error={touched.firstName ? errors.firstName : ''}
+                  onChangeText={handleChange('firstName')}
+                  onBlur={() => setFieldTouched('firstName')}
+                />
+                <Input
+                  placeholder={'Last Name'}
+                  value={values.lastName}
+                  error={touched.lastName ? errors.lastName : ''}
+                  onChangeText={handleChange('lastName')}
+                  onBlur={() => setFieldTouched('lastName')}
+                />
+                <Input
+                  placeholder={'Your Email'}
+                  value={values.email}
+                  error={touched.email ? errors.email : ''}
+                  onChangeText={handleChange('email')}
+                  onBlur={() => setFieldTouched('email')}
+                  type="email-address"
+                />
+                <Input
+                  placeholder={'Your Password'}
+                  secureTextEntry={passwordVisible}
+                  value={values.password}
+                  error={touched.password ? errors.password : ''}
+                  onChangeText={handleChange('password')}
+                  onBlur={() => setFieldTouched('password')}
+                  eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
+                  onPressEye={() => setPasswordVisible(!passwordVisible)}
+                />
+                <Datepicker
+                  handleConfirm={handleConfirm}
+                  hideDatePicker={hideDatePicker}
+                  showDatePicker={showDatePicker}
+                  isVisible={isDatePickerVisible}
+                  date={` ${
+                    selectedDate
+                      ? moment(selectedDate).format('MM/DD/YYYY')
+                      : 'Your Birthday'
+                  }`}
+                  placeholder={!selectedDate}
+                  error={touched.birthDate ? errors.birthDate : ''}
+                />
+                {/* <Dropdown
                       selectedValue={values.gender}
                       onValueChange={handleChange('gender')}
                       error={touched.gender ? errors.gender : ''}
                     /> */}
 
-                    <Button
-                      loader={isLoading}
-                      text="Complete Registration!"
-                      onPress={handleSubmit}
-                      backgroundColor={colors.buttonColor}
-                    />
-                  </>
-                )}
-              </Formik>
-            </View>
-          </KeyboardAvoidingView>
-        </ScrollView>
+                <Button
+                  loader={isLoading}
+                  text="Complete Registration!"
+                  onPress={handleSubmit}
+                  backgroundColor={colors.buttonColor}
+                />
+              </>
+            )}
+          </Formik>
+        </View>
       </View>
     </>
   );

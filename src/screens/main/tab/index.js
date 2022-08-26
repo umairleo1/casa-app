@@ -54,6 +54,19 @@ const ProfileStack = () => {
   );
 };
 
+const HomeStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name={SCREEN.HOME} component={Home} />
+
+      {/* <Stack.Screen name={'Profile'} component={Profile} /> */}
+    </Stack.Navigator>
+  );
+};
+
 export default function BottomTab() {
   const dispatch = useDispatch();
   const userToken = useSelector(state => state?.auth?.userToken);
@@ -91,7 +104,7 @@ export default function BottomTab() {
       }}>
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStack}
         options={{
           tabBarLabel: 'Home',
 

@@ -40,9 +40,12 @@ export const styles = StyleSheet.create({
     marginBottom: 5,
   },
   flatlistView: {
-    flex: 1,
+    flex: 1 / 2,
     top: 25,
     margin: 5,
     marginBottom: 20,
+    // backgroundColor: 'red',
+    // height: 210,
+    // width: 150,
   },
 });

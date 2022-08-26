@@ -14,7 +14,8 @@ export const styles = StyleSheet.create({
   },
   mainView: {
     backgroundColor: colors.whiteColor,
-    marginTop: 20,
+    //  marginTop: 20,
+    flex: 1,
     borderRadius: 3,
   },
   borderLine: {
@@ -23,7 +24,9 @@ export const styles = StyleSheet.create({
     marginTop: 12,
   },
   inputView: {
+    backgroundColor: '#fff',
     marginHorizontal: 15,
+    borderRadius: 3,
     // marginTop: hp(5),
     marginTop: hp(1),
   },
@@ -38,5 +41,27 @@ export const styles = StyleSheet.create({
   buttonView: {
     marginTop: 10,
     marginBottom: 10,
+  },
+  text2: {
+    fontSize: hp(3),
+    fontFamily: fonts.RobotoRegular,
+    color: colors.whiteColor,
+    marginTop: 20,
+    lineHeight: 30,
+  },
+  text3: {
+    fontSize: hp(2),
+    color: colors.whiteColor,
+    marginTop: 20,
+    fontFamily: fonts.RobotoRegular,
+  },
+  view: {
+    marginHorizontal: 20,
+    marginBottom: 5,
+  },
+  image: {
+    height: 50,
+    width: 120,
+    marginTop: 5,
   },
 });

@@ -12,7 +12,7 @@ import React, {useRef} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import UploadButton from '../upload-button';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Slider from '../carosel-slider';
+import Video from 'react-native-video';
 
 export default function UploadAddPost({
   onPressUpload,
@@ -23,28 +23,52 @@ export default function UploadAddPost({
   onClosePress,
 }) {
   const RenderPreview = ({data}) => (
-    <View style={{height: 185, width: 200, margin: 5}}>
-      <TouchableOpacity onPress={onClosePress} style={styles.closeIcon}>
-        <AntDesign name={'close'} size={12} color={colors.black} />
-      </TouchableOpacity>
-      <Image
-        style={{
-          height: '100%',
-          width: '100%',
-          borderRadius: 5,
-          overflow: 'hidden',
-        }}
-        source={{uri: data?.uri}}
-        resizeMode="cover"
-      />
-    </View>
+    <>
+      <View style={{height: 185, width: 200, margin: 5}}>
+        <TouchableOpacity onPress={onClosePress} style={styles.closeIcon}>
+          <AntDesign name={'close'} size={12} color={colors.black} />
+        </TouchableOpacity>
+        <Image
+          style={{
+            height: '100%',
+            width: '100%',
+            borderRadius: 5,
+            overflow: 'hidden',
+          }}
+          source={{uri: data?.uri}}
+          resizeMode="cover"
+        />
+      </View>
+
+      <View style={{height: 185, width: 200, margin: 5}}>
+        <TouchableOpacity onPress={onClosePress} style={styles.closeIcon}>
+          <AntDesign name={'close'} size={12} color={colors.black} />
+        </TouchableOpacity>
+      </View>
+
+      {/* <View style={{height: 185, width: 200, margin: 5}}>
+        <Video
+          source={{
+            uri: data?.uri,
+          }}
+          controls={true}
+          paused={true}
+          style={{height: '100%', width: '100%', backgroundColor: 'red'}}
+          repeat={true}
+          playWhenInactive={true}
+          fullscreen={true}
+          onLoadStart={() => {}}
+          resizeMode="cover"
+        />
+      </View> */}
+    </>
   );
 
   return (
     <View
       style={[
         styles.container,
-        {backgroundColor: preview.length > 0 ? 'transparent' : 'grey'},
+        {backgroundColor: preview.length > 0 ? 'transparent' : '#F5F5F5'},
       ]}>
       {preview.length > 0 ? (
         <>
@@ -84,10 +108,8 @@ export default function UploadAddPost({
 
 const styles = StyleSheet.create({
   container: {
-    // height: 200,
     paddingTop: 10,
     paddingBottom: 10,
-    // backgroundColor: 'grey',
     marginHorizontal: 20,
     justifyContent: 'center',
     alignItems: 'center',

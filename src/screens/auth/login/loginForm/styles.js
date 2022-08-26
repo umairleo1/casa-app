@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
   },
   mainView: {
     marginHorizontal: 15,
+    backgroundColor: '#fff',
   },
   borderLine: {
     borderWidth: 1,
@@ -30,11 +31,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
-  buttonView: {
-    marginTop: 80,
-    marginBottom: 10,
-  },
+  buttonView: {},
   scrollView: {
     backgroundColor: colors.whiteColor,
+    flex: 1,
   },
 });

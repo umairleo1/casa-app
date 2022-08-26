@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     // marginVertical: 10,
   },
   content: {
-    fontSize: wp(2.8),
+    fontSize: wp(3),
     color: colors.pureBlack,
     textAlign: 'justify',
     marginTop: 10,
