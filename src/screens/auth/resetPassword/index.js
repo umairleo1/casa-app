@@ -65,6 +65,10 @@ export default function ResetPassword() {
         userId: route.params.id,
         password: value.password,
       });
+      showMessage({
+        message: 'Password Changed Successfully',
+        type: 'success',
+      });
       navigation.navigate('Login');
       setIsLoading(false);
     } catch (error) {

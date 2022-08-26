@@ -7,9 +7,25 @@ import {styles} from './styles';
 import Button from 'src/components/button';
 import colors from 'src/utils/themes/global-colors';
 import {useNavigation} from '@react-navigation/native';
+import {postServices} from 'src/services/post-service';
 
 export default function PromoCode() {
   const navigation = useNavigation();
+  const [code, setCode] = React.useState('');
+
+  React.useEffect(() => {
+    getPromoCode();
+  }, []);
+
+  const getPromoCode = async () => {
+    try {
+      const result = await postServices.getPromoCodeApi();
+      console.log(result);
+      setCode(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Header onPressBack={() => navigation.goBack()} heading={'Promo Code'}>
@@ -24,8 +40,8 @@ export default function PromoCode() {
             special promo code then you’ll be friends.
           </Text>
           <InvitationLink
-            text={'Invitation Link'}
-            linkText={'crumina.net/html-olympus/03-Newsfeed'}
+            text={'Promo Code'}
+            linkText={code?.message?.code}
             onPress={undefined}
           />
         </View>

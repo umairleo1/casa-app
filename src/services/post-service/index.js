@@ -36,6 +36,10 @@ const likePostApi = id => {
   return client.post(`${API_URLS.LIKE_POST}${id}`);
 };
 
+const getPromoCodeApi = () => {
+  return client.get(API_URLS.GET_PROMO);
+};
+
 export const postServices = {
   addPost,
   getAllMyPostApi,
@@ -44,4 +48,5 @@ export const postServices = {
   deletePostApi,
   addCommentApi,
   likePostApi,
+  getPromoCodeApi,
 };

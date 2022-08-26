@@ -67,6 +67,7 @@ export default function Comments() {
 
   const ListItem = ({item}) => {
     const [like, setLike] = React.useState(route?.params?.isLiked);
+    const [increment, setIncrement] = React.useState(0);
     return (
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
@@ -113,12 +114,14 @@ export default function Comments() {
           <View style={styles.row}>
             <TouchableOpacity
               onPress={() => {
-                setLike(!like), likePost();
+                setLike(!like),
+                  likePost(),
+                  setIncrement(like ? increment - 1 : increment + 1);
               }}>
               <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>
-              {item?.postlikes}
+              {item?.postlikes + increment}
             </Text>
             <Image source={images.people} style={styles.likeImg} />
             <Image

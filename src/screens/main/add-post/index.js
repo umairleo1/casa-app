@@ -124,6 +124,7 @@ export default function AddPost() {
         console.log('Success add post ', result);
         setAddPost([]);
         setDescription('');
+        navigation.navigate('Home');
         setIsLoading(false);
       } catch (error) {
         console.log(error);

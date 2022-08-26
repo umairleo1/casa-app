@@ -28,6 +28,7 @@ const API_URLS = {
   GET_USER_ALL_POSTS: '/api/post/getByUserId/',
   ADD_COMMENT: '/api/comment/',
   LIKE_POST: '/api/like/',
+  GET_PROMO: '/api/auth/get-promo-code',
 
   //Home
   ALL_FEEDS: '/api/post/allUsers',
