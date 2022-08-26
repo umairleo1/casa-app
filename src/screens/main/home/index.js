@@ -142,6 +142,7 @@ export default function Home() {
         const result = await postServices.likePostApi(id);
         console.log(result);
         setLike(!like);
+        getAllFeeds();
       } catch (error) {
         console.log(error);
         showMessage({
