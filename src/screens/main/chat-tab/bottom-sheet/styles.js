@@ -2,13 +2,15 @@ import {StyleSheet} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP as hp,
+  widthPercentageToDP,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import colors from 'src/utils/themes/global-colors';
 
 export const styles = StyleSheet.create({
   Container: {
-    // flex: 1,
+    flex: 1,
+    // backgroundColor: 'grey',
   },
   topView: {
     flexDirection: 'row',
@@ -27,13 +29,15 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     color: colors.lightgrey,
   },
-
-  groupView: {
+  mainContainer: {
     marginHorizontal: wp(3),
+  },
+  groupView: {
     // backgroundColor: 'blue',
     paddingTop: hp(1),
     paddingBottom: wp(2),
     alignItems: 'center',
+    flex: 1,
   },
   image: {
     height: 63,
@@ -49,6 +53,10 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'flex-end',
     marginTop: 8,
-    right: 5,
+    right: widthPercentageToDP(2),
+  },
+  buttonView: {
+    marginTop: hp(1),
+    // backgroundColor: 'red',
   },
 });

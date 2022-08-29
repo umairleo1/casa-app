@@ -108,6 +108,7 @@ export default function GroupChat() {
         placeholderTextColor={colors.black}
         icon={'search1'}
         iconSize={24}
+        onChangeText={text => console.log(text)}
       />
       <FlatList
         data={dummyData}
@@ -125,7 +126,7 @@ export default function GroupChat() {
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={false}
-        height={300}
+        // height={300}
         customStyles={{
           wrapper: {
             backgroundColor: `rgba(0, 0, 0, 0.2)`,

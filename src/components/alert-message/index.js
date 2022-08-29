@@ -8,7 +8,10 @@ import {
 } from 'react-native';
 import React from 'react';
 import colors from 'src/utils/themes/global-colors';
-import {widthPercentageToDP} from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from 'react-native-responsive-screen';
 import {RFValue} from 'react-native-responsive-fontsize';
 
 export default function AlertMessage({visible = false, onPressYes, onPressNo}) {
@@ -60,7 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.whiteColor,
     borderRadius: 3,
     marginHorizontal: 20,
-    paddingBottom: 20,
+    paddingBottom: heightPercentageToDP(3),
   },
   buttonView: {
     flexDirection: 'row',
@@ -73,6 +76,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 3,
     padding: 5,
+    marginHorizontal: -50,
   },
   yesText: {
     color: colors.whiteColor,
@@ -82,5 +86,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: RFValue(15),
     padding: 20,
+    textAlign: 'center',
   },
 });

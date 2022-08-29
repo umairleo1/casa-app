@@ -14,6 +14,7 @@ import AddPost from 'src/screens/main/add-post';
 import BottomTab from 'src/screens/main/tab';
 import ChatTab from 'src/screens/main/chat-tab';
 import NewChat from 'src/screens/main/chat-tab/new-chat';
+import CreateGroup from 'src/screens/main/chat-tab/new-chat/create-group';
 
 const Stack = createStackNavigator();
 const {
@@ -27,6 +28,7 @@ const {
   ADD_POST,
   CHAT_TAB,
   NEW_CHAT,
+  CREATE_GROUP,
 } = SCREEN;
 
 export default function AppNavigator() {
@@ -46,6 +48,7 @@ export default function AppNavigator() {
       <Stack.Screen name={ADD_POST} component={AddPost} />
       <Stack.Screen name={CHAT_TAB} component={ChatTab} />
       <Stack.Screen name={NEW_CHAT} component={NewChat} />
+      <Stack.Screen name={CREATE_GROUP} component={CreateGroup} />
     </Stack.Navigator>
   );
 }

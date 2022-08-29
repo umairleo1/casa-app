@@ -43,4 +43,7 @@ export default {
 
   //New Chat
   NEW_CHAT: 'NEW_CHAT',
+
+  //Create Group
+  CREATE_GROUP: 'CREATE_GROUP',
 };

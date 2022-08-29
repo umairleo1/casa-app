@@ -8,6 +8,7 @@ import {CrossIcon, AddIcon} from 'src/assets/svg/chat';
 import {styles} from './styles';
 import colors from 'src/utils/themes/global-colors';
 import images from 'src/assets/images';
+import {heightPercentageToDP} from 'react-native-responsive-screen';
 
 export default function MembersSheet({onPressBack, rightText}) {
   const dummyData = [
@@ -42,6 +43,7 @@ export default function MembersSheet({onPressBack, rightText}) {
       </View>
     );
   };
+
   return (
     <View style={styles.Container}>
       <View style={styles.topView}>
@@ -56,29 +58,37 @@ export default function MembersSheet({onPressBack, rightText}) {
       </View>
       <Text style={styles.membersCount}>11 Members</Text>
 
-      <FlatList
-        data={[...dummyData, {id: 'add-new'}]}
-        horizontal
-        renderItem={listItem}
-        keyExtractor={item => item.id}
-        contentContainerStyle={{}}
-        showsHorizontalScrollIndicator={false}
-      />
-      <BottomSheetButton
-        image={images.editGroupPhoto}
-        text={'Edit Group Photo'}
-        onPress={undefined}
-      />
-      <BottomSheetButton
-        image={images.editGroupPhoto}
-        text={'Edit Group Name'}
-        onPress={undefined}
-      />
-      <BottomSheetButton
-        image={images.editGroupPhoto}
-        text={'Leave Group'}
-        onPress={undefined}
-      />
+      <View>
+        <FlatList
+          data={[...dummyData, {id: 'add-new'}]}
+          horizontal
+          renderItem={listItem}
+          keyExtractor={item => item.id}
+          contentContainerStyle={{
+            // backgroundColor: 'red',
+            // flex: 1,
+            paddingTop: heightPercentageToDP(0.2),
+          }}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+      <View style={styles.buttonView}>
+        <BottomSheetButton
+          image={images.editGroupPhoto}
+          text={'Edit Group Photo'}
+          onPress={undefined}
+        />
+        <BottomSheetButton
+          image={images.editGroupPhoto}
+          text={'Edit Group Name'}
+          onPress={undefined}
+        />
+        <BottomSheetButton
+          image={images.editGroupPhoto}
+          text={'Leave Group'}
+          onPress={undefined}
+        />
+      </View>
     </View>
   );
 }

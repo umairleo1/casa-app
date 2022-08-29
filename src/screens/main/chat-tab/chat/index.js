@@ -130,6 +130,7 @@ export default function Chat() {
         placeholderTextColor={colors.black}
         icon={'search1'}
         iconSize={24}
+        onChangeText={text => console.log(text)}
       />
       <FlatList
         data={dummyData}

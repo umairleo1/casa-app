@@ -6,8 +6,10 @@ import Header from 'src/components/headerView';
 import SearchInput from 'src/components/searchInput';
 import colors from 'src/utils/themes/global-colors';
 import {GroupIcon} from 'src/assets/svg/chat';
+import {useNavigation} from '@react-navigation/native';
 
 export default function NewChat() {
+  const navigation = useNavigation();
   const Dummydata = [
     {
       title: 'A',
@@ -81,7 +83,7 @@ export default function NewChat() {
   };
 
   return (
-    <Header heading={'New Chat'}>
+    <Header heading={'New Chat'} onPressBack={() => navigation.goBack()}>
       <SectionList
         sections={Dummydata}
         keyExtractor={(item, index) => item + index}
@@ -97,10 +99,13 @@ export default function NewChat() {
                 placeholderTextColor={colors.black}
                 icon={'search1'}
                 iconSize={24}
+                onChangeText={text => console.log(text)}
               />
             </View>
 
-            <TouchableOpacity style={styles.GroupIconView} onPress={undefined}>
+            <TouchableOpacity
+              style={styles.GroupIconView}
+              onPress={() => navigation.navigate('CREATE_GROUP')}>
               <GroupIcon />
               <Text style={styles.text}>Create a group</Text>
             </TouchableOpacity>
