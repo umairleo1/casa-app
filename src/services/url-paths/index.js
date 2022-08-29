@@ -32,6 +32,8 @@ const API_URLS = {
 
   //Home
   ALL_FEEDS: '/api/post/allUsers',
+
+  //TESTING
 };
 
 export {API_URLS};
