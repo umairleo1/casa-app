@@ -10,6 +10,15 @@ const addPost = obj => {
   });
 };
 
+const editPost = (id, obj) => {
+  return client.put(`${API_URLS.ADD_POST}/${id}`, obj, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+    },
+  });
+};
+
 const deletePostApi = id => {
   return client.delete(`${API_URLS.DELETE_POST}${id}`);
 };
@@ -23,8 +32,9 @@ const getUsersAllPostApi = id => {
 };
 
 const getHomeAllPostApi = (page, limit) => {
+  console.log('page limit', {page, limit});
   return client.get(API_URLS.ALL_FEEDS, {
-    params: {page: page, limit: limit},
+    params: {page: Number(page), limit: limit},
   });
 };
 
@@ -42,6 +52,7 @@ const getPromoCodeApi = () => {
 
 export const postServices = {
   addPost,
+  editPost,
   getAllMyPostApi,
   getUsersAllPostApi,
   getHomeAllPostApi,

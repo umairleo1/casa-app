@@ -10,8 +10,6 @@ import {Emoji} from 'src/assets/svg/emoji';
 import SendIcon from 'src/assets/svg/Common/left-arrow';
 
 export default function CommentInput({
-  onChangeText,
-  value,
   placeholder,
   secureTextEntry,
   onChange,
@@ -21,6 +19,8 @@ export default function CommentInput({
   onPressEmoji,
   onPressSend,
 }) {
+  const [comment, setComment] = React.useState('');
+
   return (
     <>
       <View style={styles.mainView}>
@@ -31,9 +31,9 @@ export default function CommentInput({
           placeholderTextColor={colors.placeholderColor}
           style={styles.input}
           placeholder={placeholder}
-          onChangeText={text => onChangeText(text)}
+          onChangeText={text => setComment(text)}
           onChange={onChange}
-          value={value}
+          value={comment}
           secureTextEntry={secureTextEntry}
           onBlur={onBlur}
           keyboardType={type}
@@ -42,7 +42,12 @@ export default function CommentInput({
         />
         <View>
           <TouchableOpacity onPress={onPressSend}>
-            <SendIcon onPress={onPressSend} />
+            <SendIcon
+              onPress={async () => {
+                await onPressSend(comment);
+                setComment('');
+              }}
+            />
           </TouchableOpacity>
         </View>
       </View>

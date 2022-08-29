@@ -28,19 +28,21 @@ export default function Comments() {
   const route = useRoute();
 
   const [post, setPost] = React.useState(route?.params?.data);
-  const [comment, setComment] = React.useState('');
+  // const [comment, setComment] = React.useState('');
 
-  const addComment = async () => {
+  console.log(route?.params?.data);
+
+  const addComment = async comment => {
     Keyboard.dismiss();
+    console.log(comment);
 
     try {
       const result = await postServices.addCommentApi(
         route?.params?.data?._id,
         {commentText: comment},
       );
-      console.log(result);
+
       setPost(result?.post1);
-      setComment('');
       route?.params?.render();
     } catch (error) {
       console.log(error);
@@ -72,13 +74,12 @@ export default function Comments() {
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
           <View style={styles.flatlistView2}>
-            <Image
-              source={
+            <ImageMemoized
+              src={
                 item?.postedBy?.profileImage
                   ? {uri: item?.postedBy?.profileImage}
                   : images.profile
               }
-              style={styles.image}
             />
             <View style={styles.flatlistView3}>
               <Text style={styles.flatlistName}>
@@ -105,7 +106,7 @@ export default function Comments() {
             <Image
               source={{uri: item?.files[0]?.url}}
               style={[styles.postImage]}
-              resizeMode="cover"
+              resizeMode="center"
             />
           </View>
         )}
@@ -121,7 +122,7 @@ export default function Comments() {
               <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>
-              {item?.postlikes + increment}
+              {item?.postlikes || route?.params?.data?.postlikes + increment}
             </Text>
             <Image source={images.people} style={styles.likeImg} />
             <Image
@@ -235,11 +236,19 @@ export default function Comments() {
         <CommentInput
           placeholder={'write a comment...'}
           onPressEmoji={undefined}
-          onPressSend={() => addComment()}
-          onChangeText={setComment}
-          value={comment}
+          onPressSend={comment => addComment(comment)}
+          // onChangeText={setComment}
+          // value={comment}
         />
       </View>
     </Header>
   );
 }
+
+const ImageComp = ({src}) => {
+  return <Image resizeMode="contain" style={styles.image} source={src} />;
+};
+const ImageMemoized = React.memo(
+  ImageComp,
+  (prev, next) => prev.src === next.src,
+);

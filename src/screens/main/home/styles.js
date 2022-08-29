@@ -68,6 +68,7 @@ export const styles = StyleSheet.create({
     margin: 1,
     height: 250,
     width: '100%',
+    // backgroundColor: '#000',
   },
   followView: {
     width: 94,

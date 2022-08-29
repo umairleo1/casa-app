@@ -21,11 +21,27 @@ export default function UploadAddPost({
   imageSize,
   preview,
   onClosePress,
+  setRemoved,
+  removed,
 }) {
   const RenderPreview = ({data}) => (
     <>
       <View style={{height: 185, width: 200, margin: 5}}>
-        <TouchableOpacity onPress={onClosePress} style={styles.closeIcon}>
+        <TouchableOpacity
+          onPress={() => {
+            {
+              data?.name
+                ? (onClosePress(preview.filter(el => el.name !== data.name)),
+                  setRemoved([
+                    ...removed,
+                    ...preview.filter(el => el.name == data.name),
+                  ]))
+                : onClosePress(
+                    preview.filter(el => el.fileName !== data.fileName),
+                  );
+            }
+          }}
+          style={styles.closeIcon}>
           <AntDesign name={'close'} size={12} color={colors.black} />
         </TouchableOpacity>
         <Image
@@ -35,16 +51,16 @@ export default function UploadAddPost({
             borderRadius: 5,
             overflow: 'hidden',
           }}
-          source={{uri: data?.uri}}
+          source={{uri: data?.uri || data?.url}}
           resizeMode="cover"
         />
       </View>
 
-      <View style={{height: 185, width: 200, margin: 5}}>
+      {/* <View style={{height: 185, width: 200, margin: 5}}>
         <TouchableOpacity onPress={onClosePress} style={styles.closeIcon}>
           <AntDesign name={'close'} size={12} color={colors.black} />
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       {/* <View style={{height: 185, width: 200, margin: 5}}>
         <Video
