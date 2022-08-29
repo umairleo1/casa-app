@@ -142,7 +142,7 @@ export default function Home() {
         const result = await postServices.likePostApi(id);
         console.log(result);
         setLike(!like);
-        // getAllFeeds();
+        getAllFeeds();
       } catch (error) {
         console.log(error);
         showMessage({
@@ -180,7 +180,7 @@ export default function Home() {
             <Image
               source={{uri: item?.files[0]?.url}}
               style={[styles.postImage]}
-              resizeMode="cover"
+              resizeMode="center"
             />
           </View>
         )}
@@ -191,10 +191,7 @@ export default function Home() {
               onPress={() => {
                 likePost(item._id);
               }}>
-              <Heart
-                color={like ? colors.danger : '#BBB'}
-                fillColor={like ? colors.danger : '#BBB'}
-              />
+              <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>
               {item?.postlikes}

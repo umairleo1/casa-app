@@ -49,7 +49,7 @@ export default function ViewProfile({route}) {
       const res = await profileServices.getUserProfileById(
         route?.params?.id || '',
       );
-      console.log('res-------------', res);
+      // console.log('res-------------', res);
       setData(res);
     } catch (error) {
       console.log('error -------', error);
@@ -63,7 +63,7 @@ export default function ViewProfile({route}) {
   const getMyAllPosts = async () => {
     try {
       const res = await postServices.getAllMyPostApi();
-      console.log('res my all posts-------------', res);
+      // console.log('res my all posts-------------', res);
       setAllPosts(res);
     } catch (error) {
       console.log('error -------', error);
@@ -207,7 +207,7 @@ export default function ViewProfile({route}) {
           {!route?.params?.id && (
             <TouchableOpacity
               onPress={() => {
-                setPopUpModal(true), setSelectedPostId(item?._id);
+                setPopUpModal(true), setSelectedPostId(item);
               }}>
               <MaterialCommunityIcons
                 name="dots-vertical"
@@ -351,10 +351,14 @@ export default function ViewProfile({route}) {
         iconPress={() => setPopUpModal(false)}
         visible={popUpModal}
         onPressDelPost={() => {
-          deletePost(selectedPostId), setPopUpModal(false);
+          deletePost(selectedPostId?._id), setPopUpModal(false);
         }}
         onPressEditPost={() => {
-          navigation.navigate('ADD_POST'), setSelectedPostId('');
+          setPopUpModal(false);
+          navigation.navigate('ADD_POST', {
+            myPost: selectedPostId,
+            btn: 'Update',
+          });
         }}
         deleteText={'Delete Post'}
         editText={'Edit Post'}

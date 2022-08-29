@@ -26,6 +26,7 @@ export default function PostStatus({
                 : images.people
             }
             style={styles.image}
+            resizeMode="contain"
           />
           <TextInput
             placeholder="Share what you are thinking here..."
