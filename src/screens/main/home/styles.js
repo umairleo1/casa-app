@@ -42,7 +42,6 @@ export const styles = StyleSheet.create({
   },
   mail: {
     fontSize: 12,
-    lineHeight: 14,
     color: colors.lightgrey,
   },
   flatlistView2: {
