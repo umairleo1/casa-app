@@ -5,7 +5,6 @@ import {
   ScrollView,
   Platform,
   PermissionsAndroid,
-  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import Header from 'src/components/headerView';
@@ -208,9 +207,7 @@ export default function AddPost() {
         <View style={styles.descriptionView}>
           <Text style={styles.description}>Add Description</Text>
         </View>
-        <TouchableOpacity onPress={() => console.log(removed)}>
-          <Text>show</Text>
-        </TouchableOpacity>
+
         <View>
           <TextInput
             style={styles.textInputView}

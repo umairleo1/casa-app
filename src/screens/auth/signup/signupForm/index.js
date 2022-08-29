@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {styles} from './styles';
@@ -17,14 +18,16 @@ import * as Yup from 'yup';
 import colors from 'src/utils/themes/global-colors';
 import {userService} from 'src/services/auth-service';
 import {useNavigation} from '@react-navigation/native';
-
 import {showMessage} from 'react-native-flash-message';
+import {PromoCodeModal} from 'src/components/promo-code-modal';
+import {onPress} from 'deprecated-react-native-prop-types/DeprecatedTextPropTypes';
 
 export default function SignupForm() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [openPromoCode, setOpenPromoCode] = useState(false);
 
   const navigation = useNavigation();
 
@@ -172,7 +175,13 @@ export default function SignupForm() {
                       onValueChange={handleChange('gender')}
                       error={touched.gender ? errors.gender : ''}
                     /> */}
-
+                <TouchableOpacity
+                  onPress={() => setOpenPromoCode(true)}
+                  style={styles.promoCodeView}>
+                  <Text style={styles.promoCode}>
+                    Do You Have A PromoCode ?
+                  </Text>
+                </TouchableOpacity>
                 <Button
                   loader={isLoading}
                   text="Complete Registration!"
@@ -184,6 +193,12 @@ export default function SignupForm() {
           </Formik>
         </View>
       </View>
+      <PromoCodeModal
+        visible={openPromoCode}
+        iconPress={() => setOpenPromoCode(false)}
+        onPress={undefined}
+        onCodeChange={code => console.log(code)}
+      />
     </>
   );
 }

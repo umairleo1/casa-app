@@ -69,7 +69,7 @@ export default function Home() {
         limit.currentPage,
         limit.limit,
       );
-
+      console.log('Aho    =====> ', res);
       setFeeds(res.posts);
       setLimit({...limit, availablePages: res?.totalPages});
       setIsLoading(false);
@@ -84,10 +84,11 @@ export default function Home() {
   };
 
   const loadMore = async () => {
-    setLimit({...limit, currentPage: limit.currentPage + 1});
+    await setLimit({...limit, currentPage: limit.currentPage + 1});
+
     try {
       const result = await postServices.getHomeAllPostApi(
-        limit.currentPage + 1,
+        limit.currentPage,
         limit.limit,
       );
 
@@ -141,8 +142,8 @@ export default function Home() {
       try {
         const result = await postServices.likePostApi(id);
         console.log(result);
+        await getAllFeeds();
         setLike(!like);
-        getAllFeeds();
       } catch (error) {
         console.log(error);
         showMessage({
@@ -180,7 +181,7 @@ export default function Home() {
             <Image
               source={{uri: item?.files[0]?.url}}
               style={[styles.postImage]}
-              resizeMode="center"
+              resizeMode="contain"
             />
           </View>
         )}
@@ -269,7 +270,7 @@ export default function Home() {
           </Text>
         }
         onEndReached={() => {
-          limit.currentPage <= limit.availablePages && loadMore();
+          limit.currentPage < limit.availablePages && loadMore();
         }}
         onEndReachedThreshold={0.2}
         refreshControl={
