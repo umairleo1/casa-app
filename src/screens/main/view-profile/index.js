@@ -28,6 +28,7 @@ import Chart from 'assets/svg/Common/chat';
 import {postServices} from 'src/services/post-service';
 import images from 'src/assets/images';
 import PopUpModal from 'src/components/pop-up-modal';
+import AlertMessage from 'src/components/alert-message';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function ViewProfile({route}) {
@@ -41,6 +42,7 @@ export default function ViewProfile({route}) {
   const [popUpModal, setPopUpModal] = React.useState(false);
   const [selectedPostId, setSelectedPostId] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
+  const [alertMessage, setAlertMessage] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
 
   const getProfile = async () => {
@@ -351,13 +353,23 @@ export default function ViewProfile({route}) {
         iconPress={() => setPopUpModal(false)}
         visible={popUpModal}
         onPressDelPost={() => {
-          deletePost(selectedPostId), setPopUpModal(false);
+          setAlertMessage(true), setPopUpModal(false);
         }}
+        // onPressDelPost={() => {
+        //   deletePost(selectedPostId), setPopUpModal(false);
+        // }}
         onPressEditPost={() => {
           navigation.navigate('ADD_POST'), setSelectedPostId('');
         }}
         deleteText={'Delete Post'}
         editText={'Edit Post'}
+      />
+      <AlertMessage
+        visible={alertMessage}
+        onPressNo={() => setAlertMessage(false)}
+        onPressYes={() => {
+          deletePost(selectedPostId), setAlertMessage(false);
+        }}
       />
     </Header>
   );

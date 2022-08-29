@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
   text: {
@@ -23,5 +24,14 @@ export const styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: colors.whiteColor,
+  },
+  promoCode: {
+    fontSize: RFValue(12),
+    color: colors.placeholderColor,
+    marginBottom: hp(1),
+  },
+  promoCodeView: {
+    alignSelf: 'flex-end',
+    marginTop: hp(1),
   },
 });
