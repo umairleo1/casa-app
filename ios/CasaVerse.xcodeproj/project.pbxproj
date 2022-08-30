@@ -44,7 +44,7 @@
 		B3BFDDF92EF44DFA907A70F7 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 546C38C8C58F46AF9C03ADCD /* Roboto-Italic.ttf */; };
 		C037B09983D04D9599853C9D /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E7176C9094F4B4AB56C5DAA /* Roboto-Bold.ttf */; };
 		C1D93497986243129B8F6B4F /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 16CAC291353A47D39B932478 /* Roboto-Light.ttf */; };
-		CE6BEE2228AE2583001B44E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE6BEE2128AE2583001B44E1 /* GoogleService-Info.plist */; };
+		CE5C62ED28BDF8A000F27E67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE5C62EC28BDF8A000F27E67 /* GoogleService-Info.plist */; };
 		E16EFC58CFB4BD245D52787C /* libPods-CasaVerse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 336166512E6CA88E7A8CA863 /* libPods-CasaVerse.a */; };
 		E693524FD220D0BEFD6E4C83 /* libPods-CasaVerse-CasaVerseTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40CFB4ED867270640B1D3D11 /* libPods-CasaVerse-CasaVerseTests.a */; };
 		F121BE745FF347F7B9422CC7 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A26513EBC8BD4B95945A1B5C /* Roboto-Black.ttf */; };
@@ -111,7 +111,8 @@
 		A26513EBC8BD4B95945A1B5C /* Roboto-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Black.ttf"; path = "../src/utils/themes/fonts/Roboto-Black.ttf"; sourceTree = "<group>"; };
 		B8C778783E4840C9B43238CB /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../src/utils/themes/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		CCD1131BE65F49F1A9C129F1 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
-		CE6BEE2128AE2583001B44E1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CE5C62E928BDF47200F27E67 /* CasaVerse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = CasaVerse.entitlements; path = CasaVerse/CasaVerse.entitlements; sourceTree = "<group>"; };
+		CE5C62EC28BDF8A000F27E67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EBB3220C88794D749E1C16D9 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -156,6 +157,7 @@
 		13B07FAE1A68108700A75B9A /* CasaVerse */ = {
 			isa = PBXGroup;
 			children = (
+				CE5C62E928BDF47200F27E67 /* CasaVerse.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -227,7 +229,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				CE6BEE2128AE2583001B44E1 /* GoogleService-Info.plist */,
+				CE5C62EC28BDF8A000F27E67 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* CasaVerse */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* CasaVerseTests */,
@@ -362,7 +364,7 @@
 				4725E50528ACF6D700344232 /* Ionicons.ttf in Resources */,
 				4725E50428ACF6D700344232 /* FontAwesome5_Solid.ttf in Resources */,
 				4725E50728ACF6D700344232 /* MaterialIcons.ttf in Resources */,
-				CE6BEE2228AE2583001B44E1 /* GoogleService-Info.plist in Resources */,
+				CE5C62ED28BDF8A000F27E67 /* GoogleService-Info.plist in Resources */,
 				F121BE745FF347F7B9422CC7 /* Roboto-Black.ttf in Resources */,
 				4725E50D28ACF6D700344232 /* AntDesign.ttf in Resources */,
 				8777B916577A4028B5053A9C /* Roboto-BlackItalic.ttf in Resources */,
@@ -648,6 +650,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CasaVerse/CasaVerse.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
@@ -681,6 +684,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = CasaVerse/CasaVerse.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;

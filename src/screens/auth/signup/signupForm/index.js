@@ -1,12 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {
-  Text,
-  View,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {styles} from './styles';
 import Input from 'src/components/textinput';
@@ -20,14 +13,14 @@ import {userService} from 'src/services/auth-service';
 import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 import {PromoCodeModal} from 'src/components/promo-code-modal';
-import {onPress} from 'deprecated-react-native-prop-types/DeprecatedTextPropTypes';
 
-export default function SignupForm() {
+export default function SignupForm({setShowSignUp}) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isLoading, setIsLoading] = React.useState(false);
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [openPromoCode, setOpenPromoCode] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
 
   const navigation = useNavigation();
 
@@ -66,6 +59,7 @@ export default function SignupForm() {
   );
 
   const handleSignup = async values => {
+    // console.log('code ', promoCode);
     if (selectedDate == '') {
       showMessage({
         message: 'Dob must not be empty',
@@ -81,13 +75,14 @@ export default function SignupForm() {
           password: values.password,
           dob: moment(selectedDate).format('YYYY-MM-DD'),
           gender: values.gender,
+          promoCode,
         });
 
         showMessage({
           message: result.message,
           type: 'success',
         });
-        navigation.navigate('Login');
+        setShowSignUp(false);
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -196,8 +191,8 @@ export default function SignupForm() {
       <PromoCodeModal
         visible={openPromoCode}
         iconPress={() => setOpenPromoCode(false)}
-        onPress={undefined}
-        onCodeChange={code => console.log(code)}
+        onPress={() => setOpenPromoCode(false)}
+        onCodeChange={code => setPromoCode(code)}
       />
     </>
   );

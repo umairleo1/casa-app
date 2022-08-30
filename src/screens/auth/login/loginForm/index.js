@@ -63,8 +63,8 @@ export default function LoginForm() {
       });
 
       dispatch(setUserReduxToken(result.token));
-      authStorage.storeToken(result.token);
-      authStorage.storeFcmToken(fcmToken);
+      await authStorage.storeToken(result.token);
+      await authStorage.storeFcmToken(fcmToken);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

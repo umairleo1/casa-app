@@ -248,6 +248,7 @@ export default function ProfileSetting() {
             imageBackGround={authContext?.userData?.user?.coverImage}
             editImage={images.editImage}
             image={authContext?.userData?.user?.profileImage}
+            showEdit={true}
             editBackGround={() => {
               setCoverPhoto(true);
               setImageModal(true);
@@ -362,112 +363,6 @@ export default function ProfileSetting() {
           </View>
         </ScrollView>
 
-        {/* <View style={styles.view}>
-            <Text style={styles.text}>Personal Information</Text>
-            <View style={styles.SearchInputView}>
-              <SearchInput
-                placeholder={
-                  userData?.user?.firstName == ''
-                    ? 'First Name'
-                    : userData?.user?.firstName
-                }
-                editIcon={'edit-3'}
-                placeholderTextColor={
-                  editFirstName ? colors.black : colors.placeholderColor
-                }
-                editIconSize={16}
-                editable={editFirstName}
-                editIconColor={
-                  editFirstName ? colors.black : colors.placeholderColor
-                }
-                onPress={() => {
-                  editFirstName
-                    ? setEditFirstName(false)
-                    : !editFirstName
-                    ? setEditFirstName(true)
-                    : editFirstName;
-                }}
-                value={firstName}
-                onChangeText={setFirstName}
-                borderColor={
-                  editFirstName ? colors.pureBlack : colors.innerBorder
-                }
-              />
-            </View>
-            <View style={styles.SearchInputView}>
-              <SearchInput
-                placeholder={
-                  userData?.user.lastName == ''
-                    ? 'Last Name'
-                    : userData?.user.lastName
-                }
-                editIcon={'edit-3'}
-                editIconSize={16}
-                editable={editLastName}
-                placeholderTextColor={
-                  editLastName ? colors.black : colors.placeholderColor
-                }
-                editIconColor={
-                  editLastName ? colors.black : colors.placeholderColor
-                }
-                onPress={() => {
-                  editLastName
-                    ? setEditLastName(false)
-                    : !editLastName
-                    ? setEditLastName(true)
-                    : editLastName;
-                }}
-                value={lastName}
-                onChangeText={setLastName}
-                borderColor={
-                  editLastName ? colors.pureBlack : colors.innerBorder
-                }
-              />
-            </View>
-            <View style={styles.SearchInputView}>
-              <SearchInput
-                placeholder={'Password'}
-                editIcon={'edit-3'}
-                editIconSize={16}
-                editable={editPassword}
-                placeholderTextColor={
-                  editPassword ? colors.black : colors.placeholderColor
-                }
-                editIconColor={
-                  editPassword ? colors.black : colors.placeholderColor
-                }
-                onPress={() => {
-                  editPassword
-                    ? setEditPassword(false)
-                    : !editPassword
-                    ? setEditPassword(true)
-                    : editPassword;
-                }}
-                onChangeText={setPassword}
-                borderColor={
-                  editPassword ? colors.pureBlack : colors.innerBorder
-                }
-              />
-            </View>
-            <View style={styles.SearchInputView}>
-              <CommentBox
-                placeholder={
-                  userData?.user?.bio == ''
-                    ? 'Write your bio..'
-                    : userData?.user?.bio
-                }
-                value={bio}
-                onChangeText={setBio}
-                placeholderTextColor={
-                  bio.length > 0 ? colors.black : colors.placeholderColor
-                }
-                borderColor={
-                  bio.length > 0 ? colors.pureBlack : colors.innerBorder
-                }
-              />
-            </View>
-          </View>
-        </ScrollView> */}
         <EditProfileModal
           iconPress={() => setImageModal(false)}
           visible={imageModal}

@@ -1,10 +1,17 @@
 /* eslint-disable react/prop-types */
-import {Dimensions, Image, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import images from 'src/assets/images';
 
 const ZoomPicModal = ({visible = false, iconPress, image, imageStyle}) => {
+  const [isLoading, setIsLoading] = React.useState(false);
   if (!visible) {
     return null;
   }
@@ -17,7 +24,18 @@ const ZoomPicModal = ({visible = false, iconPress, image, imageStyle}) => {
         onPress={iconPress}
         color={'white'}
       />
-      <Image source={image ? {uri: image} : images.people} style={imageStyle} />
+      {isLoading && (
+        <ActivityIndicator
+          style={{position: 'absolute', zIndex: 101}}
+          size="large"
+        />
+      )}
+      <Image
+        onLoadStart={() => setIsLoading(true)}
+        onLoadEnd={() => setIsLoading(false)}
+        source={image ? {uri: image} : images.people}
+        style={imageStyle}
+      />
     </View>
   );
 };
@@ -28,6 +46,7 @@ const ZoomBackgroundPicModal = ({
   image,
   imageStyle,
 }) => {
+  const [isLoading, setIsLoading] = React.useState(false);
   if (!visible) {
     return null;
   }
@@ -40,7 +59,18 @@ const ZoomBackgroundPicModal = ({
         onPress={iconPress}
         color={'white'}
       />
-      <Image source={image ? {uri: image} : images.people} style={imageStyle} />
+      {isLoading && (
+        <ActivityIndicator
+          style={{position: 'absolute', zIndex: 101}}
+          size="large"
+        />
+      )}
+      <Image
+        onLoadStart={() => setIsLoading(true)}
+        onLoadEnd={() => setIsLoading(false)}
+        source={image ? {uri: image} : images.people}
+        style={imageStyle}
+      />
     </View>
   );
 };

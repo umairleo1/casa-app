@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>167123948312-doa2iajsd2i2tdd6ep5ub65tguogvlev.apps.googleusercontent.com</string>
+	<string>167123948312-0ko5a2m0bbk1q0ls5psosrr2gctsugqq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.167123948312-doa2iajsd2i2tdd6ep5ub65tguogvlev</string>
+	<string>com.googleusercontent.apps.167123948312-0ko5a2m0bbk1q0ls5psosrr2gctsugqq</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDOdP7wE6YqrIiCyrvxs9j7LZpfu7DeCTU</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.casaverseios</string>
+	<string>org.native.CasaVerse</string>
 	<key>PROJECT_ID</key>
 	<string>casaverse-2ca5f</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:167123948312:ios:55a1e740d0ec2f2089046d</string>
+	<string>1:167123948312:ios:627331b0ba25e6ad89046d</string>
 </dict>
 </plist>
