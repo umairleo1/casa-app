@@ -69,7 +69,7 @@ export default function ResetPassword() {
         message: 'Password Changed Successfully',
         type: 'success',
       });
-      navigation.navigate('Login');
+      navigation.navigate('SIGNUP');
       setIsLoading(false);
     } catch (error) {
       console.log(error);

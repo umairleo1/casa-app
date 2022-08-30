@@ -7,6 +7,7 @@ const storeToken = async value => {
   try {
     const jsonObj = JSON.stringify(value);
     await AsyncStorage.setItem(userToken, jsonObj);
+    console.log('User Token stored ', value);
   } catch (e) {
     console.log('Error in storing user token', e);
   }

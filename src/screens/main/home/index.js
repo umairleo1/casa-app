@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import {styles} from './styles';
@@ -26,7 +27,7 @@ import images from 'src/assets/images';
 import moment from 'moment';
 import {profileServices} from 'src/services/profile-services';
 import {setUserProfile} from 'src/redux/profile/profile-actions';
-import ActivityIndicator from 'src/components/loader/activity-indicator';
+import ActivityIndicatorr from 'src/components/loader/activity-indicator';
 import colors from 'src/utils/themes/global-colors';
 
 export default function Home() {
@@ -62,11 +63,11 @@ export default function Home() {
     }
   };
 
-  const getAllFeeds = async () => {
+  const getAllFeeds = async page => {
     try {
       setIsLoading(true);
       const res = await postServices.getHomeAllPostApi(
-        limit.currentPage,
+        page ? page : limit.currentPage,
         limit.limit,
       );
       console.log('Aho    =====> ', res);
@@ -84,15 +85,14 @@ export default function Home() {
   };
 
   const loadMore = async () => {
-    await setLimit({...limit, currentPage: limit.currentPage + 1});
-
     try {
       const result = await postServices.getHomeAllPostApi(
-        limit.currentPage,
+        limit.currentPage + 1,
         limit.limit,
       );
-
+      // console.log('Load more ========> ', result, ' ', limit.currentPage);
       setFeeds([...feeds, ...result.posts]);
+      setLimit({...limit, currentPage: limit.currentPage + 1});
     } catch (error) {
       console.log(error);
     }
@@ -103,7 +103,7 @@ export default function Home() {
       setRefreshing(true);
       const res = await postServices.getHomeAllPostApi('1', limit.limit);
       setFeeds(res.posts);
-      setLimit({...limit, availablePages: res?.totalPages});
+      setLimit({...limit, availablePages: res?.totalPages, currentPage: 1});
       setRefreshing(false);
     } catch (error) {
       console.log(error);
@@ -123,7 +123,7 @@ export default function Home() {
         formdata.append('description', status);
         await postServices.addPost(formdata);
 
-        getAllFeeds();
+        getAllFeeds(1);
         setStatus('');
       } catch (error) {
         console.log('error -------', error);
@@ -137,12 +137,16 @@ export default function Home() {
 
   const ListItem = ({item}) => {
     const [like, setLike] = useState(item?.isLiked);
+    const [likeValue, setLikeValue] = React.useState(item?.postlikes);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const likePost = async id => {
       try {
         const result = await postServices.likePostApi(id);
         console.log(result);
-        await getAllFeeds();
+        !like ? setLikeValue(likeValue + 1) : setLikeValue(likeValue - 1);
+
+        // await getAllFeeds();
         setLike(!like);
       } catch (error) {
         console.log(error);
@@ -178,7 +182,16 @@ export default function Home() {
         <Text style={styles.content}>{item?.description}</Text>
         {item?.files?.length > 0 && (
           <View style={styles.row}>
+            {isLoading && (
+              <ActivityIndicator
+                style={{position: 'absolute', zIndex: 101}}
+                size="small"
+                color={colors.buttonColor}
+              />
+            )}
             <Image
+              onLoadStart={() => setIsLoading(true)}
+              onLoadEnd={() => setIsLoading(false)}
               source={{uri: item?.files[0]?.url}}
               style={[styles.postImage]}
               resizeMode="contain"
@@ -194,9 +207,7 @@ export default function Home() {
               }}>
               <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>
-              {item?.postlikes}
-            </Text>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
             <Image source={images.people} style={styles.likeImg} />
             <Image
               source={images.people}
@@ -247,7 +258,7 @@ export default function Home() {
       rightIcon
       onPressChat={() => navigation.navigate('CHAT_TAB')}
       onPressBack={() => navigation.goBack()}>
-      <ActivityIndicator visible={isLoading} />
+      <ActivityIndicatorr visible={isLoading} />
       <FlatList
         data={feeds}
         ListHeaderComponent={

@@ -95,7 +95,7 @@ export default function Signup() {
             </Text>
           </TouchableOpacity>
         </View>
-        {showSignUp ? <SignupForm /> : <Login />}
+        {showSignUp ? <SignupForm setShowSignUp={setShowSignUp} /> : <Login />}
       </Background>
     </View>
   );

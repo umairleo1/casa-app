@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import moment from 'moment';
@@ -29,7 +30,11 @@ import {postServices} from 'src/services/post-service';
 import images from 'src/assets/images';
 import PopUpModal from 'src/components/pop-up-modal';
 import AlertMessage from 'src/components/alert-message';
-import ActivityIndicator from 'src/components/loader/activity-indicator';
+import ActivityIndicatorr from 'src/components/loader/activity-indicator';
+import {
+  ZoomBackgroundPicModal,
+  ZoomPicModal,
+} from 'src/components/zoom-pic-modal';
 
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
@@ -44,6 +49,8 @@ export default function ViewProfile({route}) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [alertMessage, setAlertMessage] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [showimage, setShowImage] = React.useState(false);
+  const [showCover, setShowCover] = React.useState(false);
 
   const getProfile = async () => {
     // console.log('route?.params?.id', route?.params?.id);
@@ -167,7 +174,8 @@ export default function ViewProfile({route}) {
   const ListItem = ({item}) => {
     // console.log('check ==========> ', item);
     const [like, setLike] = React.useState(item?.isLiked);
-    const [increment, setIncrement] = React.useState(0);
+    const [likeValue, setLikeValue] = React.useState(item?.postlikes);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     const likePost = async id => {
       try {
@@ -175,7 +183,7 @@ export default function ViewProfile({route}) {
         console.log(result);
         route?.params?.id ? getUsersAllPosts() : getMyAllPosts();
         setLike(!like);
-        setIncrement(like ? increment - 1 : increment + 1);
+        !like ? setLikeValue(likeValue + 1) : setLikeValue(likeValue - 1);
       } catch (error) {
         console.log(error);
         showMessage({
@@ -222,7 +230,16 @@ export default function ViewProfile({route}) {
         <Text style={styles.content}>{item?.description}</Text>
         {item?.files.length > 0 && (
           <View style={styles.row}>
+            {isLoading && (
+              <ActivityIndicator
+                style={{position: 'absolute', zIndex: 101}}
+                size="small"
+                color={colors.buttonColor}
+              />
+            )}
             <Image
+              onLoadStart={() => setIsLoading(true)}
+              onLoadEnd={() => setIsLoading(false)}
               source={{uri: item?.files[0]?.url}}
               style={[styles.postImage]}
               resizeMode="contain"
@@ -238,9 +255,7 @@ export default function ViewProfile({route}) {
               }}>
               <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>
-              {item?.postlikes}
-            </Text>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
             <Image source={images.people} style={styles.likeImg} />
             <Image
               source={images.people}
@@ -290,12 +305,28 @@ export default function ViewProfile({route}) {
       onPressBack={() => navigation.goBack()}
       feather={'setting'}
       onPress={() => navigation.navigate('SETTING')}>
-      <ActivityIndicator visible={isLoading} />
+      <ActivityIndicatorr visible={isLoading} />
+      <ZoomPicModal
+        visible={showimage}
+        iconPress={() => setShowImage(false)}
+        image={data?.user?.profileImage}
+        imageStyle={{height: '60%', width: '90%'}}
+      />
+      <ZoomBackgroundPicModal
+        visible={showCover}
+        iconPress={() => setShowCover(false)}
+        image={data?.user?.coverImage}
+        imageStyle={{height: '60%', width: '90%'}}
+      />
       <ScrollView showsVerticalScrollIndicator={false}>
         <BackgroundImageWithImage
           imageBackGround={data?.user?.coverImage}
           image={data?.user?.profileImage}
+          showEdit={false}
+          onPressZoomProfile={() => setShowImage(true)}
+          onPressBackgroundZoom={() => setShowCover(true)}
         />
+
         <Text style={styles.name}>
           {(data?.user?.firstName || '') + ' ' + (data?.user?.lastName || '')}
         </Text>

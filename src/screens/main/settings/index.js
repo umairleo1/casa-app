@@ -12,6 +12,7 @@ import {handleLogout} from 'src/redux/auth/auth-actions';
 import Button from 'src/components/button';
 import colors from 'src/utils/themes/global-colors';
 import {profileServices} from 'src/services/profile-services';
+import {showMessage} from 'react-native-flash-message';
 
 export default function Settings() {
   const navigation = useNavigation();
@@ -29,19 +30,15 @@ export default function Settings() {
       asyncStorage.removeFcmToken();
     } catch (error) {
       console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
     }
   };
 
   return (
     <Header heading={'Settings'} onPressBack={() => navigation.goBack()}>
-      {/* <View style={styles.searchInputView}>
-        <SearchInput
-          placeholder={'Search for a Setting'}
-          icon={'search1'}
-          iconSize={24}
-          borderColor={colors.innerBorder}
-        />
-      </View> */}
       <View style={styles.settingSectionView}>
         <SettingSection
           leftIcon={images.profile}

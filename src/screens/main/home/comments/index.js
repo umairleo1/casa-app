@@ -30,11 +30,8 @@ export default function Comments() {
   const [post, setPost] = React.useState(route?.params?.data);
   // const [comment, setComment] = React.useState('');
 
-  console.log(route?.params?.data);
-
   const addComment = async comment => {
     Keyboard.dismiss();
-    console.log(comment);
 
     try {
       const result = await postServices.addCommentApi(
@@ -69,7 +66,9 @@ export default function Comments() {
 
   const ListItem = ({item}) => {
     const [like, setLike] = React.useState(route?.params?.isLiked);
-    const [increment, setIncrement] = React.useState(0);
+    const [likeValue, setLikeValue] = React.useState(
+      route?.params?.data?.postlikes,
+    );
     return (
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
@@ -115,15 +114,15 @@ export default function Comments() {
           <View style={styles.row}>
             <TouchableOpacity
               onPress={() => {
-                setLike(!like),
-                  likePost(),
-                  setIncrement(like ? increment - 1 : increment + 1);
+                !like
+                  ? setLikeValue(likeValue + 1)
+                  : setLikeValue(likeValue - 1),
+                  setLike(!like),
+                  likePost();
               }}>
               <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>
-              {item?.postlikes || route?.params?.data?.postlikes + increment}
-            </Text>
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
             <Image source={images.people} style={styles.likeImg} />
             <Image
               source={images.people}

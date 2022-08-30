@@ -5,6 +5,7 @@ import {
   ScrollView,
   Platform,
   PermissionsAndroid,
+  Keyboard,
 } from 'react-native';
 import React from 'react';
 import Header from 'src/components/headerView';
@@ -106,6 +107,7 @@ export default function AddPost() {
   };
 
   const handleAddNewPost = async () => {
+    Keyboard.dismiss();
     if (description == '') {
       showMessage({
         message: 'Post and description must not be empty',

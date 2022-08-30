@@ -39,6 +39,22 @@ export default function CasaVerseNavigator() {
     if (user) dispatch(setUserReduxToken(user));
   };
 
+  //Push Notifications
+
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Enabled');
+      const fcmTokenn = await messaging().getToken();
+      dispatch(setFcmTokenRedux(fcmTokenn));
+      console.log('Here is the fcm token ', Platform.OS, ' ', fcmTokenn);
+    }
+  }
+
   const onRemoteNotification = notification => {
     const isClicked = notification.getData().userInteraction === 1;
 
@@ -48,19 +64,6 @@ export default function CasaVerseNavigator() {
       // Do something else with push notification
     }
   };
-
-  async function requestUserPermission() {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    if (enabled) {
-      const fcmTokenn = await messaging().getToken();
-      dispatch(setFcmTokenRedux(fcmTokenn));
-      console.log('Here is the fcm token ', Platform.OS, ' ', fcmTokenn);
-    }
-  }
 
   //Must be outside of any component LifeCycle (such as `componentDidMount`).
   messaging().setBackgroundMessageHandler(async remoteMessage => {
@@ -127,32 +130,11 @@ export default function CasaVerseNavigator() {
     created => console.log(`createChannel returned '${created}'`),
   );
 
-  // const ExampleSend = () => {
-  //   PushNotification.localNotification({
-  //     channelId: 'channel-id',
-  //     foreground: false,
-  //     userInteraction: true,
-  //     autoCancel: true,
-  //     // bigText: 'notification.data.body',
-  //     title: 'Casa App',
-  //     message: 'hello welcome to jamanji',
-  //     // subText: 'notification.data.body',
-  //     // actions: '["Yes", "No"]',
-  //   });
-  //   // PushNotificationIOS.addNotificationRequest({
-  //   //   id: 'channel-id',
-  //   //   title: 'Notification',
-  //   // });
-  // };
-
   return (
     <>
       <NavigationContainer>
         {userToken !== '' ? <AppNavigator /> : <AuthNavigator />}
       </NavigationContainer>
-      {/* <TouchableOpacity onPress={() => ExampleSend()}>
-        <Text>gbf gf</Text>
-      </TouchableOpacity> */}
     </>
   );
 }

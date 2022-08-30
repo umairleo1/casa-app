@@ -24,6 +24,7 @@ export default function BackgroundImageWithImage({
   onPressProfileImage,
   onPressZoomProfile,
   onPressBackgroundZoom,
+  showEdit,
 }) {
   const [profileLoader, setProfileLoader] = useState(false);
   const [coverLoader, setCoverLoader] = useState(false);
@@ -60,12 +61,13 @@ export default function BackgroundImageWithImage({
           </TouchableOpacity>
         </ImageBackground>
       </Pressable>
-
-      <TouchableOpacity
-        style={styles.profilePicIcon}
-        onPress={onPressProfileImage}>
-        <EditIcon />
-      </TouchableOpacity>
+      {showEdit && (
+        <TouchableOpacity
+          style={styles.profilePicIcon}
+          onPress={onPressProfileImage}>
+          <EditIcon />
+        </TouchableOpacity>
+      )}
     </>
   );
 }

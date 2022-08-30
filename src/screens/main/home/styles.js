@@ -94,5 +94,9 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff',
   },
-  row: {flexDirection: 'row', alignItems: 'center'},
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
