@@ -32,4 +32,9 @@ export const styles = StyleSheet.create({
     width: 120,
     marginTop: 5,
   },
+  rightImage: {
+    height: 40,
+    width: 40,
+    borderRadius: 40 / 2,
+  },
 });

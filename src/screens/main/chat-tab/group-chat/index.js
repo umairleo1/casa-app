@@ -10,8 +10,10 @@ import {
 import DefaultButton from 'src/components/default-button';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import MembersSheet from '../bottom-sheet';
+import {useNavigation} from '@react-navigation/native';
 
 export default function GroupChat() {
+  const navigation = useNavigation();
   const refRBSheet = useRef();
 
   const dummyData = [
@@ -73,7 +75,7 @@ export default function GroupChat() {
             />
             <DefaultButton
               text={'Open Chat'}
-              onPress={undefined}
+              onPress={() => navigation.navigate('GIFTED_CHAT')}
               buttonStyle={{
                 borderWidth: 1.5,
                 backgroundColor: colors.buttonColor,

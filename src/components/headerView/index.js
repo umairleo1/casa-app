@@ -20,6 +20,7 @@ export default function Header({
   onPressChat,
   newChatIcon,
   onPressNewChat,
+  rightImage,
 }) {
   return (
     <View style={styles.container}>
@@ -44,6 +45,8 @@ export default function Header({
           />
         ) : newChatIcon ? (
           <NewChatIcon onPress={onPressNewChat} />
+        ) : rightImage ? (
+          <Image source={rightImage} style={styles.rightImage} />
         ) : (
           <Text></Text>
         )}

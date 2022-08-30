@@ -2,11 +2,11 @@
 import * as React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
-function SendIcon({onPress}) {
+function SendIcon({onPress, height, width}) {
   return (
     <Svg
-      width="26"
-      height="26"
+      width={height}
+      height={width}
       viewBox="0 0 26 26"
       fill="none"
       onPress={onPress}

@@ -1,5 +1,12 @@
 /* eslint-disable react/prop-types */
-import {Text, View, FlatList, Image, SectionList} from 'react-native';
+import {
+  Text,
+  View,
+  FlatList,
+  Image,
+  SectionList,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import Header from 'src/components/headerView';
 import SearchInput from 'src/components/searchInput';
@@ -7,8 +14,10 @@ import colors from 'src/utils/themes/global-colors';
 import {CrossIcon} from 'src/assets/svg/chat';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import {styles} from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 export default function CreateGroup() {
+  const navigation = useNavigation();
   const dummyData = [
     {
       name: 'Maria Sanchez',
@@ -80,13 +89,15 @@ export default function CreateGroup() {
   const listItem = ({item}) => {
     return (
       <View style={styles.mainContainer}>
-        <View style={styles.groupView}>
+        <TouchableOpacity
+          style={styles.groupView}
+          onPress={() => navigation.navigate('ADD_GROUP_NAME')}>
           <Image source={item.image} style={styles.image} />
           <View style={styles.crossIconView}>
             <CrossIcon onPress={undefined} />
           </View>
           <Text style={styles.name}>{item.name}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -114,7 +125,9 @@ export default function CreateGroup() {
   };
 
   return (
-    <Header heading={'Add Group Members'}>
+    <Header
+      heading={'Add Group Members'}
+      onPressBack={() => navigation.goBack()}>
       <View style={styles.Container}>
         <SearchInput
           placeholder={'Search...'}

@@ -46,4 +46,10 @@ export default {
 
   //Create Group
   CREATE_GROUP: 'CREATE_GROUP',
+
+  //Add Group Name
+  ADD_GROUP_NAME: 'ADD_GROUP_NAME',
+
+  //Gifted Chat
+  GIFTED_CHAT: 'GIFTED_CHAT',
 };

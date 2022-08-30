@@ -47,6 +47,8 @@ export default function CommentInput({
                 await onPressSend(comment);
                 setComment('');
               }}
+              height={26}
+              width={26}
             />
           </TouchableOpacity>
         </View>

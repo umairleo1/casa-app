@@ -14,6 +14,7 @@ import images from 'src/assets/images';
 import moment from 'moment';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 import colors from 'src/utils/themes/global-colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export default function Notification() {
   const [notification, setNotification] = React.useState([]);
@@ -79,22 +80,29 @@ export default function Notification() {
                     borderWidth: 1,
                     marginTop: 8,
                     paddingHorizontal: 5,
-                    padding: 3,
+                    padding: 5,
                   }}>
-                  <Text style={{color: colors.buttonColor}}>Discrad</Text>
+                  <Text
+                    style={{color: colors.buttonColor, fontSize: RFValue(10)}}>
+                    Discrad
+                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={{
                     // width: 61,
                     backgroundColor: colors.buttonColor,
-                    paddingHorizontal: 5,
-                    padding: 4,
                     borderRadius: 3,
+                    borderWidth: 1,
                     marginTop: 8,
+                    paddingHorizontal: 5,
+                    padding: 5,
                     marginLeft: 5,
                   }}>
-                  <Text style={{color: colors.whiteColor}}>Follow Back</Text>
+                  <Text
+                    style={{color: colors.whiteColor, fontSize: RFValue(10)}}>
+                    Follow Back
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>
