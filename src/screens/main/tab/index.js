@@ -100,7 +100,7 @@ export default function BottomTab() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        unmountOnBlur: true,
+        unmountOnBlur: false,
         tabBarActiveTintColor: colors.buttonColor,
       }}>
       <Tab.Screen

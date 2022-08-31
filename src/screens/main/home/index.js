@@ -1,39 +1,29 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {
-  Text,
-  View,
-  FlatList,
-  Image,
-  TouchableOpacity,
-  RefreshControl,
-  ActivityIndicator,
-} from 'react-native';
+import {Text, FlatList, RefreshControl} from 'react-native';
 import React, {useState} from 'react';
-import {styles} from './styles';
+
 import Header from 'src/components/headerView';
 
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import PostStatus from 'src/components/post-card';
-
-import Heart from 'assets/svg/Common/heart';
-import Chart from 'assets/svg/Common/chat';
 
 import PopUpModal from 'src/components/pop-up-modal';
 import {postServices} from 'src/services/post-service';
 import {showMessage} from 'react-native-flash-message';
 import images from 'src/assets/images';
-import moment from 'moment';
+
 import {profileServices} from 'src/services/profile-services';
 import {setUserProfile} from 'src/redux/profile/profile-actions';
 import ActivityIndicatorr from 'src/components/loader/activity-indicator';
-import colors from 'src/utils/themes/global-colors';
-import FlatListCustom from 'src/components/carosel-slider';
+
+import PostView from 'src/components/post-view';
 
 export default function Home() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   const [popUpModal, setPopUpModal] = useState(false);
   const [feeds, setFeeds] = React.useState([]);
   const [limit, setLimit] = React.useState({
@@ -42,7 +32,7 @@ export default function Home() {
     availablePages: 1,
   });
   const [refreshing, setRefreshing] = React.useState(false);
-  const userData = useSelector(state => state?.profile?.userProfile);
+
   const [status, setStatus] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -91,8 +81,8 @@ export default function Home() {
         limit.currentPage + 1,
         limit.limit,
       );
-      // console.log('Load more ========> ', result, ' ', limit.currentPage);
-      setFeeds([...feeds, ...result.posts]);
+      // console.log('load more ', result);
+      setFeeds([...result.posts]);
       setLimit({...limit, currentPage: limit.currentPage + 1});
     } catch (error) {
       console.log(error);
@@ -136,124 +126,6 @@ export default function Home() {
     }
   };
 
-  const ListItem = ({item}) => {
-    const [like, setLike] = useState(item?.isLiked);
-    const [likeValue, setLikeValue] = React.useState(item?.postlikes);
-    const [isLoading, setIsLoading] = React.useState(false);
-
-    const likePost = async id => {
-      try {
-        const result = await postServices.likePostApi(id);
-        console.log(result);
-        !like ? setLikeValue(likeValue + 1) : setLikeValue(likeValue - 1);
-
-        // await getAllFeeds();
-        setLike(!like);
-      } catch (error) {
-        console.log(error);
-        showMessage({
-          message: error.errMsg,
-          type: 'danger',
-        });
-      }
-    };
-
-    return (
-      <View style={styles.mainContainer}>
-        <View style={styles.flatlistView}>
-          <View style={styles.flatlistView2}>
-            <Image
-              source={
-                item?.postedBy?.profileImage
-                  ? {uri: item?.postedBy?.profileImage}
-                  : images.profile
-              }
-              style={styles.image}
-            />
-            <View style={styles.flatlistView3}>
-              <Text style={styles.flatlistName}>
-                {item?.postedBy?.firstName + ' ' + item?.postedBy?.lastName}
-              </Text>
-              <Text style={styles.mail}>
-                {moment(item?.createdAt).format('MMM DD YYYY')}
-              </Text>
-            </View>
-          </View>
-        </View>
-        <Text style={styles.content}>{item?.description}</Text>
-        <FlatListCustom image={{uri:item?.files[1]?.url}} data={feeds}/>
-        {/* {item?.files?.length > 0 && (
-          <View style={styles.row}>
-            {isLoading && (
-              <ActivityIndicator
-                style={{position: 'absolute', zIndex: 101}}
-                size="small"
-                color={colors.buttonColor}
-              />
-            )}
-            <Image
-              onLoadStart={() => setIsLoading(true)}
-              onLoadEnd={() => setIsLoading(false)}
-              source={{uri: item?.files[0]?.url}}
-              style={[styles.postImage]}
-              resizeMode="contain"
-            />
-          </View>
-        )} */}
-
-        <View style={styles.footer}>
-          <View style={styles.row}>
-            <TouchableOpacity
-              onPress={() => {
-                likePost(item._id);
-              }}>
-              <Heart color={like ? colors.danger : '#BBB'} />
-            </TouchableOpacity>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
-            <Image source={images.people} style={styles.likeImg} />
-            <Image
-              source={images.people}
-              style={[styles.likeImg, {marginLeft: -8}]}
-            />
-            <Image
-              source={images.people}
-              style={[styles.likeImg, {marginLeft: -8}]}
-            />
-            <View style={{width: 130}}>
-              <Text style={[styles.text]}>
-                <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>
-                  {item?.likes[0]?.likesBy?.firstName}
-                  {item?.likes[1] && ', '}
-                  {item?.likes[1]?.likesBy?.firstName}
-                </Text>
-                {item?.likes?.length > 1 && (
-                  <Text style={[styles.likedMore, {color: '#BBBBBB'}]}>
-                    {' '}
-                    and {item?.postlikes - 2} more liked this.
-                  </Text>
-                )}
-              </Text>
-            </View>
-          </View>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('COMMENTS', {
-                data: item,
-                render: onRefresh,
-                isLiked: like,
-              })
-            }
-            style={styles.row}>
-            <Chart />
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>
-              {item?.comments?.length}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
-
   return (
     <Header
       leftImage={images.blueAppLogo}
@@ -264,6 +136,7 @@ export default function Home() {
 
       <FlatList
         data={feeds}
+        keyExtractor={item => item.id}
         ListHeaderComponent={
           <PostStatus
             onPressPostButton={() => handlePost()}
@@ -272,17 +145,17 @@ export default function Home() {
             value={status}
           />
         }
-        renderItem={({item}) => <ListItem item={item} />}
-        keyExtractor={item => item.id}
+        renderItem={({item}) => <PostView onRefresh={onRefresh} item={item} />}
         contentContainerStyle={{
           marginHorizontal: 20,
         }}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <>
-          <Text style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
-            No Feeds Yet
-          </Text>
+            <Text
+              style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
+              No Feeds Yet
+            </Text>
           </>
         }
         onEndReached={() => {

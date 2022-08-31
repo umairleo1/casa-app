@@ -181,11 +181,12 @@ export default function AddPost() {
         console.log('Success edit post ', result);
         setAddPost([]);
         setDescription('');
-        navigation.navigate('Home');
+        navigation.goBack();
         setIsLoading(false);
       } catch (error) {
         console.log(error);
         setIsLoading(false);
+        navigation.goBack();
       }
     }
   };

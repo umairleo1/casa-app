@@ -35,7 +35,11 @@ export default function UploadAddPost({
                   setRemoved([
                     ...removed,
                     ...preview.filter(el => el.name == data.name),
-                  ]))
+                  ]),
+                  console.log(
+                    'Hahah ',
+                    preview.filter(el => el.name !== data.name),
+                  ))
                 : onClosePress(
                     preview.filter(el => el.fileName !== data.fileName),
                   );
@@ -44,39 +48,39 @@ export default function UploadAddPost({
           style={styles.closeIcon}>
           <AntDesign name={'close'} size={12} color={colors.black} />
         </TouchableOpacity>
-        <Image
-          style={{
-            height: '100%',
-            width: '100%',
-            borderRadius: 5,
-            overflow: 'hidden',
-          }}
-          source={{uri: data?.uri || data?.url}}
-          resizeMode="cover"
-        />
+
+        {data?.myTypeOf == 'image/jpeg' ? (
+          <Image
+            style={{
+              height: '100%',
+              width: '100%',
+              borderRadius: 5,
+              overflow: 'hidden',
+            }}
+            source={{uri: data?.uri || data?.url}}
+            resizeMode="cover"
+          />
+        ) : (
+          <Video
+            source={{
+              uri: data?.url,
+            }}
+            controls={true}
+            paused={true}
+            style={{
+              height: '100%',
+              width: '100%',
+              borderRadius: 5,
+              overflow: 'hidden',
+            }}
+            repeat={true}
+            playWhenInactive={true}
+            fullscreen={true}
+            onLoadStart={() => {}}
+            resizeMode="cover"
+          />
+        )}
       </View>
-
-      {/* <View style={{height: 185, width: 200, margin: 5}}>
-        <TouchableOpacity onPress={onClosePress} style={styles.closeIcon}>
-          <AntDesign name={'close'} size={12} color={colors.black} />
-        </TouchableOpacity>
-      </View> */}
-
-      {/* <View style={{height: 185, width: 200, margin: 5}}>
-        <Video
-          source={{
-            uri: data?.uri,
-          }}
-          controls={true}
-          paused={true}
-          style={{height: '100%', width: '100%', backgroundColor: 'red'}}
-          repeat={true}
-          playWhenInactive={true}
-          fullscreen={true}
-          onLoadStart={() => {}}
-          resizeMode="cover"
-        />
-      </View> */}
     </>
   );
 
@@ -94,19 +98,6 @@ export default function UploadAddPost({
             renderItem={({item}) => <RenderPreview data={item} />}
             showsHorizontalScrollIndicator={false}
           />
-
-          {/* <RenderPreview data={preview[0]} /> */}
-
-          {/* <TouchableOpacity
-            style={{
-              height: '100%',
-              width: '10%',
-              backgroundColor: '#3D3D3D10',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text style={styles.text}>+2</Text>
-          </TouchableOpacity> */}
         </>
       ) : (
         <>
