@@ -1,12 +1,12 @@
-import {Text, View, FlatList, Image,TouchableOpacity} from 'react-native';
+import {Text, View, FlatList, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import SearchInput from 'src/components/searchInput';
 import colors from 'src/utils/themes/global-colors';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 export default function Chat() {
-  const navigation =useNavigation();
+  const navigation = useNavigation();
   const dummyData = [
     {
       text: 'Maria Valdez',
@@ -94,7 +94,9 @@ export default function Chat() {
   const listItem = ({item}) => {
     return (
       <View style={styles.mainContainer}>
-        <TouchableOpacity style={styles.flatlistView} onPress={()=>navigation.navigate('GIFTED_CHAT')}>
+        <TouchableOpacity
+          style={styles.flatlistView}
+          onPress={() => navigation.navigate('GIFTED_CHAT')}>
           <View style={styles.flatlistView2}>
             <Image source={item.userImage} style={styles.image} />
             <View style={styles.flatlistView3}>

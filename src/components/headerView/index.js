@@ -22,7 +22,7 @@ export default function Header({
   newChatIcon,
   onPressNewChat,
   rightImage,
-  onPressInbox
+  onPressInbox,
 }) {
   return (
     <View style={styles.container}>
@@ -40,23 +40,22 @@ export default function Header({
         <Text style={styles.text}>{heading}</Text>
 
         {feather ? (
-        <View style={{flexDirection:"row"}}>
-        <Ionicons
-            name="chatbubble-ellipses-outline"
-            size={24}
-            color={colors.black}
-            onPress={onPressInbox}
-            style={{marginRight:15}}
-          /> 
-          <Feather
-            name="settings"
-            size={24}
-            color={colors.black}
-            onPress={onPress}
-          />
+          <View style={{flexDirection: 'row'}}>
+            <Ionicons
+              name="chatbubble-ellipses-outline"
+              size={24}
+              color={colors.black}
+              onPress={onPressInbox}
+              style={{marginRight: 15}}
+            />
+            <Feather
+              name="settings"
+              size={24}
+              color={colors.black}
+              onPress={onPress}
+            />
           </View>
-     
-        // {feather ? (
+        ) : // {feather ? (
         //   <>
         //    <Feather
         //     name="settings"
@@ -65,8 +64,8 @@ export default function Header({
         //     onPress={onPress}
         //   />
         //   </>
-          
-        ) : newChatIcon ? (
+
+        newChatIcon ? (
           <NewChatIcon onPress={onPressNewChat} />
         ) : rightImage ? (
           <Image source={rightImage} style={styles.rightImage} />
