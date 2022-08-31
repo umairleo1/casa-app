@@ -16,8 +16,8 @@ export default function Background({children, image, title, description}) {
           <Image source={image} style={styles.image} />
           <Text style={styles.text2}>{title}</Text>
           <Text style={styles.text3}>{description}</Text>
-          {children}
         </View>
+        {children}
       </KeyboardAwareScrollView>
     </ImageBackground>
   );

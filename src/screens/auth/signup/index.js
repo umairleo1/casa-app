@@ -49,15 +49,16 @@ export default function Signup() {
           <Tab.Screen name="Sign Up" component={SignupForm} />
           <Tab.Screen name="Login" component={Login} />
         </Tab.Navigator> */}
-
         <View
           style={{
-            width: '100%',
+            // width: '100%',
             flexDirection: 'row',
             height: 60,
             backgroundColor: '#fff',
             borderBottomWidth: 1,
             borderBottomColor: '#E6ECF5',
+            marginHorizontal: 20,
+            // marginLeft:20
           }}>
           <TouchableOpacity
             style={{
@@ -95,6 +96,7 @@ export default function Signup() {
             </Text>
           </TouchableOpacity>
         </View>
+
         {showSignUp ? <SignupForm setShowSignUp={setShowSignUp} /> : <Login />}
       </Background>
     </View>

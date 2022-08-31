@@ -16,6 +16,8 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.whiteColor,
     marginTop: 20,
     borderRadius: 3,
+    marginHorizontal: 20,
+
   },
   borderLine: {
     borderWidth: 1,

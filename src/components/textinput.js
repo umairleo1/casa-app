@@ -16,6 +16,8 @@ export default function Input({
   editable,
   eyeIcon,
   onPressEye,
+  onPressIn,
+  onFocus
 }) {
   return (
     <>
@@ -32,6 +34,8 @@ export default function Input({
           keyboardType={type}
           autoCapitalize={type == 'email-address' ? 'none' : 'sentences'}
           editable={editable}
+          onPressIn={onPressIn}
+          onFocus={onFocus}
         />
         <View>
           <Ionicons

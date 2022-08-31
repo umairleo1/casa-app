@@ -34,6 +34,7 @@ export const styles = StyleSheet.create({
   buttonView: {},
   scrollView: {
     backgroundColor: colors.whiteColor,
+    marginHorizontal: 20,
     flex: 1,
   },
 });
