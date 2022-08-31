@@ -29,6 +29,7 @@ import {profileServices} from 'src/services/profile-services';
 import {setUserProfile} from 'src/redux/profile/profile-actions';
 import ActivityIndicatorr from 'src/components/loader/activity-indicator';
 import colors from 'src/utils/themes/global-colors';
+import FlatListCustom from 'src/components/carosel-slider';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -180,7 +181,8 @@ export default function Home() {
           </View>
         </View>
         <Text style={styles.content}>{item?.description}</Text>
-        {item?.files?.length > 0 && (
+        <FlatListCustom image={{uri:item?.files[1]?.url}} data={feeds}/>
+        {/* {item?.files?.length > 0 && (
           <View style={styles.row}>
             {isLoading && (
               <ActivityIndicator
@@ -197,7 +199,7 @@ export default function Home() {
               resizeMode="contain"
             />
           </View>
-        )}
+        )} */}
 
         <View style={styles.footer}>
           <View style={styles.row}>
@@ -259,6 +261,7 @@ export default function Home() {
       onPressChat={() => navigation.navigate('CHAT_TAB')}
       onPressBack={() => navigation.goBack()}>
       <ActivityIndicatorr visible={isLoading} />
+
       <FlatList
         data={feeds}
         ListHeaderComponent={
@@ -276,9 +279,11 @@ export default function Home() {
         }}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
+          <>
           <Text style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
             No Feeds Yet
           </Text>
+          </>
         }
         onEndReached={() => {
           limit.currentPage < limit.availablePages && loadMore();
