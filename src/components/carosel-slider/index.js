@@ -1,35 +1,101 @@
-// import {StyleSheet, View} from 'react-native';
-// import React from 'react';
-// import {FlatListSlider} from 'react-native-flatlist-slider';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+import React from 'react';
+import {
+  SafeAreaView,
+  View,
+  FlatList,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+  Dimensions,
+} from 'react-native';
+import colors from 'src/utils/themes/global-colors';
+// import Video from 'react-native-video';
 
-// export default function Slider({data, component}) {
-//   const images = [
-//     {
-//       image:
-//         'https://images.unsplash.com/photo-1567226475328-9d6baaf565cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
-//       desc: 'Silent Waters in the mountains in midst of Himilayas',
-//     },
-//     {
-//       image:
-//         'https://images.unsplash.com/photo-1455620611406-966ca6889d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1130&q=80',
-//       desc: 'Red fort in India New Delhi is a magnificient masterpeiece of humans',
-//     },
-//   ];
-//   return (
-//     <View style={{height: 100, width: 200}}>
-//       <FlatListSlider
-//         data={data}
-//         // width={200}
-//         // height={300}
-//         component={component}
-//         onPress={item => alert(JSON.stringify(item))}
-//         indicatorActiveWidth={20}
-//         contentContainerStyle={{
-//           paddingHorizontal: 16,
-//         }}
-//       />
-//     </View>
-//   );
-// }
+const FlatListCustom = ({data}) => {
+  const RenderItem = ({item}) => {
+    const [isLoading, setIsLoading] = React.useState(false);
 
-// // const styles = StyleSheet.create({});
+    return (
+      <>
+        <View
+          style={{
+            margin: 4,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          {isLoading && (
+            <ActivityIndicator
+              style={{position: 'absolute', zIndex: 101}}
+              size="small"
+              color={colors.buttonColor}
+            />
+          )}
+
+          {
+            item?.myTypeOf == 'image/jpeg' ? (
+              <Image
+                onLoadStart={() => setIsLoading(true)}
+                onLoadEnd={() => setIsLoading(false)}
+                source={{uri: item?.url}}
+                style={[
+                  styles.image,
+                  {
+                    width:
+                      data.length == 1
+                        ? Dimensions.get('window').width * 0.9
+                        : 230,
+                  },
+                ]}
+                resizeMode="contain"
+              />
+            ) : null
+            // <Video
+            //   source={{
+            //     uri: item?.url,
+            //   }}
+            //   controls={true}
+            //   paused={true}
+            //   style={styles.image}
+            //   repeat={true}
+            //   playWhenInactive={false}
+            //   fullscreen={true}
+            //   // onLoadStart={() => setIsLoading(true)}
+            //   // onLoadEnd={() => setIsLoading(false)}
+            //   resizeMode="cover"
+            // />
+          }
+        </View>
+      </>
+    );
+  };
+
+  return (
+    // <SafeAreaView style={styles.container}>
+    <FlatList
+      data={data}
+      horizontal={true}
+      renderItem={({item}) => <RenderItem item={item} />}
+      keyExtractor={item => item.id}
+      showsHorizontalScrollIndicator={false}
+    />
+    // </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    // flex: 1,
+  },
+  title: {
+    fontSize: 32,
+  },
+  image: {
+    height: 260,
+    overflow: 'hidden',
+    borderRadius: 3,
+  },
+});
+
+export default FlatListCustom;
