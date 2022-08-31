@@ -8,6 +8,8 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.whiteColor,
     borderRadius: 3,
     marginTop: 20,
+    marginHorizontal: 20,
+
   },
 
   resetPassword: {

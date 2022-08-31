@@ -8,7 +8,7 @@ import {
   ScrollView,
   Keyboard,
 } from 'react-native';
-import React from 'react';
+import React,{useRef} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 import Heart from 'assets/svg/Common/heart';
@@ -26,6 +26,7 @@ import colors from 'src/utils/themes/global-colors';
 export default function Comments() {
   const navigation = useNavigation();
   const route = useRoute();
+  const ref = useRef();
 
   const [post, setPost] = React.useState(route?.params?.data);
   // const [comment, setComment] = React.useState('');
@@ -199,12 +200,17 @@ export default function Comments() {
     );
   };
 
+  const scrollToBottom = ()=>ref.current.scrollToEnd({ animated: true })
+
   return (
     <Header
       leftImage={images.blueAppLogo}
       rightIcon
       onPressBack={() => navigation.goBack()}>
-      <ScrollView>
+      <ScrollView 
+      ref={ref}          
+      onContentSizeChange={() => scrollToBottom()}
+      style={{ height: 500 }}>
         <View>
           {/* <FlatList
             data={dummyData}
@@ -236,6 +242,7 @@ export default function Comments() {
           placeholder={'write a comment...'}
           onPressEmoji={undefined}
           onPressSend={comment => addComment(comment)}
+          // onPressIn={()=>scrollToBottom()}
           // onChangeText={setComment}
           // value={comment}
         />

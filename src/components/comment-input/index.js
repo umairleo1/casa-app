@@ -18,6 +18,7 @@ export default function CommentInput({
   editable,
   onPressEmoji,
   onPressSend,
+  onPressIn
 }) {
   const [comment, setComment] = React.useState('');
 
@@ -39,6 +40,7 @@ export default function CommentInput({
           keyboardType={type}
           autoCapitalize={type == 'email-address' ? 'none' : 'sentences'}
           editable={editable}
+          onPressIn={onPressIn}
         />
         <View>
           <TouchableOpacity onPress={onPressSend}>
