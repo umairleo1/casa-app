@@ -14,7 +14,7 @@ import Header from 'src/components/headerView';
 import SearchInput from 'src/components/searchInput';
 import colors from 'src/utils/themes/global-colors';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {useNavigation, useIsFocused} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {peopleServices} from 'src/services/people-services';
 import images from 'src/assets/images';
 import {profileServices} from 'src/services/profile-services';
@@ -22,7 +22,6 @@ import ActivityIndicatorr from 'src/components/loader/activity-indicator';
 
 export default function FindPeople() {
   const navigation = useNavigation();
-  const focus = useIsFocused();
 
   const [search, setSearch] = React.useState('');
   const [peoples, setPeoples] = React.useState([]);
@@ -39,7 +38,7 @@ export default function FindPeople() {
 
   React.useEffect(() => {
     findPeople();
-  }, [search, focus]);
+  }, [search]);
 
   const findPeople = async () => {
     try {
@@ -128,7 +127,12 @@ export default function FindPeople() {
     return (
       <View style={styles.flatlistView}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('VIEW_PROFILE', {id: item._id})}
+          onPress={() =>
+            navigation.navigate('VIEW_PROFILE', {
+              id: item._id,
+              updater: findPeople,
+            })
+          }
           style={{justifyContent: 'center', alignItems: 'center'}}>
           {isLoading && (
             <ActivityIndicator

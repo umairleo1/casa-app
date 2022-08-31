@@ -159,6 +159,8 @@ export default function ViewProfile({route}) {
         setLoader(false);
       }
 
+      route?.params?.updater();
+
       //getFollowing();
     } catch (error) {
       setLoader(false);

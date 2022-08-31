@@ -3,8 +3,8 @@ import axios from 'axios';
 import asyncStorage from 'utils/async-storage/index';
 
 const request = axios.create({
-  // baseURL: 'http://192.168.100.53:3000',
-  baseURL: 'http://3.111.170.45:3000/',
+  // baseURL: 'http://3.111.170.45:3000/',
+  baseURL: 'http://43.205.56.71:3000/',
   headers: {
     'Content-Type': 'multipart/form-data',
     'Content-Type': 'application/json',
