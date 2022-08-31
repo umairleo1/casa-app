@@ -4,6 +4,7 @@ import React from 'react';
 import {styles} from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {NewChatIcon} from 'src/assets/svg/chat';
 
 import colors from 'src/utils/themes/global-colors';
@@ -21,6 +22,7 @@ export default function Header({
   newChatIcon,
   onPressNewChat,
   rightImage,
+  onPressInbox
 }) {
   return (
     <View style={styles.container}>
@@ -36,13 +38,34 @@ export default function Header({
           />
         )}
         <Text style={styles.text}>{heading}</Text>
+
         {feather ? (
+        <View style={{flexDirection:"row"}}>
+        <Ionicons
+            name="chatbubble-ellipses-outline"
+            size={24}
+            color={colors.black}
+            onPress={onPressInbox}
+            style={{marginRight:15}}
+          /> 
           <Feather
             name="settings"
             size={24}
             color={colors.black}
             onPress={onPress}
           />
+          </View>
+     
+        // {feather ? (
+        //   <>
+        //    <Feather
+        //     name="settings"
+        //     size={24}
+        //     color={colors.black}
+        //     onPress={onPress}
+        //   />
+        //   </>
+          
         ) : newChatIcon ? (
           <NewChatIcon onPress={onPressNewChat} />
         ) : rightImage ? (
