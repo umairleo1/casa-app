@@ -11,7 +11,6 @@ export default function Following({route}) {
   const [refreshing, setRefreshing] = React.useState(false);
 
   const defaultImage = require('assets/images/findpeople/people.png');
-  console.log('following id -------------', route?.params?.id);
 
   React.useEffect(() => {
     getFollowing(route?.params?.id ? route?.params?.id : '');

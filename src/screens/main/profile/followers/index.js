@@ -9,6 +9,7 @@ import {useRoute} from '@react-navigation/native';
 
 export default function Followers() {
   const route = useRoute();
+
   const [followers, setFollowers] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
 

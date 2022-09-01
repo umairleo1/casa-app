@@ -32,7 +32,6 @@ const getUsersAllPostApi = id => {
 };
 
 const getHomeAllPostApi = (page, limit) => {
-  console.log('page limit', {page, limit});
   return client.get(API_URLS.ALL_FEEDS, {
     params: {page: Number(page), limit: limit},
   });

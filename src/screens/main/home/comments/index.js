@@ -7,6 +7,7 @@ import {
   View,
   ScrollView,
   Keyboard,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import {styles} from './styles';
@@ -66,6 +67,7 @@ export default function Comments() {
 
   const ListItem = ({item}) => {
     const [like, setLike] = React.useState(route?.params?.isLiked);
+    const [isLoading, setIsLoading] = React.useState(false);
     const [likeValue, setLikeValue] = React.useState(
       route?.params?.data?.postlikes,
     );
@@ -89,23 +91,19 @@ export default function Comments() {
               </Text>
             </View>
           </View>
-          {/* {userData?.user?._id == item?.postedBy?._id && (
-            <TouchableOpacity onPress={() => setPopUpModal(true)}>
-              <MaterialCommunityIcons
-                name="dots-vertical"
-                size={22}
-                color={colors.placeholderColor}
-              />
-            </TouchableOpacity>
-          )} */}
         </View>
         <Text style={styles.content}>{item?.description}</Text>
         {item?.files?.length > 0 && (
-          <View style={styles.row}>
+          <View style={[styles.row, {justifyContent: 'center'}]}>
+            {isLoading && (
+              <ActivityIndicator style={{position: 'absolute', zIndex: 1}} />
+            )}
             <Image
               source={{uri: item?.files[0]?.url}}
               style={[styles.postImage]}
               resizeMode="center"
+              onLoadStart={() => setIsLoading(true)}
+              onLoadEnd={() => setIsLoading(false)}
             />
           </View>
         )}
