@@ -20,6 +20,7 @@ export default function Settings() {
   const fcm = asyncStorage.getfcmToken();
 
   const logout = async () => {
+
     try {
       const result = await profileServices.logoutApi({
         notificationToken: fcm?._W,

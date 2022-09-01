@@ -35,7 +35,7 @@ export default function ChatTab() {
 
           tabBarInactiveTintColor: colors.placeholderColor,
         }}>
-        <Tab.Screen name="Chat" component={Chat} />
+        <Tab.Screen name="Chats" component={Chat} />
         <Tab.Screen name="Cuartos" component={GroupChat} />
       </Tab.Navigator>
     </Header>
