@@ -367,10 +367,10 @@ export default function ProfileSetting() {
                 }
               />
             </View>
-{/* 
+
             <View style={styles.SearchInputView}>
                <CountryPickerModal/>
-             </View> */}
+             </View>
 
              <View style={styles.SearchInputView}>
              <SearchInput
@@ -384,7 +384,6 @@ export default function ProfileSetting() {
                   editPassword ? colors.pureBlack : colors.innerBorder
                 }  
               />
-     
              </View>
 
              <View style={styles.SearchInputView}>
