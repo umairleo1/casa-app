@@ -61,7 +61,7 @@ export default function Home() {
         page ? page : limit.currentPage,
         limit.limit,
       );
-      console.log('Aho    =====> ', res);
+      console.log('Aho feeds    =====> ', res);
       setFeeds(res.posts);
       setLimit({...limit, availablePages: res?.totalPages});
       setIsLoading(false);
@@ -81,8 +81,8 @@ export default function Home() {
         limit.currentPage + 1,
         limit.limit,
       );
-      // console.log('load more ', result);
-      setFeeds([...result.posts]);
+      console.log('load more at ', limit.currentPage + 1, ' ', result);
+      setFeeds([...feeds, ...result.posts]);
       setLimit({...limit, currentPage: limit.currentPage + 1});
     } catch (error) {
       console.log(error);
@@ -136,7 +136,8 @@ export default function Home() {
 
       <FlatList
         data={feeds}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id}
+        showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <PostStatus
             onPressPostButton={() => handlePost()}
@@ -149,7 +150,13 @@ export default function Home() {
         contentContainerStyle={{
           marginHorizontal: 20,
         }}
-        showsVerticalScrollIndicator={false}
+        onEndReached={() => {
+          limit.currentPage < limit.availablePages && loadMore();
+        }}
+        onEndReachedThreshold={0.3}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         ListEmptyComponent={
           <>
             <Text
@@ -157,13 +164,6 @@ export default function Home() {
               No Feeds Yet
             </Text>
           </>
-        }
-        onEndReached={() => {
-          limit.currentPage < limit.availablePages && loadMore();
-        }}
-        onEndReachedThreshold={0.2}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
       <PopUpModal

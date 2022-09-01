@@ -17,12 +17,13 @@ import {showMessage} from 'react-native-flash-message';
 export default function Settings() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const fcm = asyncStorage.getfcmToken();
 
   const logout = async () => {
+    const fcm = await asyncStorage.getfcmToken();
+
     try {
       const result = await profileServices.logoutApi({
-        notificationToken: fcm?._W,
+        notificationToken: fcm,
       });
       console.log(result);
       asyncStorage.removeToken();

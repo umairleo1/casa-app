@@ -40,14 +40,22 @@ export default function PostView({item, onRefresh}) {
     <View style={styles.mainContainer}>
       <View style={styles.flatlistView}>
         <View style={styles.flatlistView2}>
-          <Image
-            source={
-              item?.postedBy?.profileImage
-                ? {uri: item?.postedBy?.profileImage}
-                : images.profile
-            }
-            style={styles.image}
-          />
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Profile', {
+                screen: 'USER_PROFILE',
+                params: {id: item?.postedBy?._id},
+              })
+            }>
+            <Image
+              source={
+                item?.postedBy?.profileImage
+                  ? {uri: item?.postedBy?.profileImage}
+                  : images.profile
+              }
+              style={styles.image}
+            />
+          </TouchableOpacity>
           <View style={styles.flatlistView3}>
             <Text style={styles.flatlistName}>
               {item?.postedBy?.firstName + ' ' + item?.postedBy?.lastName}
