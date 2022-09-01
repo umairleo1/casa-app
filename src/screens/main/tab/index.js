@@ -62,8 +62,6 @@ const HomeStack = () => {
         headerShown: false,
       }}>
       <Stack.Screen name={SCREEN.HOME} component={Home} />
-
-      {/* <Stack.Screen name={'Profile'} component={Profile} /> */}
     </Stack.Navigator>
   );
 };
@@ -148,7 +146,7 @@ export default function BottomTab() {
         name="Profile"
         component={ProfileStack}
         options={{
-          // unmountOnBlur: true,
+          unmountOnBlur: false,
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (
             <Ionicons name="person" color={color} size={size} />

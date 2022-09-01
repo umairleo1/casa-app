@@ -10,7 +10,6 @@ export default function Profile() {
   const Tab = createMaterialTopTabNavigator();
   const navigation = useNavigation();
   const route = useRoute();
-  console.log('followers id ', route?.params?.id);
 
   return (
     <Header

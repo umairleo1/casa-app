@@ -35,20 +35,25 @@ const FlatListCustom = ({data}) => {
 
           {
             item?.myTypeOf == 'image/jpeg' ? (
-              <Image
-                onLoadStart={() => setIsLoading(true)}
-                onLoadEnd={() => setIsLoading(false)}
-                source={{uri: item?.url}}
-                style={[
-                  styles.image,
-                  {
-                    width:
-                      data.length == 1
-                        ? Dimensions.get('window').width * 0.9
-                        : 230,
-                  },
-                ]}
-                resizeMode="contain"
+              // <Image
+              // onLoadStart={() => setIsLoading(true)}
+              // onLoadEnd={() => setIsLoading(false)}
+              // source={{uri: item?.url}}
+              // style={[
+              //   styles.image,
+              //   {
+              //     width:
+              //       data.length == 1
+              //         ? Dimensions.get('window').width * 0.9
+              //         : 230,
+              //   },
+              // ]}
+              // resizeMode="contain"
+              // />
+              <ImageMemoized
+                setIsLoading={setIsLoading}
+                data={data}
+                src={{uri: item?.url}}
               />
             ) : null
             // <Video
@@ -97,5 +102,26 @@ const styles = StyleSheet.create({
     borderRadius: 3,
   },
 });
+
+const ImageComp = ({src, data, setIsLoading}) => {
+  return (
+    <Image
+      onLoadStart={() => setIsLoading(true)}
+      onLoadEnd={() => setIsLoading(false)}
+      style={[
+        styles.image,
+        {
+          width: data.length == 1 ? Dimensions.get('window').width * 0.9 : 230,
+        },
+      ]}
+      resizeMode="contain"
+      source={src}
+    />
+  );
+};
+const ImageMemoized = React.memo(
+  ImageComp,
+  (prev, next) => prev.src === next.src,
+);
 
 export default FlatListCustom;
