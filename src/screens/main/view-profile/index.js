@@ -35,6 +35,7 @@ import {
   ZoomBackgroundPicModal,
   ZoomPicModal,
 } from 'src/components/zoom-pic-modal';
+import FlatListCustom from 'src/components/carosel-slider';
 
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
@@ -230,7 +231,8 @@ export default function ViewProfile({route}) {
           )}
         </View>
         <Text style={styles.content}>{item?.description}</Text>
-        {item?.files.length > 0 && (
+        {item?.files?.length > 0 && <FlatListCustom data={item?.files} />}
+        {/* {item?.files.length > 0 && (
           <View style={styles.row}>
             {isLoading && (
               <ActivityIndicator
@@ -247,7 +249,7 @@ export default function ViewProfile({route}) {
               resizeMode="contain"
             />
           </View>
-        )}
+        )} */}
 
         <View style={styles.footer}>
           <View style={styles.row}>
