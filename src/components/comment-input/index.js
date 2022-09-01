@@ -18,7 +18,7 @@ export default function CommentInput({
   editable,
   onPressEmoji,
   onPressSend,
-  onPressIn
+  onPressIn,
 }) {
   const [comment, setComment] = React.useState('');
 

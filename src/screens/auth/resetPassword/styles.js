@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     borderRadius: 3,
     marginTop: 20,
     marginHorizontal: 20,
-
   },
 
   resetPassword: {

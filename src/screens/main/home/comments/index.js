@@ -9,7 +9,7 @@ import {
   Keyboard,
   ActivityIndicator,
 } from 'react-native';
-import React,{useRef} from 'react';
+import React, {useRef} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 import Heart from 'assets/svg/Common/heart';
@@ -198,17 +198,17 @@ export default function Comments() {
     );
   };
 
-  const scrollToBottom = ()=>ref.current.scrollToEnd({ animated: true })
+  const scrollToBottom = () => ref.current.scrollToEnd({animated: true});
 
   return (
     <Header
       leftImage={images.blueAppLogo}
       rightIcon
       onPressBack={() => navigation.goBack()}>
-      <ScrollView 
-      ref={ref}          
-      onContentSizeChange={() => scrollToBottom()}
-      style={{ height: 500 }}>
+      <ScrollView
+        ref={ref}
+        onContentSizeChange={() => scrollToBottom()}
+        style={{height: 500}}>
         <View>
           {/* <FlatList
             data={dummyData}

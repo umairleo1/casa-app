@@ -25,7 +25,6 @@ export const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: colors.whiteColor,
     marginHorizontal: 20,
-
   },
   promoCode: {
     fontSize: RFValue(12),
