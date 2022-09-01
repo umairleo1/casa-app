@@ -44,6 +44,7 @@ export default function SignupForm({setShowSignUp}) {
       Yup.object({
         firstName: Yup.string().required('First name is required'),
         lastName: Yup.string().required('Last name is required'),
+        userName: Yup.string().required('User name is required'),
         email: Yup.string()
           .required('Email is required')
           .email('Email format is incorrect'),
@@ -71,6 +72,7 @@ export default function SignupForm({setShowSignUp}) {
         const result = await userService.signup({
           firstName: values.firstName,
           lastName: values.lastName,
+          userName: values.userName,
           email: values.email,
           password: values.password,
           dob: moment(selectedDate).format('YYYY-MM-DD'),
@@ -105,6 +107,7 @@ export default function SignupForm({setShowSignUp}) {
             initialValues={{
               firstName: '',
               lastName: '',
+              userName:'',
               email: '',
               password: '',
               birthDate: '',
@@ -133,6 +136,13 @@ export default function SignupForm({setShowSignUp}) {
                   error={touched.lastName ? errors.lastName : ''}
                   onChangeText={handleChange('lastName')}
                   onBlur={() => setFieldTouched('lastName')}
+                />
+                <Input
+                  placeholder={'User Name'}
+                  value={values.userName}
+                  error={touched.userName ? errors.userName : ''}
+                  onChangeText={handleChange('userName')}
+                  onBlur={() => setFieldTouched('userName')}
                 />
                 <Input
                   placeholder={'Your Email'}

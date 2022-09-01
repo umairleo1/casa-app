@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 2,
     borderColor: colors.innerBorder,
-    marginTop: 12,
     // backgroundColor: 'red',
   },
   errorText: {

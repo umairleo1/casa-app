@@ -33,6 +33,13 @@ import {
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 import AuthContext from 'src/utils/auth-context';
 import {useIsFocused} from '@react-navigation/native';
+import CountryPickerModal from 'src/components/country-picker';
+import DropdownMenu from 'src/components/paper-dropdown';
+import RNPickerSelect from 'react-native-picker-select';
+import Dropdown from 'src/components/dropdown';
+import MultiSelect from 'react-native-multiple-select';
+import MultiSelectPicker from 'src/components/multi-select-picker';
+
 
 let cameraIs = false;
 
@@ -48,6 +55,8 @@ export default function ProfileSetting() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const [city,setCity] = useState('');
+  const [selectedItems,setSelectedItems] = useState([]);
   const [bio, setBio] = useState('');
 
   const [imageModal, setImageModal] = useState(false);
@@ -59,6 +68,19 @@ export default function ProfileSetting() {
   const navigation = useNavigation();
 
   const userToken = useSelector(state => state?.auth?.userToken);
+
+  const DATA = [
+    { label: 'React Naive', value: '1' },
+    { label: 'Javascript', value: '2' },
+    { label: 'Laravel', value: '3' },
+    { label: 'PHP', value: '4' },
+    { label: 'jQuery', value: '5' },
+    { label: 'Bootstrap', value: '6' },
+    { label: 'HTML', value: '7' },
+    { label: 'CSS', value: '8' },
+];
+
+
 
   useEffect(() => {
     getUserOnFocus();
@@ -345,6 +367,30 @@ export default function ProfileSetting() {
                 }
               />
             </View>
+{/* 
+            <View style={styles.SearchInputView}>
+               <CountryPickerModal/>
+             </View> */}
+
+             <View style={styles.SearchInputView}>
+             <SearchInput
+                placeholder={'City'}
+                editIconSize={16}
+                placeholderTextColor={
+                  editPassword ? colors.black : colors.placeholderColor
+                }
+                onChangeText={setCity}
+                borderColor={
+                  editPassword ? colors.pureBlack : colors.innerBorder
+                }  
+              />
+     
+             </View>
+
+             <View style={styles.SearchInputView}>
+              <MultiSelectPicker multiSelect={selectedItems} setMultiSelect={(item)=>setSelectedItems(item)} data={DATA}/>
+            </View>
+
             <View style={styles.SearchInputView}>
               <CommentBox
                 placeholder={
