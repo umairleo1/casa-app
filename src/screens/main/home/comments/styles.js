@@ -22,7 +22,6 @@ export const styles = StyleSheet.create({
   },
   flatlistName: {
     fontSize: RFValue(15),
-    lineHeight: 18,
     color: colors.pureBlack,
     fontWeight: 'bold',
   },
@@ -42,7 +41,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   content: {
-    fontSize: wp(2.8),
+    fontSize: RFValue(12),
     color: colors.pureBlack,
     textAlign: 'justify',
     marginTop: 10,
@@ -101,13 +100,11 @@ export const styles = StyleSheet.create({
   },
   commentName: {
     fontSize: RFValue(15),
-    lineHeight: 18,
     color: colors.pureBlack,
     fontWeight: 'bold',
   },
   commentTime: {
     fontSize: RFValue(12),
-    lineHeight: 14,
     color: colors.lightgrey,
   },
   commentContent: {
