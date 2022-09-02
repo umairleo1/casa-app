@@ -10,8 +10,9 @@ import ViewProfile from '../view-profile';
 import Notification from '../notification';
 import Home from '../home';
 import AddPost from '../add-post';
+import { AddIcon,FindPeopleIcon,HomeIcon, NotificationIcon, ProfileIcon } from 'src/assets/svg/bottomTab';
 
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -62,6 +63,8 @@ const HomeStack = () => {
         headerShown: false,
       }}>
       <Stack.Screen name={SCREEN.HOME} component={Home} />
+      <Stack.Screen name={SCREEN.ADD_POST} component={AddPost} />
+
     </Stack.Navigator>
   );
 };
@@ -100,15 +103,16 @@ export default function BottomTab() {
         headerShown: false,
         unmountOnBlur: false,
         tabBarActiveTintColor: colors.buttonColor,
+  
       }}>
       <Tab.Screen
         name="Home"
         component={HomeStack}
         options={{
           tabBarLabel: 'Home',
-
-          tabBarIcon: ({color, size}) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+          tabBarIcon: ({color, size,focused}) => (
+            <HomeIcon strokeColor={focused?colors.buttonColor:'#BBBBBB'}/>
+            // <SimpleLineIcons name="home" color={color} size={size} />
           ),
         }}
       />
@@ -117,8 +121,9 @@ export default function BottomTab() {
         component={FindPeopleStack}
         options={{
           tabBarLabel: 'Mi Gente',
-          tabBarIcon: ({color, size}) => (
-            <FontAwesome name="group" color={color} size={size} />
+          tabBarIcon: ({color, size,focused}) => (
+            <FindPeopleIcon strokeColor={focused?colors.buttonColor:'#BBBBBB'}/>
+            // <FontAwesome name="group" color={color} size={size} />
           ),
         }}
       />
@@ -127,8 +132,10 @@ export default function BottomTab() {
         component={AddPost}
         options={{
           tabBarLabel: 'Add Post',
-          tabBarIcon: ({color, size}) => (
-            <AntDesign name="pluscircle" color={color} size={size} />
+          tabBarIcon: ({color, size,focused}) => (
+            <AddIcon strokeColor={focused?colors.buttonColor:'#BBBBBB'}/>
+
+            // <AntDesign name="pluscircle" color={color} size={size} />
           ),
         }}
       />
@@ -137,8 +144,9 @@ export default function BottomTab() {
         component={Notification}
         options={{
           tabBarLabel: 'Notification',
-          tabBarIcon: ({color, size}) => (
-            <FontAwesome name="bell" color={color} size={size} />
+          tabBarIcon: ({color, size,focused}) => (
+            <NotificationIcon strokeColor={focused?colors.buttonColor:'#BBBBBB'}/>
+            // <FontAwesome name="bell" color={color} size={size} />
           ),
         }}
       />
@@ -148,8 +156,9 @@ export default function BottomTab() {
         options={{
           unmountOnBlur: false,
           tabBarLabel: 'Profile',
-          tabBarIcon: ({color, size}) => (
-            <Ionicons name="person" color={color} size={size} />
+          tabBarIcon: ({color, size,focused}) => (
+            <ProfileIcon strokeColor={focused?colors.buttonColor:'#BBBBBB'}/>
+            // <Ionicons name="person" color={color} size={size} />
           ),
         }}
       />

@@ -390,6 +390,8 @@ export default function ProfileSetting() {
               <MultiSelectPicker multiSelect={selectedItems} setMultiSelect={(item)=>setSelectedItems(item)} data={DATA}/>
             </View>
 
+          
+
             <View style={styles.SearchInputView}>
               <CommentBox
                 placeholder={
