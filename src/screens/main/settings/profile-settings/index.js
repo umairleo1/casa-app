@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 import {useNavigation} from '@react-navigation/native';
@@ -34,11 +35,9 @@ import ActivityIndicator from 'src/components/loader/activity-indicator';
 import AuthContext from 'src/utils/auth-context';
 import {useIsFocused} from '@react-navigation/native';
 import CountryPickerModal from 'src/components/country-picker';
-import DropdownMenu from 'src/components/paper-dropdown';
-import RNPickerSelect from 'react-native-picker-select';
-import Dropdown from 'src/components/dropdown';
 import MultiSelect from 'react-native-multiple-select';
 import MultiSelectPicker from 'src/components/multi-select-picker';
+import CustomPicker from 'src/components/paper-dropdown';
 
 
 let cameraIs = false;
@@ -62,12 +61,19 @@ export default function ProfileSetting() {
   const [imageModal, setImageModal] = useState(false);
   const [zoomPicModal, setZoomPicModal] = useState(false);
   const [zoomBackPicModal, setZoomBackPicModal] = useState(false);
-
   const [coverPhoto, setCoverPhoto] = useState(false);
-
   const navigation = useNavigation();
-
   const userToken = useSelector(state => state?.auth?.userToken);
+  //
+  const array=['option 1','option 2']
+  const [heritage,setHeritage] = React.useState('Select Heritage');
+  //
+  const [values,setValues]=React.useState('');
+  const [countryCode, setCountryCode] = React.useState('US')
+  const onSelect = (Country) => {
+    setCountryCode(Country.cca2);
+    setValues(Country)
+  };
 
   const DATA = [
     { label: 'React Naive', value: '1' },
@@ -112,7 +118,9 @@ export default function ProfileSetting() {
         },
       );
       console.log('here is the success ', result);
-
+      setEditFirstName(false);
+      setEditLastName(false);
+      setEditPassword(false);
       const res = await profileServices.getUserProfile();
       authContext.setUserData(res);
 
@@ -369,7 +377,7 @@ export default function ProfileSetting() {
             </View>
 
             <View style={styles.SearchInputView}>
-               <CountryPickerModal/>
+               <CountryPickerModal  onSelect={(Country) => onSelect(Country)} countryText={values?.name ? values?.name : 'Select Country'} countryCode={countryCode} />
              </View>
 
              <View style={styles.SearchInputView}>
@@ -377,11 +385,11 @@ export default function ProfileSetting() {
                 placeholder={'City'}
                 editIconSize={16}
                 placeholderTextColor={
-                  editPassword ? colors.black : colors.placeholderColor
+                   colors.placeholderColor
                 }
                 onChangeText={setCity}
                 borderColor={
-                  editPassword ? colors.pureBlack : colors.innerBorder
+                  colors.innerBorder
                 }  
               />
              </View>
@@ -390,7 +398,9 @@ export default function ProfileSetting() {
               <MultiSelectPicker multiSelect={selectedItems} setMultiSelect={(item)=>setSelectedItems(item)} data={DATA}/>
             </View>
 
-          
+            <View style={styles.SearchInputView}>
+              <CustomPicker defaultValue={heritage} onSelect={(value)=>setHeritage(value)} options={array}/>
+           </View>
 
             <View style={styles.SearchInputView}>
               <CommentBox

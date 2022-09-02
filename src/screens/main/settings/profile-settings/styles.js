@@ -17,6 +17,7 @@ export const styles = StyleSheet.create({
   },
   SearchInputView: {
     marginVertical: 10,
+ 
   },
   buttonView: {
     paddingHorizontal: 20,

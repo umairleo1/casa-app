@@ -306,6 +306,7 @@ export default function ViewProfile({route}) {
     <Header
       onPressBack={() => navigation.goBack()}
       feather={'setting'}
+      chatIcon={route?.params?.id && 'chatbubble-ellipses-outline'}
       onPressInbox={() => navigation.navigate('GIFTED_CHAT')}
       onPress={() => navigation.navigate('SETTING')}>
       <ActivityIndicatorr visible={isLoading} />

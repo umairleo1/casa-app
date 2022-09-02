@@ -8,16 +8,8 @@ import {
 import CountryPicker,{DEFAULT_THEME} from 'react-native-country-picker-modal'
 
 
-export default function CountryPickerModal() {
-    const [value,setValue]=React.useState('');
-    const [countryCode, setCountryCode] = React.useState('US')
-
-    const onSelect = (Country) => {
-      setCountryCode(Country.cca2);
-      setValue(Country)
-      // props.setSelectCountryCode(Country.callingCode[0]);
-    };
-
+export default function CountryPickerModal({onSelect,countryText,countryCode}) {
+  
   return (
     <>
     {/* {alert(JSON.stringify(value))} */}
@@ -29,7 +21,7 @@ export default function CountryPickerModal() {
         withFlagButton
         countryCode={countryCode}
         containerButtonStyle={styles.pickerButtonStyle}
-        onSelect={(Country) => onSelect(Country)}
+        onSelect={onSelect}
         theme={{
           ...DEFAULT_THEME,
           backgroundColor: colors.whiteColor,
@@ -39,9 +31,9 @@ export default function CountryPickerModal() {
         placeholder={'Select Country'}
         // onValueChange={(value)=>setValue(value)}
       />
-     {value &&
+     {countryText &&
           <Text style={styles.text}>
-            {(value.name)}
+            {countryText}
           </Text>
         }     
          </View>

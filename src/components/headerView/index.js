@@ -23,6 +23,7 @@ export default function Header({
   onPressNewChat,
   rightImage,
   onPressInbox,
+  chatIcon,
 }) {
   return (
     <View style={styles.container}>
@@ -42,7 +43,7 @@ export default function Header({
         {feather ? (
           <View style={{flexDirection: 'row'}}>
             <Ionicons
-              name="chatbubble-ellipses-outline"
+              name={chatIcon}
               size={24}
               color={colors.black}
               onPress={onPressInbox}
