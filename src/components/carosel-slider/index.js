@@ -20,11 +20,14 @@ const FlatListCustom = ({data}) => {
     return (
       <>
         <View
-          style={{
-            margin: 4,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+          style={[
+            styles.image,
+            {
+              margin: 4,
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+          ]}>
           {isLoading && (
             <ActivityIndicator
               style={{position: 'absolute', zIndex: 101}}
@@ -35,21 +38,6 @@ const FlatListCustom = ({data}) => {
 
           {
             item?.myTypeOf == 'image/jpeg' ? (
-              // <Image
-              // onLoadStart={() => setIsLoading(true)}
-              // onLoadEnd={() => setIsLoading(false)}
-              // source={{uri: item?.url}}
-              // style={[
-              //   styles.image,
-              //   {
-              //     width:
-              //       data.length == 1
-              //         ? Dimensions.get('window').width * 0.9
-              //         : 230,
-              //   },
-              // ]}
-              // resizeMode="contain"
-              // />
               <ImageMemoized
                 setIsLoading={setIsLoading}
                 data={data}
@@ -108,12 +96,16 @@ const ImageComp = ({src, data, setIsLoading}) => {
     <Image
       onLoadStart={() => setIsLoading(true)}
       onLoadEnd={() => setIsLoading(false)}
-      style={[
-        styles.image,
-        {
-          width: data.length == 1 ? Dimensions.get('window').width * 0.9 : 230,
-        },
-      ]}
+      // style={[
+      //   styles.image,
+      //   {
+      //     width: data.length == 1 ? Dimensions.get('window').width * 0.9 : 230,
+      //   },
+      // ]}
+      style={{
+        height: '100%',
+        width: data.length == 1 ? Dimensions.get('window').width * 0.9 : 230,
+      }}
       resizeMode="contain"
       source={src}
     />

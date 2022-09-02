@@ -14,8 +14,6 @@ export default function BottomSheetButton({text, image, onPress}) {
   );
 }
 
-
-
 const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',

@@ -9,7 +9,7 @@ import {
   Keyboard,
   ActivityIndicator,
 } from 'react-native';
-import React,{useRef} from 'react';
+import React, {useRef} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 import Heart from 'assets/svg/Common/heart';
@@ -25,8 +25,7 @@ import moment from 'moment';
 import {postServices} from 'src/services/post-service';
 import colors from 'src/utils/themes/global-colors';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { CommentsBottomSheet } from 'src/components/del-edit-bottomsheet';
-
+import {CommentsBottomSheet} from 'src/components/del-edit-bottomsheet';
 
 export default function Comments() {
   const navigation = useNavigation();
@@ -35,6 +34,8 @@ export default function Comments() {
   const refRBSheet = useRef();
 
   const [post, setPost] = React.useState(route?.params?.data);
+  const [selectedComment, setSelectedComent] = React.useState('');
+  const [text, setText] = React.useState('');
   // const [comment, setComment] = React.useState('');
 
   const addComment = async comment => {
@@ -185,14 +186,63 @@ export default function Comments() {
               </Text>
               <Text style={styles.commentContent}>{item?.text}</Text>
             </View>
-            <TouchableOpacity onPress={()=> refRBSheet.current.open()} >
-            <MaterialCommunityIcons name="dots-vertical" color='black' size={20} />
+            <TouchableOpacity onPress={() => commentPress(item)}>
+              <MaterialCommunityIcons
+                name="dots-vertical"
+                color="black"
+                size={20}
+              />
             </TouchableOpacity>
           </View>
-
         </View>
       </View>
     );
+  };
+
+  const commentPress = item => {
+    refRBSheet.current.open();
+    setSelectedComent(item);
+    console.log(item);
+  };
+
+  const onEditCommentPress = async () => {
+    refRBSheet.current.close();
+    setText(selectedComment.text);
+  };
+
+  const editCommemt = async comment => {
+    try {
+      const result = await postServices.editCommentApi(selectedComment._id, {
+        commentText: comment,
+      });
+      console.log(result);
+      setSelectedComent('');
+      setText('');
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
+  };
+
+  const onDeleteCommentPress = async () => {
+    refRBSheet.current.close();
+
+    try {
+      const result = await postServices.deleteCommentApi(selectedComment._id);
+      console.log(result);
+      setPost(result?.post1);
+      setSelectedComent('');
+      route?.params?.render();
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
   };
 
   const ItemDivider = () => {
@@ -207,17 +257,17 @@ export default function Comments() {
     );
   };
 
-  const scrollToBottom = ()=>ref.current.scrollToEnd({ animated: true })
+  const scrollToBottom = () => ref.current.scrollToEnd({animated: true});
 
   return (
     <Header
       leftImage={images.blueAppLogo}
       rightIcon
       onPressBack={() => navigation.goBack()}>
-      <ScrollView 
-      ref={ref}          
-      onContentSizeChange={() => scrollToBottom()}
-      style={{ height: 500 }}>
+      <ScrollView
+        ref={ref}
+        onContentSizeChange={() => scrollToBottom()}
+        style={{height: 500}}>
         <View>
           {/* <FlatList
             data={dummyData}
@@ -262,17 +312,22 @@ export default function Comments() {
             backgroundColor: '#000',
           },
         }}>
-         <CommentsBottomSheet onPressEdit={undefined} onPressDel={undefined}/>
+        <CommentsBottomSheet
+          onPressEdit={() => onEditCommentPress()}
+          onPressDel={() => onDeleteCommentPress()}
+        />
       </RBSheet>
 
       <View style={styles.footerView}>
         <CommentInput
           placeholder={'write a comment...'}
           onPressEmoji={undefined}
-          onPressSend={comment => addComment(comment)}
+          onPressSend={comment => {
+            !text ? addComment(comment) : editCommemt(comment);
+          }}
           // onPressIn={()=>scrollToBottom()}
           // onChangeText={setComment}
-          // value={comment}
+          value={text}
         />
       </View>
     </Header>

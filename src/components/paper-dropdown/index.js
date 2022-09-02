@@ -14,7 +14,6 @@
 // export default function DropdownMenu() {
 //   const [showDropDown, setShowDropDown] = useState(false);
 //   const [gender, setGender] = useState('');
- 
 
 //   const genderList = [
 //     {
@@ -41,7 +40,7 @@
 //               value={gender}
 //               setValue={setGender}
 //               list={genderList}
-              
+
 //             />
 //      {/* <RNPickerSelect
 //             onValueChange={(value) => console.log(value)}
@@ -66,25 +65,24 @@
 
 // });
 
-
-import  React from 'react';
-import {  View, StyleSheet } from 'react-native';
+import React from 'react';
+import {View, StyleSheet} from 'react-native';
 
 // You can import from local files
-import DropDownPicker from 'react-native-dropdown-picker'
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function CustomPicker() {
   return (
     <View style={styles.container}>
       <DropDownPicker
-          items={[
-              {label: 'English', value: 'en'},
-              {label: 'Deutsch', value: 'de'},
-              {label: 'French', value: 'fr'},
-          ]}
-          defaultIndex={0}
-          containerStyle={{height: 40}}
-          onChangeItem={item => console.log(item.label, item.value)}
+        items={[
+          {label: 'English', value: 'en'},
+          {label: 'Deutsch', value: 'de'},
+          {label: 'French', value: 'fr'},
+        ]}
+        defaultIndex={0}
+        containerStyle={{height: 40}}
+        onChangeItem={item => console.log(item.label, item.value)}
       />
     </View>
   );
@@ -98,5 +96,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#ecf0f1',
     padding: 8,
   },
-
 });

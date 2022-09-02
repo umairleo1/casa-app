@@ -69,16 +69,17 @@ export default function SignupForm({setShowSignUp}) {
     } else {
       try {
         setIsLoading(true);
-        const result = await userService.signup({
+        const signupData = {
           firstName: values.firstName,
           lastName: values.lastName,
           userName: values.userName,
           email: values.email,
           password: values.password,
           dob: moment(selectedDate).format('YYYY-MM-DD'),
-          gender: values.gender,
-          promoCode,
-        });
+          ...(promoCode && {promoCode}),
+        };
+
+        const result = await userService.signup(signupData);
 
         showMessage({
           message: result.message,
@@ -107,7 +108,7 @@ export default function SignupForm({setShowSignUp}) {
             initialValues={{
               firstName: '',
               lastName: '',
-              userName:'',
+              userName: '',
               email: '',
               password: '',
               birthDate: '',

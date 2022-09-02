@@ -17,7 +17,6 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 3,
     marginHorizontal: 20,
-
   },
   borderLine: {
     borderWidth: 1,
