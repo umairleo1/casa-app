@@ -17,7 +17,7 @@ export default function Input({
   eyeIcon,
   onPressEye,
   onPressIn,
-  onFocus
+  onFocus,
 }) {
   return (
     <>

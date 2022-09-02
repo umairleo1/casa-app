@@ -41,6 +41,14 @@ const addCommentApi = (id, obj) => {
   return client.post(`${API_URLS.ADD_COMMENT}${id}`, obj);
 };
 
+const editCommentApi = (id, obj) => {
+  return client.put(`${API_URLS.EDIT_COMMENT}${id}`, obj);
+};
+
+const deleteCommentApi = id => {
+  return client.delete(`${API_URLS.EDIT_COMMENT}${id}`);
+};
+
 const likePostApi = id => {
   return client.post(`${API_URLS.LIKE_POST}${id}`);
 };
@@ -59,4 +67,6 @@ export const postServices = {
   addCommentApi,
   likePostApi,
   getPromoCodeApi,
+  editCommentApi,
+  deleteCommentApi,
 };

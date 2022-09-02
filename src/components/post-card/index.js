@@ -1,22 +1,21 @@
 /* eslint-disable react/prop-types */
-import {StyleSheet, View, Image,TouchableOpacity} from 'react-native';
-import React from 'react';
+import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
+import React, {useContext} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import images from 'src/assets/images';
 import {TextInput} from 'react-native-gesture-handler';
 import PostStatusButton from '../post-status';
-import {useSelector} from 'react-redux';
+import AuthContext from 'src/utils/auth-context';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-
 
 export default function PostStatus({
   value,
   onChangeText,
   onPressPostButton,
   postButtonText,
-  onPressPlus
+  onPressPlus,
 }) {
-  const userData = useSelector(state => state?.profile?.userProfile);
+  const authContext = useContext(AuthContext);
   return (
     <>
       <View style={styles.borderLine} />
@@ -24,8 +23,8 @@ export default function PostStatus({
         <View style={styles.imageTextView}>
           <Image
             source={
-              userData?.user?.profileImage
-                ? {uri: userData?.user?.profileImage}
+              authContext.userData?.user?.profileImage
+                ? {uri: authContext.userData?.user?.profileImage}
                 : images.people
             }
             style={styles.image}
@@ -44,8 +43,8 @@ export default function PostStatus({
       <View style={styles.borderLine} />
       <View style={styles.buttonView}>
         <TouchableOpacity style={styles.plusButton} onPress={onPressPlus}>
-      <AntDesign name="pluscircle" color={colors.buttonColor} size={20} />
-      </TouchableOpacity>
+          <AntDesign name="pluscircle" color={colors.buttonColor} size={20} />
+        </TouchableOpacity>
         <PostStatusButton
           text={postButtonText}
           backgroundColor={colors.buttonColor}
@@ -88,10 +87,10 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginBottom: 10,
     marginTop: 10,
-    flexDirection:'row',
-    alignItems:'center'
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  plusButton:{
-    marginRight:10
-  }
+  plusButton: {
+    marginRight: 10,
+  },
 });

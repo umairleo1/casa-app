@@ -78,15 +78,38 @@ export default function PostView({item, onRefresh}) {
             <Heart color={like ? colors.danger : '#BBB'} />
           </TouchableOpacity>
           <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
-          <Image source={images.people} style={styles.likeImg} />
-          <Image
-            source={images.people}
-            style={[styles.likeImg, {marginLeft: -8}]}
-          />
-          <Image
-            source={images.people}
-            style={[styles.likeImg, {marginLeft: -8}]}
-          />
+          {item?.likes.length > 0 && (
+            <>
+              <Image
+                source={
+                  item?.likes[0]?.likesBy?.profileImage
+                    ? {uri: item?.likes[0].likesBy?.profileImage}
+                    : images.people
+                }
+                style={styles.likeImg}
+              />
+              {item?.likes.length > 1 && (
+                <Image
+                  source={
+                    item?.likes[1]?.likesBy?.profileImage
+                      ? {uri: item?.likes[1].likesBy?.profileImage}
+                      : images.people
+                  }
+                  style={[styles.likeImg, {marginLeft: -8}]}
+                />
+              )}
+              {item?.likes.length > 2 && (
+                <Image
+                  source={
+                    item?.likes[2]?.likesBy?.profileImage
+                      ? {uri: item?.likes[2].likesBy?.profileImage}
+                      : images.people
+                  }
+                  style={[styles.likeImg, {marginLeft: -8}]}
+                />
+              )}
+            </>
+          )}
           <View style={{width: 130}}>
             <Text style={[styles.text]}>
               <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>

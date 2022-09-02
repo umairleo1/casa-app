@@ -58,7 +58,7 @@ export default function Signup() {
             borderBottomWidth: 1,
             borderBottomColor: '#E6ECF5',
             marginHorizontal: 20,
-            marginTop:8
+            marginTop: 8,
             // marginLeft:20
           }}>
           <TouchableOpacity

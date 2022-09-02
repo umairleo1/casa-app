@@ -8,20 +8,36 @@ import Button from 'src/components/button';
 import colors from 'src/utils/themes/global-colors';
 import {useNavigation} from '@react-navigation/native';
 import {postServices} from 'src/services/post-service';
+import {showMessage} from 'react-native-flash-message';
+import Clipboard from '@react-native-community/clipboard';
 
 export default function PromoCode() {
   const navigation = useNavigation();
   const [code, setCode] = React.useState('');
+  const [copiedText, setCopiedText] = React.useState('');
 
   React.useEffect(() => {
     getPromoCode();
   }, []);
 
+  const copyToClipboard = () => {
+    Clipboard.setString(code);
+    showMessage({
+      message: 'Code coppied successfully',
+      type: 'success',
+    });
+  };
+
+  const fetchCopiedText = async () => {
+    const text = await Clipboard.getString();
+    setCopiedText(text);
+  };
+
   const getPromoCode = async () => {
     try {
       const result = await postServices.getPromoCodeApi();
-      console.log(result);
-      setCode(result);
+      console.log('Here is the promo code ', result);
+      setCode(result?.message?.code || '');
     } catch (error) {
       console.log(error);
     }
@@ -41,16 +57,19 @@ export default function PromoCode() {
           </Text>
           <InvitationLink
             text={'Promo Code'}
-            linkText={code?.message?.code}
-            onPress={undefined}
+            linkText={code}
+            onPress={() => {
+              code !== '' && copyToClipboard();
+            }}
           />
+          <Text>{copiedText}</Text>
         </View>
       </ScrollView>
       <View style={styles.buttonView}>
         <Button
           backgroundColor={colors.buttonColor}
           text={'Invite People'}
-          onPress={() => navigation.navigate('PROMO_CODE')}
+          onPress={() => fetchCopiedText()}
         />
       </View>
     </Header>

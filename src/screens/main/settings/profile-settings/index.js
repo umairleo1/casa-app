@@ -39,7 +39,6 @@ import MultiSelect from 'react-native-multiple-select';
 import MultiSelectPicker from 'src/components/multi-select-picker';
 import CustomPicker from 'src/components/paper-dropdown';
 
-
 let cameraIs = false;
 
 export default function ProfileSetting() {
@@ -54,14 +53,17 @@ export default function ProfileSetting() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
-  const [city,setCity] = useState('');
-  const [selectedItems,setSelectedItems] = useState([]);
+  const [city, setCity] = useState('');
+  const [selectedItems, setSelectedItems] = useState([]);
   const [bio, setBio] = useState('');
 
   const [imageModal, setImageModal] = useState(false);
   const [zoomPicModal, setZoomPicModal] = useState(false);
   const [zoomBackPicModal, setZoomBackPicModal] = useState(false);
   const [coverPhoto, setCoverPhoto] = useState(false);
+
+  const [profile, setProfile] = useState({dp: '', cover: ''});
+
   const navigation = useNavigation();
   const userToken = useSelector(state => state?.auth?.userToken);
   //
@@ -76,17 +78,15 @@ export default function ProfileSetting() {
   };
 
   const DATA = [
-    { label: 'React Naive', value: '1' },
-    { label: 'Javascript', value: '2' },
-    { label: 'Laravel', value: '3' },
-    { label: 'PHP', value: '4' },
-    { label: 'jQuery', value: '5' },
-    { label: 'Bootstrap', value: '6' },
-    { label: 'HTML', value: '7' },
-    { label: 'CSS', value: '8' },
-];
-
-
+    {label: 'React Naive', value: '1'},
+    {label: 'Javascript', value: '2'},
+    {label: 'Laravel', value: '3'},
+    {label: 'PHP', value: '4'},
+    {label: 'jQuery', value: '5'},
+    {label: 'Bootstrap', value: '6'},
+    {label: 'HTML', value: '7'},
+    {label: 'CSS', value: '8'},
+  ];
 
   useEffect(() => {
     getUserOnFocus();
@@ -100,6 +100,8 @@ export default function ProfileSetting() {
   const getUserOnFocus = async () => {
     const res = await profileServices.getUserProfile();
     console.log('ressss', res);
+
+    setProfile({dp: res?.user?.profileImage, cover: res?.user?.coverImage});
 
     authContext.setUserData(res);
   };
@@ -216,8 +218,10 @@ export default function ProfileSetting() {
           cameraIs = false;
         } else {
           if (coverPhoto) {
+            setProfile({...profile, cover: res?.assets[0]?.uri});
             updateCoverPicture(res.assets[0].base64);
           } else {
+            setProfile({...profile, dp: res?.assets[0]?.uri});
             updateProfilePicture(res.assets[0].base64);
           }
           cameraIs = false;
@@ -255,8 +259,10 @@ export default function ProfileSetting() {
           } else {
             if (res.assets) {
               if (coverPhoto) {
+                setProfile({...profile, cover: res?.assets[0]?.uri});
                 updateCoverPicture(res.assets[0].base64);
               } else {
+                setProfile({...profile, dp: res?.assets[0]?.uri});
                 updateProfilePicture(res.assets[0].base64);
               }
             }
@@ -275,9 +281,9 @@ export default function ProfileSetting() {
         <ActivityIndicator visible={loader} />
         <ScrollView showsVerticalScrollIndicator={false}>
           <BackgroundImageWithImage
-            imageBackGround={authContext?.userData?.user?.coverImage}
+            imageBackGround={profile?.cover}
             editImage={images.editImage}
-            image={authContext?.userData?.user?.profileImage}
+            image={profile?.dp}
             showEdit={true}
             editBackGround={() => {
               setCoverPhoto(true);
@@ -378,10 +384,10 @@ export default function ProfileSetting() {
 
             <View style={styles.SearchInputView}>
                <CountryPickerModal  onSelect={(Country) => onSelect(Country)} countryText={values?.name ? values?.name : 'Select Country'} countryCode={countryCode} />
-             </View>
+            </View>
 
-             <View style={styles.SearchInputView}>
-             <SearchInput
+            <View style={styles.SearchInputView}>
+              <SearchInput
                 placeholder={'City'}
                 editIconSize={16}
                 placeholderTextColor={
@@ -392,15 +398,19 @@ export default function ProfileSetting() {
                   colors.innerBorder
                 }  
               />
-             </View>
-
-             <View style={styles.SearchInputView}>
-              <MultiSelectPicker multiSelect={selectedItems} setMultiSelect={(item)=>setSelectedItems(item)} data={DATA}/>
             </View>
 
             <View style={styles.SearchInputView}>
               <CustomPicker defaultValue={heritage} onSelect={(value)=>setHeritage(value)} options={array}/>
            </View>
+
+           <View>
+              <MultiSelectPicker
+                multiSelect={selectedItems}
+                setMultiSelect={item => setSelectedItems(item)}
+                data={DATA}
+              />
+            </View>
 
             <View style={styles.SearchInputView}>
               <CommentBox
@@ -429,13 +439,13 @@ export default function ProfileSetting() {
         <ZoomPicModal
           visible={zoomPicModal}
           iconPress={() => setZoomPicModal(false)}
-          image={authContext?.userData?.user?.profileImage}
+          image={profile?.dp}
           imageStyle={{height: '60%', width: '90%'}}
         />
         <ZoomBackgroundPicModal
           visible={zoomBackPicModal}
           iconPress={() => setZoomBackPicModal(false)}
-          image={authContext?.userData?.user?.coverImage}
+          image={profile?.cover}
           imageStyle={{height: '60%', width: '90%'}}
         />
       </Header>

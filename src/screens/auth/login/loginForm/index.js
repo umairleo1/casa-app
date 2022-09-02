@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React, {useMemo, useState,useRef} from 'react';
+import React, {useMemo, useState, useRef} from 'react';
 import {styles} from './styles';
 import Input from 'src/components/textinput';
 import Button from 'src/components/button';
@@ -28,7 +28,7 @@ import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 export default function LoginForm() {
   const navigation = useNavigation();
   const ref = useRef();
-  const scrollToBottom = ()=>ref.current.scrollToEnd({ animated: true })
+  const scrollToBottom = () => ref.current.scrollToEnd({animated: true});
   const dispatch = useDispatch();
   const [passwordVisible, setPasswordVisible] = useState(true);
 
@@ -79,10 +79,11 @@ export default function LoginForm() {
   };
 
   return (
-    <ScrollView style={styles.scrollView}  
-    ref={ref}       
-    scrollToOverflowEnabled   
-    onContentSizeChange={() => scrollToBottom()}>
+    <ScrollView
+      style={styles.scrollView}
+      ref={ref}
+      scrollToOverflowEnabled
+      onContentSizeChange={() => scrollToBottom()}>
       <Text style={styles.text}>Login to your Account</Text>
       <View style={styles.borderLine} />
 
@@ -110,7 +111,7 @@ export default function LoginForm() {
                 onChangeText={handleChange('email')}
                 onBlur={() => setFieldTouched('email')}
                 type="email-address"
-                onPressIn={()=>scrollToBottom()}
+                onPressIn={() => scrollToBottom()}
               />
               <Input
                 placeholder={'Your Password'}
@@ -121,8 +122,7 @@ export default function LoginForm() {
                 onBlur={() => setFieldTouched('password')}
                 eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
                 onPressEye={() => setPasswordVisible(!passwordVisible)}
-                onPressIn={()=>scrollToBottom()}
-
+                onPressIn={() => scrollToBottom()}
               />
               <View style={styles.forgotPasswordView}>
                 {/* <CheckBox

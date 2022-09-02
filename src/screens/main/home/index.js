@@ -140,13 +140,13 @@ export default function Home() {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
-          <PostStatus
-            onPressPostButton={() => handlePost()}
-            postButtonText={'Post Status'}
-            onChangeText={setStatus}
-            value={status}
-            onPressPlus={()=>navigation.navigate('ADD_POST')}
-          />
+            <PostStatus
+              onPressPostButton={() => handlePost()}
+              postButtonText={'Post Status'}
+              onChangeText={setStatus}
+              value={status}
+              onPressPlus={() => navigation.navigate('ADD_POST')}
+            />
           </>
         }
         renderItem={({item}) => <PostView onRefresh={onRefresh} item={item} />}
