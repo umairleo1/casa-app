@@ -92,10 +92,11 @@ export const styles = StyleSheet.create({
   },
   commentView2: {
     flexDirection: 'row',
+    // backgroundColor:'red'
   },
   commentView3: {
     marginHorizontal: 10,
-    marginTop: 5,
+    // marginTop: 5,
     justifyContent: 'center',
     flex: 1,
   },
@@ -111,7 +112,7 @@ export const styles = StyleSheet.create({
     color: colors.lightgrey,
   },
   commentContent: {
-    fontSize: RFValue(9),
+    fontSize: RFValue(15),
     color: colors.pureBlack,
     textAlign: 'justify',
     paddingTop: 5,

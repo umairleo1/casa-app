@@ -1,17 +1,19 @@
 /* eslint-disable react/prop-types */
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
 import React, {useContext} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import images from 'src/assets/images';
 import {TextInput} from 'react-native-gesture-handler';
 import PostStatusButton from '../post-status';
 import AuthContext from 'src/utils/auth-context';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 export default function PostStatus({
   value,
   onChangeText,
   onPressPostButton,
   postButtonText,
+  onPressPlus,
 }) {
   const authContext = useContext(AuthContext);
   return (
@@ -40,6 +42,9 @@ export default function PostStatus({
       </View>
       <View style={styles.borderLine} />
       <View style={styles.buttonView}>
+        <TouchableOpacity style={styles.plusButton} onPress={onPressPlus}>
+          <AntDesign name="pluscircle" color={colors.buttonColor} size={20} />
+        </TouchableOpacity>
         <PostStatusButton
           text={postButtonText}
           backgroundColor={colors.buttonColor}
@@ -82,5 +87,10 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginBottom: 10,
     marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  plusButton: {
+    marginRight: 10,
   },
 });

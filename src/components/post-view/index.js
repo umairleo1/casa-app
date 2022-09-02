@@ -14,7 +14,6 @@ import Chart from 'assets/svg/Common/chat';
 import colors from 'src/utils/themes/global-colors';
 
 export default function PostView({item, onRefresh}) {
-  console.log('logggggggg =====> ', item);
   const navigation = useNavigation();
 
   const [like, setLike] = useState(item?.isLiked);

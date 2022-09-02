@@ -19,9 +19,12 @@ export default function CommentInput({
   onPressEmoji,
   onPressSend,
   onPressIn,
+  value,
 }) {
   const [comment, setComment] = React.useState('');
-
+  React.useEffect(() => {
+    setComment(value);
+  }, [value]);
   return (
     <>
       <View style={styles.mainView}>

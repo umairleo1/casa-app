@@ -14,6 +14,7 @@ import {styles} from './styles';
 import Header from 'src/components/headerView';
 import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -23,13 +24,18 @@ import images from 'src/assets/images';
 import moment from 'moment';
 import {postServices} from 'src/services/post-service';
 import colors from 'src/utils/themes/global-colors';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import {CommentsBottomSheet} from 'src/components/del-edit-bottomsheet';
 
 export default function Comments() {
   const navigation = useNavigation();
   const route = useRoute();
   const ref = useRef();
+  const refRBSheet = useRef();
 
   const [post, setPost] = React.useState(route?.params?.data);
+  const [selectedComment, setSelectedComent] = React.useState('');
+  const [text, setText] = React.useState('');
   // const [comment, setComment] = React.useState('');
 
   const addComment = async comment => {
@@ -180,10 +186,63 @@ export default function Comments() {
               </Text>
               <Text style={styles.commentContent}>{item?.text}</Text>
             </View>
+            <TouchableOpacity onPress={() => commentPress(item)}>
+              <MaterialCommunityIcons
+                name="dots-vertical"
+                color="black"
+                size={20}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
     );
+  };
+
+  const commentPress = item => {
+    refRBSheet.current.open();
+    setSelectedComent(item);
+    console.log(item);
+  };
+
+  const onEditCommentPress = async () => {
+    refRBSheet.current.close();
+    setText(selectedComment.text);
+  };
+
+  const editCommemt = async comment => {
+    try {
+      const result = await postServices.editCommentApi(selectedComment._id, {
+        commentText: comment,
+      });
+      console.log(result);
+      setSelectedComent('');
+      setText('');
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
+  };
+
+  const onDeleteCommentPress = async () => {
+    refRBSheet.current.close();
+
+    try {
+      const result = await postServices.deleteCommentApi(selectedComment._id);
+      console.log(result);
+      setPost(result?.post1);
+      setSelectedComent('');
+      route?.params?.render();
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
   };
 
   const ItemDivider = () => {
@@ -235,14 +294,40 @@ export default function Comments() {
         />
       </ScrollView>
 
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        height={120}
+        customStyles={{
+          wrapper: {
+            backgroundColor: `rgba(0, 0, 0, 0.2)`,
+          },
+          container: {
+            backgroundColor: colors.whiteColor,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
+        }}>
+        <CommentsBottomSheet
+          onPressEdit={() => onEditCommentPress()}
+          onPressDel={() => onDeleteCommentPress()}
+        />
+      </RBSheet>
+
       <View style={styles.footerView}>
         <CommentInput
           placeholder={'write a comment...'}
           onPressEmoji={undefined}
-          onPressSend={comment => addComment(comment)}
+          onPressSend={comment => {
+            !text ? addComment(comment) : editCommemt(comment);
+          }}
           // onPressIn={()=>scrollToBottom()}
           // onChangeText={setComment}
-          // value={comment}
+          value={text}
         />
       </View>
     </Header>
