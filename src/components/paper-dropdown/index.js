@@ -14,7 +14,6 @@
 // export default function DropdownMenu() {
 //   const [showDropDown, setShowDropDown] = useState(false);
 //   const [gender, setGender] = useState('');
- 
 
 //   const genderList = [
 //     {
@@ -41,7 +40,7 @@
 //               value={gender}
 //               setValue={setGender}
 //               list={genderList}
-              
+
 //             />
 //      {/* <RNPickerSelect
 //             onValueChange={(value) => console.log(value)}

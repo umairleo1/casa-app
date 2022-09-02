@@ -136,8 +136,8 @@ export default function Chat() {
         onChangeText={text => console.log(text)}
       />
 
-      <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
-         <Text style={{fontSize:18}}>No Chats</Text>
+      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+        <Text style={{fontSize: 18}}>No Chats</Text>
       </View>
       {/* <FlatList
         data={dummyData}
