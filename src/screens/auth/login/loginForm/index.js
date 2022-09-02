@@ -82,6 +82,7 @@ export default function LoginForm() {
     <ScrollView
       style={styles.scrollView}
       ref={ref}
+      scrollToOverflowEnabled
       onContentSizeChange={() => scrollToBottom()}>
       <Text style={styles.text}>Login to your Account</Text>
       <View style={styles.borderLine} />

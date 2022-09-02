@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import {StyleSheet, View, Image} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import images from 'src/assets/images';
 import {TextInput} from 'react-native-gesture-handler';
 import PostStatusButton from '../post-status';
-import {useSelector} from 'react-redux';
+import AuthContext from 'src/utils/auth-context';
 
 export default function PostStatus({
   value,
@@ -13,7 +13,7 @@ export default function PostStatus({
   onPressPostButton,
   postButtonText,
 }) {
-  const userData = useSelector(state => state?.profile?.userProfile);
+  const authContext = useContext(AuthContext);
   return (
     <>
       <View style={styles.borderLine} />
@@ -21,8 +21,8 @@ export default function PostStatus({
         <View style={styles.imageTextView}>
           <Image
             source={
-              userData?.user?.profileImage
-                ? {uri: userData?.user?.profileImage}
+              authContext.userData?.user?.profileImage
+                ? {uri: authContext.userData?.user?.profileImage}
                 : images.people
             }
             style={styles.image}

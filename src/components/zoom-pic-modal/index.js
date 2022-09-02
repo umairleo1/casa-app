@@ -66,6 +66,7 @@ const ZoomBackgroundPicModal = ({
         />
       )}
       <Image
+        resizeMode="contain"
         onLoadStart={() => setIsLoading(true)}
         onLoadEnd={() => setIsLoading(false)}
         source={image ? {uri: image} : images.people}
