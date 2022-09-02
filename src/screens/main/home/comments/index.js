@@ -14,6 +14,7 @@ import {styles} from './styles';
 import Header from 'src/components/headerView';
 import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -23,11 +24,15 @@ import images from 'src/assets/images';
 import moment from 'moment';
 import {postServices} from 'src/services/post-service';
 import colors from 'src/utils/themes/global-colors';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import { CommentsBottomSheet } from 'src/components/del-edit-bottomsheet';
+
 
 export default function Comments() {
   const navigation = useNavigation();
   const route = useRoute();
   const ref = useRef();
+  const refRBSheet = useRef();
 
   const [post, setPost] = React.useState(route?.params?.data);
   // const [comment, setComment] = React.useState('');
@@ -180,7 +185,11 @@ export default function Comments() {
               </Text>
               <Text style={styles.commentContent}>{item?.text}</Text>
             </View>
+            <TouchableOpacity onPress={()=> refRBSheet.current.open()} >
+            <MaterialCommunityIcons name="dots-vertical" color='black' size={20} />
+            </TouchableOpacity>
           </View>
+
         </View>
       </View>
     );
@@ -234,6 +243,27 @@ export default function Comments() {
           ItemSeparatorComponent={ItemDivider}
         />
       </ScrollView>
+
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        height={120}
+        customStyles={{
+          wrapper: {
+            backgroundColor: `rgba(0, 0, 0, 0.2)`,
+          },
+          container: {
+            backgroundColor: colors.whiteColor,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
+        }}>
+         <CommentsBottomSheet onPressEdit={undefined} onPressDel={undefined}/>
+      </RBSheet>
 
       <View style={styles.footerView}>
         <CommentInput

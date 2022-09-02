@@ -139,12 +139,15 @@ export default function Home() {
         keyExtractor={item => item._id}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
+          <>
           <PostStatus
             onPressPostButton={() => handlePost()}
             postButtonText={'Post Status'}
             onChangeText={setStatus}
             value={status}
+            onPressPlus={()=>navigation.navigate('ADD_POST')}
           />
+          </>
         }
         renderItem={({item}) => <PostView onRefresh={onRefresh} item={item} />}
         contentContainerStyle={{

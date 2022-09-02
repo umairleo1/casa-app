@@ -38,6 +38,7 @@
     "react-native-config": "^1.4.6",
     "react-native-country-picker-modal": "^2.0.0",
     "react-native-dotenv": "^3.3.1",
+    "react-native-dropdown-picker": "^5.4.2",
     "react-native-element-dropdown": "^2.2.0",
     "react-native-flash-message": "^0.3.1",
     "react-native-flatlist-slider": "^1.0.6",

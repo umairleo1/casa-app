@@ -65,3 +65,38 @@
 //   },
 
 // });
+
+
+import  React from 'react';
+import {  View, StyleSheet } from 'react-native';
+
+// You can import from local files
+import DropDownPicker from 'react-native-dropdown-picker'
+
+export default function CustomPicker() {
+  return (
+    <View style={styles.container}>
+      <DropDownPicker
+          items={[
+              {label: 'English', value: 'en'},
+              {label: 'Deutsch', value: 'de'},
+              {label: 'French', value: 'fr'},
+          ]}
+          defaultIndex={0}
+          containerStyle={{height: 40}}
+          onChangeItem={item => console.log(item.label, item.value)}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: 12,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+
+});
