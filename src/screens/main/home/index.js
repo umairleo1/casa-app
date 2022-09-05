@@ -138,6 +138,7 @@ export default function Home() {
         data={feeds}
         keyExtractor={item => item._id}
         showsVerticalScrollIndicator={false}
+        initialNumToRender={limit.limit}
         ListHeaderComponent={
           <>
             <PostStatus
@@ -149,7 +150,7 @@ export default function Home() {
             />
           </>
         }
-        renderItem={({item}) => <PostView onRefresh={onRefresh} item={item} onPressLikes={()=>navigation.navigate('LIKES')}/>}
+        renderItem={({item}) => <PostView onRefresh={onRefresh} item={item} />}
         contentContainerStyle={{
           marginHorizontal: 20,
         }}

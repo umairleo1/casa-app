@@ -1,5 +1,5 @@
-import {Text, View, Image, TouchableOpacity,Pressable} from 'react-native';
-import React, {useState} from 'react';
+import {Text, View, Image, TouchableOpacity, Pressable} from 'react-native';
+import React, {useState, memo} from 'react';
 import {postServices} from 'src/services/post-service';
 import {showMessage} from 'react-native-flash-message';
 import images from 'src/assets/images';
@@ -13,7 +13,7 @@ import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
 import colors from 'src/utils/themes/global-colors';
 
-export default function PostView({item, onRefresh,onPressLikes}) {
+const PostView = ({item, onRefresh}) => {
   const navigation = useNavigation();
 
   const [like, setLike] = useState(item?.isLiked);
@@ -51,7 +51,7 @@ export default function PostView({item, onRefresh,onPressLikes}) {
               source={
                 item?.postedBy?.profileImage
                   ? {uri: item?.postedBy?.profileImage}
-                  : images.profile
+                  : images.people
               }
               style={styles.image}
             />
@@ -110,7 +110,9 @@ export default function PostView({item, onRefresh,onPressLikes}) {
               )}
             </>
           )}
-          <Pressable style={{width: 130}} onPress={onPressLikes}>
+          <Pressable
+            style={{width: 130}}
+            onPress={() => navigation.navigate('LIKES', {post: item})}>
             <Text style={[styles.text]}>
               <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>
                 {item?.likes[0]?.likesBy?.firstName}
@@ -143,4 +145,6 @@ export default function PostView({item, onRefresh,onPressLikes}) {
       </View>
     </View>
   );
-}
+};
+
+export default memo(PostView);

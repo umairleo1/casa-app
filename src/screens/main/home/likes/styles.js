@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
   time: {
     fontSize: RFValue(11),
     color: colors.lightgrey,
-    marginRight:10
+    marginRight: 10,
   },
   text2: {
     marginTop: hp(1),
@@ -50,10 +50,10 @@ export const styles = StyleSheet.create({
     marginHorizontal: wp(5),
     color: colors.lightgrey,
   },
-  totalLikes:{
-    fontSize:RFValue(11),
-    color:colors.black,
-    marginHorizontal:wp(5),
-    fontWeight:'bold'
-  }
+  totalLikes: {
+    fontSize: RFValue(11),
+    color: colors.black,
+    marginHorizontal: wp(5),
+    fontWeight: 'bold',
+  },
 });
