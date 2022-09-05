@@ -15,7 +15,7 @@ import moment from 'moment';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 import colors from 'src/utils/themes/global-colors';
 import {RFValue} from 'react-native-responsive-fontsize';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 export default function Notification() {
   const [notification, setNotification] = React.useState([]);
@@ -174,7 +174,7 @@ export default function Notification() {
   return (
     <View style={styles.Container}>
       <ActivityIndicator visible={loder} />
-      <Header heading={'Notification'} onPressBack={()=>navigation.goBack()}>
+      <Header heading={'Notification'} onPressBack={() => navigation.goBack()}>
         <FlatList
           data={notification}
           keyExtractor={item => item._id}

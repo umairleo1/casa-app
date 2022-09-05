@@ -67,14 +67,14 @@ export default function ProfileSetting() {
   const navigation = useNavigation();
   const userToken = useSelector(state => state?.auth?.userToken);
   //
-  const array=['option 1','option 2']
-  const [heritage,setHeritage] = React.useState('Select Heritage');
+  const array = ['option 1', 'option 2'];
+  const [heritage, setHeritage] = React.useState('Select Heritage');
   //
-  const [values,setValues]=React.useState('');
-  const [countryCode, setCountryCode] = React.useState('US')
-  const onSelect = (Country) => {
+  const [values, setValues] = React.useState('');
+  const [countryCode, setCountryCode] = React.useState('US');
+  const onSelect = Country => {
     setCountryCode(Country.cca2);
-    setValues(Country)
+    setValues(Country);
   };
 
   const DATA = [
@@ -383,28 +383,32 @@ export default function ProfileSetting() {
             </View>
 
             <View style={styles.SearchInputView}>
-               <CountryPickerModal  onSelect={(Country) => onSelect(Country)} countryText={values?.name ? values?.name : 'Select Country'} countryCode={countryCode} />
+              <CountryPickerModal
+                onSelect={Country => onSelect(Country)}
+                countryText={values?.name ? values?.name : 'Select Country'}
+                countryCode={countryCode}
+              />
             </View>
 
             <View style={styles.SearchInputView}>
               <SearchInput
                 placeholder={'City'}
                 editIconSize={16}
-                placeholderTextColor={
-                   colors.placeholderColor
-                }
+                placeholderTextColor={colors.placeholderColor}
                 onChangeText={setCity}
-                borderColor={
-                  colors.innerBorder
-                }  
+                borderColor={colors.innerBorder}
               />
             </View>
 
             <View style={styles.SearchInputView}>
-              <CustomPicker defaultValue={heritage} onSelect={(value)=>setHeritage(value)} options={array}/>
-           </View>
+              <CustomPicker
+                defaultValue={heritage}
+                onSelect={value => setHeritage(value)}
+                options={array}
+              />
+            </View>
 
-           <View>
+            <View>
               <MultiSelectPicker
                 multiSelect={selectedItems}
                 setMultiSelect={item => setSelectedItems(item)}

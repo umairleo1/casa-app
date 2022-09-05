@@ -54,5 +54,5 @@ export default {
   GIFTED_CHAT: 'GIFTED_CHAT',
 
   //Likes Screen
-  LIKES:'LIKES'
+  LIKES: 'LIKES',
 };
