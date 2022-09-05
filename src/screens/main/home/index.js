@@ -149,7 +149,7 @@ export default function Home() {
             />
           </>
         }
-        renderItem={({item}) => <PostView onRefresh={onRefresh} item={item} />}
+        renderItem={({item}) => <PostView onRefresh={onRefresh} item={item} onPressLikes={()=>navigation.navigate('LIKES')}/>}
         contentContainerStyle={{
           marginHorizontal: 20,
         }}
