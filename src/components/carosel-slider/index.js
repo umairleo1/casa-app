@@ -48,14 +48,15 @@ const FlatListCustom = ({data}) => {
             //   source={{
             //     uri: item?.url,
             //   }}
-            //   controls={true}
-            //   paused={true}
+            //   controls={false}
+            //   paused={false}
             //   style={styles.image}
             //   repeat={true}
+            //   muted={true}
             //   playWhenInactive={false}
             //   fullscreen={true}
-            //   // onLoadStart={() => setIsLoading(true)}
-            //   // onLoadEnd={() => setIsLoading(false)}
+            //   onLoadStart={() => setIsLoading(true)}
+            //   onLoadEnd={() => setIsLoading(false)}
             //   resizeMode="cover"
             // />
           }

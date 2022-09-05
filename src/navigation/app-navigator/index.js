@@ -34,7 +34,7 @@ const {
   CREATE_GROUP,
   ADD_GROUP_NAME,
   GIFTED_CHAT,
-  LIKES
+  LIKES,
 } = SCREEN;
 
 export default function AppNavigator() {
@@ -58,7 +58,6 @@ export default function AppNavigator() {
       <Stack.Screen name={ADD_GROUP_NAME} component={AddGroupName} />
       <Stack.Screen name={GIFTED_CHAT} component={GiftedChats} />
       <Stack.Screen name={LIKES} component={Likes} />
-
     </Stack.Navigator>
   );
 }

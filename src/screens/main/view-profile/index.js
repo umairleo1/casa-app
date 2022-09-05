@@ -178,7 +178,6 @@ export default function ViewProfile({route}) {
     // console.log('check ==========> ', item);
     const [like, setLike] = React.useState(item?.isLiked);
     const [likeValue, setLikeValue] = React.useState(item?.postlikes);
-    const [isLoading, setIsLoading] = React.useState(false);
 
     const likePost = async id => {
       try {
@@ -204,7 +203,7 @@ export default function ViewProfile({route}) {
               source={
                 item?.postedBy?.profileImage
                   ? {uri: item?.postedBy?.profileImage}
-                  : images.profile
+                  : images.people
               }
               style={styles.image}
             />
@@ -230,26 +229,9 @@ export default function ViewProfile({route}) {
             </TouchableOpacity>
           )}
         </View>
+
         <Text style={styles.content}>{item?.description}</Text>
         {item?.files?.length > 0 && <FlatListCustom data={item?.files} />}
-        {/* {item?.files.length > 0 && (
-          <View style={styles.row}>
-            {isLoading && (
-              <ActivityIndicator
-                style={{position: 'absolute', zIndex: 101}}
-                size="small"
-                color={colors.buttonColor}
-              />
-            )}
-            <Image
-              onLoadStart={() => setIsLoading(true)}
-              onLoadEnd={() => setIsLoading(false)}
-              source={{uri: item?.files[0]?.url}}
-              style={[styles.postImage]}
-              resizeMode="contain"
-            />
-          </View>
-        )} */}
 
         <View style={styles.footer}>
           <View style={styles.row}>
@@ -260,16 +242,41 @@ export default function ViewProfile({route}) {
               <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
-            <Image source={images.people} style={styles.likeImg} />
-            <Image
-              source={images.people}
-              style={[styles.likeImg, {marginLeft: -8}]}
-            />
-            <Image
-              source={images.people}
-              style={[styles.likeImg, {marginLeft: -8}]}
-            />
-            <View style={{width: 130}}>
+            {item?.likes.length > 0 && (
+              <>
+                <Image
+                  source={
+                    item?.likes[0]?.likesBy?.profileImage
+                      ? {uri: item?.likes[0].likesBy?.profileImage}
+                      : images.people
+                  }
+                  style={styles.likeImg}
+                />
+                {item?.likes.length > 1 && (
+                  <Image
+                    source={
+                      item?.likes[1]?.likesBy?.profileImage
+                        ? {uri: item?.likes[1].likesBy?.profileImage}
+                        : images.people
+                    }
+                    style={[styles.likeImg, {marginLeft: -8}]}
+                  />
+                )}
+                {item?.likes.length > 2 && (
+                  <Image
+                    source={
+                      item?.likes[2]?.likesBy?.profileImage
+                        ? {uri: item?.likes[2].likesBy?.profileImage}
+                        : images.people
+                    }
+                    style={[styles.likeImg, {marginLeft: -8}]}
+                  />
+                )}
+              </>
+            )}
+            <TouchableOpacity
+              onPress={() => navigation.navigate('LIKES', {post: item})}
+              style={{width: 130}}>
               <Text style={[styles.text]}>
                 <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>
                   {item?.likes[0]?.likesBy?.firstName}
@@ -283,7 +290,7 @@ export default function ViewProfile({route}) {
                   </Text>
                 )}
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity
             onPress={() => {
@@ -367,6 +374,7 @@ export default function ViewProfile({route}) {
         />
 
         <FlatList
+          initialNumToRender={25}
           data={route?.params?.id ? userPosts : myAllPosts}
           renderItem={({item}) => <ListItem item={item} />}
           keyExtractor={item => item.id}

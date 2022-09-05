@@ -215,6 +215,9 @@ export default function Comments() {
       const result = await postServices.editCommentApi(selectedComment._id, {
         commentText: comment,
       });
+      {
+        result?.success && setPost(result?.post1);
+      }
       console.log(result);
       setSelectedComent('');
       setText('');
