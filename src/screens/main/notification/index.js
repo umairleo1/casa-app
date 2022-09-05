@@ -15,11 +15,14 @@ import moment from 'moment';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 import colors from 'src/utils/themes/global-colors';
 import {RFValue} from 'react-native-responsive-fontsize';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Notification() {
   const [notification, setNotification] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [loder, setLoader] = React.useState(false);
+
+  const navigation = useNavigation();
 
   const dummyImg = images.people;
 
@@ -129,7 +132,7 @@ export default function Notification() {
   return (
     <View style={styles.Container}>
       <ActivityIndicator visible={loder} />
-      <Header heading={'Notification'}>
+      <Header heading={'Notification'} onPressBack={()=>navigation.goBack()}>
         <FlatList
           data={notification.notifications}
           renderItem={listItem}
