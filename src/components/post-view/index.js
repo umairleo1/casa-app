@@ -1,4 +1,4 @@
-import {Text, View, Image, TouchableOpacity} from 'react-native';
+import {Text, View, Image, TouchableOpacity,Pressable} from 'react-native';
 import React, {useState} from 'react';
 import {postServices} from 'src/services/post-service';
 import {showMessage} from 'react-native-flash-message';
@@ -13,7 +13,7 @@ import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
 import colors from 'src/utils/themes/global-colors';
 
-export default function PostView({item, onRefresh}) {
+export default function PostView({item, onRefresh,onPressLikes}) {
   const navigation = useNavigation();
 
   const [like, setLike] = useState(item?.isLiked);
@@ -110,7 +110,7 @@ export default function PostView({item, onRefresh}) {
               )}
             </>
           )}
-          <View style={{width: 130}}>
+          <Pressable style={{width: 130}} onPress={onPressLikes}>
             <Text style={[styles.text]}>
               <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>
                 {item?.likes[0]?.likesBy?.firstName}
@@ -124,7 +124,7 @@ export default function PostView({item, onRefresh}) {
                 </Text>
               )}
             </Text>
-          </View>
+          </Pressable>
         </View>
         <TouchableOpacity
           onPress={() =>

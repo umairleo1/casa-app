@@ -52,4 +52,7 @@ export default {
 
   //Gifted Chat
   GIFTED_CHAT: 'GIFTED_CHAT',
+
+  //Likes Screen
+  LIKES:'LIKES'
 };

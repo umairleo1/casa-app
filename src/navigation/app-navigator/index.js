@@ -17,6 +17,7 @@ import NewChat from 'src/screens/main/chat-tab/new-chat';
 import CreateGroup from 'src/screens/main/chat-tab/new-chat/create-group';
 import AddGroupName from 'src/screens/main/chat-tab/new-chat/add-group-name';
 import GiftedChats from 'src/screens/main/chat-tab/gifted-chat';
+import Likes from 'src/screens/main/home/likes';
 
 const Stack = createStackNavigator();
 const {
@@ -33,6 +34,7 @@ const {
   CREATE_GROUP,
   ADD_GROUP_NAME,
   GIFTED_CHAT,
+  LIKES
 } = SCREEN;
 
 export default function AppNavigator() {
@@ -55,6 +57,8 @@ export default function AppNavigator() {
       <Stack.Screen name={CREATE_GROUP} component={CreateGroup} />
       <Stack.Screen name={ADD_GROUP_NAME} component={AddGroupName} />
       <Stack.Screen name={GIFTED_CHAT} component={GiftedChats} />
+      <Stack.Screen name={LIKES} component={Likes} />
+
     </Stack.Navigator>
   );
 }

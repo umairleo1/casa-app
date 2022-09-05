@@ -64,7 +64,7 @@ export default function CommentInput({
 const styles = StyleSheet.create({
   input: {
     flex: 1,
-    height: hp(7),
+    height: 50,
     padding: 10,
     borderWidth: 1,
     borderRadius: wp(10),

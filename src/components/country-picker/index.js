@@ -5,39 +5,35 @@ import colors from 'src/utils/themes/global-colors';
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import CountryPicker, {DEFAULT_THEME} from 'react-native-country-picker-modal';
 
-export default function CountryPickerModal() {
-  const [value, setValue] = React.useState('');
-  const [countryCode, setCountryCode] = React.useState('US');
-
-  const onSelect = Country => {
-    setCountryCode(Country.cca2);
-    setValue(Country);
-    // props.setSelectCountryCode(Country.callingCode[0]);
-  };
-
+export default function CountryPickerModal({onSelect,countryText,countryCode}) {
+  
   return (
     <>
       {/* {alert(JSON.stringify(value))} */}
       <View style={styles.mainView}>
-        <CountryPicker
-          withFlag={true}
-          withCallingCode={true}
-          // withCallingCode={true}
-          withFlagButton
-          countryCode={countryCode}
-          containerButtonStyle={styles.pickerButtonStyle}
-          onSelect={Country => onSelect(Country)}
-          theme={{
-            ...DEFAULT_THEME,
-            backgroundColor: colors.whiteColor,
-            onBackgroundTextColor: colors.black,
-            fontSize: 15,
-          }}
-          placeholder={'Select Country'}
-          // onValueChange={(value)=>setValue(value)}
-        />
-        {value && <Text style={styles.text}>{value.name}</Text>}
-      </View>
+      <CountryPicker
+        withFlag={true}
+        withCallingCode={true}
+        // withCallingCode={true}
+        withFlagButton
+        countryCode={countryCode}
+        containerButtonStyle={styles.pickerButtonStyle}
+        onSelect={onSelect}
+        theme={{
+          ...DEFAULT_THEME,
+          backgroundColor: colors.whiteColor,
+          onBackgroundTextColor: colors.black,
+          fontSize: 15,
+        }}
+        placeholder={'Select Country'}
+        // onValueChange={(value)=>setValue(value)}
+      />
+     {countryText &&
+          <Text style={styles.text}>
+            {countryText}
+          </Text>
+        }     
+         </View>
     </>
   );
 }
