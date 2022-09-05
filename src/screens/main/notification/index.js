@@ -20,6 +20,11 @@ export default function Notification() {
   const [notification, setNotification] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
   const [loder, setLoader] = React.useState(false);
+  const [limit, setLimit] = React.useState({
+    currentPage: 1,
+    limit: 25,
+    availablePages: 1,
+  });
 
   const dummyImg = images.people;
 
@@ -31,11 +36,28 @@ export default function Notification() {
     try {
       setLoader(true);
       const result = await profileServices.getNotificationApi('1', '25');
-      setNotification(result);
-      console.log('Here are the notifications ', result);
+      console.log('Her are the notifications ', result);
+      setNotification(result?.notifications);
+      setLimit({...limit, availablePages: result?.totalPages});
+
       setLoader(false);
     } catch (error) {
       setLoader(false);
+      console.log(error);
+    }
+  };
+
+  const loadMore = async () => {
+    try {
+      const result = await profileServices.getNotificationApi(
+        limit.currentPage + 1,
+        limit.limit,
+      );
+      console.log('Her are more notifications ', result);
+
+      setNotification([...notification, ...result?.notifications]);
+      setLimit({...limit, currentPage: limit.currentPage + 1});
+    } catch (error) {
       console.log(error);
     }
   };
@@ -43,8 +65,9 @@ export default function Notification() {
   const onRefresh = async () => {
     try {
       setRefreshing(true);
-      const result = await profileServices.getNotificationApi('1', '25');
-      setNotification(result);
+      const result = await profileServices.getNotificationApi('1', limit.limit);
+      setNotification(result.notifications);
+      setLimit({...limit, availablePages: result?.totalPages, currentPage: 1});
       setRefreshing(false);
     } catch (error) {
       console.log(error);
@@ -52,7 +75,18 @@ export default function Notification() {
     }
   };
 
-  const listItem = ({item}) => {
+  const onPressFollowBtn = async item => {
+    // setLoader(true);
+    try {
+      const result = await profileServices.followTo(item?.fromUser?._id);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const ListItem = ({item}) => {
+    const [isFollow, setIsFollow] = React.useState(item?.isFollowing);
     return (
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
@@ -70,41 +104,49 @@ export default function Notification() {
                 <Text style={styles.flatlistName}>{item?.title}</Text>
               </View>
               <Text style={styles.mail}>{item?.message}</Text>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity
-                  style={{
-                    // width: 61,
-                    backgroundColor: colors.whiteColor,
-                    borderRadius: 3,
-                    borderColor: colors.buttonColor,
-                    borderWidth: 1,
-                    marginTop: 8,
-                    paddingHorizontal: 5,
-                    padding: 5,
-                  }}>
-                  <Text
-                    style={{color: colors.buttonColor, fontSize: RFValue(10)}}>
-                    Discrad
-                  </Text>
-                </TouchableOpacity>
+              {item?.type == 'follow' && isFollow == false && (
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  {/* <TouchableOpacity
+                    style={{
+                      // width: 61,
+                      backgroundColor: colors.whiteColor,
+                      borderRadius: 3,
+                      borderColor: colors.buttonColor,
+                      borderWidth: 1,
+                      marginTop: 8,
+                      paddingHorizontal: 5,
+                      padding: 5,
+                    }}>
+                    <Text
+                      style={{
+                        color: colors.buttonColor,
+                        fontSize: RFValue(10),
+                      }}>
+                      Discrad
+                    </Text>
+                  </TouchableOpacity> */}
 
-                <TouchableOpacity
-                  style={{
-                    // width: 61,
-                    backgroundColor: colors.buttonColor,
-                    borderRadius: 3,
-                    borderWidth: 1,
-                    marginTop: 8,
-                    paddingHorizontal: 5,
-                    padding: 5,
-                    marginLeft: 5,
-                  }}>
-                  <Text
-                    style={{color: colors.whiteColor, fontSize: RFValue(10)}}>
-                    Follow Back
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                  <TouchableOpacity
+                    onPress={() => {
+                      onPressFollowBtn(item), setIsFollow(!isFollow);
+                    }}
+                    style={{
+                      // width: 61,
+                      backgroundColor: colors.buttonColor,
+                      borderRadius: 3,
+                      borderWidth: 1,
+                      marginTop: 8,
+                      paddingHorizontal: 5,
+                      padding: 5,
+                      marginLeft: 5,
+                    }}>
+                    <Text
+                      style={{color: colors.whiteColor, fontSize: RFValue(10)}}>
+                      Follow Back
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           </View>
           <Text style={styles.time}>
@@ -131,9 +173,9 @@ export default function Notification() {
       <ActivityIndicator visible={loder} />
       <Header heading={'Notification'}>
         <FlatList
-          data={notification.notifications}
-          renderItem={listItem}
+          data={notification}
           keyExtractor={item => item._id}
+          renderItem={({item}) => <ListItem item={item} />}
           contentContainerStyle={{
             marginHorizontal: 20,
             marginTop: 15,
@@ -146,6 +188,10 @@ export default function Notification() {
           }
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={ItemDivider}
+          onEndReached={() => {
+            limit.currentPage < limit.availablePages && loadMore();
+          }}
+          onEndReachedThreshold={0.3}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
