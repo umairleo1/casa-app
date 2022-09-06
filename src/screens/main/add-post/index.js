@@ -36,7 +36,7 @@ export default function AddPost() {
   const [description, setDescription] = React.useState('');
 
   React.useEffect(() => {
-    console.log(' UseEffect ', route?.params?.myPost);
+    // console.log(' UseEffect ', route?.params?.myPost);
     route?.params?.myPost && setDescription(route?.params?.myPost?.description);
     route?.params?.myPost && setAddPost(route?.params?.myPost?.files);
   }, []);

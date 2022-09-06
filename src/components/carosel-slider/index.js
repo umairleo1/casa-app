@@ -13,10 +13,22 @@ import {
 import colors from 'src/utils/themes/global-colors';
 // import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-player';
+import {createThumbnail} from 'react-native-create-thumbnail';
 
 const FlatListCustom = ({data}) => {
   const RenderItem = ({item}) => {
     const [isLoading, setIsLoading] = React.useState(false);
+    const [thumbnail, setThumbNail] = React.useState('');
+
+    React.useEffect(() => {
+      item?.myTypeOf !== 'image/jpeg' &&
+        createThumbnail({
+          url: item?.url,
+          timeStamp: 10000,
+        })
+          .then(response => setThumbNail(response))
+          .catch(err => console.log({err}));
+    }, []);
 
     return (
       <>
@@ -51,12 +63,9 @@ const FlatListCustom = ({data}) => {
               video={{
                 uri: item?.url,
               }}
-              // video={{
-              //   uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-              // }}
               // videoWidth={1600}
               // videoHeight={900}
-              thumbnail={{uri: item?.url}}
+              thumbnail={{uri: thumbnail?.path}}
               style={[styles.image]}
             />
           )}

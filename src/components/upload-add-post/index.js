@@ -15,6 +15,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 // import Video from 'react-native-video';
 
 import VideoPlayer from 'react-native-video-player';
+import {createThumbnail} from 'react-native-create-thumbnail';
 
 export default function UploadAddPost({
   onPressUpload,
@@ -26,61 +27,73 @@ export default function UploadAddPost({
   setRemoved,
   removed,
 }) {
-  const RenderPreview = ({data}) => (
-    <>
-      <View style={{height: 185, width: 200, margin: 5}}>
-        <TouchableOpacity
-          onPress={() => {
-            {
-              data?.name
-                ? (onClosePress(preview.filter(el => el.name !== data.name)),
-                  setRemoved([
-                    ...removed,
-                    ...preview.filter(el => el.name == data.name),
-                  ]),
-                  console.log(
-                    'Hahah ',
-                    preview.filter(el => el.name !== data.name),
-                  ))
-                : onClosePress(
-                    preview.filter(el => el.fileName !== data.fileName),
-                  );
-            }
-          }}
-          style={styles.closeIcon}>
-          <AntDesign name={'close'} size={12} color={colors.black} />
-        </TouchableOpacity>
+  const RenderPreview = ({data}) => {
+    const [thumbnail, setThumbNail] = React.useState('');
+    React.useEffect(() => {
+      image?.myTypeOf !== 'image/jpeg' &&
+        createThumbnail({
+          url: data?.uri || data?.url,
+          timeStamp: 10000,
+        })
+          .then(response => setThumbNail(response))
+          .catch(err => console.log({err}));
+    }, []);
+    return (
+      <>
+        <View style={{height: 185, width: 200, margin: 5}}>
+          <TouchableOpacity
+            onPress={() => {
+              {
+                data?.name
+                  ? (onClosePress(preview.filter(el => el.name !== data.name)),
+                    setRemoved([
+                      ...removed,
+                      ...preview.filter(el => el.name == data.name),
+                    ]),
+                    console.log(
+                      'Hahah ',
+                      preview.filter(el => el.name !== data.name),
+                    ))
+                  : onClosePress(
+                      preview.filter(el => el.fileName !== data.fileName),
+                    );
+              }
+            }}
+            style={styles.closeIcon}>
+            <AntDesign name={'close'} size={12} color={colors.black} />
+          </TouchableOpacity>
 
-        {data?.type == 'image/jpg' || data?.myTypeOf == 'image/jpeg' ? (
-          <Image
-            style={{
-              height: '100%',
-              width: '100%',
-              borderRadius: 5,
-              overflow: 'hidden',
-            }}
-            source={{uri: data?.uri || data?.url}}
-            resizeMode="cover"
-          />
-        ) : (
-          <VideoPlayer
-            video={{
-              uri: data?.url || data?.uri,
-            }}
-            // videoWidth={1600}
-            // videoHeight={900}
-            // thumbnail={{uri: item?.url}}
-            style={{
-              height: '100%',
-              width: '100%',
-              borderRadius: 5,
-              overflow: 'hidden',
-            }}
-          />
-        )}
-      </View>
-    </>
-  );
+          {data?.type == 'image/jpg' || data?.myTypeOf == 'image/jpeg' ? (
+            <Image
+              style={{
+                height: '100%',
+                width: '100%',
+                borderRadius: 5,
+                overflow: 'hidden',
+              }}
+              source={{uri: data?.uri || data?.url}}
+              resizeMode="cover"
+            />
+          ) : (
+            <VideoPlayer
+              video={{
+                uri: data?.url || data?.uri,
+              }}
+              // videoWidth={1600}
+              // videoHeight={900}
+              thumbnail={{uri: thumbnail?.path}}
+              style={{
+                height: '100%',
+                width: '100%',
+                borderRadius: 5,
+                overflow: 'hidden',
+              }}
+            />
+          )}
+        </View>
+      </>
+    );
+  };
 
   return (
     <View
