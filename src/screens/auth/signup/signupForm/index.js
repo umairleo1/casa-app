@@ -42,9 +42,21 @@ export default function SignupForm({setShowSignUp}) {
   const signupFormSchema = useMemo(
     () =>
       Yup.object({
-        firstName: Yup.string().required('First name is required'),
-        lastName: Yup.string().required('Last name is required'),
-        userName: Yup.string().required('User name is required'),
+        firstName: Yup.string()
+          .trim('The contact name cannot include leading and trailing spaces')
+          .min(3, 'Must be longer than 2 characters')
+          .max(20, 'Nice try, nobody has a first name that long')
+          .required('First name is required'),
+        lastName: Yup.string()
+          .trim('The contact name cannot include leading and trailing spaces')
+          .min(3, 'Must be longer than 2 characters')
+          .max(20, 'Nice try, nobody has a last name that long')
+          .required('Last name is required'),
+        userName: Yup.string()
+          .trim('The contact name cannot include leading and trailing spaces')
+          .min(3, 'Must be longer than 2 characters')
+          .max(20, 'Nice try, nobody has a user name that long')
+          .required('User name is required'),
         email: Yup.string()
           .required('Email is required')
           .email('Email format is incorrect'),

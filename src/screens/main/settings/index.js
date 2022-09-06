@@ -12,7 +12,7 @@ import {handleLogout} from 'src/redux/auth/auth-actions';
 import Button from 'src/components/button';
 import colors from 'src/utils/themes/global-colors';
 import {profileServices} from 'src/services/profile-services';
-import {showMessage} from 'react-native-flash-message';
+// import {showMessage} from 'react-native-flash-message';
 
 export default function Settings() {
   const navigation = useNavigation();
@@ -20,21 +20,27 @@ export default function Settings() {
 
   const logout = async () => {
     const fcm = await asyncStorage.getfcmToken();
+    console.log('Check fcm Token logout ', fcm);
 
     try {
       const result = await profileServices.logoutApi({
         notificationToken: fcm,
       });
       console.log(result);
-      asyncStorage.removeToken();
+      await asyncStorage.removeFcmToken();
+      await asyncStorage.removeToken();
+
       dispatch(handleLogout(''));
-      asyncStorage.removeFcmToken();
     } catch (error) {
       console.log(error);
-      showMessage({
-        message: error.errMsg,
-        type: 'danger',
-      });
+      // showMessage({
+      //   message: error.errMsg,
+      //   type: 'danger',
+      // });
+      asyncStorage.removeFcmToken();
+      asyncStorage.removeToken();
+
+      dispatch(handleLogout(''));
     }
   };
 

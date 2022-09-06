@@ -61,7 +61,7 @@ export default function Home() {
         page ? page : limit.currentPage,
         limit.limit,
       );
-      console.log('Aho feeds    =====> ', res);
+      // console.log('Aho feeds    =====> ', res);
       setFeeds(res.posts);
       setLimit({...limit, availablePages: res?.totalPages});
       setIsLoading(false);

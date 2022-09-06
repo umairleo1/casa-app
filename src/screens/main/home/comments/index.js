@@ -17,6 +17,7 @@ import Chart from 'assets/svg/Common/chat';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {showMessage} from 'react-native-flash-message';
 import CommentInput from 'src/components/comment-input';
@@ -32,6 +33,8 @@ export default function Comments() {
   const route = useRoute();
   const ref = useRef();
   const refRBSheet = useRef();
+
+  const userProfile = useSelector(state => state?.profile?.userProfile);
 
   const [post, setPost] = React.useState(route?.params?.data);
   const [selectedComment, setSelectedComent] = React.useState('');
@@ -128,15 +131,38 @@ export default function Comments() {
               <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
-            <Image source={images.people} style={styles.likeImg} />
-            <Image
-              source={images.people}
-              style={[styles.likeImg, {marginLeft: -8}]}
-            />
-            <Image
-              source={images.people}
-              style={[styles.likeImg, {marginLeft: -8}]}
-            />
+            {item?.likes.length > 0 && (
+              <>
+                <Image
+                  source={
+                    item?.likes[0]?.likesBy?.profileImage
+                      ? {uri: item?.likes[0].likesBy?.profileImage}
+                      : images.people
+                  }
+                  style={styles.likeImg}
+                />
+                {item?.likes.length > 1 && (
+                  <Image
+                    source={
+                      item?.likes[1]?.likesBy?.profileImage
+                        ? {uri: item?.likes[1].likesBy?.profileImage}
+                        : images.people
+                    }
+                    style={[styles.likeImg, {marginLeft: -8}]}
+                  />
+                )}
+                {item?.likes.length > 2 && (
+                  <Image
+                    source={
+                      item?.likes[2]?.likesBy?.profileImage
+                        ? {uri: item?.likes[2].likesBy?.profileImage}
+                        : images.people
+                    }
+                    style={[styles.likeImg, {marginLeft: -8}]}
+                  />
+                )}
+              </>
+            )}
             <View style={{width: 130}}>
               <Text style={[styles.text]}>
                 <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>
@@ -167,6 +193,7 @@ export default function Comments() {
   const commentsList = ({item}) => {
     return (
       <View style={[styles.mainContainer, {marginHorizontal: 10}]}>
+        {console.log(item)}
         <View style={styles.commentView}>
           <View style={styles.commentView2}>
             <Image
@@ -186,13 +213,16 @@ export default function Comments() {
               </Text>
               <Text style={styles.commentContent}>{item?.text}</Text>
             </View>
-            <TouchableOpacity onPress={() => commentPress(item)}>
-              <MaterialCommunityIcons
-                name="dots-vertical"
-                color="black"
-                size={20}
-              />
-            </TouchableOpacity>
+            {console.log('check   ', userProfile)}
+            {item?.commentBy?._id == userProfile?.user?._id && (
+              <TouchableOpacity onPress={() => commentPress(item)}>
+                <MaterialCommunityIcons
+                  name="dots-vertical"
+                  color="black"
+                  size={20}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>

@@ -104,6 +104,9 @@ export default function BottomTab() {
 
   return (
     <Tab.Navigator
+      tabBarOptions={{
+        keyboardHidesTabBar: true,
+      }}
       screenOptions={{
         headerShown: false,
         unmountOnBlur: false,
