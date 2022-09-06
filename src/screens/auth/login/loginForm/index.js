@@ -19,7 +19,7 @@ import colors from 'src/utils/themes/global-colors';
 import {showMessage} from 'react-native-flash-message';
 import {userService} from 'src/services/auth-service';
 import {useNavigation} from '@react-navigation/native';
-import authStorage from 'utils/async-storage/index';
+import asyncStorage from 'utils/async-storage/index';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserReduxToken} from 'src/redux/auth/auth-actions';
@@ -56,6 +56,7 @@ export default function LoginForm() {
   );
 
   const handleLogin = async value => {
+    console.log('FCM token on login ', fcmToken);
     try {
       setIsLoading(true);
       const result = await userService.login({
@@ -65,8 +66,8 @@ export default function LoginForm() {
       });
 
       dispatch(setUserReduxToken(result.token));
-      await authStorage.storeToken(result.token);
-      await authStorage.storeFcmToken(fcmToken);
+      await asyncStorage.storeToken(result.token);
+      await asyncStorage.storeFcmToken(fcmToken);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

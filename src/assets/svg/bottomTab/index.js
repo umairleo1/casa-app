@@ -39,7 +39,7 @@ const HomeIcon = ({fillColor, strokeColor}) => (
   </View>
 );
 
-const NotificationIcon = ({strokeColor}) => (
+const NotificationIcon = ({strokeColor, fillColor}) => (
   <View>
     <Svg
       width="18"
@@ -47,7 +47,7 @@ const NotificationIcon = ({strokeColor}) => (
       viewBox="0 0 18 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg">
-      <Mask id="path-1-inside-1_1045_253" fill="fillColor">
+      <Mask id="path-1-inside-1_1045_253" fill={fillColor}>
         <Path
           fill-rule="evenodd"
           clip-rule="evenodd"

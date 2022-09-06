@@ -12,7 +12,9 @@ import React, {useRef} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import UploadButton from '../upload-button';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Video from 'react-native-video';
+// import Video from 'react-native-video';
+
+import VideoPlayer from 'react-native-video-player';
 
 export default function UploadAddPost({
   onPressUpload,
@@ -49,7 +51,7 @@ export default function UploadAddPost({
           <AntDesign name={'close'} size={12} color={colors.black} />
         </TouchableOpacity>
 
-        {data?.myTypeOf == 'image/jpeg' ? (
+        {data?.type == 'image/jpg' || data?.myTypeOf == 'image/jpeg' ? (
           <Image
             style={{
               height: '100%',
@@ -61,23 +63,19 @@ export default function UploadAddPost({
             resizeMode="cover"
           />
         ) : (
-          <Video
-            source={{
-              uri: data?.url,
+          <VideoPlayer
+            video={{
+              uri: data?.url || data?.uri,
             }}
-            controls={true}
-            paused={true}
+            // videoWidth={1600}
+            // videoHeight={900}
+            // thumbnail={{uri: item?.url}}
             style={{
               height: '100%',
               width: '100%',
               borderRadius: 5,
               overflow: 'hidden',
             }}
-            repeat={true}
-            playWhenInactive={true}
-            fullscreen={true}
-            onLoadStart={() => {}}
-            resizeMode="cover"
           />
         )}
       </View>

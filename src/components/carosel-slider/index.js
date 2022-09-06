@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import colors from 'src/utils/themes/global-colors';
 // import Video from 'react-native-video';
+import VideoPlayer from 'react-native-video-player';
 
 const FlatListCustom = ({data}) => {
   const RenderItem = ({item}) => {
@@ -26,6 +27,8 @@ const FlatListCustom = ({data}) => {
               margin: 4,
               alignItems: 'center',
               justifyContent: 'center',
+              width:
+                data.length == 1 ? Dimensions.get('window').width * 0.9 : 230,
             },
           ]}>
           {isLoading && (
@@ -36,37 +39,33 @@ const FlatListCustom = ({data}) => {
             />
           )}
 
-          {
-            item?.myTypeOf == 'image/jpeg' ? (
-              <ImageMemoized
-                setIsLoading={setIsLoading}
-                data={data}
-                src={{uri: item?.url}}
-              />
-            ) : null
-            // <Video
-            //   source={{
-            //     uri: item?.url,
-            //   }}
-            //   controls={false}
-            //   paused={false}
-            //   style={styles.image}
-            //   repeat={true}
-            //   muted={true}
-            //   playWhenInactive={false}
-            //   fullscreen={true}
-            //   onLoadStart={() => setIsLoading(true)}
-            //   onLoadEnd={() => setIsLoading(false)}
-            //   resizeMode="cover"
-            // />
-          }
+          {item?.myTypeOf == 'image/jpeg' ? (
+            <ImageMemoized
+              setIsLoading={setIsLoading}
+              data={data}
+              src={{uri: item?.url}}
+            />
+          ) : (
+            <VideoPlayer
+              hideControlsOnStart={true}
+              video={{
+                uri: item?.url,
+              }}
+              // video={{
+              //   uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+              // }}
+              // videoWidth={1600}
+              // videoHeight={900}
+              thumbnail={{uri: item?.url}}
+              style={[styles.image]}
+            />
+          )}
         </View>
       </>
     );
   };
 
   return (
-    // <SafeAreaView style={styles.container}>
     <FlatList
       data={data}
       horizontal={true}
@@ -74,7 +73,6 @@ const FlatListCustom = ({data}) => {
       keyExtractor={item => item.id}
       showsHorizontalScrollIndicator={false}
     />
-    // </SafeAreaView>
   );
 };
 
@@ -97,12 +95,6 @@ const ImageComp = ({src, data, setIsLoading}) => {
     <Image
       onLoadStart={() => setIsLoading(true)}
       onLoadEnd={() => setIsLoading(false)}
-      // style={[
-      //   styles.image,
-      //   {
-      //     width: data.length == 1 ? Dimensions.get('window').width * 0.9 : 230,
-      //   },
-      // ]}
       style={{
         height: '100%',
         width: data.length == 1 ? Dimensions.get('window').width * 0.9 : 230,
