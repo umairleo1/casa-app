@@ -80,11 +80,12 @@ export default function LoginForm() {
   };
 
   return (
-    <ScrollView
+    <View
       style={styles.scrollView}
-      ref={ref}
-      scrollToOverflowEnabled
-      onContentSizeChange={() => scrollToBottom()}>
+      // ref={ref}
+      // scrollToOverflowEnabled
+      // onContentSizeChange={() => scrollToBottom()}
+    >
       <Text style={styles.text}>Login to your Account</Text>
       <View style={styles.borderLine} />
 
@@ -112,7 +113,7 @@ export default function LoginForm() {
                 onChangeText={handleChange('email')}
                 onBlur={() => setFieldTouched('email')}
                 type="email-address"
-                onPressIn={() => scrollToBottom()}
+                // onPressIn={() => scrollToBottom()}
               />
               <Input
                 placeholder={'Your Password'}
@@ -123,14 +124,9 @@ export default function LoginForm() {
                 onBlur={() => setFieldTouched('password')}
                 eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
                 onPressEye={() => setPasswordVisible(!passwordVisible)}
-                onPressIn={() => scrollToBottom()}
+                // onPressIn={() => scrollToBottom()}
               />
               <View style={styles.forgotPasswordView}>
-                {/* <CheckBox
-                    isChecked={checked}
-                    onPress={() => setUnChecked(!checked)}
-                    tc1="Remeber Me"
-                  /> */}
                 <Pressable
                   onPress={() => navigation.navigate('FORGOT_PASSWORD')}>
                   <Text style={styles.forgotPassword}>Forgot Password?</Text>
@@ -149,6 +145,6 @@ export default function LoginForm() {
           )}
         </Formik>
       </View>
-    </ScrollView>
+    </View>
   );
 }

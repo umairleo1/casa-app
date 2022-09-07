@@ -71,7 +71,7 @@ export default function Followers() {
               style={
                 styles.name
               }>{`${item?.firstName} ${item?.lastName}`}</Text>
-            <Text style={styles.mail}>{item?.email}</Text>
+            <Text style={styles.mail}>{item?.userName || 'No Username'}</Text>
           </View>
         </View>
         {!route?.params?.id && (
@@ -91,10 +91,6 @@ export default function Followers() {
         renderItem={listItem}
         keyExtractor={item => item.id}
         style={{marginBottom: 10, marginHorizontal: 20, marginTop: 15}}
-        // contentContainerStyle={{
-        //   marginHorizontal: 20,
-        //   marginTop: 15,
-        // }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

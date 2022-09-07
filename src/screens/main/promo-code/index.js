@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {Text, View, ScrollView} from 'react-native';
 import React from 'react';
 import Header from 'src/components/headerView';
@@ -62,7 +63,7 @@ export default function PromoCode() {
               code !== '' && copyToClipboard();
             }}
           />
-          <Text>{copiedText}</Text>
+          {/* <Text>{copiedText}</Text> */}
         </View>
       </ScrollView>
       <View style={styles.buttonView}>
