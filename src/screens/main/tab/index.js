@@ -48,6 +48,19 @@ const FindPeopleStack = () => {
     </Stack.Navigator>
   );
 };
+
+const NotificationStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name={'Notification'} component={Notification} />
+      <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} />
+    </Stack.Navigator>
+  );
+};
+
 const ProfileStack = () => {
   return (
     <Stack.Navigator
@@ -118,8 +131,7 @@ export default function BottomTab() {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({color, size, focused}) => (
-            <HomeIcon strokeColor={focused ? colors.buttonColor : '#BBBBBB'} />
-            // <SimpleLineIcons name="home" color={color} size={size} />
+            <HomeIcon color={focused ? colors.buttonColor : '#BBBBBB'} />
           ),
         }}
       />
@@ -129,10 +141,7 @@ export default function BottomTab() {
         options={{
           tabBarLabel: 'Mi Gente',
           tabBarIcon: ({color, size, focused}) => (
-            <FindPeopleIcon
-              strokeColor={focused ? colors.buttonColor : '#BBBBBB'}
-            />
-            // <FontAwesome name="group" color={color} size={size} />
+            <FindPeopleIcon color={focused ? colors.buttonColor : '#BBBBBB'} />
           ),
         }}
       />
@@ -142,7 +151,7 @@ export default function BottomTab() {
         options={{
           tabBarLabel: 'Add Post',
           tabBarIcon: ({color, size, focused}) => (
-            <AddIcon strokeColor={focused ? colors.buttonColor : '#BBBBBB'} />
+            <AddIcon color={focused ? colors.buttonColor : '#BBBBBB'} />
 
             // <AntDesign name="pluscircle" color={color} size={size} />
           ),
@@ -150,12 +159,12 @@ export default function BottomTab() {
       />
       <Tab.Screen
         name="Notification"
-        component={Notification}
+        component={NotificationStack}
         options={{
           tabBarLabel: 'Notification',
           tabBarIcon: ({color, size, focused}) => (
             <NotificationIcon
-              strokeColor={focused ? colors.buttonColor : '#BBBBBB'}
+              color={focused ? colors.buttonColor : '#BBBBBB'}
             />
             // <FontAwesome name="bell" color={color} size={size} />
           ),
@@ -168,9 +177,7 @@ export default function BottomTab() {
           unmountOnBlur: false,
           tabBarLabel: 'Profile',
           tabBarIcon: ({color, size, focused}) => (
-            <ProfileIcon
-              strokeColor={focused ? colors.buttonColor : '#BBBBBB'}
-            />
+            <ProfileIcon color={focused ? colors.buttonColor : '#BBBBBB'} />
             // <Ionicons name="person" color={color} size={size} />
           ),
         }}

@@ -29,8 +29,9 @@ export default function UploadAddPost({
 }) {
   const RenderPreview = ({data}) => {
     const [thumbnail, setThumbNail] = React.useState('');
+
     React.useEffect(() => {
-      image?.myTypeOf !== 'image/jpeg' &&
+      data?.type?.split('/')[0] == 'video' &&
         createThumbnail({
           url: data?.uri || data?.url,
           timeStamp: 10000,
@@ -49,11 +50,7 @@ export default function UploadAddPost({
                     setRemoved([
                       ...removed,
                       ...preview.filter(el => el.name == data.name),
-                    ]),
-                    console.log(
-                      'Hahah ',
-                      preview.filter(el => el.name !== data.name),
-                    ))
+                    ]))
                   : onClosePress(
                       preview.filter(el => el.fileName !== data.fileName),
                     );
@@ -63,7 +60,7 @@ export default function UploadAddPost({
             <AntDesign name={'close'} size={12} color={colors.black} />
           </TouchableOpacity>
 
-          {data?.type == 'image/jpg' || data?.myTypeOf == 'image/jpeg' ? (
+          {data?.type?.split('/')[0] !== 'video' ? (
             <Image
               style={{
                 height: '100%',

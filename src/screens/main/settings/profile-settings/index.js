@@ -38,6 +38,8 @@ import CountryPickerModal from 'src/components/country-picker';
 import MultiSelect from 'react-native-multiple-select';
 import MultiSelectPicker from 'src/components/multi-select-picker';
 import CustomPicker from 'src/components/paper-dropdown';
+import {getCountries, getStates} from 'src/utils/functions/location';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
 let cameraIs = false;
 
@@ -48,13 +50,15 @@ export default function ProfileSetting() {
 
   const [editFirstName, setEditFirstName] = useState(false);
   const [editLastName, setEditLastName] = useState(false);
+  const [editUserName, setEditUserName] = useState(false);
   const [editPassword, setEditPassword] = useState(false);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [city, setCity] = useState('');
-  const [selectedItems, setSelectedItems] = useState([]);
+
   const [bio, setBio] = useState('');
 
   const [imageModal, setImageModal] = useState(false);
@@ -67,35 +71,48 @@ export default function ProfileSetting() {
   const navigation = useNavigation();
   const userToken = useSelector(state => state?.auth?.userToken);
   //
-  const array = ['option 1', 'option 2'];
-  const [heritage, setHeritage] = React.useState('Select Heritage');
+
+  const [heritage, setHeritage] = React.useState('');
+  const [states, setStates] = React.useState([]);
   //
   const [values, setValues] = React.useState('');
-  const [countryCode, setCountryCode] = React.useState('US');
+  const [countryCode, setCountryCode] = React.useState('');
+  const [DATA, setDAta] = React.useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+
   const onSelect = Country => {
+    console.log(Country);
     setCountryCode(Country.cca2);
     setValues(Country);
   };
-
-  const DATA = [
-    {label: 'React Naive', value: '1'},
-    {label: 'Javascript', value: '2'},
-    {label: 'Laravel', value: '3'},
-    {label: 'PHP', value: '4'},
-    {label: 'jQuery', value: '5'},
-    {label: 'Bootstrap', value: '6'},
-    {label: 'HTML', value: '7'},
-    {label: 'CSS', value: '8'},
-  ];
 
   useEffect(() => {
     getUserOnFocus();
   }, [focused]);
 
   useEffect(() => {
+    console.log(
+      'authContext?.userData?.user?.heritage ',
+      authContext?.userData?.user?.heritage,
+    );
+    for (var i = 0; i < getCountries().length; i++) {
+      DATA.push({label: getCountries()[i], value: i + 1});
+    }
     setFirstName(authContext?.userData?.user?.firstName);
     setLastName(authContext?.userData?.user?.lastName);
+    setUserName(authContext?.userData?.user?.userName);
+    setCity(authContext?.userData?.user?.city);
+    setValues(authContext?.userData?.user?.country);
+    setCountryCode(authContext?.userData?.user?.country?.cca2 || 'US');
+    setHeritage(authContext?.userData?.user?.state || 'Select States');
+    setSelectedItems(
+      authContext?.userData?.user?.heritage.map(e => parseInt(e)),
+    );
   }, []);
+
+  useEffect(() => {
+    setStates(getStates(values?.name ? values?.name : 'United States'));
+  }, [values]);
 
   const getUserOnFocus = async () => {
     const res = await profileServices.getUserProfile();
@@ -107,6 +124,7 @@ export default function ProfileSetting() {
   };
 
   const handleSave = async () => {
+    // console.log('selectedItems ', selectedItems);
     Keyboard.dismiss();
     setLoader(true);
     try {
@@ -117,13 +135,22 @@ export default function ProfileSetting() {
           lastName: lastName,
           password: password,
           bio: bio,
+          userName,
+          ...(values?.name && {
+            country: {name: values?.name, cca2: values?.cca2},
+          }),
+          ...(city && {city}),
+          ...(heritage && {state: heritage}),
+          ...(selectedItems && {heritage: selectedItems}),
         },
       );
       console.log('here is the success ', result);
       setEditFirstName(false);
       setEditLastName(false);
       setEditPassword(false);
+      setEditUserName(false);
       const res = await profileServices.getUserProfile();
+      console.log('user prof    ===> ', res);
       authContext.setUserData(res);
 
       setLoader(false);
@@ -279,161 +306,198 @@ export default function ProfileSetting() {
         heading={'Profile Settings'}
         onPressBack={() => navigation.goBack()}>
         <ActivityIndicator visible={loader} />
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <BackgroundImageWithImage
-            imageBackGround={profile?.cover}
-            editImage={images.editImage}
-            image={profile?.dp}
-            showEdit={true}
-            editBackGround={() => {
-              setCoverPhoto(true);
-              setImageModal(true);
-            }}
-            onPressProfileImage={() => {
-              setCoverPhoto(false);
-              setImageModal(true);
-            }}
-            onPressZoomProfile={() => setZoomPicModal(true)}
-            onPressBackgroundZoom={() => setZoomBackPicModal(true)}
-          />
-          <View style={styles.view}>
-            <Text style={styles.text}>Personal Information</Text>
-            <View style={styles.SearchInputView}>
-              <SearchInput
-                placeholder={'First Name'}
-                editIcon={'edit-3'}
-                editIconSize={16}
-                editable={editFirstName}
-                placeholderTextColor={
-                  editPassword ? colors.black : colors.placeholderColor
-                }
-                editIconColor={
-                  editFirstName ? colors.black : colors.placeholderColor
-                }
-                disableColor={
-                  editFirstName ? colors.black : colors.placeholderColor
-                }
-                onPress={() => {
-                  editFirstName
-                    ? setEditFirstName(false)
-                    : !editFirstName
-                    ? setEditFirstName(true)
-                    : editFirstName;
-                }}
-                value={firstName}
-                onChangeText={setFirstName}
-                borderColor={
-                  editFirstName ? colors.pureBlack : colors.innerBorder
-                }
-              />
-            </View>
-            <View style={styles.SearchInputView}>
-              <SearchInput
-                placeholder={'Last Name'}
-                editIcon={'edit-3'}
-                editIconSize={16}
-                editable={editLastName}
-                placeholderTextColor={
-                  editLastName ? colors.black : colors.placeholderColor
-                }
-                editIconColor={
-                  editLastName ? colors.black : colors.placeholderColor
-                }
-                disableColor={
-                  editLastName ? colors.black : colors.placeholderColor
-                }
-                onPress={() => {
-                  editLastName
-                    ? setEditLastName(false)
-                    : !editLastName
-                    ? setEditLastName(true)
-                    : editLastName;
-                }}
-                value={lastName}
-                onChangeText={setLastName}
-                borderColor={
-                  editLastName ? colors.pureBlack : colors.innerBorder
-                }
-              />
-            </View>
-            <View style={styles.SearchInputView}>
-              <SearchInput
-                placeholder={'Password'}
-                editIcon={'edit-3'}
-                editIconSize={16}
-                editable={editPassword}
-                placeholderTextColor={
-                  editPassword ? colors.black : colors.placeholderColor
-                }
-                editIconColor={
-                  editPassword ? colors.black : colors.placeholderColor
-                }
-                onPress={() => {
-                  editPassword
-                    ? setEditPassword(false)
-                    : !editPassword
-                    ? setEditPassword(true)
-                    : editPassword;
-                }}
-                onChangeText={setPassword}
-                borderColor={
-                  editPassword ? colors.pureBlack : colors.innerBorder
-                }
-              />
-            </View>
+        <KeyboardAwareScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <BackgroundImageWithImage
+              imageBackGround={profile?.cover}
+              editImage={images.editImage}
+              image={profile?.dp}
+              showEdit={true}
+              editBackGround={() => {
+                setCoverPhoto(true);
+                setImageModal(true);
+              }}
+              onPressProfileImage={() => {
+                setCoverPhoto(false);
+                setImageModal(true);
+              }}
+              onPressZoomProfile={() => setZoomPicModal(true)}
+              onPressBackgroundZoom={() => setZoomBackPicModal(true)}
+            />
+            <View style={styles.view}>
+              <Text style={styles.text}>Personal Information</Text>
+              <View style={styles.SearchInputView}>
+                <SearchInput
+                  placeholder={'First Name'}
+                  editIcon={'edit-3'}
+                  editIconSize={16}
+                  editable={editFirstName}
+                  placeholderTextColor={
+                    editPassword ? colors.black : colors.placeholderColor
+                  }
+                  editIconColor={
+                    editFirstName ? colors.black : colors.placeholderColor
+                  }
+                  disableColor={
+                    editFirstName ? colors.black : colors.placeholderColor
+                  }
+                  onPress={() => {
+                    editFirstName
+                      ? setEditFirstName(false)
+                      : !editFirstName
+                      ? setEditFirstName(true)
+                      : editFirstName;
+                  }}
+                  value={firstName}
+                  onChangeText={setFirstName}
+                  borderColor={
+                    editFirstName ? colors.pureBlack : colors.innerBorder
+                  }
+                />
+              </View>
+              <View style={styles.SearchInputView}>
+                <SearchInput
+                  placeholder={'Last Name'}
+                  editIcon={'edit-3'}
+                  editIconSize={16}
+                  editable={editLastName}
+                  placeholderTextColor={
+                    editLastName ? colors.black : colors.placeholderColor
+                  }
+                  editIconColor={
+                    editLastName ? colors.black : colors.placeholderColor
+                  }
+                  disableColor={
+                    editLastName ? colors.black : colors.placeholderColor
+                  }
+                  onPress={() => {
+                    editLastName
+                      ? setEditLastName(false)
+                      : !editLastName
+                      ? setEditLastName(true)
+                      : editLastName;
+                  }}
+                  value={lastName}
+                  onChangeText={setLastName}
+                  borderColor={
+                    editLastName ? colors.pureBlack : colors.innerBorder
+                  }
+                />
+              </View>
+              <View style={styles.SearchInputView}>
+                <SearchInput
+                  placeholder={'User Name'}
+                  editIcon={'edit-3'}
+                  editIconSize={16}
+                  editable={editUserName}
+                  placeholderTextColor={
+                    editUserName ? colors.black : colors.placeholderColor
+                  }
+                  editIconColor={
+                    editUserName ? colors.black : colors.placeholderColor
+                  }
+                  disableColor={
+                    editUserName ? colors.black : colors.placeholderColor
+                  }
+                  onPress={() => {
+                    editUserName
+                      ? setEditUserName(false)
+                      : !editUserName
+                      ? setEditUserName(true)
+                      : editUserName;
+                  }}
+                  value={userName}
+                  onChangeText={setUserName}
+                  borderColor={
+                    editUserName ? colors.pureBlack : colors.innerBorder
+                  }
+                />
+              </View>
+              <View style={styles.SearchInputView}>
+                <SearchInput
+                  placeholder={'Password'}
+                  editIcon={'edit-3'}
+                  editIconSize={16}
+                  editable={editPassword}
+                  placeholderTextColor={
+                    editPassword ? colors.black : colors.placeholderColor
+                  }
+                  editIconColor={
+                    editPassword ? colors.black : colors.placeholderColor
+                  }
+                  onPress={() => {
+                    editPassword
+                      ? setEditPassword(false)
+                      : !editPassword
+                      ? setEditPassword(true)
+                      : editPassword;
+                  }}
+                  onChangeText={setPassword}
+                  borderColor={
+                    editPassword ? colors.pureBlack : colors.innerBorder
+                  }
+                />
+              </View>
 
-            <View style={styles.SearchInputView}>
-              <CountryPickerModal
-                onSelect={Country => onSelect(Country)}
-                countryText={values?.name ? values?.name : 'Select Country'}
-                countryCode={countryCode}
-              />
-            </View>
+              <View style={styles.SearchInputView}>
+                <CountryPickerModal
+                  onSelect={Country => onSelect(Country)}
+                  countryText={
+                    values?.name
+                      ? values?.name
+                      : authContext?.userData?.user?.country?.name
+                  }
+                  countryCode={countryCode}
+                />
+              </View>
 
-            <View style={styles.SearchInputView}>
-              <SearchInput
-                placeholder={'City'}
-                editIconSize={16}
-                placeholderTextColor={colors.placeholderColor}
-                onChangeText={setCity}
-                borderColor={colors.innerBorder}
-              />
-            </View>
+              <View style={styles.SearchInputView}>
+                <SearchInput
+                  placeholder={'City'}
+                  editIconSize={16}
+                  placeholderTextColor={colors.placeholderColor}
+                  onChangeText={setCity}
+                  borderColor={colors.innerBorder}
+                  value={city}
+                />
+              </View>
 
-            <View style={styles.SearchInputView}>
-              <CustomPicker
-                defaultValue={heritage}
-                onSelect={value => setHeritage(value)}
-                options={array}
-              />
-            </View>
+              <View style={styles.SearchInputView}>
+                <CustomPicker
+                  defaultValue={heritage}
+                  onSelect={(value, name) => {
+                    setHeritage(name), console.log('chacha ', value);
+                  }}
+                  options={states}
+                />
+              </View>
 
-            <View>
-              <MultiSelectPicker
-                multiSelect={selectedItems}
-                setMultiSelect={item => setSelectedItems(item)}
-                data={DATA}
-              />
-            </View>
+              <View>
+                <MultiSelectPicker
+                  multiSelect={selectedItems}
+                  setMultiSelect={setSelectedItems}
+                  data={DATA}
+                />
+              </View>
 
-            <View style={styles.SearchInputView}>
-              <CommentBox
-                placeholder={
-                  authContext?.userData?.user?.bio == ''
-                    ? 'Write your bio..'
-                    : authContext?.userData?.user?.bio
-                }
-                value={bio}
-                onChangeText={setBio}
-                placeholderTextColor={colors.black}
-                borderColor={
-                  bio.length > 0 ? colors.pureBlack : colors.innerBorder
-                }
-              />
+              <View style={styles.SearchInputView}>
+                <CommentBox
+                  placeholder={
+                    authContext?.userData?.user?.bio == ''
+                      ? 'Write your bio..'
+                      : authContext?.userData?.user?.bio
+                  }
+                  value={bio}
+                  onChangeText={setBio}
+                  placeholderTextColor={colors.black}
+                  borderColor={
+                    bio.length > 0 ? colors.pureBlack : colors.innerBorder
+                  }
+                />
+              </View>
             </View>
-          </View>
-        </ScrollView>
-
+          </ScrollView>
+        </KeyboardAwareScrollView>
         <EditProfileModal
           iconPress={() => setImageModal(false)}
           visible={imageModal}

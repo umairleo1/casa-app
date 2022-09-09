@@ -72,8 +72,15 @@ export default function ViewProfile({route}) {
 
   const getMyAllPosts = async () => {
     try {
-      const res = await postServices.getAllMyPostApi();
-      // console.log('res my all posts-------------', res);
+      let res = await postServices.getAllMyPostApi();
+      console.log('res my all posts-------------', res);
+      res = res.map(el => {
+        el.files.forEach(nestEl => {
+          nestEl.type = nestEl.myTypeOf;
+        });
+        return el;
+      });
+
       setAllPosts(res);
     } catch (error) {
       console.log('error -------', error);
@@ -88,6 +95,7 @@ export default function ViewProfile({route}) {
     try {
       const res = await postServices.getUsersAllPostApi(route?.params?.id);
       console.log('user all posts-------------', res);
+
       setUserPosts(res.post);
     } catch (error) {
       console.log('error -------', error);
@@ -175,7 +183,6 @@ export default function ViewProfile({route}) {
   };
 
   const ListItem = ({item}) => {
-    // console.log('check ==========> ', item);
     const [like, setLike] = React.useState(item?.isLiked);
     const [likeValue, setLikeValue] = React.useState(item?.postlikes);
 
@@ -199,14 +206,16 @@ export default function ViewProfile({route}) {
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
           <View style={styles.flatlistView2}>
-            <Image
-              source={
-                item?.postedBy?.profileImage
-                  ? {uri: item?.postedBy?.profileImage}
-                  : images.people
-              }
-              style={styles.image}
-            />
+            <View style={{width: 50}}>
+              <Image
+                source={
+                  item?.postedBy?.profileImage
+                    ? {uri: item?.postedBy?.profileImage}
+                    : images.people
+                }
+                style={styles.image}
+              />
+            </View>
             <View style={styles.flatlistView3}>
               <Text style={styles.flatlistName}>
                 {item?.postedBy?.firstName + ' ' + item?.postedBy?.lastName}
@@ -236,47 +245,57 @@ export default function ViewProfile({route}) {
         <View style={styles.footer}>
           <View style={styles.row}>
             <TouchableOpacity
+              style={{
+                // width: 50,
+                flexDirection: 'row',
+                alignItems: 'center',
+
+                marginRight: 5,
+              }}
               onPress={() => {
                 likePost(item._id);
               }}>
               <Heart color={like ? colors.danger : '#BBB'} />
+              <Text style={[styles.text, {fontWeight: 'bold'}]}>
+                {likeValue}
+              </Text>
             </TouchableOpacity>
-            <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
-            {item?.likes.length > 0 && (
-              <>
-                <Image
-                  source={
-                    item?.likes[0]?.likesBy?.profileImage
-                      ? {uri: item?.likes[0].likesBy?.profileImage}
-                      : images.people
-                  }
-                  style={styles.likeImg}
-                />
-                {item?.likes.length > 1 && (
-                  <Image
-                    source={
-                      item?.likes[1]?.likesBy?.profileImage
-                        ? {uri: item?.likes[1].likesBy?.profileImage}
-                        : images.people
-                    }
-                    style={[styles.likeImg, {marginLeft: -8}]}
-                  />
-                )}
-                {item?.likes.length > 2 && (
-                  <Image
-                    source={
-                      item?.likes[2]?.likesBy?.profileImage
-                        ? {uri: item?.likes[2].likesBy?.profileImage}
-                        : images.people
-                    }
-                    style={[styles.likeImg, {marginLeft: -8}]}
-                  />
-                )}
-              </>
-            )}
             <TouchableOpacity
               onPress={() => navigation.navigate('LIKES', {post: item})}
-              style={{width: 130}}>
+              style={{width: 130, flexDirection: 'row', alignItems: 'center'}}>
+              {item?.likes?.length > 0 && (
+                <>
+                  <Image
+                    source={
+                      item?.likes[0]?.likesBy?.profileImage
+                        ? {uri: item?.likes[0].likesBy?.profileImage}
+                        : images.people
+                    }
+                    style={styles.likeImg}
+                  />
+                  {item?.likes?.length > 1 && (
+                    <Image
+                      source={
+                        item?.likes[1]?.likesBy?.profileImage
+                          ? {uri: item?.likes[1].likesBy?.profileImage}
+                          : images.people
+                      }
+                      style={[styles.likeImg, {marginLeft: -8}]}
+                    />
+                  )}
+                  {item?.likes?.length > 2 && (
+                    <Image
+                      source={
+                        item?.likes[2]?.likesBy?.profileImage
+                          ? {uri: item?.likes[2].likesBy?.profileImage}
+                          : images.people
+                      }
+                      style={[styles.likeImg, {marginLeft: -8}]}
+                    />
+                  )}
+                </>
+              )}
+
               <Text style={[styles.text]}>
                 <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>
                   {item?.likes[0]?.likesBy?.firstName}

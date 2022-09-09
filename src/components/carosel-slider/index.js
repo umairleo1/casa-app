@@ -19,9 +19,8 @@ const FlatListCustom = ({data}) => {
   const RenderItem = ({item}) => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [thumbnail, setThumbNail] = React.useState('');
-
     React.useEffect(() => {
-      item?.myTypeOf !== 'image/jpeg' &&
+      item?.myTypeOf.split('/')[0] == 'video' &&
         createThumbnail({
           url: item?.url,
           timeStamp: 10000,
@@ -51,7 +50,7 @@ const FlatListCustom = ({data}) => {
             />
           )}
 
-          {item?.myTypeOf == 'image/jpeg' ? (
+          {item?.myTypeOf.split('/')[0] !== 'video' ? (
             <ImageMemoized
               setIsLoading={setIsLoading}
               data={data}

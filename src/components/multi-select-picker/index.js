@@ -31,11 +31,14 @@ const MultiSelectPicker = ({multiSelect, setMultiSelect, data}) => {
         data={data}
         labelField="label"
         valueField="value"
-        placeholder="Multi Select item"
+        placeholder="Heritage"
         value={multiSelect}
         search
         searchPlaceholder="Search..."
-        onChange={setMultiSelect}
+        onChange={value => {
+          setMultiSelect(value), console.log(value);
+        }}
+        dropdownPosition="auto"
         // renderLeftIcon={() => (
         //     <AntDesign
         //         style={styles.icon}

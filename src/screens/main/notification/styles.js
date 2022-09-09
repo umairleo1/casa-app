@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
   },
   flatlistView: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 15,
   },
@@ -51,6 +51,8 @@ export const styles = StyleSheet.create({
   flatlistView2: {
     flexDirection: 'row',
     // alignItems: 'center',
+    width: '85%',
+    overflow: 'hidden',
   },
   flatlistView3: {
     marginHorizontal: 10,

@@ -41,6 +41,7 @@ const PostView = ({item, onRefresh}) => {
       <View style={styles.flatlistView}>
         <View style={styles.flatlistView2}>
           <TouchableOpacity
+            style={{width: 50}}
             onPress={() =>
               navigation.navigate('Profile', {
                 screen: 'USER_PROFILE',
@@ -66,53 +67,61 @@ const PostView = ({item, onRefresh}) => {
           </View>
         </View>
       </View>
-      <Text style={styles.content}>{item?.description}</Text>
+      <Text style={[styles.content]}>{item?.description}</Text>
       {item?.files?.length > 0 && <FlatListCustom data={item?.files} />}
 
-      <View style={styles.footer}>
+      <View style={[styles.footer]}>
         <View style={styles.row}>
           <TouchableOpacity
+            style={{
+              // width: 50,
+              flexDirection: 'row',
+              alignItems: 'center',
+
+              marginRight: 5,
+            }}
             onPress={() => {
               likePost(item._id);
             }}>
             <Heart color={like ? colors.danger : '#BBB'} />
+            <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
           </TouchableOpacity>
-          <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
-          {item?.likes.length > 0 && (
-            <>
-              <Image
-                source={
-                  item?.likes[0]?.likesBy?.profileImage
-                    ? {uri: item?.likes[0].likesBy?.profileImage}
-                    : images.people
-                }
-                style={styles.likeImg}
-              />
-              {item?.likes.length > 1 && (
-                <Image
-                  source={
-                    item?.likes[1]?.likesBy?.profileImage
-                      ? {uri: item?.likes[1].likesBy?.profileImage}
-                      : images.people
-                  }
-                  style={[styles.likeImg, {marginLeft: -8}]}
-                />
-              )}
-              {item?.likes.length > 2 && (
-                <Image
-                  source={
-                    item?.likes[2]?.likesBy?.profileImage
-                      ? {uri: item?.likes[2].likesBy?.profileImage}
-                      : images.people
-                  }
-                  style={[styles.likeImg, {marginLeft: -8}]}
-                />
-              )}
-            </>
-          )}
           <Pressable
-            style={{width: 130}}
+            style={{width: 130, flexDirection: 'row', alignItems: 'center'}}
             onPress={() => navigation.navigate('LIKES', {post: item})}>
+            {item?.likes.length > 0 && (
+              <>
+                <Image
+                  source={
+                    item?.likes[0]?.likesBy?.profileImage
+                      ? {uri: item?.likes[0].likesBy?.profileImage}
+                      : images.people
+                  }
+                  style={styles.likeImg}
+                />
+                {item?.likes.length > 1 && (
+                  <Image
+                    source={
+                      item?.likes[1]?.likesBy?.profileImage
+                        ? {uri: item?.likes[1].likesBy?.profileImage}
+                        : images.people
+                    }
+                    style={[styles.likeImg, {marginLeft: -8}]}
+                  />
+                )}
+                {item?.likes.length > 2 && (
+                  <Image
+                    source={
+                      item?.likes[2]?.likesBy?.profileImage
+                        ? {uri: item?.likes[2].likesBy?.profileImage}
+                        : images.people
+                    }
+                    style={[styles.likeImg, {marginLeft: -8}]}
+                  />
+                )}
+              </>
+            )}
+
             <Text style={[styles.text]}>
               <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>
                 {item?.likes[0]?.likesBy?.firstName}

@@ -11,8 +11,11 @@ export default function CustomPicker({options, defaultValue, onSelect}) {
         options={options}
         defaultValue={defaultValue}
         onSelect={onSelect}
-        dropdownStyle={{width: 200}}
-        style={{padding: 5, borderColor: colors.placeholderColor}}
+        dropdownStyle={{width: '80%'}}
+        style={{
+          padding: 5,
+          borderColor: colors.placeholderColor,
+        }}
       />
     </View>
   );
