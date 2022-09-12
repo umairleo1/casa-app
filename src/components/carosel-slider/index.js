@@ -62,8 +62,8 @@ const FlatListCustom = ({data}) => {
               video={{
                 uri: item?.url,
               }}
-              // videoWidth={1600}
-              // videoHeight={900}
+              videoWidth={1600}
+              videoHeight={900}
               thumbnail={{uri: thumbnail?.path}}
               style={[styles.image]}
             />

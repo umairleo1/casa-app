@@ -302,7 +302,7 @@ export default function ViewProfile({route}) {
                   {item?.likes[1] && ', '}
                   {item?.likes[1]?.likesBy?.firstName}
                 </Text>
-                {item?.likes.length > 1 && (
+                {item?.likes.length > 2 && (
                   <Text style={[styles.likedMore, {color: '#BBBBBB'}]}>
                     {' '}
                     and {item?.postlikes - 2} more liked this.
@@ -362,7 +362,9 @@ export default function ViewProfile({route}) {
         <Text style={styles.name}>
           {(data?.user?.firstName || '') + ' ' + (data?.user?.lastName || '')}
         </Text>
-        <Text style={styles.description}>{data?.user?.bio}</Text>
+        <Text style={[styles.description, {margin: 10}]}>
+          {data?.user?.bio}
+        </Text>
         {route?.params?.id && (
           <FollowButton
             onPress={() => onPressFollowBtn()}

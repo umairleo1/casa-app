@@ -128,7 +128,7 @@ const PostView = ({item, onRefresh}) => {
                 {item?.likes[1] && ', '}
                 {item?.likes[1]?.likesBy?.firstName}
               </Text>
-              {item?.likes?.length > 1 && (
+              {item?.likes?.length > 2 && (
                 <Text style={[styles.likedMore, {color: '#BBBBBB'}]}>
                   {' '}
                   and {item?.postlikes - 2} more liked this.
