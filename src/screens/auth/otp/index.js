@@ -17,11 +17,12 @@ export default function Otp() {
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [otp, setOtp] = React.useState('');
+  const [isClear, setisClear] = React.useState(false);
 
   const handleOtp = async () => {
     if (otp.length < 4) {
       showMessage({
-        message: otp.length == 0 ? 'OTP is required' : 'zinvalid OTP length',
+        message: otp.length == 0 ? 'OTP is required' : 'invalid OTP length',
         type: 'danger',
       });
     } else {
@@ -32,7 +33,10 @@ export default function Otp() {
           otp: otp,
         });
         console.log(result);
+        setisClear(true);
+        setOtp('');
         navigation.navigate('RESET_PASSWORD', {id: result.userId, otp: otp});
+
         setIsLoading(false);
       } catch (error) {
         showMessage({
@@ -52,7 +56,7 @@ export default function Otp() {
       all around the world.Share you thoughts, write blog posts,show your
       favourite music via Stopify,earn badges and much more!">
       <View style={styles.view}>
-        <OtpInput onCodeChange={setOtp} count={4} />
+        <OtpInput onCodeChange={setOtp} count={4} clear={isClear} />
 
         <View style={styles.buttonView}>
           <Button

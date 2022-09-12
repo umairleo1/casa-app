@@ -16,8 +16,8 @@ export default function CountryPickerModal({
       <View style={styles.mainView}>
         <CountryPicker
           withFlag={true}
-          withCallingCode={true}
           // withCallingCode={true}
+          withCallingCode={false}
           withFlagButton
           countryCode={countryCode}
           containerButtonStyle={styles.pickerButtonStyle}
@@ -28,7 +28,7 @@ export default function CountryPickerModal({
             onBackgroundTextColor: colors.black,
             fontSize: 15,
           }}
-          placeholder={'Select Country'}
+          placeholder={'Select Countries'}
           // onValueChange={(value)=>setValue(value)}
         />
         {countryText && <Text style={styles.text}>{countryText}</Text>}

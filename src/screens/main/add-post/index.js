@@ -2,7 +2,6 @@ import {
   Text,
   View,
   TextInput,
-  ScrollView,
   Platform,
   PermissionsAndroid,
   Keyboard,
@@ -22,6 +21,7 @@ import {postServices} from 'src/services/post-service';
 import {showMessage} from 'react-native-flash-message';
 
 import ActivityIndicator from 'src/components/loader/activity-indicator';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 
 let cameraIs = false;
 
@@ -194,7 +194,8 @@ export default function AddPost() {
   return (
     <Header onPressBack={() => navigation.goBack()} heading={'Add Post'}>
       <ActivityIndicator visible={isLoading} />
-      <ScrollView>
+      {/* <ScrollView> */}
+      <KeyboardAwareScrollView>
         <View style={styles.mainView}>
           <UploadAddPost
             image={addPost?.uri ? {uri: addPost?.uri} : images.uploadImage}
@@ -221,7 +222,8 @@ export default function AddPost() {
             value={description}
           />
         </View>
-      </ScrollView>
+        {/* </ScrollView> */}
+      </KeyboardAwareScrollView>
       <View style={styles.buttonView}>
         <Button
           backgroundColor={colors.buttonColor}

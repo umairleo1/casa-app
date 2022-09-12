@@ -68,7 +68,7 @@ export default function Following({route}) {
               style={
                 styles.name
               }>{`${item?.firstName} ${item?.lastName}`}</Text>
-            <Text style={styles.mail}>{item?.email}</Text>
+            <Text style={styles.mail}>{item?.userName || 'No Username'}</Text>
           </View>
         </View>
         {!route?.params?.id && (

@@ -17,11 +17,9 @@ export default function FollowButton({text, onPress, backgroundColor, loder}) {
         style={[styles.button, {backgroundColor: backgroundColor}]}
         onPress={onPress}
         disabled={loder}>
-        {loder ? (
-          <ActivityIndicator color={'#fff'} size={30} />
-        ) : (
-          <Text style={styles.buttonText}>{text}</Text>
-        )}
+        {loder && <ActivityIndicator color={'#fff'} size={30} />}
+
+        <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
     </>
   );
@@ -37,11 +35,13 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     height: 40,
-    width: 100,
+    // width: 100,
+    paddingHorizontal: 10,
     borderRadius: 4,
     marginBottom: 10,
     alignItems: 'center',
     alignSelf: 'center',
     marginTop: hp(1),
+    flexDirection: 'row',
   },
 });

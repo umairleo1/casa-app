@@ -7,7 +7,6 @@ import {
   View,
   ScrollView,
   Keyboard,
-  ActivityIndicator,
 } from 'react-native';
 import React, {useRef} from 'react';
 import {styles} from './styles';
@@ -27,6 +26,7 @@ import {postServices} from 'src/services/post-service';
 import colors from 'src/utils/themes/global-colors';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {CommentsBottomSheet} from 'src/components/del-edit-bottomsheet';
+import FlatListCustom from 'src/components/carosel-slider';
 
 export default function Comments() {
   const navigation = useNavigation();
@@ -77,7 +77,7 @@ export default function Comments() {
 
   const ListItem = ({item}) => {
     const [like, setLike] = React.useState(route?.params?.isLiked);
-    const [isLoading, setIsLoading] = React.useState(false);
+
     const [likeValue, setLikeValue] = React.useState(
       route?.params?.data?.postlikes,
     );
@@ -103,7 +103,7 @@ export default function Comments() {
           </View>
         </View>
         <Text style={styles.content}>{item?.description}</Text>
-        {item?.files?.length > 0 && (
+        {/* {item?.files?.length > 0 && (
           <View style={[styles.row, {justifyContent: 'center'}]}>
             {isLoading && (
               <ActivityIndicator style={{position: 'absolute', zIndex: 1}} />
@@ -116,8 +116,9 @@ export default function Comments() {
               onLoadEnd={() => setIsLoading(false)}
             />
           </View>
-        )}
+        )} */}
 
+        {item?.files?.length > 0 && <FlatListCustom data={item?.files} />}
         <View style={styles.footer}>
           <View style={styles.row}>
             <TouchableOpacity
@@ -131,39 +132,42 @@ export default function Comments() {
               <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>
             <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
-            {item?.likes.length > 0 && (
-              <>
-                <Image
-                  source={
-                    item?.likes[0]?.likesBy?.profileImage
-                      ? {uri: item?.likes[0].likesBy?.profileImage}
-                      : images.people
-                  }
-                  style={styles.likeImg}
-                />
-                {item?.likes.length > 1 && (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('LIKES', {post: item})}
+              style={{width: 130, flexDirection: 'row'}}>
+              {item?.likes.length > 0 && (
+                <>
                   <Image
                     source={
-                      item?.likes[1]?.likesBy?.profileImage
-                        ? {uri: item?.likes[1].likesBy?.profileImage}
+                      item?.likes[0]?.likesBy?.profileImage
+                        ? {uri: item?.likes[0].likesBy?.profileImage}
                         : images.people
                     }
-                    style={[styles.likeImg, {marginLeft: -8}]}
+                    style={styles.likeImg}
                   />
-                )}
-                {item?.likes.length > 2 && (
-                  <Image
-                    source={
-                      item?.likes[2]?.likesBy?.profileImage
-                        ? {uri: item?.likes[2].likesBy?.profileImage}
-                        : images.people
-                    }
-                    style={[styles.likeImg, {marginLeft: -8}]}
-                  />
-                )}
-              </>
-            )}
-            <View style={{width: 130}}>
+                  {item?.likes.length > 1 && (
+                    <Image
+                      source={
+                        item?.likes[1]?.likesBy?.profileImage
+                          ? {uri: item?.likes[1].likesBy?.profileImage}
+                          : images.people
+                      }
+                      style={[styles.likeImg, {marginLeft: -8}]}
+                    />
+                  )}
+                  {item?.likes.length > 2 && (
+                    <Image
+                      source={
+                        item?.likes[2]?.likesBy?.profileImage
+                          ? {uri: item?.likes[2].likesBy?.profileImage}
+                          : images.people
+                      }
+                      style={[styles.likeImg, {marginLeft: -8}]}
+                    />
+                  )}
+                </>
+              )}
+
               <Text style={[styles.text]}>
                 <Text style={[styles.likedMore, {fontWeight: 'bold'}]}>
                   {item?.likes[0]?.likesBy?.firstName}
@@ -177,7 +181,7 @@ export default function Comments() {
                   </Text>
                 )}
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <TouchableOpacity style={styles.row}>
             <Chart />
@@ -193,17 +197,24 @@ export default function Comments() {
   const commentsList = ({item}) => {
     return (
       <View style={[styles.mainContainer, {marginHorizontal: 10}]}>
-        {console.log(item)}
         <View style={styles.commentView}>
           <View style={styles.commentView2}>
-            <Image
-              source={
-                item?.commentBy?.profileImage
-                  ? {uri: item?.commentBy?.profileImage}
-                  : images.people
-              }
-              style={styles.image}
-            />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Profile', {
+                  screen: 'USER_PROFILE',
+                  params: {id: item?.commentBy?._id},
+                })
+              }>
+              <Image
+                source={
+                  item?.commentBy?.profileImage
+                    ? {uri: item?.commentBy?.profileImage}
+                    : images.people
+                }
+                style={styles.image}
+              />
+            </TouchableOpacity>
             <View style={styles.commentView3}>
               <Text style={styles.commentName}>
                 {item?.commentBy?.firstName + ' ' + item?.commentBy?.lastName}
@@ -213,7 +224,7 @@ export default function Comments() {
               </Text>
               <Text style={styles.commentContent}>{item?.text}</Text>
             </View>
-            {console.log('check   ', userProfile)}
+
             {item?.commentBy?._id == userProfile?.user?._id && (
               <TouchableOpacity onPress={() => commentPress(item)}>
                 <MaterialCommunityIcons

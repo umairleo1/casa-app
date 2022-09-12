@@ -4,11 +4,12 @@ import React from 'react';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import colors from 'src/utils/themes/global-colors';
 
-export default function OtpInput({count, code, onCodeChange}) {
+export default function OtpInput({count, code, onCodeChange, clear}) {
   return (
     <View style={styles.mainView}>
       <OTPInputView
         style={{width: '100%', height: 200}}
+        clearInputs={clear}
         pinCount={count}
         code={code} //You can supply this prop or not. The component will be used as a controlled / uncontrolled component respectively.
         onCodeChanged={code => onCodeChange(code)}

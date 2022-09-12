@@ -78,8 +78,7 @@ export default function Likes() {
               </View>
             </View>
             <Text style={styles.time}>
-              {moment(item?.likedAt).format('MMM DD YYYY hh:mm:ss') ||
-                'Month Ago'}
+              {moment(item?.likedAt).format('MMM DD hh:mm A') || 'Month Ago'}
             </Text>
           </View>
         </View>

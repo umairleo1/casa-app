@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     fontSize: hp(2),
     color: colors.whiteColor,
     marginTop: 20,
+    marginBottom: 10,
     fontFamily: fonts.RobotoRegular,
   },
 });

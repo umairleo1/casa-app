@@ -88,10 +88,29 @@ export default function Notification() {
     }
   };
 
+  const handleNotification = item => {
+    console.log('notification ======>  ', item);
+    item?.type == 'follow' &&
+      navigation.navigate('VIEW_PROFILE', {
+        id: item?.fromUser?._id,
+      });
+    // item?.type == 'like' ||
+    //   (item.type == 'comment' &&
+    //     navigation.navigate('COMMENTS', {
+    //       data: item?.postId,
+
+    //       isLiked: true,
+    //     }));
+  };
+
   const ListItem = ({item}) => {
     const [isFollow, setIsFollow] = React.useState(item?.isFollowing);
     return (
-      <View style={styles.mainContainer}>
+      <TouchableOpacity
+        onPress={() => {
+          handleNotification(item);
+        }}
+        style={styles.mainContainer}>
         <View style={styles.flatlistView}>
           <View style={styles.flatlistView2}>
             <Image
@@ -152,11 +171,13 @@ export default function Notification() {
               )}
             </View>
           </View>
-          <Text style={styles.time}>
-            {moment(item?.createdAt).format('DD MMM')}
-          </Text>
+          <View style={{width: '15%', alignItems: 'flex-end'}}>
+            <Text style={styles.time}>
+              {moment(item?.createdAt).format('DD MMM')}
+            </Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
