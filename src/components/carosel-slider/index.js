@@ -2,11 +2,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {
-  SafeAreaView,
   View,
   FlatList,
   StyleSheet,
-  Image,
   ActivityIndicator,
   Dimensions,
   Pressable,
@@ -15,6 +13,7 @@ import colors from 'src/utils/themes/global-colors';
 // import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-player';
 import {createThumbnail} from 'react-native-create-thumbnail';
+import FastImage from 'react-native-fast-image';
 
 const FlatListCustom = ({data, setZoomPicModal, setProfile}) => {
   const RenderItem = ({item}) => {
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
 
 const ImageComp = ({src, data, setIsLoading}) => {
   return (
-    <Image
+    <FastImage
       onLoadStart={() => setIsLoading(true)}
       onLoadEnd={() => setIsLoading(false)}
       style={{

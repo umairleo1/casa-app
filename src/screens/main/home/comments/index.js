@@ -5,7 +5,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ScrollView,
   Keyboard,
   Dimensions,
 } from 'react-native';
@@ -15,6 +14,7 @@ import Header from 'src/components/headerView';
 import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FastImage from 'react-native-fast-image';
 
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
@@ -30,6 +30,7 @@ import {CommentsBottomSheet} from 'src/components/del-edit-bottomsheet';
 import FlatListCustom from 'src/components/carosel-slider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {ZoomPicModal} from 'src/components/zoom-pic-modal';
+import fonts from 'src/utils/themes/fonts';
 
 export default function Comments() {
   const navigation = useNavigation();
@@ -319,27 +320,23 @@ export default function Comments() {
       leftImage={images.blueAppLogo}
       rightIcon
       onPressBack={() => navigation.goBack()}>
-      <ScrollView
-        style={{height: Dimensions.get('window').height * 0.8}}
-        ref={ref}
-        onContentSizeChange={() => scrollToBottom()}>
-        <KeyboardAwareScrollView r>
-          <View>
-            {/* <FlatList
-            data={dummyData}
-            renderItem={listItem}
-            keyExtractor={item => item.id}
-            contentContainerStyle={{
-              marginHorizontal: 20,
-            }}
-            showsVerticalScrollIndicator={false}
-          /> */}
-            <ListItem item={post} />
-          </View>
+      <KeyboardAwareScrollView>
+        <View
+          style={{
+            height: Dimensions.get('window').height * 0.8,
+          }}>
           <View style={styles.bottomLine} />
           <FlatList
             data={post?.comments}
+            ref={ref}
+            onContentSizeChange={() => scrollToBottom()}
+            ListHeaderComponent={<ListItem item={post} />}
             renderItem={commentsList}
+            ListEmptyComponent={
+              <Text style={{marginLeft: 20, fontFamily: fonts.RobotoRegular}}>
+                No Comments Yet
+              </Text>
+            }
             keyExtractor={item => item.id}
             contentContainerStyle={{
               marginHorizontal: 20,
@@ -348,19 +345,6 @@ export default function Comments() {
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={ItemDivider}
           />
-
-          <View style={styles.footerView}>
-            <CommentInput
-              placeholder={'write a comment...'}
-              onPressEmoji={undefined}
-              onPressSend={comment => {
-                !text ? addComment(comment) : editCommemt(comment);
-              }}
-              // onPressIn={()=>scrollToBottom()}
-              // onChangeText={setComment}
-              value={text}
-            />
-          </View>
 
           <RBSheet
             ref={refRBSheet}
@@ -385,21 +369,33 @@ export default function Comments() {
               onPressDel={() => onDeleteCommentPress()}
             />
           </RBSheet>
-        </KeyboardAwareScrollView>
-      </ScrollView>
 
-      <ZoomPicModal
-        visible={zoomPicModal}
-        iconPress={() => setZoomPicModal(false)}
-        image={profile?.dp}
-        imageStyle={{height: '60%', width: '90%', resizeMode: 'contain'}}
-      />
+          <View style={styles.footerView}>
+            <CommentInput
+              placeholder={'write a comment...'}
+              onPressEmoji={undefined}
+              onPressSend={comment => {
+                !text ? addComment(comment) : editCommemt(comment);
+              }}
+              // onPressIn={()=>scrollToBottom()}
+              // onChangeText={setComment}
+              value={text}
+            />
+          </View>
+          <ZoomPicModal
+            visible={zoomPicModal}
+            iconPress={() => setZoomPicModal(false)}
+            image={profile?.dp}
+            imageStyle={{height: '60%', width: '90%', resizeMode: 'contain'}}
+          />
+        </View>
+      </KeyboardAwareScrollView>
     </Header>
   );
 }
 
 const ImageComp = ({src}) => {
-  return <Image resizeMode="contain" style={styles.image} source={src} />;
+  return <FastImage resizeMode="contain" style={styles.image} source={src} />;
 };
 const ImageMemoized = React.memo(
   ImageComp,
