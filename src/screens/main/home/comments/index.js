@@ -7,8 +7,9 @@ import {
   View,
   ScrollView,
   Keyboard,
+  Dimensions,
 } from 'react-native';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
 import Heart from 'assets/svg/Common/heart';
@@ -27,6 +28,8 @@ import colors from 'src/utils/themes/global-colors';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {CommentsBottomSheet} from 'src/components/del-edit-bottomsheet';
 import FlatListCustom from 'src/components/carosel-slider';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {ZoomPicModal} from 'src/components/zoom-pic-modal';
 
 export default function Comments() {
   const navigation = useNavigation();
@@ -39,6 +42,8 @@ export default function Comments() {
   const [post, setPost] = React.useState(route?.params?.data);
   const [selectedComment, setSelectedComent] = React.useState('');
   const [text, setText] = React.useState('');
+  const [zoomPicModal, setZoomPicModal] = useState(false);
+  const [profile, setProfile] = useState({dp: '', cover: ''});
   // const [comment, setComment] = React.useState('');
 
   const addComment = async comment => {
@@ -118,7 +123,13 @@ export default function Comments() {
           </View>
         )} */}
 
-        {item?.files?.length > 0 && <FlatListCustom data={item?.files} />}
+        {item?.files?.length > 0 && (
+          <FlatListCustom
+            setZoomPicModal={setZoomPicModal}
+            setProfile={setProfile}
+            data={item?.files}
+          />
+        )}
         <View style={styles.footer}>
           <View style={styles.row}>
             <TouchableOpacity
@@ -309,11 +320,12 @@ export default function Comments() {
       rightIcon
       onPressBack={() => navigation.goBack()}>
       <ScrollView
+        style={{height: Dimensions.get('window').height * 0.8}}
         ref={ref}
-        onContentSizeChange={() => scrollToBottom()}
-        style={{height: 500}}>
-        <View>
-          {/* <FlatList
+        onContentSizeChange={() => scrollToBottom()}>
+        <KeyboardAwareScrollView r>
+          <View>
+            {/* <FlatList
             data={dummyData}
             renderItem={listItem}
             keyExtractor={item => item.id}
@@ -322,58 +334,66 @@ export default function Comments() {
             }}
             showsVerticalScrollIndicator={false}
           /> */}
-          <ListItem item={post} />
-        </View>
-        <View style={styles.bottomLine} />
-        <FlatList
-          data={post?.comments}
-          renderItem={commentsList}
-          keyExtractor={item => item.id}
-          contentContainerStyle={{
-            marginHorizontal: 20,
-            paddingBottom: hp(8),
-          }}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={ItemDivider}
-        />
+            <ListItem item={post} />
+          </View>
+          <View style={styles.bottomLine} />
+          <FlatList
+            data={post?.comments}
+            renderItem={commentsList}
+            keyExtractor={item => item.id}
+            contentContainerStyle={{
+              marginHorizontal: 20,
+              paddingBottom: hp(8),
+            }}
+            showsVerticalScrollIndicator={false}
+            ItemSeparatorComponent={ItemDivider}
+          />
+
+          <View style={styles.footerView}>
+            <CommentInput
+              placeholder={'write a comment...'}
+              onPressEmoji={undefined}
+              onPressSend={comment => {
+                !text ? addComment(comment) : editCommemt(comment);
+              }}
+              // onPressIn={()=>scrollToBottom()}
+              // onChangeText={setComment}
+              value={text}
+            />
+          </View>
+
+          <RBSheet
+            ref={refRBSheet}
+            closeOnDragDown={true}
+            closeOnPressMask={false}
+            height={120}
+            customStyles={{
+              wrapper: {
+                backgroundColor: `rgba(0, 0, 0, 0.2)`,
+              },
+              container: {
+                backgroundColor: colors.whiteColor,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+              },
+              draggableIcon: {
+                backgroundColor: '#000',
+              },
+            }}>
+            <CommentsBottomSheet
+              onPressEdit={() => onEditCommentPress()}
+              onPressDel={() => onDeleteCommentPress()}
+            />
+          </RBSheet>
+        </KeyboardAwareScrollView>
       </ScrollView>
 
-      <RBSheet
-        ref={refRBSheet}
-        closeOnDragDown={true}
-        closeOnPressMask={false}
-        height={120}
-        customStyles={{
-          wrapper: {
-            backgroundColor: `rgba(0, 0, 0, 0.2)`,
-          },
-          container: {
-            backgroundColor: colors.whiteColor,
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-          },
-          draggableIcon: {
-            backgroundColor: '#000',
-          },
-        }}>
-        <CommentsBottomSheet
-          onPressEdit={() => onEditCommentPress()}
-          onPressDel={() => onDeleteCommentPress()}
-        />
-      </RBSheet>
-
-      <View style={styles.footerView}>
-        <CommentInput
-          placeholder={'write a comment...'}
-          onPressEmoji={undefined}
-          onPressSend={comment => {
-            !text ? addComment(comment) : editCommemt(comment);
-          }}
-          // onPressIn={()=>scrollToBottom()}
-          // onChangeText={setComment}
-          value={text}
-        />
-      </View>
+      <ZoomPicModal
+        visible={zoomPicModal}
+        iconPress={() => setZoomPicModal(false)}
+        image={profile?.dp}
+        imageStyle={{height: '60%', width: '90%', resizeMode: 'contain'}}
+      />
     </Header>
   );
 }

@@ -52,6 +52,8 @@ export default function ViewProfile({route}) {
   const [refreshing, setRefreshing] = React.useState(false);
   const [showimage, setShowImage] = React.useState(false);
   const [showCover, setShowCover] = React.useState(false);
+  const [zoomPicModal, setZoomPicModal] = React.useState(false);
+  const [profile, setProfile] = React.useState({dp: '', cover: ''});
 
   const getProfile = async () => {
     // console.log('route?.params?.id', route?.params?.id);
@@ -240,7 +242,13 @@ export default function ViewProfile({route}) {
         </View>
 
         <Text style={styles.content}>{item?.description}</Text>
-        {item?.files?.length > 0 && <FlatListCustom data={item?.files} />}
+        {item?.files?.length > 0 && (
+          <FlatListCustom
+            setZoomPicModal={setZoomPicModal}
+            setProfile={setProfile}
+            data={item?.files}
+          />
+        )}
 
         <View style={styles.footer}>
           <View style={styles.row}>
@@ -335,7 +343,9 @@ export default function ViewProfile({route}) {
       onPressBack={() => navigation.goBack()}
       feather={'setting'}
       chatIcon={route?.params?.id && 'chatbubble-ellipses-outline'}
-      onPressInbox={() => navigation.navigate('GIFTED_CHAT')}
+      onPressInbox={() =>
+        navigation.navigate('GIFTED_CHAT', {userId: route?.params?.id})
+      }
       onPress={() => navigation.navigate('SETTING')}>
       <ActivityIndicatorr visible={isLoading} />
       <ZoomPicModal
@@ -440,6 +450,12 @@ export default function ViewProfile({route}) {
         onPressYes={() => {
           deletePost(selectedPostId?._id), setAlertMessage(false);
         }}
+      />
+      <ZoomPicModal
+        visible={zoomPicModal}
+        iconPress={() => setZoomPicModal(false)}
+        image={profile?.dp}
+        imageStyle={{height: '60%', width: '90%', resizeMode: 'contain'}}
       />
     </Header>
   );

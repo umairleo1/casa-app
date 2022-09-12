@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {StyleSheet, Text, View, Image} from 'react-native';
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 import Header from 'src/components/headerView';
 import {GiftedChat, Send, InputToolbar, Bubble} from 'react-native-gifted-chat';
 import SendIcon from 'src/assets/svg/Common/left-arrow';
@@ -8,11 +8,16 @@ import SendIcon from 'src/assets/svg/Common/left-arrow';
 import {styles} from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from 'src/utils/themes/global-colors';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {useWebSockets} from 'src/utils/functions/useWebSockets';
+import AuthContext from 'src/utils/auth-context';
 
 export default function GiftedChats() {
   const navigation = useNavigation();
-  const [messages, setMessages] = useState([]);
+  const route = useRoute();
+  const [message, setMessages] = useState([]);
+  const authContext = React.useContext(AuthContext);
+  const ref = useRef();
 
   useEffect(() => {
     setMessages([
@@ -27,12 +32,33 @@ export default function GiftedChats() {
         },
       },
     ]);
+    scrollToBottom();
   }, []);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    console.log('Message changed');
+    // setTimeout(() => {
+    //   ref.current.scrollToBottom({animated: true});
+    // }, 2000);
+  };
+
+  const {messages, send} = useWebSockets({
+    userId: authContext?.userData?.user?._id,
+    arrayOfOtherUsers: [route?.params?.userId],
+    enabled: Boolean(authContext?.userData?.user?._id),
+    onConnected: scrollToBottom,
+  });
+
   const onSend = useCallback((messages = []) => {
+    console.log('Check messages ', messages);
     setMessages(previousMessages =>
       GiftedChat.append(previousMessages, messages),
     );
+    // send(message[0]?.text, message.user?._id);
   }, []);
 
   const MessengerBarContainer = props => {
@@ -87,11 +113,11 @@ export default function GiftedChats() {
       rightImage={require('../../../../assets/images/findpeople/people2.png')}
       onPressBack={() => navigation.goBack()}>
       <GiftedChat
-        messages={messages}
+        messages={message}
         alwaysShowSend={true}
         onSend={messages => onSend(messages)}
         user={{
-          _id: 1,
+          _id: authContext.userData?.user?._id,
         }}
         renderInputToolbar={props => MessengerBarContainer(props)}
         renderBubble={props => renderBubble(props)}
@@ -99,7 +125,7 @@ export default function GiftedChats() {
           return (
             <Send {...props}>
               <TouchableOpacity
-                onPress={messages => onSend(messages)}
+                // onPress={messages => onSend(messages)}
                 style={styles.sendBtn}>
                 <SendIcon height={30} width={30} />
               </TouchableOpacity>

@@ -13,7 +13,7 @@ import Heart from 'assets/svg/Common/heart';
 import Chart from 'assets/svg/Common/chat';
 import colors from 'src/utils/themes/global-colors';
 
-const PostView = ({item, onRefresh}) => {
+const PostView = ({item, onRefresh, setZoomPicModal, setProfile}) => {
   const navigation = useNavigation();
 
   const [like, setLike] = useState(item?.isLiked);
@@ -68,7 +68,13 @@ const PostView = ({item, onRefresh}) => {
         </View>
       </View>
       <Text style={[styles.content]}>{item?.description}</Text>
-      {item?.files?.length > 0 && <FlatListCustom data={item?.files} />}
+      {item?.files?.length > 0 && (
+        <FlatListCustom
+          setZoomPicModal={setZoomPicModal}
+          setProfile={setProfile}
+          data={item?.files}
+        />
+      )}
 
       <View style={[styles.footer]}>
         <View style={styles.row}>
