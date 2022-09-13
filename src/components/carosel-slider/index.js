@@ -2,20 +2,20 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {
-  SafeAreaView,
   View,
   FlatList,
   StyleSheet,
-  Image,
   ActivityIndicator,
   Dimensions,
+  Pressable,
 } from 'react-native';
 import colors from 'src/utils/themes/global-colors';
 // import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-player';
 import {createThumbnail} from 'react-native-create-thumbnail';
+import FastImage from 'react-native-fast-image';
 
-const FlatListCustom = ({data}) => {
+const FlatListCustom = ({data, setZoomPicModal, setProfile}) => {
   const RenderItem = ({item}) => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [thumbnail, setThumbNail] = React.useState('');
@@ -51,11 +51,17 @@ const FlatListCustom = ({data}) => {
           )}
 
           {item?.myTypeOf.split('/')[0] !== 'video' ? (
-            <ImageMemoized
-              setIsLoading={setIsLoading}
-              data={data}
-              src={{uri: item?.url}}
-            />
+            <Pressable
+              onPress={() => {
+                setProfile({dp: item?.url, cover: 'post'}),
+                  setZoomPicModal(true);
+              }}>
+              <ImageMemoized
+                setIsLoading={setIsLoading}
+                data={data}
+                src={{uri: item?.url}}
+              />
+            </Pressable>
           ) : (
             <VideoPlayer
               hideControlsOnStart={true}
@@ -100,7 +106,7 @@ const styles = StyleSheet.create({
 
 const ImageComp = ({src, data, setIsLoading}) => {
   return (
-    <Image
+    <FastImage
       onLoadStart={() => setIsLoading(true)}
       onLoadEnd={() => setIsLoading(false)}
       style={{

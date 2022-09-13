@@ -12,6 +12,11 @@ export default function Followers() {
 
   const [followers, setFollowers] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [limit, setLimit] = React.useState({
+    currentPage: 1,
+    limit: 25,
+    availablePages: 1,
+  });
 
   const defaultImage = require('assets/images/findpeople/people.png');
 
@@ -21,9 +26,29 @@ export default function Followers() {
 
   const getFollowers = async id => {
     try {
-      const result = await profileServices.getFollowersApi('1', '25', id);
+      const result = await profileServices.getFollowersApi(
+        limit?.currentPage,
+        limit?.limit,
+        id,
+      );
       console.log('Here are the followers ', result);
       setFollowers(result.followers);
+      setLimit({...limit, availablePages: result?.totalPages});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadMore = async () => {
+    try {
+      const result = await profileServices.getFollowersApi(
+        limit?.currentPage + 1,
+        limit?.limit,
+        route?.params?.id ? route?.params?.id : '',
+      );
+
+      setFollowers([...followers, ...result.followers]);
+      setLimit({...limit, currentPage: limit.currentPage + 1});
     } catch (error) {
       console.log(error);
     }
@@ -49,6 +74,7 @@ export default function Followers() {
       );
       console.log('Here are the followers ', result);
       setFollowers(result.followers);
+      setLimit({...limit, availablePages: result?.totalPages, currentPage: 1});
       setRefreshing(false);
     } catch (error) {
       console.log(error);
@@ -96,6 +122,10 @@ export default function Followers() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         ListEmptyComponent={<Text>No Followers Yet</Text>}
+        onEndReached={() => {
+          limit.currentPage < limit.availablePages && loadMore();
+        }}
+        onEndReachedThreshold={0.3}
       />
     </View>
   );

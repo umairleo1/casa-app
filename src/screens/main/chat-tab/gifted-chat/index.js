@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import {StyleSheet, Text, View, Image} from 'react-native';
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 import Header from 'src/components/headerView';
 import {GiftedChat, Send, InputToolbar, Bubble} from 'react-native-gifted-chat';
 import SendIcon from 'src/assets/svg/Common/left-arrow';
@@ -8,31 +8,62 @@ import SendIcon from 'src/assets/svg/Common/left-arrow';
 import {styles} from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from 'src/utils/themes/global-colors';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import {useWebSockets} from 'src/utils/functions/useWebSockets';
+import AuthContext from 'src/utils/auth-context';
 
 export default function GiftedChats() {
   const navigation = useNavigation();
-  const [messages, setMessages] = useState([]);
+  const route = useRoute();
+  const [message, setMessages] = useState([]);
+  const authContext = React.useContext(AuthContext);
+  const ref = useRef();
 
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
+    scrollToBottom();
   }, []);
 
-  const onSend = useCallback((messages = []) => {
+  const scrollToBottom = () => {
+    // console.log('Message changed');
+    // setTimeout(() => {
+    //   ref.current.scrollToBottom({animated: true});
+    // }, 2000);
+  };
+
+  const receiceMsg = message => {
     setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, messages),
+      GiftedChat.append(previousMessages, [
+        {
+          _id: message?.post?._id,
+          text: message?.post?.message,
+          createdAt: message?.post?.createdAt,
+          user: {
+            _id: message?.post?.postedByUser,
+            name:
+              route?.params.data?.user?.firstName +
+              ' ' +
+              route?.params.data?.user?.lastName,
+            avatar: route?.params.data?.user?.profileImage,
+          },
+        },
+      ]),
     );
+  };
+
+  const {send} = useWebSockets({
+    userId: authContext?.userData?.user?._id,
+    arrayOfOtherUsers: [route?.params?.userId],
+    enabled: Boolean(authContext?.userData?.user?._id),
+    onConnected: scrollToBottom,
+    receiceMsg: receiceMsg,
+  });
+
+  const onSend = useCallback((messages = []) => {
+    //we are receiving out own message thats why we comment this
+    // setMessages(previousMessages =>
+    //   GiftedChat.append(previousMessages, messages),
+    // );
+    send(messages[0]?.text);
   }, []);
 
   const MessengerBarContainer = props => {
@@ -48,6 +79,7 @@ export default function GiftedChats() {
           marginHorizontal: 6,
           borderRadius: 32,
           borderTopColor: 'transparent',
+          marginBottom: 2,
         }}
       />
     );
@@ -83,15 +115,19 @@ export default function GiftedChats() {
 
   return (
     <Header
-      heading={'Miguel Cardona'}
-      rightImage={require('../../../../assets/images/findpeople/people2.png')}
+      heading={
+        route?.params.data?.user?.firstName +
+        ' ' +
+        route?.params.data?.user?.lastName
+      }
+      rightImage={{uri: route?.params.data?.user?.profileImage}}
       onPressBack={() => navigation.goBack()}>
       <GiftedChat
-        messages={messages}
+        messages={message}
         alwaysShowSend={true}
         onSend={messages => onSend(messages)}
         user={{
-          _id: 1,
+          _id: authContext.userData?.user?._id,
         }}
         renderInputToolbar={props => MessengerBarContainer(props)}
         renderBubble={props => renderBubble(props)}
@@ -99,7 +135,7 @@ export default function GiftedChats() {
           return (
             <Send {...props}>
               <TouchableOpacity
-                onPress={messages => onSend(messages)}
+                // onPress={messages => onSend(messages)}
                 style={styles.sendBtn}>
                 <SendIcon height={30} width={30} />
               </TouchableOpacity>

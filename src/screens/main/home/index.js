@@ -19,6 +19,8 @@ import {setUserProfile} from 'src/redux/profile/profile-actions';
 import ActivityIndicatorr from 'src/components/loader/activity-indicator';
 
 import PostView from 'src/components/post-view';
+import {ZoomPicModal} from 'src/components/zoom-pic-modal';
+import {ViewFullPost} from 'src/components/view-full-post';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -35,6 +37,8 @@ export default function Home() {
 
   const [status, setStatus] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
+  const [zoomPicModal, setZoomPicModal] = useState(false);
+  const [profile, setProfile] = useState({dp: '', cover: ''});
 
   React.useEffect(() => {
     getAllFeeds();
@@ -150,7 +154,14 @@ export default function Home() {
             />
           </>
         }
-        renderItem={({item}) => <PostView onRefresh={onRefresh} item={item} />}
+        renderItem={({item}) => (
+          <PostView
+            setZoomPicModal={setZoomPicModal}
+            setProfile={setProfile}
+            onRefresh={onRefresh}
+            item={item}
+          />
+        )}
         contentContainerStyle={{
           marginHorizontal: 20,
         }}
@@ -177,6 +188,13 @@ export default function Home() {
         onPressEditPost={() => navigation.navigate('ADD_POST')}
         deleteText={'Delete Post'}
         editText={'Edit Post'}
+      />
+
+      <ZoomPicModal
+        visible={zoomPicModal}
+        iconPress={() => setZoomPicModal(false)}
+        image={profile?.dp}
+        imageStyle={{height: '60%', width: '90%', resizeMode: 'contain'}}
       />
     </Header>
   );

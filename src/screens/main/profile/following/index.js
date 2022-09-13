@@ -9,6 +9,11 @@ import {profileServices} from 'src/services/profile-services';
 export default function Following({route}) {
   const [following, setFolowings] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [limit, setLimit] = React.useState({
+    currentPage: 1,
+    limit: 25,
+    availablePages: 1,
+  });
 
   const defaultImage = require('assets/images/findpeople/people.png');
 
@@ -18,9 +23,29 @@ export default function Following({route}) {
 
   const getFollowing = async id => {
     try {
-      const result = await profileServices.getFollowingApi('1', '25', id);
+      const result = await profileServices.getFollowingApi(
+        limit?.currentPage,
+        limit?.limit,
+        id,
+      );
       console.log('Here are the followings LIshgsfcjbds cgjsdgcjdg ', result);
       setFolowings(result.following);
+      setLimit({...limit, availablePages: result?.totalPages});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadMore = async () => {
+    try {
+      const result = await profileServices.getFollowingApi(
+        limit?.currentPage + 1,
+        limit?.limit,
+        route?.params?.id ? route?.params?.id : '',
+      );
+
+      setFolowings([...following, ...result.following]);
+      setLimit({...limit, currentPage: limit.currentPage + 1});
     } catch (error) {
       console.log(error);
     }
@@ -93,6 +118,10 @@ export default function Following({route}) {
         //   marginTop: 15,
         //   // backgroundColor: 'red',
         // }}
+        onEndReached={() => {
+          limit.currentPage < limit.availablePages && loadMore();
+        }}
+        onEndReachedThreshold={0.3}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
