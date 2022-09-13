@@ -8,17 +8,15 @@ export const useWebSockets = ({
   enabled,
   onConnected,
   arrayOfOtherUsers,
+  receiceMsg,
 }) => {
-  //   const ref=useRef<SocketIOCient.Socket>();
   const ref = useRef();
-  const [messages, setMessages] = useState([]);
+  const roomDataIdRef = useRef();
 
-  const send = (msg, senderId) => {
+  const send = msg => {
     ref.current.emit('message', {
-      content: msg,
-      senderId: senderId,
-      userId,
-      date: new Date(),
+      roomId: roomDataIdRef.current,
+      messagePayload: msg,
     });
   };
 
@@ -33,7 +31,7 @@ export const useWebSockets = ({
     //first we need to make room with user
     // socket.emit('joinRoom', userId);
 
-    socket.emit('identity', userId);
+    socket.emit('identity', {userId});
 
     //create chat
     socket.emit('create', {otherUserId: arrayOfOtherUsers});
@@ -44,12 +42,20 @@ export const useWebSockets = ({
       }
     });
 
-    // socket.emit('message', msg => {
-    //   setMessages(prev => prev.concat(msg));
-    // });
+    //When room is successfully created this event is lisitened
+    socket.on('OnJoin', data => {
+      console.log('Room Data ', data);
+      // setRoomData(data.chatRoomId);
+      roomDataIdRef.current = String(data.chatRoomId);
+    });
+
+    socket.on('new message', data => {
+      console.log('Reply received ', data);
+      receiceMsg(data);
+    });
 
     socket.on('disconnect', () => {
-      console.log('Disconnected');
+      console.log('Someone else disconnected');
     });
 
     // socket.on('reconnect', () => {
@@ -59,10 +65,9 @@ export const useWebSockets = ({
     ref.current = socket;
 
     return () => socket.disconnect();
-  }, [enabled, userId]);
+  }, [userId]);
 
   return {
     send,
-    messages,
   };
 };

@@ -1,5 +1,7 @@
+/* eslint-disable no-useless-escape */
 import {Text, View, Image, TouchableOpacity, Pressable} from 'react-native';
 import React, {useState, memo} from 'react';
+import {Linking} from 'react-native';
 import {postServices} from 'src/services/post-service';
 import {showMessage} from 'react-native-flash-message';
 import images from 'src/assets/images';
@@ -15,6 +17,9 @@ import colors from 'src/utils/themes/global-colors';
 
 const PostView = ({item, onRefresh, setZoomPicModal, setProfile}) => {
   const navigation = useNavigation();
+
+  var expression =
+    /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
 
   const [like, setLike] = useState(item?.isLiked);
   const [likeValue, setLikeValue] = React.useState(item?.postlikes);
@@ -67,7 +72,29 @@ const PostView = ({item, onRefresh, setZoomPicModal, setProfile}) => {
           </View>
         </View>
       </View>
-      <Text style={[styles.content]}>{item?.description}</Text>
+
+      <Text style={[styles.content]}>
+        <Text>
+          {item?.description?.split(item?.description?.match(expression))[0]}
+        </Text>
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL(item?.description?.match(expression)[0])
+          }>
+          <Text style={[styles.content, {fontWeight: 'bold'}]}>
+            {item?.description?.match(expression)
+              ? item?.description
+                  ?.match(expression)[0]
+                  ?.slice(0, 40)
+                  ?.concat('...')
+              : ''}
+          </Text>
+        </TouchableOpacity>
+        <Text>
+          {item?.description?.split(item?.description?.match(expression))[1]}
+        </Text>
+      </Text>
+
       {item?.files?.length > 0 && (
         <FlatListCustom
           setZoomPicModal={setZoomPicModal}

@@ -20,45 +20,50 @@ export default function GiftedChats() {
   const ref = useRef();
 
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
     scrollToBottom();
   }, []);
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   const scrollToBottom = () => {
-    console.log('Message changed');
+    // console.log('Message changed');
     // setTimeout(() => {
     //   ref.current.scrollToBottom({animated: true});
     // }, 2000);
   };
 
-  const {messages, send} = useWebSockets({
+  const receiceMsg = message => {
+    setMessages(previousMessages =>
+      GiftedChat.append(previousMessages, [
+        {
+          _id: message?.post?._id,
+          text: message?.post?.message,
+          createdAt: message?.post?.createdAt,
+          user: {
+            _id: message?.post?.postedByUser,
+            name:
+              route?.params.data?.user?.firstName +
+              ' ' +
+              route?.params.data?.user?.lastName,
+            avatar: route?.params.data?.user?.profileImage,
+          },
+        },
+      ]),
+    );
+  };
+
+  const {send} = useWebSockets({
     userId: authContext?.userData?.user?._id,
     arrayOfOtherUsers: [route?.params?.userId],
     enabled: Boolean(authContext?.userData?.user?._id),
     onConnected: scrollToBottom,
+    receiceMsg: receiceMsg,
   });
 
   const onSend = useCallback((messages = []) => {
-    console.log('Check messages ', messages);
-    setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, messages),
-    );
-    // send(message[0]?.text, message.user?._id);
+    //we are receiving out own message thats why we comment this
+    // setMessages(previousMessages =>
+    //   GiftedChat.append(previousMessages, messages),
+    // );
+    send(messages[0]?.text);
   }, []);
 
   const MessengerBarContainer = props => {
@@ -74,6 +79,7 @@ export default function GiftedChats() {
           marginHorizontal: 6,
           borderRadius: 32,
           borderTopColor: 'transparent',
+          marginBottom: 2,
         }}
       />
     );
@@ -109,8 +115,12 @@ export default function GiftedChats() {
 
   return (
     <Header
-      heading={'Miguel Cardona'}
-      rightImage={require('../../../../assets/images/findpeople/people2.png')}
+      heading={
+        route?.params.data?.user?.firstName +
+        ' ' +
+        route?.params.data?.user?.lastName
+      }
+      rightImage={{uri: route?.params.data?.user?.profileImage}}
       onPressBack={() => navigation.goBack()}>
       <GiftedChat
         messages={message}
