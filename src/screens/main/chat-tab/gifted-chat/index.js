@@ -1,9 +1,23 @@
 /* eslint-disable no-unused-vars */
-import {StyleSheet, Text, View, Image, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ActivityIndicator,
+  Keyboard,
+} from 'react-native';
 import React, {useState, useCallback, useEffect} from 'react';
 import Header from 'src/components/headerView';
-import {GiftedChat, Send, InputToolbar, Bubble} from 'react-native-gifted-chat';
+import {
+  GiftedChat,
+  Send,
+  InputToolbar,
+  Bubble,
+  Composer,
+} from 'react-native-gifted-chat';
 import SendIcon from 'src/assets/svg/Common/left-arrow';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {styles} from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -12,6 +26,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {useWebSockets} from 'src/utils/functions/useWebSockets';
 import AuthContext from 'src/utils/auth-context';
 import {useRef} from 'react';
+import Emoji from 'src/components/emoji';
 
 export default function GiftedChats() {
   const navigation = useNavigation();
@@ -19,6 +34,8 @@ export default function GiftedChats() {
   const ref = useRef();
   const [message, setMessages] = useState([]);
   const [connected, setConnected] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [messageText, setMessageText] = useState('');
   const authContext = React.useContext(AuthContext);
 
   useEffect(() => {
@@ -170,7 +187,7 @@ export default function GiftedChats() {
         messages={message}
         alwaysShowSend={true}
         onSend={messages => {
-          onSend(messages), console.log('messages ', message);
+          onSend(messages);
         }}
         user={{
           _id: authContext.userData?.user?._id,
@@ -179,14 +196,16 @@ export default function GiftedChats() {
         renderBubble={props => renderBubble(props)}
         // loadEarlier={true}
         // isLoadingEarlier={true}
-        renderLoading={() => (
-          <ActivityIndicator
-            style={{position: 'absolute', zIndex: 200}}
-            size="large"
-            color="#0000ff"
-          />
-        )}
+        // renderChatEmpty={() => (
+        //   <ActivityIndicator size="large" color="#0000ff" />
+        // )}
         scrollToBottom
+        text={messageText}
+        textInputProps={{
+          onChangeText: text => {
+            setMessageText(text);
+          },
+        }}
         isAnimated
         showAvatarForEveryMessage={true}
         isInitialized={false}
@@ -201,7 +220,30 @@ export default function GiftedChats() {
             </Send>
           );
         }}
+        renderComposer={props => {
+          return (
+            <View
+              style={{
+                flexDirection: 'row',
+                width: '90%',
+                alignItems: 'center',
+              }}>
+              <Composer {...props} />
+              <TouchableOpacity
+                onPress={() => {
+                  Keyboard.dismiss(), setShowEmoji(!showEmoji);
+                }}>
+                <Icon
+                  size={18}
+                  name={showEmoji ? 'close' : 'sticker-emoji'}
+                  color={colors.placeholderColor}
+                />
+              </TouchableOpacity>
+            </View>
+          );
+        }}
       />
+      {showEmoji && <Emoji setMessageText={setMessageText} />}
     </Header>
   );
 }
