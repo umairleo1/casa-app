@@ -1,14 +1,16 @@
 /* eslint-disable no-unused-vars */
 // ES6 import or TypeScript
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 import io from 'socket.io-client';
+import {chatServices} from 'src/services/chat-services';
 
 export const useWebSockets = ({
   userId,
   enabled,
   onConnected,
   arrayOfOtherUsers,
-  receiceMsg,
+  receiveMsg,
+  setConnected,
 }) => {
   const ref = useRef();
   const roomDataIdRef = useRef();
@@ -18,6 +20,18 @@ export const useWebSockets = ({
       roomId: roomDataIdRef.current,
       messagePayload: msg,
     });
+  };
+
+  const getConversation = async () => {
+    try {
+      const result = await chatServices.getConversatioApi(
+        roomDataIdRef.current,
+      );
+      console.log('Here is the conversation ', result);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -47,15 +61,16 @@ export const useWebSockets = ({
       console.log('Room Data ', data);
       // setRoomData(data.chatRoomId);
       roomDataIdRef.current = String(data.chatRoomId);
+      setConnected(true);
     });
 
     socket.on('new message', data => {
       console.log('Reply received ', data);
-      receiceMsg(data);
+      receiveMsg(data);
     });
 
     socket.on('disconnect', () => {
-      console.log('Someone else disconnected');
+      console.log('disconnected');
     });
 
     // socket.on('reconnect', () => {
@@ -69,5 +84,6 @@ export const useWebSockets = ({
 
   return {
     send,
+    getConversation,
   };
 };
