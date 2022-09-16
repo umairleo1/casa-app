@@ -11,6 +11,7 @@ export const useWebSockets = ({
   arrayOfOtherUsers,
   receiveMsg,
   setConnected,
+  getChatList,
 }) => {
   const ref = useRef();
   const roomDataIdRef = useRef();
@@ -22,10 +23,12 @@ export const useWebSockets = ({
     });
   };
 
-  const getConversation = async () => {
+  const getConversation = async (page, limit) => {
     try {
       const result = await chatServices.getConversatioApi(
         roomDataIdRef.current,
+        page,
+        limit,
       );
       console.log('Here is the conversation ', result);
       return result;
@@ -79,7 +82,11 @@ export const useWebSockets = ({
 
     ref.current = socket;
 
-    return () => socket.disconnect();
+    return () => {
+      socket.emit('markUnread', {roomId: roomDataIdRef.current}),
+        socket.disconnect(),
+        getChatList();
+    };
   }, [userId]);
 
   return {

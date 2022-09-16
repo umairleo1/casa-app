@@ -27,6 +27,7 @@ import {useWebSockets} from 'src/utils/functions/useWebSockets';
 import AuthContext from 'src/utils/auth-context';
 import {useRef} from 'react';
 import Emoji from 'src/components/emoji';
+import images from 'src/assets/images';
 
 export default function GiftedChats() {
   const navigation = useNavigation();
@@ -41,7 +42,7 @@ export default function GiftedChats() {
   useEffect(() => {
     if (connected) {
       var temp = [];
-      getConversation().then(value =>
+      getConversation(1, 100).then(value =>
         value?.conversation?.map(item => {
           setMessages(previousMessages =>
             GiftedChat.append(previousMessages, [
@@ -60,26 +61,8 @@ export default function GiftedChats() {
               },
             ]),
           );
-
-          // temp.push({
-          //   _id: item?._id,
-          //   text: item?.message,
-          //   createdAt: item?.createdAt,
-          //   user: {
-          //     _id: item?.postedByUser,
-          //     name:
-          //       route?.params?.data?.user?.firstName +
-          //       ' ' +
-          //       route?.params?.data?.user?.lastName,
-          //     avatar: route?.params?.data?.user?.profileImage,
-          //   },
-          // });
         }),
       );
-
-      // setMessages(previousMessages =>
-      //   GiftedChat.append(previousMessages, temp),
-      // );
     }
   }, [connected]);
 
@@ -91,23 +74,25 @@ export default function GiftedChats() {
   };
 
   const receiveMsg = message => {
-    setMessages(previousMessages =>
-      GiftedChat.append(previousMessages, [
-        {
-          _id: message?.post?._id,
-          text: message?.post?.message,
-          createdAt: message?.post?.createdAt,
-          user: {
-            _id: message?.post?.postedByUser,
-            name:
-              route?.params?.data?.user?.firstName +
-              ' ' +
-              route?.params?.data?.user?.lastName,
-            avatar: route?.params?.data?.user?.profileImage,
+    {
+      setMessages(previousMessages =>
+        GiftedChat.append(previousMessages, [
+          {
+            _id: message?.post?._id,
+            text: message?.post?.message,
+            createdAt: message?.post?.createdAt,
+            user: {
+              _id: message?.post?.postedByUser,
+              name:
+                route?.params?.data?.user?.firstName +
+                ' ' +
+                route?.params?.data?.user?.lastName,
+              avatar: route?.params?.data?.user?.profileImage,
+            },
           },
-        },
-      ]),
-    );
+        ]),
+      );
+    }
   };
 
   const {send, getConversation} = useWebSockets({
@@ -117,6 +102,7 @@ export default function GiftedChats() {
     onConnected: scrollToBottom,
     receiveMsg: receiveMsg,
     setConnected,
+    getChatList: route?.params?.getChatList,
   });
 
   const onSend = useCallback((messages = []) => {
@@ -125,7 +111,10 @@ export default function GiftedChats() {
     //   GiftedChat.append(previousMessages, messages),
     // );
     send(messages[0]?.text);
+    setMessageText('');
   }, []);
+
+  const loadMoreMessages = () => {};
 
   const MessengerBarContainer = props => {
     return (
@@ -181,7 +170,11 @@ export default function GiftedChats() {
         ' ' +
         route?.params?.data?.user?.lastName
       }
-      rightImage={{uri: route?.params?.data?.user?.profileImage}}
+      rightImage={
+        route?.params?.data?.user?.profileImage
+          ? {uri: route?.params?.data?.user?.profileImage}
+          : images.people
+      }
       onPressBack={() => navigation.goBack()}>
       <GiftedChat
         messages={message}
@@ -192,6 +185,13 @@ export default function GiftedChats() {
         user={{
           _id: authContext.userData?.user?._id,
         }}
+        text={messageText}
+        textInputProps={{
+          onFocus: () => setShowEmoji(false),
+          onChangeText: text => {
+            setMessageText(text);
+          },
+        }}
         renderInputToolbar={props => MessengerBarContainer(props)}
         renderBubble={props => renderBubble(props)}
         // loadEarlier={true}
@@ -200,15 +200,13 @@ export default function GiftedChats() {
         //   <ActivityIndicator size="large" color="#0000ff" />
         // )}
         scrollToBottom
-        text={messageText}
-        textInputProps={{
-          onChangeText: text => {
-            setMessageText(text);
-          },
-        }}
         isAnimated
         showAvatarForEveryMessage={true}
         isInitialized={false}
+        listViewProps={{
+          onEndReachedThreshold: 0.3, // When the top of the content is within 3/10 of the visible length of the content
+          onEndReached: () => loadMoreMessages(),
+        }}
         renderSend={props => {
           return (
             <Send {...props}>
@@ -243,6 +241,7 @@ export default function GiftedChats() {
           );
         }}
       />
+
       {showEmoji && <Emoji setMessageText={setMessageText} />}
     </Header>
   );

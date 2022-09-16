@@ -10,10 +10,11 @@ export const styles = StyleSheet.create({
   headerView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
+    // padding: 10,
     alignItems: 'center',
     marginHorizontal: 10,
-    paddingVertical: 20,
+    // paddingVertical: 20,
+    height: 90,
   },
   text: {
     fontSize: 22,

@@ -4,6 +4,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
 
 export const styles = StyleSheet.create({
@@ -37,6 +38,9 @@ export const styles = StyleSheet.create({
   flatlistView2: {
     flexDirection: 'row',
     alignItems: 'center',
+    // backgroundColor: 'red',
+    width: '70%',
+    overflow: 'hidden',
   },
   flatlistView3: {
     marginHorizontal: 10,
@@ -48,13 +52,15 @@ export const styles = StyleSheet.create({
   countView: {
     backgroundColor: colors.buttonColor,
     borderRadius: wp(5),
-    flex: 1,
+    // paddingVertical: 1,
+    width: 40,
+    marginBottom: 5,
   },
   count: {
     color: colors.whiteColor,
     textAlign: 'center',
-    borderRadius: wp(50),
-    flex: 1,
+    fontFamily: fonts.PoppinsRegular,
+    fontSize: 14,
   },
   time: {
     fontSize: RFValue(11),

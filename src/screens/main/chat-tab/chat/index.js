@@ -1,114 +1,90 @@
-import {Text, View, FlatList, TouchableOpacity, Image} from 'react-native';
-import React from 'react';
+import {
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  Image,
+  RefreshControl,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {styles} from './styles';
 import SearchInput from 'src/components/searchInput';
 import colors from 'src/utils/themes/global-colors';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {chatServices} from 'src/services/chat-services';
+import images from 'src/assets/images';
+
+import moment from 'moment';
 
 export default function Chat() {
   const navigation = useNavigation();
-  const dummyData = [
-    {
-      text: 'Maria Valdez',
-      count: '1',
-      message: 'The weather will be perfect for the st...',
-      userImage: require('../../../../assets/images/findpeople/people3.png'),
-      time: '2:14 PM',
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-    },
-    {
-      text: 'Maria Valdez',
-      count: '1',
-      message: 'The weather will be perfect for the st...',
-      userImage: require('../../../../assets/images/findpeople/people4.png'),
-      time: '2:14 PM',
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-    },
-    {
-      text: 'Maria Valdez',
-      count: '1',
-      message: 'The weather will be perfect for the st...',
-      userImage: require('../../../../assets/images/findpeople/people5.png'),
-      time: '2:14 PM',
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-    },
-    {
-      text: 'Maria Valdez',
-      count: '1',
-      message: 'The weather will be perfect for the st...',
-      userImage: require('../../../../assets/images/findpeople/people6.png'),
-      time: '2:14 PM',
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-    },
-    {
-      text: 'Maria Valdez',
-      count: '1',
-      message: 'The weather will be perfect for the st...',
-      userImage: require('../../../../assets/images/findpeople/people4.png'),
-      time: '2:14 PM',
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-    },
-    {
-      text: 'Maria Valdez',
-      count: '1',
-      message: 'The weather will be perfect for the st...',
-      userImage: require('../../../../assets/images/findpeople/people2.png'),
-      time: '2:14 PM',
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-    },
-    {
-      text: 'Maria Valdez',
-      count: '1',
-      message: 'The weather will be perfect for the st...',
-      userImage: require('../../../../assets/images/findpeople/people5.png'),
-      time: '2:14 PM',
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-    },
-    {
-      text: 'Maria Valdez',
-      count: '1',
-      message: 'The weather will be perfect for the st...',
-      userImage: require('../../../../assets/images/findpeople/people6.png'),
-      time: '2:14 PM',
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-    },
-    {
-      text: 'Maria Valdez',
-      count: '1',
-      message: 'The weather will be perfect for the st...',
-      userImage: require('../../../../assets/images/findpeople/people6.png'),
-      time: '2:14 PM',
-      content:
-        'Hey Cindi, you should really check out this new song by Iron Maid. The next time they come to the city we should totally go!',
-    },
-  ];
+  const isFocus = useIsFocused();
+  const [chatList, setChatList] = useState([]);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  useEffect(() => {
+    getChatList();
+  }, [isFocus]);
+
+  const getChatList = async () => {
+    try {
+      const result = await chatServices.getChatListApi();
+      console.log('Here is the chat list   ===>>>> ', result);
+      setChatList(
+        result
+          .sort(function (a, b) {
+            return a.lastMessage.createdAt.localeCompare(
+              b.lastMessage.createdAt,
+            );
+          })
+          .reverse(),
+      );
+      setRefreshing(false);
+    } catch (error) {
+      setRefreshing(false);
+      console.log(error);
+    }
+  };
 
   const listItem = ({item}) => {
     return (
       <View style={styles.mainContainer}>
         <TouchableOpacity
           style={styles.flatlistView}
-          onPress={() => navigation.navigate('GIFTED_CHAT')}>
+          onPress={() =>
+            navigation.navigate('GIFTED_CHAT', {
+              data: {
+                user: {
+                  firstName: item?.firstName,
+                  lastName: item?.lastName,
+                  profileImage: item?.picture,
+                },
+              },
+              userId: item?.secondUserId,
+              getChatList: getChatList,
+            })
+          }>
           <View style={styles.flatlistView2}>
-            <Image source={item.userImage} style={styles.image} />
+            <Image
+              source={item?.picture ? {uri: item?.picture} : images.people}
+              style={styles.image}
+            />
             <View style={styles.flatlistView3}>
-              <Text style={styles.flatlistName}>{item.text}</Text>
-              <Text style={styles.message}>{item.message}</Text>
+              <Text style={styles.flatlistName}>
+                {item?.firstName + ' ' + item?.lastName}
+              </Text>
+              <Text style={styles.message}>{item?.lastMessage?.message}</Text>
             </View>
           </View>
-          <View>
-            <View style={styles.countView}>
-              <Text style={styles.count}>{item.count}</Text>
-            </View>
-            <Text style={styles.time}>{item.time}</Text>
+          <View style={{width: '30%', alignItems: 'center'}}>
+            {item?.unreadCount > 0 ? (
+              <View style={styles.countView}>
+                <Text style={styles.count}>{item?.unreadCount}</Text>
+              </View>
+            ) : null}
+            <Text style={styles.time}>
+              {moment(item?.lastMessage?.createdAt).format('MMM DD YYYY')}
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -141,7 +117,7 @@ export default function Chat() {
         <Text style={{fontSize: 18}}>No Chats</Text>
       </View> */}
       <FlatList
-        data={dummyData}
+        data={chatList}
         renderItem={listItem}
         keyExtractor={item => item.id}
         ItemSeparatorComponent={ItemDivider}
@@ -150,6 +126,22 @@ export default function Chat() {
           paddingTop: 10,
         }}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => {
+              setRefreshing(true), getChatList();
+            }}
+          />
+        }
+        ListEmptyComponent={
+          <>
+            <Text
+              style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
+              No Conversation Yet
+            </Text>
+          </>
+        }
       />
     </View>
   );
