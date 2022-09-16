@@ -14,6 +14,7 @@ import AuthContext from 'src/utils/auth-context';
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [user, setUser] = useState('');
+  const [chatRoom, setChatRoom] = useState({});
   const [userData, setUserData] = useState({});
   const backgroundStyle = {
     flex: 1,
@@ -25,7 +26,8 @@ const App = () => {
   return (
     // <ErrorBoundary>
     <Provider store={Store}>
-      <AuthContext.Provider value={{user, setUser, userData, setUserData}}>
+      <AuthContext.Provider
+        value={{user, setUser, userData, setUserData, setChatRoom, chatRoom}}>
         <SafeAreaView style={backgroundStyle}>
           <StatusBar
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}

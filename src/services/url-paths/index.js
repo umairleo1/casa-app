@@ -35,6 +35,9 @@ const API_URLS = {
   ALL_FEEDS: '/api/post/allUsers',
 
   //TESTING
+
+  //Chat
+  GET_CONVERSATION: '/api/chat/',
 };
 
 export {API_URLS};
