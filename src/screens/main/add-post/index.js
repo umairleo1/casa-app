@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   Text,
   View,
@@ -5,14 +6,16 @@ import {
   Platform,
   PermissionsAndroid,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import Header from 'src/components/headerView';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import UploadAddPost from 'src/components/upload-add-post';
 import {styles} from './styles';
-import Button from 'src/components/button';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import colors from 'src/utils/themes/global-colors';
+import AuthContext from 'src/utils/auth-context';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import EditProfileModal from 'src/components/edit-profile-menu';
@@ -22,12 +25,17 @@ import {showMessage} from 'react-native-flash-message';
 
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import {AddPostBottomSheet} from 'src/components/add-post-bottom-sheet';
+import {Image} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 let cameraIs = false;
 
 export default function AddPost() {
   const navigation = useNavigation();
   const route = useRoute();
+  const refRBSheet = React.useRef();
+  const authContext = useContext(AuthContext);
 
   const [imageModal, setImageModal] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -36,9 +44,10 @@ export default function AddPost() {
   const [description, setDescription] = React.useState('');
 
   React.useEffect(() => {
-    // console.log(' UseEffect ', route?.params?.myPost);
+    // console.log(' UseEffect ', authContext?.userData?.user);
     route?.params?.myPost && setDescription(route?.params?.myPost?.description);
     route?.params?.myPost && setAddPost(route?.params?.myPost?.files);
+    refRBSheet?.current?.open();
   }, []);
 
   const imagePickerFromGallery = () => {
@@ -59,7 +68,7 @@ export default function AddPost() {
           cameraIs = false;
         } else {
           console.log('Selected from gallery ', res.assets);
-
+          refRBSheet.current.close();
           setAddPost(res.assets);
 
           cameraIs = false;
@@ -192,26 +201,60 @@ export default function AddPost() {
   };
 
   return (
-    <Header onPressBack={() => navigation.goBack()} heading={'Add Post'}>
+    <Header
+      description={description}
+      onPressBack={() => navigation.goBack()}
+      heading={'Add Post'}
+      rightText={route?.params?.btn ? route?.params?.btn : 'Post'}
+      onPostPress={() =>
+        route?.params?.btn ? handleEditPost() : handleAddNewPost()
+      }>
       <ActivityIndicator visible={isLoading} />
       {/* <ScrollView> */}
       <KeyboardAwareScrollView>
-        <View style={styles.mainView}>
-          <UploadAddPost
-            image={addPost?.uri ? {uri: addPost?.uri} : images.uploadImage}
-            uploadImagetext={'Upload your image'}
-            imageSize={'Max Size : 20 MB'}
-            onPressUpload={() => setImageModal(true)}
-            preview={addPost}
-            onClosePress={setAddPost}
-            setRemoved={setRemoved}
-            removed={removed}
-          />
-        </View>
-        <View style={styles.descriptionView}>
-          <Text style={styles.description}>Add Description</Text>
-        </View>
+        <UploadAddPost
+          image={addPost?.uri ? {uri: addPost?.uri} : images.uploadImage}
+          uploadImagetext={'Upload your image'}
+          imageSize={'Max Size : 20 MB'}
+          // onPressUpload={() => setImageModal(true)}
+          onPressUpload={() => refRBSheet.current.open()}
+          preview={addPost}
+          onClosePress={setAddPost}
+          setRemoved={setRemoved}
+          removed={removed}
+        />
 
+        <View
+          style={[
+            styles.descriptionView,
+            {flexDirection: 'row', alignItems: 'center', paddingLeft: 10},
+          ]}>
+          <View
+            style={{flexDirection: 'row', alignItems: 'center', width: '80%'}}>
+            <Image
+              source={
+                authContext?.userData?.user?.profileImage
+                  ? {uri: authContext?.userData?.user?.profileImage}
+                  : images.people
+              }
+              style={{height: 40, width: 40, borderRadius: 20}}
+            />
+            <Text style={styles.description}>
+              {authContext?.userData?.user?.firstName +
+                ' ' +
+                authContext?.userData?.user?.lastName}
+            </Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => refRBSheet?.current?.open()}
+            style={{
+              width: '20%',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <AntDesign name={'plus'} size={18} color={colors.black} />
+          </TouchableOpacity>
+        </View>
         <View>
           <TextInput
             style={styles.textInputView}
@@ -224,7 +267,7 @@ export default function AddPost() {
         </View>
         {/* </ScrollView> */}
       </KeyboardAwareScrollView>
-      <View style={styles.buttonView}>
+      {/* <View style={styles.buttonView}>
         <Button
           backgroundColor={colors.buttonColor}
           text={route?.params?.btn ? route?.params?.btn : 'Post'}
@@ -232,14 +275,37 @@ export default function AddPost() {
             route?.params?.btn ? handleEditPost() : handleAddNewPost()
           }
         />
-      </View>
-      <EditProfileModal
+      </View> */}
+      {/* <EditProfileModal
         iconPress={() => setImageModal(false)}
         visible={imageModal}
         onPressGallery={() => imagePickerFromGallery()}
         onPressPhoto={() => imagePickerFromCamera()}
         title="Add Post From"
-      />
+      /> */}
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={true}
+        height={120}
+        customStyles={{
+          wrapper: {
+            backgroundColor: `rgba(0, 0, 0, 0.2)`,
+          },
+          container: {
+            backgroundColor: colors.whiteColor,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
+        }}>
+        <AddPostBottomSheet
+          onPhotoPress={() => imagePickerFromGallery()}
+          onVideoPress={() => imagePickerFromGallery()}
+        />
+      </RBSheet>
     </Header>
   );
 }

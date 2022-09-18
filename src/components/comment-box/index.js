@@ -14,6 +14,7 @@ export default function CommentBox({
 }) {
   return (
     <>
+      {console.log('ccccc ', value)}
       <View style={styles.textAreaContainer}>
         <TextInput
           placeholderTextColor={placeholderTextColor}
@@ -32,7 +33,7 @@ export default function CommentBox({
 }
 const styles = StyleSheet.create({
   input: {
-    justifyContent: 'flex-start',
+    // justifyContent: 'flex-start',
     borderWidth: 1,
     borderRadius: 2,
     padding: 10,

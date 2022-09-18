@@ -108,6 +108,7 @@ export default function ProfileSetting() {
     setSelectedItems(
       authContext?.userData?.user?.heritage.map(e => parseInt(e)),
     );
+    setBio(authContext?.userData?.user?.bio);
   }, []);
 
   useEffect(() => {
@@ -482,11 +483,7 @@ export default function ProfileSetting() {
 
               <View style={styles.SearchInputView}>
                 <CommentBox
-                  placeholder={
-                    authContext?.userData?.user?.bio == ''
-                      ? 'Write your bio..'
-                      : authContext?.userData?.user?.bio
-                  }
+                  placeholder={'Write your bio..'}
                   value={bio}
                   onChangeText={setBio}
                   placeholderTextColor={colors.black}

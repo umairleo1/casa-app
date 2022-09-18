@@ -92,32 +92,30 @@ export default function UploadAddPost({
     );
   };
 
-  return (
-    <View
-      style={[
-        styles.container,
-        {backgroundColor: preview.length > 0 ? 'transparent' : '#F5F5F5'},
-      ]}>
-      {preview.length > 0 ? (
-        <>
-          <FlatList
-            data={preview}
-            horizontal
-            renderItem={({item}) => <RenderPreview data={item} />}
-            showsHorizontalScrollIndicator={false}
-          />
-        </>
-      ) : (
-        <>
-          <Image source={image} />
+  return preview.length > 0 ? (
+    <>
+      <View
+        style={[
+          styles.container,
+          {backgroundColor: preview.length > 0 ? 'transparent' : '#F5F5F5'},
+        ]}>
+        <FlatList
+          data={preview}
+          horizontal
+          renderItem={({item}) => <RenderPreview data={item} />}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+    </>
+  ) : (
+    <>
+      {/* <Image source={image} />
           <Text style={styles.text}>{uploadImagetext}</Text>
           <Text style={styles.size}>{imageSize}</Text>
           <View style={styles.uploadbutton}>
             <UploadButton uploadText={'Upload'} onPressUpload={onPressUpload} />
-          </View>
-        </>
-      )}
-    </View>
+          </View> */}
+    </>
   );
 }
 

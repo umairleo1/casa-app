@@ -4,7 +4,7 @@ import colors from 'src/utils/themes/global-colors';
 
 export const styles = StyleSheet.create({
   mainView: {
-    marginTop: 20,
+    // marginTop: 20,
   },
   bottomLine: {
     borderWidth: 0.5,
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: colors.pureBlack,
-    marginLeft: 20,
+    marginLeft: 10,
   },
   textInputView: {
     height: 150,
