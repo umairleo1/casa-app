@@ -38,6 +38,7 @@ const API_URLS = {
 
   //Chat
   GET_CONVERSATION: '/api/chat/',
+  GET_CHAT_LIST: '/api/chat/allChatList',
 };
 
 export {API_URLS};

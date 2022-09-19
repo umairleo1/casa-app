@@ -1,14 +1,9 @@
 /* eslint-disable react/prop-types */
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  View,
-  ActivityIndicator,
-} from 'react-native';
+import {Dimensions, StyleSheet, View, ActivityIndicator} from 'react-native';
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import images from 'src/assets/images';
+import FastImage from 'react-native-fast-image';
 
 const ZoomPicModal = ({visible = false, iconPress, image, imageStyle}) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -30,7 +25,7 @@ const ZoomPicModal = ({visible = false, iconPress, image, imageStyle}) => {
           size="large"
         />
       )}
-      <Image
+      <FastImage
         onLoadStart={() => setIsLoading(true)}
         onLoadEnd={() => setIsLoading(false)}
         source={image ? {uri: image} : images.people}
@@ -65,7 +60,7 @@ const ZoomBackgroundPicModal = ({
           size="large"
         />
       )}
-      <Image
+      <FastImage
         resizeMode="contain"
         onLoadStart={() => setIsLoading(true)}
         onLoadEnd={() => setIsLoading(false)}

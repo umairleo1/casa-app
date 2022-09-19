@@ -9,6 +9,7 @@ import {NewChatIcon} from 'src/assets/svg/chat';
 
 import colors from 'src/utils/themes/global-colors';
 import MultiChat from 'assets/svg/Common/multiChat';
+import fonts from 'src/utils/themes/fonts';
 
 export default function Header({
   children,
@@ -24,6 +25,9 @@ export default function Header({
   rightImage,
   onPressInbox,
   chatIcon,
+  rightText,
+  onPostPress,
+  description,
 }) {
   return (
     <View style={styles.container}>
@@ -71,11 +75,23 @@ export default function Header({
         ) : rightImage ? (
           <Image source={rightImage} style={styles.rightImage} />
         ) : (
-          <Text></Text>
+          <TouchableOpacity
+            disabled={description == '' ? true : false}
+            onPress={onPostPress}>
+            <Text
+              style={{
+                fontFamily: fonts.PoppinsBold,
+                fontSize: 16,
+                color:
+                  description == '' ? colors.placeholderColor : colors.black,
+              }}>
+              {rightText}
+            </Text>
+          </TouchableOpacity>
         )}
 
         {rightIcon && (
-          <TouchableOpacity onPress={onPressChat}>
+          <TouchableOpacity style={{padding: 10}} onPress={onPressChat}>
             <MultiChat />
           </TouchableOpacity>
         )}

@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
   searchInputView: {
     marginHorizontal: 20,
     marginTop: 1,
+    marginBottom: 20,
   },
   plusIconView: {
     flexDirection: 'row',
@@ -41,7 +42,7 @@ export const styles = StyleSheet.create({
   },
   flatlistView: {
     flex: 1 / 2,
-    top: 25,
+    // top: 25,
     margin: 5,
     marginBottom: 20,
     // backgroundColor: 'red',

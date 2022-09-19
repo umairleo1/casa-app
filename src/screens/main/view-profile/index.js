@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
@@ -9,6 +10,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import moment from 'moment';
@@ -54,6 +56,9 @@ export default function ViewProfile({route}) {
   const [showCover, setShowCover] = React.useState(false);
   const [zoomPicModal, setZoomPicModal] = React.useState(false);
   const [profile, setProfile] = React.useState({dp: '', cover: ''});
+
+  var expression =
+    /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
 
   const getProfile = async () => {
     // console.log('route?.params?.id', route?.params?.id);
@@ -241,7 +246,27 @@ export default function ViewProfile({route}) {
           )}
         </View>
 
-        <Text style={styles.content}>{item?.description}</Text>
+        <Text style={[styles.content]}>
+          <Text>
+            {item?.description?.split(item?.description?.match(expression))[0]}
+          </Text>
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL(item?.description?.match(expression)[0])
+            }>
+            <Text style={[styles.content, {fontWeight: 'bold'}]}>
+              {item?.description?.match(expression)
+                ? item?.description
+                    ?.match(expression)[0]
+                    ?.slice(0, 40)
+                    ?.concat('...')
+                : ''}
+            </Text>
+          </TouchableOpacity>
+          <Text>
+            {item?.description?.split(item?.description?.match(expression))[1]}
+          </Text>
+        </Text>
         {item?.files?.length > 0 && (
           <FlatListCustom
             setZoomPicModal={setZoomPicModal}

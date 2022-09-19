@@ -1,13 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 import React, {useRef} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import UploadButton from '../upload-button';
@@ -16,6 +9,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import VideoPlayer from 'react-native-video-player';
 import {createThumbnail} from 'react-native-create-thumbnail';
+import FastImage from 'react-native-fast-image';
 
 export default function UploadAddPost({
   onPressUpload,
@@ -61,7 +55,7 @@ export default function UploadAddPost({
           </TouchableOpacity>
 
           {data?.type?.split('/')[0] !== 'video' ? (
-            <Image
+            <FastImage
               style={{
                 height: '100%',
                 width: '100%',
@@ -92,32 +86,30 @@ export default function UploadAddPost({
     );
   };
 
-  return (
-    <View
-      style={[
-        styles.container,
-        {backgroundColor: preview.length > 0 ? 'transparent' : '#F5F5F5'},
-      ]}>
-      {preview.length > 0 ? (
-        <>
-          <FlatList
-            data={preview}
-            horizontal
-            renderItem={({item}) => <RenderPreview data={item} />}
-            showsHorizontalScrollIndicator={false}
-          />
-        </>
-      ) : (
-        <>
-          <Image source={image} />
+  return preview.length > 0 ? (
+    <>
+      <View
+        style={[
+          styles.container,
+          {backgroundColor: preview.length > 0 ? 'transparent' : '#F5F5F5'},
+        ]}>
+        <FlatList
+          data={preview}
+          horizontal
+          renderItem={({item}) => <RenderPreview data={item} />}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+    </>
+  ) : (
+    <>
+      {/* <Image source={image} />
           <Text style={styles.text}>{uploadImagetext}</Text>
           <Text style={styles.size}>{imageSize}</Text>
           <View style={styles.uploadbutton}>
             <UploadButton uploadText={'Upload'} onPressUpload={onPressUpload} />
-          </View>
-        </>
-      )}
-    </View>
+          </View> */}
+    </>
   );
 }
 

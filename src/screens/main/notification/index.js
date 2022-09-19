@@ -1,7 +1,6 @@
 import {
   Text,
   View,
-  Image,
   FlatList,
   RefreshControl,
   TouchableOpacity,
@@ -16,6 +15,8 @@ import ActivityIndicator from 'src/components/loader/activity-indicator';
 import colors from 'src/utils/themes/global-colors';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useNavigation} from '@react-navigation/native';
+
+import FastImage from 'react-native-fast-image';
 
 export default function Notification() {
   const [notification, setNotification] = React.useState([]);
@@ -113,16 +114,16 @@ export default function Notification() {
         style={styles.mainContainer}>
         <View style={styles.flatlistView}>
           <View style={styles.flatlistView2}>
-            <Image
+            <FastImage
               source={item?.picture ? {uri: item?.picture} : dummyImg}
               style={styles.image}
             />
             <View style={styles.flatlistView3}>
               <View style={styles.flatlistView4}>
-                <Image
+                {/* <Image
                   source={item?.picture ? {uri: item?.picture} : dummyImg}
                   style={styles.notiImage}
-                />
+                /> */}
                 <Text style={styles.flatlistName}>{item?.title}</Text>
               </View>
               <Text style={styles.mail}>{item?.message}</Text>

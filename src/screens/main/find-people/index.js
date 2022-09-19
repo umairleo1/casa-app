@@ -3,7 +3,6 @@ import {
   Text,
   View,
   FlatList,
-  Image,
   TouchableOpacity,
   RefreshControl,
   ActivityIndicator,
@@ -19,6 +18,7 @@ import {peopleServices} from 'src/services/people-services';
 import images from 'src/assets/images';
 import {profileServices} from 'src/services/profile-services';
 import ActivityIndicatorr from 'src/components/loader/activity-indicator';
+import FastImage from 'react-native-fast-image';
 
 export default function FindPeople() {
   const navigation = useNavigation();
@@ -141,7 +141,8 @@ export default function FindPeople() {
               color={colors.buttonColor}
             />
           )}
-          <Image
+
+          <FastImage
             onLoadStart={() => setIsLoading(true)}
             onLoadEnd={() => setIsLoading(false)}
             source={

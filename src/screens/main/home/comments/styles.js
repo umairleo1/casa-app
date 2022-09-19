@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
   },
   mainContainer: {
     marginBottom: 10,
-    marginHorizontal: 20,
+    // marginHorizontal: 20,
   },
   content: {
     fontSize: RFValue(12),
@@ -114,11 +114,12 @@ export const styles = StyleSheet.create({
     paddingTop: 5,
   },
   footerView: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    // position: 'absolute',
+    // bottom: 0,
+    // left: 0,
+    // right: 0,
     width: '100%',
+
     backgroundColor: colors.whiteColor,
   },
 });

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable react/prop-types */
 import {
   FlatList,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   View,
   Keyboard,
-  Dimensions,
+  Linking,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {styles} from './styles';
@@ -18,7 +19,7 @@ import FastImage from 'react-native-fast-image';
 
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 import {showMessage} from 'react-native-flash-message';
 import CommentInput from 'src/components/comment-input';
 import images from 'src/assets/images';
@@ -46,6 +47,9 @@ export default function Comments() {
   const [zoomPicModal, setZoomPicModal] = useState(false);
   const [profile, setProfile] = useState({dp: '', cover: ''});
   // const [comment, setComment] = React.useState('');
+
+  var expression =
+    /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
 
   const addComment = async comment => {
     Keyboard.dismiss();
@@ -108,21 +112,28 @@ export default function Comments() {
             </View>
           </View>
         </View>
-        <Text style={styles.content}>{item?.description}</Text>
-        {/* {item?.files?.length > 0 && (
-          <View style={[styles.row, {justifyContent: 'center'}]}>
-            {isLoading && (
-              <ActivityIndicator style={{position: 'absolute', zIndex: 1}} />
-            )}
-            <Image
-              source={{uri: item?.files[0]?.url}}
-              style={[styles.postImage]}
-              resizeMode="center"
-              onLoadStart={() => setIsLoading(true)}
-              onLoadEnd={() => setIsLoading(false)}
-            />
-          </View>
-        )} */}
+
+        <Text style={[styles.content]}>
+          <Text>
+            {item?.description?.split(item?.description?.match(expression))[0]}
+          </Text>
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL(item?.description?.match(expression)[0])
+            }>
+            <Text style={[styles.content, {fontWeight: 'bold'}]}>
+              {item?.description?.match(expression)
+                ? item?.description
+                    ?.match(expression)[0]
+                    ?.slice(0, 40)
+                    ?.concat('...')
+                : ''}
+            </Text>
+          </TouchableOpacity>
+          <Text>
+            {item?.description?.split(item?.description?.match(expression))[1]}
+          </Text>
+        </Text>
 
         {item?.files?.length > 0 && (
           <FlatListCustom
@@ -186,7 +197,7 @@ export default function Comments() {
                   {item?.likes[1] && ', '}
                   {item?.likes[1]?.likesBy?.firstName}
                 </Text>
-                {item?.likes?.length > 1 && (
+                {item?.likes?.length > 2 && (
                   <Text style={[styles.likedMore, {color: '#BBBBBB'}]}>
                     {' '}
                     and {item?.postlikes - 2} more liked this.
@@ -320,11 +331,8 @@ export default function Comments() {
       leftImage={images.blueAppLogo}
       rightIcon
       onPressBack={() => navigation.goBack()}>
-      <KeyboardAwareScrollView>
-        <View
-          style={{
-            height: Dimensions.get('window').height * 0.8,
-          }}>
+      <KeyboardAwareScrollView style={{flex: 1}}>
+        <View style={{flex: 0.9}}>
           <View style={styles.bottomLine} />
           <FlatList
             data={post?.comments}
@@ -340,36 +348,12 @@ export default function Comments() {
             keyExtractor={item => item.id}
             contentContainerStyle={{
               marginHorizontal: 20,
-              paddingBottom: hp(8),
             }}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={ItemDivider}
           />
-
-          <RBSheet
-            ref={refRBSheet}
-            closeOnDragDown={true}
-            closeOnPressMask={false}
-            height={120}
-            customStyles={{
-              wrapper: {
-                backgroundColor: `rgba(0, 0, 0, 0.2)`,
-              },
-              container: {
-                backgroundColor: colors.whiteColor,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
-              },
-              draggableIcon: {
-                backgroundColor: '#000',
-              },
-            }}>
-            <CommentsBottomSheet
-              onPressEdit={() => onEditCommentPress()}
-              onPressDel={() => onDeleteCommentPress()}
-            />
-          </RBSheet>
-
+        </View>
+        <View style={{flex: 0.1}}>
           <View style={styles.footerView}>
             <CommentInput
               placeholder={'write a comment...'}
@@ -377,19 +361,42 @@ export default function Comments() {
               onPressSend={comment => {
                 !text ? addComment(comment) : editCommemt(comment);
               }}
-              // onPressIn={()=>scrollToBottom()}
-              // onChangeText={setComment}
               value={text}
             />
           </View>
-          <ZoomPicModal
-            visible={zoomPicModal}
-            iconPress={() => setZoomPicModal(false)}
-            image={profile?.dp}
-            imageStyle={{height: '60%', width: '90%', resizeMode: 'contain'}}
-          />
         </View>
       </KeyboardAwareScrollView>
+
+      {/* <Emoji /> */}
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        height={120}
+        customStyles={{
+          wrapper: {
+            backgroundColor: `rgba(0, 0, 0, 0.2)`,
+          },
+          container: {
+            backgroundColor: colors.whiteColor,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
+        }}>
+        <CommentsBottomSheet
+          onPressEdit={() => onEditCommentPress()}
+          onPressDel={() => onDeleteCommentPress()}
+        />
+      </RBSheet>
+      <ZoomPicModal
+        visible={zoomPicModal}
+        iconPress={() => setZoomPicModal(false)}
+        image={profile?.dp}
+        imageStyle={{height: '60%', width: '90%', resizeMode: 'contain'}}
+      />
     </Header>
   );
 }
