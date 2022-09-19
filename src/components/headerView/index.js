@@ -91,7 +91,7 @@ export default function Header({
         )}
 
         {rightIcon && (
-          <TouchableOpacity onPress={onPressChat}>
+          <TouchableOpacity style={{padding: 10}} onPress={onPressChat}>
             <MultiChat />
           </TouchableOpacity>
         )}

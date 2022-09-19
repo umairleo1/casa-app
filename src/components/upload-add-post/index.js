@@ -1,13 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
 import React, {useRef} from 'react';
 import colors from 'src/utils/themes/global-colors';
 import UploadButton from '../upload-button';
@@ -16,6 +9,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import VideoPlayer from 'react-native-video-player';
 import {createThumbnail} from 'react-native-create-thumbnail';
+import FastImage from 'react-native-fast-image';
 
 export default function UploadAddPost({
   onPressUpload,
@@ -61,7 +55,7 @@ export default function UploadAddPost({
           </TouchableOpacity>
 
           {data?.type?.split('/')[0] !== 'video' ? (
-            <Image
+            <FastImage
               style={{
                 height: '100%',
                 width: '100%',

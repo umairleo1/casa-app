@@ -27,7 +27,7 @@ import ActivityIndicator from 'src/components/loader/activity-indicator';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {AddPostBottomSheet} from 'src/components/add-post-bottom-sheet';
 import {Image} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 let cameraIs = false;
 
@@ -47,7 +47,7 @@ export default function AddPost() {
     // console.log(' UseEffect ', authContext?.userData?.user);
     route?.params?.myPost && setDescription(route?.params?.myPost?.description);
     route?.params?.myPost && setAddPost(route?.params?.myPost?.files);
-    refRBSheet?.current?.open();
+    !route?.params?.myPost && refRBSheet?.current?.open();
   }, []);
 
   const imagePickerFromGallery = () => {
@@ -149,6 +149,10 @@ export default function AddPost() {
       } catch (error) {
         console.log(error);
         setIsLoading(false);
+        showMessage({
+          message: error.errMsg,
+          type: 'danger',
+        });
       }
     }
   };
@@ -195,6 +199,10 @@ export default function AddPost() {
       } catch (error) {
         console.log(error);
         setIsLoading(false);
+        showMessage({
+          message: error.errMsg,
+          type: 'danger',
+        });
         navigation.goBack();
       }
     }
@@ -252,7 +260,7 @@ export default function AddPost() {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <AntDesign name={'plus'} size={18} color={colors.black} />
+            <Entypo name={'plus'} size={18} color={colors.black} />
           </TouchableOpacity>
         </View>
         <View>
@@ -287,7 +295,7 @@ export default function AddPost() {
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        height={120}
+        height={150}
         customStyles={{
           wrapper: {
             backgroundColor: `rgba(0, 0, 0, 0.2)`,

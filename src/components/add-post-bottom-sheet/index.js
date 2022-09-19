@@ -1,14 +1,17 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Feather from 'react-native-vector-icons/Feather';
+
 import colors from 'src/utils/themes/global-colors';
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from 'react-native-responsive-screen';
 import {RFValue} from 'react-native-responsive-fontsize';
+
+import Photo from 'src/assets/svg/addPost/photo';
+import Video from 'src/assets/svg/addPost/video';
+import fonts from 'src/utils/themes/fonts';
 
 const AddPostBottomSheet = ({onPhotoPress, onVideoPress}) => (
   <>
@@ -20,13 +23,13 @@ const AddPostBottomSheet = ({onPhotoPress, onVideoPress}) => (
         marginTop: heightPercentageToDP(1.5),
       }}
       onPress={onPhotoPress}>
-      <FontAwesome name="photo" color="black" size={20} />
+      <Photo />
       <Text
         style={{
           color: colors.black,
           marginHorizontal: widthPercentageToDP(2),
           fontSize: RFValue(15),
-          flex: 1,
+          fontFamily: fonts.RobotoMedium,
         }}>
         Upload Photo
       </Text>
@@ -40,13 +43,13 @@ const AddPostBottomSheet = ({onPhotoPress, onVideoPress}) => (
         marginTop: heightPercentageToDP(1.5),
       }}
       onPress={onVideoPress}>
-      <Feather name="video" color="black" size={20} />
+      <Video />
       <Text
         style={{
           color: colors.black,
           marginHorizontal: widthPercentageToDP(2),
           fontSize: RFValue(15),
-          flex: 1,
+          fontFamily: fonts.RobotoMedium,
         }}>
         Upload Video
       </Text>

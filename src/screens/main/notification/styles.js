@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     lineHeight: 18,
     color: colors.pureBlack,
     fontWeight: 'bold',
-    marginHorizontal: 5,
+    // marginHorizontal: 5,
   },
   mail: {
     fontSize: 12,
