@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {Text, FlatList, RefreshControl} from 'react-native';
+import {Text, FlatList, RefreshControl, View} from 'react-native';
 import React, {useState} from 'react';
 
 import Header from 'src/components/headerView';
@@ -165,6 +165,16 @@ export default function Home() {
         contentContainerStyle={{
           marginHorizontal: 20,
         }}
+        ItemSeparatorComponent={() => (
+          <View
+            style={{
+              width: '100%',
+              height: 1,
+              backgroundColor: '#E6ECF5',
+              marginVertical: 10,
+            }}
+          />
+        )}
         onEndReached={() => {
           limit.currentPage < limit.availablePages && loadMore();
         }}

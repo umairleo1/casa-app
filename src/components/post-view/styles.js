@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   mainContainer: {
-    marginBottom: 10,
+    // marginBottom: 10,
     // marginVertical: 10,
   },
   content: {

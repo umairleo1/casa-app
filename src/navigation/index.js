@@ -83,7 +83,7 @@ export default function CasaVerseNavigator() {
       // Platform.OS === 'android' &&
       PushNotification.localNotification({
         channelId: 'channel-id',
-        foreground: false,
+        foreground: true,
         userInteraction: true,
         autoCancel: true,
         // bigText: 'notification.data.body',

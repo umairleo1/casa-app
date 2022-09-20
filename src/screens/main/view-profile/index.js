@@ -210,7 +210,7 @@ export default function ViewProfile({route}) {
     };
 
     return (
-      <View style={styles.mainContainer}>
+      <View>
         <View style={styles.flatlistView}>
           <View style={styles.flatlistView2}>
             <View style={{width: 50}}>
@@ -448,6 +448,16 @@ export default function ViewProfile({route}) {
               No Post Yet
             </Text>
           }
+          ItemSeparatorComponent={() => (
+            <View
+              style={{
+                width: '100%',
+                height: 1,
+                backgroundColor: '#E6ECF5',
+                marginVertical: 10,
+              }}
+            />
+          )}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }

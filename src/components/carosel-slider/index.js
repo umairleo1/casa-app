@@ -19,6 +19,7 @@ const FlatListCustom = ({data, setZoomPicModal, setProfile}) => {
   const RenderItem = ({item}) => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [thumbnail, setThumbNail] = React.useState('');
+
     React.useEffect(() => {
       item?.myTypeOf.split('/')[0] == 'video' &&
         createThumbnail({
@@ -40,6 +41,7 @@ const FlatListCustom = ({data, setZoomPicModal, setProfile}) => {
               justifyContent: 'center',
               width:
                 data.length == 1 ? Dimensions.get('window').width * 0.9 : 230,
+              backgroundColor: '#F3F2EF',
             },
           ]}>
           {isLoading && (
@@ -70,9 +72,32 @@ const FlatListCustom = ({data, setZoomPicModal, setProfile}) => {
               }}
               videoWidth={1600}
               videoHeight={900}
+              resizeMode="contain"
               thumbnail={{uri: thumbnail?.path}}
               style={[styles.image]}
             />
+            // <Video
+            //   source={{
+            //     uri: item?.url,
+            //   }} // Can be a URL or a local file.
+            //   // ref={ref => {
+            //   //   this.player = ref;
+            //   // }} // Store reference
+            //   // onBuffer={this.onBuffer} // Callback when remote video is buffering
+            //   // onError={this.videoError} // Callback when video cannot be loaded
+            //   controls={true}
+            //   paused={true}
+            //   playInBackground={false}
+            //   playWhenInactive={false}
+            //   resizeMode="contain"
+            // style={{
+            //   position: 'absolute',
+            //   top: 0,
+            //   left: 0,
+            //   bottom: 0,
+            //   right: 0,
+            // }}
+            // />
           )}
         </View>
       </>
