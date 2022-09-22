@@ -29,7 +29,6 @@ export default function Settings() {
       console.log(result);
       await asyncStorage.removeFcmToken();
       await asyncStorage.removeToken();
-
       dispatch(handleLogout(''));
     } catch (error) {
       console.log(error);
@@ -39,7 +38,6 @@ export default function Settings() {
       // });
       asyncStorage.removeFcmToken();
       asyncStorage.removeToken();
-
       dispatch(handleLogout(''));
     }
   };

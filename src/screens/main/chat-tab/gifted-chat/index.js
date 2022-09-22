@@ -36,13 +36,15 @@ export default function GiftedChats() {
   const [message, setMessages] = useState([]);
   const [connected, setConnected] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [messageText, setMessageText] = useState('');
   const authContext = React.useContext(AuthContext);
 
   useEffect(() => {
+    setIsLoading(true);
     if (connected) {
       var temp = [];
-      getConversation(1, 100).then(value =>
+      getConversation(1, 1000).then(value =>
         value?.conversation?.map(item => {
           setMessages(previousMessages =>
             GiftedChat.append(previousMessages, [
@@ -63,8 +65,28 @@ export default function GiftedChats() {
           );
         }),
       );
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }, [connected]);
+
+  const RenderLoader = () => (
+    <View
+      style={{
+        // flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      }}>
+      <ActivityIndicator size="small" color="#000000" />
+      {/* <Text style={{transform: [{scaleY: -1}]}}>Say hello to your buddy</Text> */}
+    </View>
+  );
 
   const scrollToBottom = id => {
     // console.log('Message changed');
@@ -195,14 +217,14 @@ export default function GiftedChats() {
         renderInputToolbar={props => MessengerBarContainer(props)}
         renderBubble={props => renderBubble(props)}
         // loadEarlier={true}
-        // isLoadingEarlier={true}
-        // renderChatEmpty={() => (
-        //   <ActivityIndicator size="large" color="#0000ff" />
-        // )}
+        // isLoadingEarlier={false}
+        // renderChatEmpty={() => <RenderLoader />}
+        // renderLoading={() => <RenderLoader />}
+
         scrollToBottom
-        isAnimated
+        isAnimated={false}
         showAvatarForEveryMessage={true}
-        isInitialized={false}
+        isInitialized={true}
         listViewProps={{
           onEndReachedThreshold: 0.3, // When the top of the content is within 3/10 of the visible length of the content
           onEndReached: () => loadMoreMessages(),
@@ -241,7 +263,7 @@ export default function GiftedChats() {
           );
         }}
       />
-
+      {isLoading && <RenderLoader />}
       {showEmoji && <Emoji setMessageText={setMessageText} />}
     </Header>
   );

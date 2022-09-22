@@ -14,8 +14,7 @@ const storeToken = async value => {
 
 const storeFcmToken = async value => {
   try {
-    // const jsonObj = JSON.stringify(value);
-    const jsonObj = value;
+    const jsonObj = JSON.stringify(value);
     await AsyncStorage.setItem(fcmTokem, jsonObj);
   } catch (e) {
     console.log('Error in storing fcm token', e);
@@ -40,9 +39,8 @@ const getfcmToken = async () => {
   try {
     const value = await AsyncStorage.getItem(fcmTokem);
     if (value !== null) {
-      // const jsonVal = JSON.parse(value);
-
-      return value;
+      const jsonVal = JSON.parse(value);
+      return jsonVal;
     } else {
       return null;
     }
