@@ -5,6 +5,8 @@ import {Provider} from 'react-redux';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import FlashMessage from 'react-native-flash-message';
 
+import {NavigationContainer} from '@react-navigation/native';
+
 import CasaVerseNavigator from 'src/navigation';
 import colors from 'src/utils/themes/global-colors';
 import {Store} from 'src/redux/store/index';
@@ -33,7 +35,9 @@ const App = () => {
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}
             backgroundColor={colors.whiteColor}
           />
-          <CasaVerseNavigator />
+          <NavigationContainer>
+            <CasaVerseNavigator />
+          </NavigationContainer>
           <FlashMessage position="top" />
         </SafeAreaView>
       </AuthContext.Provider>

@@ -7,8 +7,10 @@ const getConversatioApi = (id, page, limit) => {
   });
 };
 
-const getChatListApi = () => {
-  return client.get(API_URLS.GET_CHAT_LIST);
+const getChatListApi = search => {
+  return client.get(API_URLS.GET_CHAT_LIST, {
+    params: {search: search},
+  });
 };
 
 export const chatServices = {

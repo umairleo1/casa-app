@@ -21,14 +21,15 @@ export default function Chat() {
   const isFocus = useIsFocused();
   const [chatList, setChatList] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [searchChat, setSearchChat] = React.useState('');
 
   useEffect(() => {
-    getChatList();
-  }, [isFocus]);
+    getChatList(searchChat);
+  }, [isFocus, searchChat]);
 
-  const getChatList = async () => {
+  const getChatList = async searchChat => {
     try {
-      const result = await chatServices.getChatListApi();
+      const result = await chatServices.getChatListApi(searchChat);
       console.log('Here is the chat list   ===>>>> ', result);
       setChatList(
         result
@@ -48,46 +49,50 @@ export default function Chat() {
 
   const listItem = ({item}) => {
     return (
-      <View style={styles.mainContainer}>
-        <TouchableOpacity
-          style={styles.flatlistView}
-          onPress={() =>
-            navigation.navigate('GIFTED_CHAT', {
-              data: {
-                user: {
-                  firstName: item?.firstName,
-                  lastName: item?.lastName,
-                  profileImage: item?.picture,
-                },
+      <TouchableOpacity
+        style={styles.flatlistView}
+        onPress={() =>
+          navigation.navigate('GIFTED_CHAT', {
+            data: {
+              user: {
+                firstName: item?.firstName,
+                lastName: item?.lastName,
+                profileImage: item?.picture,
               },
-              userId: item?.secondUserId,
-              getChatList: getChatList,
-            })
-          }>
-          <View style={styles.flatlistView2}>
-            <Image
-              source={item?.picture ? {uri: item?.picture} : images.people}
-              style={styles.image}
-            />
-            <View style={styles.flatlistView3}>
-              <Text style={styles.flatlistName}>
-                {item?.firstName + ' ' + item?.lastName}
-              </Text>
-              <Text style={styles.message}>{item?.lastMessage?.message}</Text>
-            </View>
-          </View>
-          <View style={{width: '30%', alignItems: 'center'}}>
-            {item?.unreadCount > 0 ? (
-              <View style={styles.countView}>
-                <Text style={styles.count}>{item?.unreadCount}</Text>
-              </View>
-            ) : null}
-            <Text style={styles.time}>
-              {moment(item?.lastMessage?.createdAt).format('MMM DD YYYY')}
+            },
+            userId: item?.secondUserId,
+            getChatList: getChatList,
+          })
+        }>
+        <View style={styles.flatlistView2}>
+          <Image
+            source={item?.picture ? {uri: item?.picture} : images.people}
+            style={styles.image}
+          />
+          <View style={styles.flatlistView3}>
+            <Text style={styles.flatlistName}>
+              {item?.firstName + ' ' + item?.lastName}
             </Text>
+            <Text style={styles.message}>{item?.lastMessage?.message}</Text>
           </View>
-        </TouchableOpacity>
-      </View>
+        </View>
+        <View
+          style={{
+            width: '30%',
+            height: '100%',
+            alignItems: 'center',
+            // justifyContent: 'center',
+          }}>
+          {item?.unreadCount > 0 ? (
+            <View style={styles.countView}>
+              <Text style={styles.count}>{item?.unreadCount}</Text>
+            </View>
+          ) : null}
+          <Text style={styles.time}>
+            {moment(item?.lastMessage?.createdAt).format('MMM DD YYYY')}
+          </Text>
+        </View>
+      </TouchableOpacity>
     );
   };
 
@@ -110,7 +115,7 @@ export default function Chat() {
         placeholderTextColor={colors.black}
         icon={'search1'}
         iconSize={24}
-        onChangeText={text => console.log(text)}
+        onChangeText={text => setSearchChat(text)}
       />
 
       {/* <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>

@@ -57,7 +57,7 @@ export default function Settings() {
         <SettingSection
           leftIcon={images.promoCode}
           rightIcon={'arrow-right'}
-          name={'Promo Code'}
+          name={'Referral Invite'}
           rightIconSize={15}
           onPress={() => navigation.navigate('PROMO_CODE')}
         />

@@ -47,19 +47,21 @@ export default function PromoCode() {
   };
 
   return (
-    <Header onPressBack={() => navigation.goBack()} heading={'Promo Code'}>
+    <Header onPressBack={() => navigation.goBack()} heading={'Referral Invite'}>
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.image}>
             <PromoCodeImage />
           </View>
-          <Text style={styles.title}>Invite People with your Promo Code</Text>
+          <Text style={styles.title}>
+            Invite People with your Referral Invite
+          </Text>
           <Text style={styles.description}>
             Share the code below and ask them to enter it.If people enter your
-            special promo code then you’ll be friends.
+            special referral invite then you’ll be friends.
           </Text>
           <InvitationLink
-            text={'Promo Code'}
+            text={'Referral Invite'}
             linkText={code}
             onPress={() => {
               code !== '' && copyToClipboard();
@@ -67,7 +69,7 @@ export default function PromoCode() {
           />
           <Text
             style={[styles.description, {color: limit >= 3 && colors.danger}]}>
-            Promo Code Limit {limit < 3 ? `${limit} / 3` : 'Exceeds'}
+            Referral Invite Limit {limit < 3 ? `${limit} / 3` : 'Exceeds'}
           </Text>
         </View>
       </ScrollView>
