@@ -2,7 +2,7 @@
 import React from 'react';
 import {Platform} from 'react-native';
 
-import {NavigationContainer} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 import AppNavigator from './app-navigator';
 import AuthNavigator from './auth-navigator';
@@ -18,6 +18,7 @@ import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 export default function CasaVerseNavigator() {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const userToken = useSelector(state => state?.auth?.userToken);
 
@@ -57,9 +58,10 @@ export default function CasaVerseNavigator() {
 
   const onRemoteNotification = notification => {
     const isClicked = notification.getData().userInteraction === 1;
-
+    console.log('onRemoteNotification ', notification);
     if (isClicked) {
       // Navigate user to another screen
+      console.log('REmote notification clicked');
     } else {
       // Do something else with push notification
     }
@@ -68,6 +70,11 @@ export default function CasaVerseNavigator() {
   //Must be outside of any component LifeCycle (such as `componentDidMount`).
   messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Message handled in the background!', remoteMessage);
+    // remoteMessage?.title !== 'Casa-App' && navigation.navigate('CHAT_TAB');
+    // const temp = JSON.parse(remoteMessage);
+    // console.log('hamzaalikhalid:', temp.type);
+    // console.log('hamzaalikhalid:', temp.messages);
+    // console.log('hamzaalikhalid:', temp.id);
   });
 
   PushNotification.configure({
@@ -78,19 +85,30 @@ export default function CasaVerseNavigator() {
 
     // (required) Called when a remote is received or opened, or local notification is opened
     onNotification: function (notification) {
-      console.log('NOTIFICATION:', notification);
-      PushNotification.localNotification({
-        channelId: 'channel-id',
-        foreground: true,
-        ignoreInForeground: notification?.title === 'Casa-App' ? false : true,
-        userInteraction: true,
-        autoCancel: true,
-        // bigText: 'notification.data.body',
-        title: notification.title,
-        message: notification.message,
-        // subText: 'notification.data.body',
-        // actions: '["Yes", "No"]',
-      });
+      // if (notification.userInteraction == false) {
+      //   const temp = JSON.parse(notification.message);
+      //   console.log('hamzaalikhalid:', temp.type);
+      //   console.log('hamzaalikhalid:', temp.messages);
+      //   console.log('hamzaalikhalid:', temp.id);
+      // }
+      console.log('NOTIFICATION: ', notification);
+
+      notification?.title !== 'Casa-App' && navigation.navigate('CHAT_TAB');
+
+      notification?.channelId !== 'channel-id' &&
+        PushNotification.localNotification({
+          channelId: 'channel-id',
+          foreground: true,
+          ignoreInForeground: notification?.title === 'Casa-App' ? false : true,
+          userInteraction: true,
+          autoCancel: true,
+          // bigText: 'notification.data.body',
+          title: notification.title,
+          // message: JSON.parse(notification.message).messages,
+          message: notification.message,
+          // subText: 'notification.data.body',
+          // actions: '["Yes", "No"]',
+        });
 
       // (required) Called when a remote is received or opened, or local notification is opened
       notification.finish(PushNotificationIOS.FetchResult.NoData);
@@ -149,9 +167,8 @@ export default function CasaVerseNavigator() {
       {/* <TouchableOpacity onPress={() => ExampleSend()}>
         <Text>ghfghfg</Text>
       </TouchableOpacity> */}
-      <NavigationContainer>
-        {userToken !== '' ? <AppNavigator /> : <AuthNavigator />}
-      </NavigationContainer>
+
+      {userToken !== '' ? <AppNavigator /> : <AuthNavigator />}
     </>
   );
 }

@@ -22,11 +22,11 @@ export default function ChatTab() {
         sceneContainerStyle={{backgroundColor: 'transparent'}}
         screenOptions={{
           tabBarStyle: {
-            height: hp(6.5),
+            height: hp(6),
           },
           tabBarLabelStyle: {
             // fontWeight: 'bold',
-            fontSize: RFValue(16),
+            fontSize: RFValue(14),
           },
 
           tabBarIndicatorStyle: {

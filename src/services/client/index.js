@@ -3,7 +3,7 @@ import axios from 'axios';
 import asyncStorage from 'utils/async-storage/index';
 
 const request = axios.create({
-  // baseURL: 'https://32a5-119-152-129-178.in.ngrok.io/',
+  // baseURL: 'https://localhost:3000/',
   baseURL: 'http://43.205.56.71:3000/',
   headers: {
     'Content-Type': 'multipart/form-data',
