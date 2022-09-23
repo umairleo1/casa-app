@@ -16,6 +16,7 @@ export default function PromoCode() {
   const navigation = useNavigation();
   const [code, setCode] = React.useState('');
   const [copiedText, setCopiedText] = React.useState('');
+  const [limit, setLimit] = React.useState('');
 
   React.useEffect(() => {
     getPromoCode();
@@ -39,6 +40,7 @@ export default function PromoCode() {
       const result = await postServices.getPromoCodeApi();
       console.log('Here is the promo code ', result);
       setCode(result?.message?.code || '');
+      setLimit(result?.message?.usedCount);
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +53,7 @@ export default function PromoCode() {
           <View style={styles.image}>
             <PromoCodeImage />
           </View>
-          <Text style={styles.title}>Invite People with your Promo Code </Text>
+          <Text style={styles.title}>Invite People with your Promo Code</Text>
           <Text style={styles.description}>
             Share the code below and ask them to enter it.If people enter your
             special promo code then you’ll be friends.
@@ -63,7 +65,10 @@ export default function PromoCode() {
               code !== '' && copyToClipboard();
             }}
           />
-          {/* <Text>{copiedText}</Text> */}
+          <Text
+            style={[styles.description, {color: limit >= 3 && colors.danger}]}>
+            Promo Code Limit {limit < 3 ? `${limit} / 3` : 'Exceeds'}
+          </Text>
         </View>
       </ScrollView>
       <View style={styles.buttonView}>

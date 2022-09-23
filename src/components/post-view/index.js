@@ -42,7 +42,7 @@ const PostView = ({item, onRefresh, setZoomPicModal, setProfile}) => {
   };
 
   return (
-    <View style={styles.mainContainer}>
+    <View>
       <View style={styles.flatlistView}>
         <View style={styles.flatlistView2}>
           <TouchableOpacity

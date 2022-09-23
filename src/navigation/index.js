@@ -72,18 +72,17 @@ export default function CasaVerseNavigator() {
 
   PushNotification.configure({
     // (optional) Called when Token is generated (iOS and Android)
-    // onRegister: function (token) {
-    //   // console.log('TOKEN:', token);
-    // },
+    onRegister: function () {
+      // console.log('TOKEN:', token);
+    },
 
     // (required) Called when a remote is received or opened, or local notification is opened
     onNotification: function (notification) {
       console.log('NOTIFICATION:', notification);
-
-      // Platform.OS === 'android' &&
       PushNotification.localNotification({
         channelId: 'channel-id',
-        foreground: false,
+        foreground: true,
+        ignoreInForeground: notification?.title === 'Casa-App' ? false : true,
         userInteraction: true,
         autoCancel: true,
         // bigText: 'notification.data.body',
@@ -92,6 +91,7 @@ export default function CasaVerseNavigator() {
         // subText: 'notification.data.body',
         // actions: '["Yes", "No"]',
       });
+
       // (required) Called when a remote is received or opened, or local notification is opened
       notification.finish(PushNotificationIOS.FetchResult.NoData);
     },
@@ -130,8 +130,25 @@ export default function CasaVerseNavigator() {
     created => console.log(`createChannel returned '${created}'`),
   );
 
+  // const ExampleSend = () => {
+  //   PushNotification.localNotification({
+  //     channelId: 'channel-id',
+  //     foreground: false,
+  //     userInteraction: true,
+  //     autoCancel: true,
+  //     // bigText: 'notification.data.body',
+  //     title: 'Casa App',
+  //     message: 'hello welcome to jamanji',
+  //     // subText: 'notification.data.body',
+  //     // actions: '["Yes", "No"]',
+  //   });
+  // };
+
   return (
     <>
+      {/* <TouchableOpacity onPress={() => ExampleSend()}>
+        <Text>ghfghfg</Text>
+      </TouchableOpacity> */}
       <NavigationContainer>
         {userToken !== '' ? <AppNavigator /> : <AuthNavigator />}
       </NavigationContainer>
