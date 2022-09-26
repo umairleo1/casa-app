@@ -10,5 +10,6 @@ const images = {
   blueAppLogo: require('./home/blue-logo.png'),
   uploadImage: require('./addpost/defaultimage.png'),
   editGroupPhoto: require('../images/chat/Edit-group-photo.png'),
+  gifChat: require('../images/chat/chat.gif'),
 };
 export default images;

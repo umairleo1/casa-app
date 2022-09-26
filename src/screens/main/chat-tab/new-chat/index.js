@@ -120,9 +120,6 @@ export default function NewChat() {
         data={people}
         keyExtractor={(item, index) => item + index}
         renderItem={({item}) => <Item title={item} />}
-        // renderSectionHeader={({section: {title}}) => (
-        //   <Text style={styles.header}>{title}</Text>
-        // )}
         onEndReached={() => {
           limit.currentPage <= limit.availablePages && loadMore();
         }}
@@ -151,8 +148,7 @@ export default function NewChat() {
               <GroupIcon />
               <Text style={styles.text}>Create new contact</Text>
             </TouchableOpacity>
-
-            <Text style={styles.text2}>On the platform</Text>
+            <Text style={[styles.text2]}>On the platform</Text>
           </>
         }
         ItemSeparatorComponent={ItemDivider}

@@ -1,5 +1,5 @@
-import {FlatList, Image, Text, View} from 'react-native';
-import React, {useRef} from 'react';
+import {FlatList, Image, RefreshControl, Text, View} from 'react-native';
+import React, {useEffect, useRef} from 'react';
 import SearchInput from 'src/components/searchInput';
 import colors from 'src/utils/themes/global-colors';
 import {styles} from './styles';
@@ -10,54 +10,108 @@ import {
 import DefaultButton from 'src/components/default-button';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import MembersSheet from '../bottom-sheet';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {chatServices} from 'src/services/chat-services';
+import images from 'src/assets/images';
+import {KeyboardAwareListView} from 'react-native-keyboard-aware-scrollview';
 
 export default function GroupChat() {
   const navigation = useNavigation();
   const refRBSheet = useRef();
+  const isFocus = useIsFocused();
+  const [search, setSearch] = React.useState('');
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [groupList, setGroupList] = React.useState([]);
 
-  const dummyData = [
-    {
-      groupName: 'Technologies',
-      groupText: '30 Friends in the Group',
-      image: require('../../../../assets/images/chat/chat.png'),
-      groupImage: require('../../../../assets/images/findpeople/people3.png'),
-      groupImage2: require('../../../../assets/images/findpeople/people4.png'),
-      groupImage3: require('../../../../assets/images/findpeople/people5.png'),
-      groupImage4: require('../../../../assets/images/findpeople/people2.png'),
-    },
-    {
-      groupName: 'Best Friends',
-      groupText: '4 Friends in the Group',
-      image: require('../../../../assets/images/chat/chat1.png'),
-      groupImage: require('../../../../assets/images/findpeople/people3.png'),
-      groupImage2: require('../../../../assets/images/findpeople/people4.png'),
-      groupImage3: require('../../../../assets/images/findpeople/people5.png'),
-      groupImage4: require('../../../../assets/images/findpeople/people2.png'),
-    },
-  ];
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      getChatGroups(search);
+    }, 300);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isFocus, search]);
+
+  const getChatGroups = async search => {
+    // console.log();
+    try {
+      const result = await chatServices.getGroupChatListApi(search);
+      console.log('Here ist he get group chat list ', result);
+      setGroupList(result.reverse());
+      setRefreshing(false);
+    } catch (error) {
+      console.log(error);
+      setRefreshing(false);
+    }
+  };
 
   const listItem = ({item}) => {
     return (
       <View style={styles.mainContainer}>
         <View style={styles.groupView}>
-          <Image source={item.image} style={styles.image} />
-          <Text style={styles.groupName}>{item.groupName}</Text>
-          <Text style={styles.groupText}>{item.groupText}</Text>
+          <View style={{flexDirection: 'row'}}>
+            {item?.userIds[0]?.profileImage && (
+              <Image
+                source={
+                  item?.userIds[0]?.profileImage
+                    ? {uri: item?.userIds[0]?.profileImage}
+                    : images.people
+                }
+                style={styles.image}
+              />
+            )}
+            {item?.userIds[1]?.profileImage && (
+              <Image
+                source={
+                  item?.userIds[1]?.profileImage
+                    ? {uri: item?.userIds[1]?.profileImage}
+                    : images.people
+                }
+                style={[styles.image, {marginLeft: -40}]}
+              />
+            )}
+            {item?.userIds[2]?.profileImage && (
+              <Image
+                source={
+                  item?.userIds[1]?.profileImage
+                    ? {uri: item?.userIds[2]?.profileImage}
+                    : images.people
+                }
+                style={[styles.image, {marginLeft: -40}]}
+              />
+            )}
+          </View>
+          <Text style={[styles.groupName, {marginVertical: 10}]}>
+            {item?.name}
+          </Text>
+          <Text style={styles.groupText}>
+            {item?.userIds?.length + ' Friends in the Group'}
+          </Text>
           <View style={styles.groupImages}>
-            <Image source={item.groupImage} style={styles.groupImage} />
-            <Image
-              source={item.groupImage2}
-              style={[styles.groupImage, {marginLeft: wp(-2)}]}
-            />
-            <Image
-              source={item.groupImage3}
-              style={[styles.groupImage, {marginLeft: -8}]}
-            />
-            <Image
-              source={item.groupImage4}
-              style={[styles.groupImage, {marginLeft: -8}]}
-            />
+            {item?.userIds[0]?.profileImage && (
+              <Image
+                source={{uri: item?.userIds[0]?.profileImage}}
+                style={styles.groupImage}
+              />
+            )}
+            {item?.userIds[1]?.profileImage && (
+              <Image
+                source={{uri: item?.userIds[1]?.profileImage}}
+                style={[styles.groupImage, {marginLeft: wp(-2)}]}
+              />
+            )}
+            {item?.userIds[2]?.profileImage && (
+              <Image
+                source={{uri: item?.userIds[2]?.profileImage}}
+                style={[styles.groupImage, {marginLeft: -8}]}
+              />
+            )}
+            {item?.userIds[3]?.profileImage && (
+              <Image
+                source={{uri: item?.userIds[3]?.profileImage}}
+                style={[styles.groupImage, {marginLeft: -8}]}
+              />
+            )}
           </View>
           <View style={styles.buttonsView}>
             <DefaultButton
@@ -110,20 +164,37 @@ export default function GroupChat() {
         placeholderTextColor={colors.black}
         icon={'search1'}
         iconSize={24}
-        onChangeText={text => console.log(text)}
+        onChangeText={text => setSearch(text)}
       />
-      <FlatList
-        data={dummyData}
-        renderItem={listItem}
-        keyExtractor={item => item.id}
-        ItemSeparatorComponent={ItemDivider}
-        contentContainerStyle={{
-          paddingBottom: hp(5),
-          paddingTop: 10,
-        }}
-        showsVerticalScrollIndicator={false}
-      />
-
+      <KeyboardAwareListView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => {
+              setRefreshing(true), getChatGroups();
+            }}
+          />
+        }>
+        <FlatList
+          data={groupList}
+          renderItem={listItem}
+          keyExtractor={item => item._id}
+          ItemSeparatorComponent={ItemDivider}
+          contentContainerStyle={{
+            paddingBottom: hp(5),
+            paddingTop: 10,
+          }}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <>
+              <Text
+                style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
+                No Groups to Sshow Yet
+              </Text>
+            </>
+          }
+        />
+      </KeyboardAwareListView>
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}

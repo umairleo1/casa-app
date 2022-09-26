@@ -18,9 +18,11 @@ export const styles = StyleSheet.create({
     paddingTop: hp(1),
   },
   image: {
-    height: 118,
-    width: 118,
+    height: 100,
+    width: 100,
     borderRadius: 118 / 2,
+    borderWidth: 2,
+    borderColor: '#fff',
   },
   groupName: {
     color: colors.black,

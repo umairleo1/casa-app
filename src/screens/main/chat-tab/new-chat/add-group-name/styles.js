@@ -4,6 +4,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
 
 export const styles = StyleSheet.create({
@@ -19,6 +20,7 @@ export const styles = StyleSheet.create({
     margin: 5,
     borderBottomWidth: 1,
     borderColor: colors.placeholderColor,
+    marginHorizontal: 20,
   },
   input: {
     flex: 1,
@@ -28,14 +30,16 @@ export const styles = StyleSheet.create({
     paddingLeft: 10,
     backgroundColor: '#fff',
     borderLeftWidth: 1,
-    fontSize: RFValue(14),
+    fontSize: RFValue(12),
     height: 40,
     margin: 5,
     borderColor: colors.placeholderColor,
+    fontFamily: fonts.RobotoRegular,
   },
   name: {
     fontSize: RFValue(12),
     color: colors.black,
+    fontFamily: fonts.RobotoRegular,
   },
   //
   image: {
@@ -44,10 +48,8 @@ export const styles = StyleSheet.create({
     width: 42,
   },
   flatlistName: {
-    fontSize: 15,
-    lineHeight: 18,
-    color: colors.pureBlack,
-    fontWeight: 'bold',
+    fontSize: RFValue(13),
+    color: colors.lightgrey,
   },
   message: {
     fontSize: RFValue(11),
@@ -91,6 +93,13 @@ export const styles = StyleSheet.create({
     fontSize: RFValue(13),
     fontWeight: 'bold',
     marginHorizontal: wp(5),
-    color: colors.lightgrey,
+    fontFamily: fonts.RobotoRegular,
+    color: '#7A7A7A',
+    // color: colors.lightgrey,
+  },
+  title: {
+    fontSize: RFValue(14),
+    color: colors.black,
+    fontWeight: 'bold',
   },
 });
