@@ -109,6 +109,7 @@ export default function Comments() {
 
   if (post == null) return;
   const ListItem = ({item}) => {
+    console.log(item);
     const [like, setLike] = React.useState(
       post?.post?.isLiked || post?.post1?.isLiked,
     );
@@ -180,7 +181,11 @@ export default function Comments() {
             <Text style={[styles.text, {fontWeight: 'bold'}]}>{likeValue}</Text>
             <TouchableOpacity
               onPress={() => navigation.navigate('LIKES', {post: item})}
-              style={{width: 130, flexDirection: 'row'}}>
+              style={{
+                width: 130,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
               {item?.likes?.length > 0 && (
                 <>
                   <Image
@@ -223,7 +228,7 @@ export default function Comments() {
                 {item?.likes?.length > 2 && (
                   <Text style={[styles.likedMore, {color: '#BBBBBB'}]}>
                     {' '}
-                    and {item?.postlikes - 2} more liked this.
+                    and {item?.postlikes || 3 - 2} more liked this.
                   </Text>
                 )}
               </Text>

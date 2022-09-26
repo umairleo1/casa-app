@@ -15,12 +15,14 @@ import {chatServices} from 'src/services/chat-services';
 import images from 'src/assets/images';
 
 import moment from 'moment';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function Chat() {
   const navigation = useNavigation();
   const isFocus = useIsFocused();
   const [chatList, setChatList] = useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [searchChat, setSearchChat] = React.useState('');
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export default function Chat() {
 
   const getChatList = async searchChat => {
     try {
+      setIsLoading(true);
       const result = await chatServices.getChatListApi(searchChat);
       // console.log('Here is the chat list   ===>>>> ', result);
       setChatList(
@@ -46,7 +49,9 @@ export default function Chat() {
           .reverse(),
       );
       setRefreshing(false);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       setRefreshing(false);
       console.log(error);
     }
@@ -116,6 +121,7 @@ export default function Chat() {
 
   return (
     <View style={styles.Container}>
+      <ActivityIndicator visible={isLoading} />
       <SearchInput
         placeholder={'Search...'}
         placeholderTextColor={colors.black}
