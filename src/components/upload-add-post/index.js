@@ -68,17 +68,22 @@ export default function UploadAddPost({
             />
           ) : (
             <Video
-              video={{
+              source={{
                 uri: data?.url || data?.uri,
               }}
-              // videoWidth={1600}
-              // videoHeight={900}
-              thumbnail={{uri: thumbnail?.path}}
+              //   thumbnail={{uri: thumbnail?.path}}
+              paused={true}
+              controls={true}
+              resizeMode={'center'}
               style={{
                 height: '100%',
                 width: '100%',
                 borderRadius: 5,
-                overflow: 'hidden',
+
+                backgroundColor: '#000',
+              }}
+              onError={er => {
+                console.log('error', er);
               }}
             />
           )}
