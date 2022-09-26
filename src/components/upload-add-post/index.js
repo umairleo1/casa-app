@@ -7,9 +7,10 @@ import UploadButton from '../upload-button';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 // import Video from 'react-native-video';
 
-import VideoPlayer from 'react-native-video-player';
+//import VideoPlayer from 'react-native-video-player';
 import {createThumbnail} from 'react-native-create-thumbnail';
 import FastImage from 'react-native-fast-image';
+import Video from 'react-native-video';
 
 export default function UploadAddPost({
   onPressUpload,
@@ -66,7 +67,7 @@ export default function UploadAddPost({
               resizeMode="cover"
             />
           ) : (
-            <VideoPlayer
+            <Video
               video={{
                 uri: data?.url || data?.uri,
               }}
