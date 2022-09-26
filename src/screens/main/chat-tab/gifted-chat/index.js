@@ -152,7 +152,7 @@ export default function GiftedChats() {
           marginHorizontal: 6,
           borderRadius: 32,
           borderTopColor: 'transparent',
-          marginBottom: 4,
+          marginBottom: Platform.OS === 'ios' ? 4 : 8,
         }}
       />
     );
