@@ -41,26 +41,48 @@ export default function Comments() {
 
   const userProfile = useSelector(state => state?.profile?.userProfile);
 
-  const [post, setPost] = React.useState(route?.params?.data);
+  // const [post, setPost] = React.useState(route?.params?.data);
+  const [post, setPost] = React.useState(null);
   const [selectedComment, setSelectedComent] = React.useState('');
   const [text, setText] = React.useState('');
   const [zoomPicModal, setZoomPicModal] = useState(false);
   const [profile, setProfile] = useState({dp: '', cover: ''});
-  // const [comment, setComment] = React.useState('');
+  const [comment, setComment] = React.useState([]);
 
   var expression =
     /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
+
+  React.useEffect(() => {
+    console.log(route?.params.data);
+    getPostByid(route?.params.postId);
+  }, []);
+
+  const getPostByid = async id => {
+    try {
+      const result = await postServices.getPostByIdApi(id);
+      console.log('Here  is the post by id ', result);
+      // console.log('Here  is the post by id ', route?.params?.data);
+      setPost(result);
+      setComment(result?.post?.comments);
+      // route?.params?.render();
+    } catch (error) {
+      console.log(error);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
+    }
+  };
 
   const addComment = async comment => {
     Keyboard.dismiss();
 
     try {
-      const result = await postServices.addCommentApi(
-        route?.params?.data?._id,
-        {commentText: comment},
-      );
-
-      setPost(result?.post1);
+      const result = await postServices.addCommentApi(route?.params?.postId, {
+        commentText: comment,
+      });
+      console.log('comment added ', result);
+      setComment(result?.post1?.comments);
       route?.params?.render();
     } catch (error) {
       console.log(error);
@@ -73,7 +95,7 @@ export default function Comments() {
 
   const likePost = async () => {
     try {
-      const result = await postServices.likePostApi(route?.params?.data?._id);
+      const result = await postServices.likePostApi(route?.params?.postId);
       console.log(result);
       route?.params?.render();
     } catch (error) {
@@ -85,12 +107,13 @@ export default function Comments() {
     }
   };
 
+  if (post == null) return;
   const ListItem = ({item}) => {
-    const [like, setLike] = React.useState(route?.params?.isLiked);
-
-    const [likeValue, setLikeValue] = React.useState(
-      route?.params?.data?.postlikes,
+    const [like, setLike] = React.useState(
+      post?.post?.isLiked || post?.post1?.isLiked,
     );
+
+    const [likeValue, setLikeValue] = React.useState(post?.postlikes);
     return (
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
@@ -158,7 +181,7 @@ export default function Comments() {
             <TouchableOpacity
               onPress={() => navigation.navigate('LIKES', {post: item})}
               style={{width: 130, flexDirection: 'row'}}>
-              {item?.likes.length > 0 && (
+              {item?.likes?.length > 0 && (
                 <>
                   <Image
                     source={
@@ -168,7 +191,7 @@ export default function Comments() {
                     }
                     style={styles.likeImg}
                   />
-                  {item?.likes.length > 1 && (
+                  {item?.likes?.length > 1 && (
                     <Image
                       source={
                         item?.likes[1]?.likesBy?.profileImage
@@ -178,7 +201,7 @@ export default function Comments() {
                       style={[styles.likeImg, {marginLeft: -8}]}
                     />
                   )}
-                  {item?.likes.length > 2 && (
+                  {item?.likes?.length > 2 && (
                     <Image
                       source={
                         item?.likes[2]?.likesBy?.profileImage
@@ -218,6 +241,7 @@ export default function Comments() {
   };
 
   const commentsList = ({item}) => {
+    // console.log('xxxxfddfdfdf ', item);
     return (
       <View style={[styles.mainContainer, {marginHorizontal: 10}]}>
         <View style={styles.commentView}>
@@ -279,9 +303,9 @@ export default function Comments() {
       const result = await postServices.editCommentApi(selectedComment._id, {
         commentText: comment,
       });
-      {
-        result?.success && setPost(result?.post1);
-      }
+
+      result?.success && setComment(result?.post1?.comments);
+      getPostByid(route?.params.postId);
       console.log(result);
       setSelectedComent('');
       setText('');
@@ -300,7 +324,9 @@ export default function Comments() {
     try {
       const result = await postServices.deleteCommentApi(selectedComment._id);
       console.log(result);
-      setPost(result?.post1);
+      // setPost(result?.post1);
+      setComment(result?.post1?.comments);
+      getPostByid(route?.params.postId);
       setSelectedComent('');
       route?.params?.render();
     } catch (error) {
@@ -335,17 +361,17 @@ export default function Comments() {
         <View style={{flex: 0.9}}>
           <View style={styles.bottomLine} />
           <FlatList
-            data={post?.comments}
+            data={comment}
             ref={ref}
             onContentSizeChange={() => scrollToBottom()}
-            ListHeaderComponent={<ListItem item={post} />}
+            ListHeaderComponent={<ListItem item={post?.post} />}
             renderItem={commentsList}
             ListEmptyComponent={
               <Text style={{marginLeft: 20, fontFamily: fonts.RobotoRegular}}>
                 No Comments Yet
               </Text>
             }
-            keyExtractor={item => item.id}
+            keyExtractor={item => item?._id}
             contentContainerStyle={{
               marginHorizontal: 20,
             }}

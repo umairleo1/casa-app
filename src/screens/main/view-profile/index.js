@@ -347,9 +347,10 @@ export default function ViewProfile({route}) {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('COMMENTS', {
-                data: item,
+                // data: item,
                 render: onRefresh,
-                isLiked: like,
+                // isLiked: like,
+                postId: item?._id,
               });
             }}
             style={styles.row}>

@@ -30,7 +30,7 @@ export const useWebSockets = ({
         page,
         limit,
       );
-      console.log('Here is the conversation ', result);
+      // console.log('Here is the conversation ', result);
       return result;
     } catch (error) {
       console.log(error);

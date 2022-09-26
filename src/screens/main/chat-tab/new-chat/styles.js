@@ -4,6 +4,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
 
 export const styles = StyleSheet.create({
@@ -24,10 +25,11 @@ export const styles = StyleSheet.create({
     marginTop: hp(1.5),
   },
   text: {
-    color: colors.lightgrey,
-    fontWeight: 'bold',
+    color: '#7A7A7A',
+    // fontWeight: 'bold',
     fontSize: RFValue(14),
     marginHorizontal: wp(3),
+    fontFamily: fonts.RobotoMedium,
   },
   bottomLine: {
     borderWidth: 1,
@@ -37,8 +39,10 @@ export const styles = StyleSheet.create({
   text2: {
     marginTop: hp(2),
     fontSize: RFValue(13),
-    fontWeight: 'bold',
+    fontFamily: fonts.RobotoMedium,
     marginHorizontal: wp(3),
+    color: '#7A7A7A',
+    marginVertical: 10,
   },
   //section list
   item: {

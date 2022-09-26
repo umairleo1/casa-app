@@ -37,7 +37,12 @@ export default function FindPeople() {
   const defaultImage = images.people;
 
   React.useEffect(() => {
-    findPeople();
+    let timeout = setTimeout(() => {
+      findPeople();
+    }, 300);
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [search]);
 
   const findPeople = async () => {

@@ -23,6 +23,10 @@ const deletePostApi = id => {
   return client.delete(`${API_URLS.DELETE_POST}${id}`);
 };
 
+const getPostByIdApi = id => {
+  return client.get(`${API_URLS.GET_POST_BY_ID}${id}`);
+};
+
 const getAllMyPostApi = () => {
   return client.get(API_URLS.GET_MY_ALL_POSTS);
 };
@@ -69,4 +73,5 @@ export const postServices = {
   getPromoCodeApi,
   editCommentApi,
   deleteCommentApi,
+  getPostByIdApi,
 };
