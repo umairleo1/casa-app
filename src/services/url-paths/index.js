@@ -25,6 +25,7 @@ const API_URLS = {
   ADD_POST: '/api/post',
   DELETE_POST: '/api/post/',
   GET_MY_ALL_POSTS: '/api/post',
+  GET_POST_BY_ID: '/api/post/',
   GET_USER_ALL_POSTS: '/api/post/getByUserId/',
   ADD_COMMENT: '/api/comment/',
   EDIT_COMMENT: '/api/comment/',

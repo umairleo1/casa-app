@@ -23,12 +23,13 @@ export const styles = StyleSheet.create({
     lineHeight: 18,
     color: colors.pureBlack,
     fontWeight: 'bold',
+    marginBottom: 5,
   },
   message: {
     fontSize: RFValue(11),
     lineHeight: 14,
     color: colors.lightgrey,
-    marginTop: 5,
+    // marginTop: 5,
   },
   flatlistView: {
     flexDirection: 'row',
@@ -36,6 +37,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     // marginTop: 10,
     paddingVertical: 15,
+    height: 70,
   },
   flatlistView2: {
     flexDirection: 'row',
@@ -43,13 +45,16 @@ export const styles = StyleSheet.create({
     // backgroundColor: 'green',
     width: '70%',
     height: '100%',
-    overflow: 'hidden',
+    // overflow: 'hidden',
+    // backgroundColor: 'red',
   },
   flatlistView3: {
     marginLeft: 10,
     // backgroundColor: 'red',
     width: '70%',
     height: '100%',
+    // justifyContent: 'center',
+    // height: 50,
   },
   mainContainer: {
     // alignItems: 'center',

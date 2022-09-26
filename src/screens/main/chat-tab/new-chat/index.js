@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import {Text, View, SectionList, Image, TouchableOpacity} from 'react-native';
+import {Text, View, Image, TouchableOpacity, FlatList} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import Header from 'src/components/headerView';
@@ -7,67 +7,98 @@ import SearchInput from 'src/components/searchInput';
 import colors from 'src/utils/themes/global-colors';
 import {GroupIcon} from 'src/assets/svg/chat';
 import {useNavigation} from '@react-navigation/native';
+import {peopleServices} from 'src/services/people-services';
+import images from 'src/assets/images';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
+
+import AuthContext from 'src/utils/auth-context';
 
 export default function NewChat() {
   const navigation = useNavigation();
-  const Dummydata = [
-    {
-      title: 'A',
-      data: [
-        {
-          image: require('../../../../assets/images/chat/group.png'),
-          title: 'Alvarado',
-          subTitle: 'Stream test account',
-        },
-      ],
-    },
+  const authContext = React.useContext(AuthContext);
 
-    {
-      title: 'B',
-      data: [
-        {
-          image: require('../../../../assets/images/chat/group.png'),
-          title: 'Bomasa Lopez',
-          subTitle: 'Stream test account',
-        },
-        {
-          image: require('../../../../assets/images/chat/group.png'),
-          title: 'Bomasa Lopez',
-          subTitle: 'Stream test account',
-        },
-      ],
-    },
+  const [search, setSearch] = React.useState('');
+  const [loader, setLoader] = React.useState(false);
+  const [limit, setLimit] = React.useState({
+    currentPage: 1,
+    limit: 25,
+    availablePages: 1,
+  });
+  const [people, setPeople] = React.useState([]);
 
-    {
-      title: 'C',
-      data: [
-        {
-          image: require('../../../../assets/images/chat/group.png'),
-          title: 'Bomasa Lopez',
-          subTitle: 'Stream test account',
-        },
-        {
-          image: require('../../../../assets/images/chat/group.png'),
-          title: 'Bomasa Lopez',
-          subTitle: 'Stream test account',
-        },
-        {
-          image: require('../../../../assets/images/chat/group.png'),
-          title: 'Bomasa Lopez',
-          subTitle: 'Stream test account',
-        },
-      ],
-    },
-  ];
+  React.useEffect(() => {
+    let timeout = setTimeout(() => {
+      getUsers(search);
+    }, 300);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [search]);
+
+  const getUsers = async search => {
+    try {
+      setLoader(true);
+      const result = await peopleServices.findPeopleApi(
+        search,
+        '1',
+        limit.limit,
+        authContext?.userData?.user?._id,
+      );
+
+      // console.log('here are the peoples ', result, ' ', result.users.length);
+      setPeople(result?.users);
+      setLimit({...limit, availablePages: result?.totalPages});
+      setLoader(false);
+    } catch (error) {
+      setLoader(false);
+      console.log(error);
+    }
+  };
+
+  const loadMore = async () => {
+    setLimit({...limit, currentPage: limit.currentPage + 1});
+    try {
+      const result = await peopleServices.findPeopleApi(
+        search,
+        limit.currentPage + 1,
+        limit.limit,
+      );
+
+      setPeople([...people, ...result.users]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const Item = ({title}) => (
-    <View style={styles.item}>
-      <Image source={title.image} style={styles.listImage} />
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('GIFTED_CHAT', {
+          data: {
+            user: {
+              firstName: title?.firstName,
+              lastName: title?.lastName,
+              profileImage: title?.profileImage,
+            },
+          },
+          userId: title?._id,
+        })
+      }
+      // onPress={() => console.log(title)}
+      style={styles.item}>
+      <Image
+        source={
+          title?.profileImage ? {uri: title?.profileImage} : images.people
+        }
+        style={styles.listImage}
+      />
       <View style={styles.itemView}>
-        <Text style={styles.title}>{title.title}</Text>
-        <Text style={styles.subTitle}>{title.subTitle}</Text>
+        <Text style={styles.title}>
+          {title?.firstName + ' ' + title?.lastName}
+        </Text>
+        <Text style={styles.subTitle}>@{title?.userName}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   const ItemDivider = () => {
@@ -84,13 +115,18 @@ export default function NewChat() {
 
   return (
     <Header heading={'New Chat'} onPressBack={() => navigation.goBack()}>
-      <SectionList
-        sections={Dummydata}
+      <ActivityIndicator visible={loader} />
+      <FlatList
+        data={people}
         keyExtractor={(item, index) => item + index}
         renderItem={({item}) => <Item title={item} />}
-        renderSectionHeader={({section: {title}}) => (
-          <Text style={styles.header}>{title}</Text>
-        )}
+        // renderSectionHeader={({section: {title}}) => (
+        //   <Text style={styles.header}>{title}</Text>
+        // )}
+        onEndReached={() => {
+          limit.currentPage <= limit.availablePages && loadMore();
+        }}
+        onEndReachedThreshold={0.2}
         ListHeaderComponent={
           <>
             <View style={styles.Container}>
@@ -99,7 +135,7 @@ export default function NewChat() {
                 placeholderTextColor={colors.black}
                 icon={'search1'}
                 iconSize={24}
-                onChangeText={text => console.log(text)}
+                onChangeText={text => setSearch(text)}
               />
             </View>
 

@@ -64,6 +64,7 @@ export default function CasaVerseNavigator() {
       console.log('REmote notification clicked');
     } else {
       // Do something else with push notification
+      console.log('REmote notification not clicked');
     }
   };
 
@@ -93,21 +94,34 @@ export default function CasaVerseNavigator() {
       // }
       console.log('NOTIFICATION: ', notification);
 
-      notification?.title !== 'Casa-App' && navigation.navigate('CHAT_TAB');
+      if (notification?.userInteraction) {
+        notification?.data?.type === 'chat' &&
+          navigation.navigate('GIFTED_CHAT', {
+            data: {
+              user: {
+                firstName: notification?.data?.firstName,
+                lastName: notification?.data?.lastName,
+                profileImage: notification?.data?.picture,
+              },
+            },
+            userId: notification?.data?.userId,
+          });
+        (notification?.data?.type === 'like' ||
+          notification?.data?.type === 'comment') &&
+          navigation.navigate('COMMENTS', {postId: notification?.data?.id});
+      }
 
       notification?.channelId !== 'channel-id' &&
         PushNotification.localNotification({
           channelId: 'channel-id',
           foreground: true,
           ignoreInForeground: notification?.title === 'Casa-App' ? false : true,
-          userInteraction: true,
+          userInteraction: false,
           autoCancel: true,
           // bigText: 'notification.data.body',
           title: notification.title,
           // message: JSON.parse(notification.message).messages,
           message: notification.message,
-          // subText: 'notification.data.body',
-          // actions: '["Yes", "No"]',
         });
 
       // (required) Called when a remote is received or opened, or local notification is opened

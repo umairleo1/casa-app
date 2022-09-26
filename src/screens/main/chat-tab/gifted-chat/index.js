@@ -6,6 +6,7 @@ import {
   Image,
   ActivityIndicator,
   Keyboard,
+  Platform,
 } from 'react-native';
 import React, {useState, useCallback, useEffect} from 'react';
 import Header from 'src/components/headerView';
@@ -151,7 +152,7 @@ export default function GiftedChats() {
           marginHorizontal: 6,
           borderRadius: 32,
           borderTopColor: 'transparent',
-          marginBottom: 2,
+          marginBottom: Platform.OS === 'ios' ? 4 : 8,
         }}
       />
     );
@@ -208,11 +209,14 @@ export default function GiftedChats() {
           _id: authContext.userData?.user?._id,
         }}
         text={messageText}
+        multiline={true}
         textInputProps={{
           onFocus: () => setShowEmoji(false),
           onChangeText: text => {
             setMessageText(text);
           },
+          // textAlignVertical: 'top',
+          height: Platform.OS == 'ios' ? 50 : 70,
         }}
         renderInputToolbar={props => MessengerBarContainer(props)}
         renderBubble={props => renderBubble(props)}
@@ -228,6 +232,7 @@ export default function GiftedChats() {
         listViewProps={{
           onEndReachedThreshold: 0.3, // When the top of the content is within 3/10 of the visible length of the content
           onEndReached: () => loadMoreMessages(),
+          marginBottom: Platform.OS == 'ios' ? 30 : 50,
         }}
         renderSend={props => {
           return (

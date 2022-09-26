@@ -24,13 +24,18 @@ export default function Chat() {
   const [searchChat, setSearchChat] = React.useState('');
 
   useEffect(() => {
-    getChatList(searchChat);
+    let timeout = setTimeout(() => {
+      getChatList(searchChat);
+    }, 300);
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [isFocus, searchChat]);
 
   const getChatList = async searchChat => {
     try {
       const result = await chatServices.getChatListApi(searchChat);
-      console.log('Here is the chat list   ===>>>> ', result);
+      // console.log('Here is the chat list   ===>>>> ', result);
       setChatList(
         result
           .sort(function (a, b) {
@@ -80,6 +85,7 @@ export default function Chat() {
           style={{
             width: '30%',
             height: '100%',
+
             alignItems: 'center',
             // justifyContent: 'center',
           }}>

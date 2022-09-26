@@ -24,6 +24,11 @@ const PostView = ({item, onRefresh, setZoomPicModal, setProfile}) => {
   const [like, setLike] = useState(item?.isLiked);
   const [likeValue, setLikeValue] = React.useState(item?.postlikes);
 
+  const onRefreshed = () => {
+    onRefresh();
+    // setLike(!like);
+  };
+
   const likePost = async id => {
     try {
       const result = await postServices.likePostApi(id);
@@ -173,9 +178,10 @@ const PostView = ({item, onRefresh, setZoomPicModal, setProfile}) => {
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('COMMENTS', {
-              data: item,
-              render: onRefresh,
-              isLiked: like,
+              // data: item,
+              render: onRefreshed,
+              // isLiked: like,
+              postId: item?._id,
             })
           }
           style={styles.row}>
