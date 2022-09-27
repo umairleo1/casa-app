@@ -212,6 +212,14 @@ export default function CreateGroup() {
         }
         ItemSeparatorComponent={ItemDivider}
         contentContainerStyle={{paddingBottom: 10}}
+        ListEmptyComponent={
+          <>
+            <Text
+              style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
+              No Groups Members to Show
+            </Text>
+          </>
+        }
       />
     </Header>
   );

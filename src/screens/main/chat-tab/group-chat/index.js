@@ -14,6 +14,7 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {chatServices} from 'src/services/chat-services';
 import images from 'src/assets/images';
 import {KeyboardAwareListView} from 'react-native-keyboard-aware-scrollview';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function GroupChat() {
   const navigation = useNavigation();
@@ -21,7 +22,9 @@ export default function GroupChat() {
   const isFocus = useIsFocused();
   const [search, setSearch] = React.useState('');
   const [refreshing, setRefreshing] = React.useState(false);
+  const [isLoading, setisLoading] = React.useState(false);
   const [groupList, setGroupList] = React.useState([]);
+  const [selectedGroup, setSelectedGroup] = React.useState('');
 
   useEffect(() => {
     let timeout = setTimeout(() => {
@@ -42,6 +45,25 @@ export default function GroupChat() {
     } catch (error) {
       console.log(error);
       setRefreshing(false);
+    }
+  };
+
+  const exitGroup = async () => {
+    // console.log();
+    try {
+      setisLoading(true);
+      refRBSheet.current.close();
+      const [leaveGroup] = await Promise.all([
+        chatServices.leaveGroupApi(selectedGroup?._id),
+      ]);
+      console.log('Here ist he leve group ', leaveGroup);
+      setSelectedGroup('');
+      getChatGroups();
+      setisLoading(false);
+    } catch (error) {
+      console.log(error);
+
+      setisLoading(false);
     }
   };
 
@@ -116,7 +138,9 @@ export default function GroupChat() {
           <View style={styles.buttonsView}>
             <DefaultButton
               text={'Edit Group'}
-              onPress={() => refRBSheet.current.open()}
+              onPress={() => {
+                refRBSheet.current.open(), setSelectedGroup(item);
+              }}
               buttonStyle={{
                 borderWidth: 1.5,
                 borderColor: colors.buttonColor,
@@ -129,7 +153,13 @@ export default function GroupChat() {
             />
             <DefaultButton
               text={'Open Chat'}
-              onPress={() => navigation.navigate('GIFTED_CHAT')}
+              onPress={() =>
+                navigation.navigate('GIFTED_GROUP_CHAT', {
+                  data: {user: {groupName: item?.name}},
+                  usersId: item?.userIds?.map(item => item?._id),
+                  chatRoomId: item?._id,
+                })
+              }
               buttonStyle={{
                 borderWidth: 1.5,
                 backgroundColor: colors.buttonColor,
@@ -159,6 +189,7 @@ export default function GroupChat() {
 
   return (
     <View style={styles.Container}>
+      <ActivityIndicator visible={isLoading} />
       <SearchInput
         placeholder={'Search...'}
         placeholderTextColor={colors.black}
@@ -189,7 +220,7 @@ export default function GroupChat() {
             <>
               <Text
                 style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
-                No Groups to Sshow Yet
+                No Groups to Show Yet
               </Text>
             </>
           }
@@ -216,6 +247,7 @@ export default function GroupChat() {
         <MembersSheet
           rightText
           onPressBack={() => refRBSheet.current.close()}
+          onLeavePress={() => exitGroup()}
         />
       </RBSheet>
     </View>

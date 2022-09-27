@@ -27,6 +27,7 @@ export default function ChatTab() {
           tabBarLabelStyle: {
             // fontWeight: 'bold',
             fontSize: RFValue(14),
+            textTransform: 'none',
           },
 
           tabBarIndicatorStyle: {

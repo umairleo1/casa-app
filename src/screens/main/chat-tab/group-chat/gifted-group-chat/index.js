@@ -1,13 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ActivityIndicator,
-  Keyboard,
-  Platform,
-} from 'react-native';
+import {View, ActivityIndicator, Keyboard, Platform} from 'react-native';
 import React, {useState, useCallback, useEffect} from 'react';
 import Header from 'src/components/headerView';
 import {
@@ -24,16 +16,15 @@ import {styles} from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from 'src/utils/themes/global-colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useWebSockets} from 'src/utils/functions/useWebSockets';
+import {useGroupChat} from 'src/utils/functions/useGroupChat';
 import AuthContext from 'src/utils/auth-context';
-import {useRef} from 'react';
 import Emoji from 'src/components/emoji';
 import images from 'src/assets/images';
 
-export default function GiftedChats() {
+export default function GiftedGroupChat() {
   const navigation = useNavigation();
   const route = useRoute();
-  const ref = useRef();
+
   const [message, setMessages] = useState([]);
   const [connected, setConnected] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
@@ -105,12 +96,12 @@ export default function GiftedChats() {
             text: message?.post?.message,
             createdAt: message?.post?.createdAt,
             user: {
-              _id: message?.post?.postedByUser,
+              _id: message?.post?.postedByUser?._id,
               name:
-                route?.params?.data?.user?.firstName +
+                message?.post?.postedByUser?.firstName +
                 ' ' +
-                route?.params?.data?.user?.lastName,
-              avatar: route?.params?.data?.user?.profileImage,
+                message?.post?.postedByUser?.lastName,
+              avatar: message?.post?.postedByUser?.profileImage,
             },
           },
         ]),
@@ -118,14 +109,17 @@ export default function GiftedChats() {
     }
   };
 
-  const {send, getConversation} = useWebSockets({
+  const {send, getConversation} = useGroupChat({
     userId: authContext?.userData?.user?._id,
-    arrayOfOtherUsers: [route?.params?.userId],
+    arrayOfOtherUsers: route?.params?.usersId.filter(
+      e => e !== authContext?.userData?.user?._id,
+    ),
     enabled: Boolean(authContext?.userData?.user?._id),
     onConnected: scrollToBottom,
     receiveMsg: receiveMsg,
     setConnected,
     getChatList: route?.params?.getChatList,
+    chatRoomId: route?.params?.chatRoomId,
   });
 
   const onSend = useCallback((messages = []) => {
@@ -188,11 +182,7 @@ export default function GiftedChats() {
 
   return (
     <Header
-      heading={
-        route?.params?.data?.user?.firstName +
-        ' ' +
-        route?.params?.data?.user?.lastName
-      }
+      heading={route?.params?.data?.user?.groupName}
       rightImage={
         route?.params?.data?.user?.profileImage
           ? {uri: route?.params?.data?.user?.profileImage}

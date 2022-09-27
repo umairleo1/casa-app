@@ -10,7 +10,7 @@ import colors from 'src/utils/themes/global-colors';
 import images from 'src/assets/images';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 
-export default function MembersSheet({onPressBack, rightText}) {
+export default function MembersSheet({onPressBack, rightText, onLeavePress}) {
   const dummyData = [
     {
       name: 'Maria Sanchez',
@@ -86,7 +86,7 @@ export default function MembersSheet({onPressBack, rightText}) {
         <BottomSheetButton
           image={images.editGroupPhoto}
           text={'Leave Group'}
-          onPress={undefined}
+          onPress={onLeavePress}
         />
       </View>
     </View>

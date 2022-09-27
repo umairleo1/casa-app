@@ -124,6 +124,14 @@ export default function NewChat() {
           limit.currentPage <= limit.availablePages && loadMore();
         }}
         onEndReachedThreshold={0.2}
+        ListEmptyComponent={
+          <>
+            <Text
+              style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
+              No User Found
+            </Text>
+          </>
+        }
         ListHeaderComponent={
           <>
             <View style={styles.Container}>
