@@ -71,11 +71,6 @@ export default function CasaVerseNavigator() {
   //Must be outside of any component LifeCycle (such as `componentDidMount`).
   messaging().setBackgroundMessageHandler(async remoteMessage => {
     console.log('Message handled in the background!', remoteMessage);
-    // remoteMessage?.title !== 'Casa-App' && navigation.navigate('CHAT_TAB');
-    // const temp = JSON.parse(remoteMessage);
-    // console.log('hamzaalikhalid:', temp.type);
-    // console.log('hamzaalikhalid:', temp.messages);
-    // console.log('hamzaalikhalid:', temp.id);
   });
 
   PushNotification.configure({
@@ -86,15 +81,10 @@ export default function CasaVerseNavigator() {
 
     // (required) Called when a remote is received or opened, or local notification is opened
     onNotification: function (notification) {
-      // if (notification.userInteraction == false) {
-      //   const temp = JSON.parse(notification.message);
-      //   console.log('hamzaalikhalid:', temp.type);
-      //   console.log('hamzaalikhalid:', temp.messages);
-      //   console.log('hamzaalikhalid:', temp.id);
-      // }
       console.log('NOTIFICATION: ', notification);
 
       if (notification?.userInteraction) {
+        // setTimeout(() => {
         notification?.data?.type === 'chat' &&
           navigation.navigate('GIFTED_CHAT', {
             data: {
@@ -106,9 +96,17 @@ export default function CasaVerseNavigator() {
             },
             userId: notification?.data?.userId,
           });
+
+        notification?.data?.type === 'groupChat' &&
+          navigation.navigate('GIFTED_GROUP_CHAT', {
+            data: {user: {groupName: notification?.data?.groupName}},
+            usersId: notification?.data?.userIds.split('-'),
+            chatRoomId: notification?.data?.id,
+          });
         (notification?.data?.type === 'like' ||
           notification?.data?.type === 'comment') &&
           navigation.navigate('COMMENTS', {postId: notification?.data?.id});
+        // }, [2000]);
       }
 
       notification?.channelId !== 'channel-id' &&

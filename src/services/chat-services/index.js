@@ -13,7 +13,24 @@ const getChatListApi = search => {
   });
 };
 
+const getGroupChatListApi = search => {
+  return client.get(API_URLS.GET_GROUP_CHAT_LIST, {
+    params: {search: search},
+  });
+};
+
+const createGroupApi = obj => {
+  return client.post(API_URLS.CREATE_GROUP, obj);
+};
+
+const leaveGroupApi = id => {
+  return client.post(API_URLS.LEAVE_GROUP, {roomId: id});
+};
+
 export const chatServices = {
   getConversatioApi,
   getChatListApi,
+  createGroupApi,
+  getGroupChatListApi,
+  leaveGroupApi,
 };

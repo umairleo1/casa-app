@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import {postServices} from 'src/services/post-service';
 import {showMessage} from 'react-native-flash-message';
 import Clipboard from '@react-native-community/clipboard';
+import {onShare} from 'src/components/social-share';
 
 export default function PromoCode() {
   const navigation = useNavigation();
@@ -77,7 +78,13 @@ export default function PromoCode() {
         <Button
           backgroundColor={colors.buttonColor}
           text={'Invite People'}
-          onPress={() => fetchCopiedText()}
+          onPress={async () => {
+            await onShare({
+              title:
+                'Share this referral code with friends to invite then in Casa',
+              url: `Share this ${code} code with your friends to invite then in Casa.`,
+            });
+          }}
         />
       </View>
     </Header>

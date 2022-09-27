@@ -40,6 +40,9 @@ const API_URLS = {
   //Chat
   GET_CONVERSATION: '/api/chat/',
   GET_CHAT_LIST: '/api/chat/allChatList',
+  GET_GROUP_CHAT_LIST: '/api/chat/get-groups',
+  CREATE_GROUP: '/api/chat/create-group',
+  LEAVE_GROUP: '/api/chat/leave-group',
 };
 
 export {API_URLS};

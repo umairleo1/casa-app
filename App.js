@@ -22,6 +22,7 @@ const App = () => {
     flex: 1,
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+  const [selectedMember, setSelectedMember] = React.useState([]);
 
   LogBox.ignoreAllLogs(true);
 
@@ -29,7 +30,16 @@ const App = () => {
     // <ErrorBoundary>
     <Provider store={Store}>
       <AuthContext.Provider
-        value={{user, setUser, userData, setUserData, setChatRoom, chatRoom}}>
+        value={{
+          user,
+          setUser,
+          userData,
+          setUserData,
+          setChatRoom,
+          chatRoom,
+          selectedMember,
+          setSelectedMember,
+        }}>
         <SafeAreaView style={backgroundStyle}>
           <StatusBar
             barStyle={isDarkMode ? 'light-content' : 'dark-content'}

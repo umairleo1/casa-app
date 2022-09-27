@@ -18,7 +18,7 @@ import colors from 'src/utils/themes/global-colors';
 import AuthContext from 'src/utils/auth-context';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import EditProfileModal from 'src/components/edit-profile-menu';
+
 import images from 'src/assets/images';
 import {postServices} from 'src/services/post-service';
 import {showMessage} from 'react-native-flash-message';
@@ -44,7 +44,6 @@ export default function AddPost() {
   const [description, setDescription] = React.useState('');
 
   React.useEffect(() => {
-    // console.log(' UseEffect ', authContext?.userData?.user);
     route?.params?.myPost && setDescription(route?.params?.myPost?.description);
     route?.params?.myPost && setAddPost(route?.params?.myPost?.files);
     !route?.params?.myPost && refRBSheet?.current?.open();
@@ -218,7 +217,7 @@ export default function AddPost() {
         route?.params?.btn ? handleEditPost() : handleAddNewPost()
       }>
       <ActivityIndicator visible={isLoading} />
-      {/* <ScrollView> */}
+
       <KeyboardAwareScrollView>
         <UploadAddPost
           image={addPost?.uri ? {uri: addPost?.uri} : images.uploadImage}
@@ -273,29 +272,13 @@ export default function AddPost() {
             value={description}
           />
         </View>
-        {/* </ScrollView> */}
       </KeyboardAwareScrollView>
-      {/* <View style={styles.buttonView}>
-        <Button
-          backgroundColor={colors.buttonColor}
-          text={route?.params?.btn ? route?.params?.btn : 'Post'}
-          onPress={() =>
-            route?.params?.btn ? handleEditPost() : handleAddNewPost()
-          }
-        />
-      </View> */}
-      {/* <EditProfileModal
-        iconPress={() => setImageModal(false)}
-        visible={imageModal}
-        onPressGallery={() => imagePickerFromGallery()}
-        onPressPhoto={() => imagePickerFromCamera()}
-        title="Add Post From"
-      /> */}
+
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        height={150}
+        height={180}
         customStyles={{
           wrapper: {
             backgroundColor: `rgba(0, 0, 0, 0.2)`,

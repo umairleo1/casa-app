@@ -24,11 +24,13 @@ export const styles = StyleSheet.create({
     color: colors.pureBlack,
     fontWeight: 'bold',
     marginBottom: 5,
+    overflow: 'hidden',
   },
   message: {
     fontSize: RFValue(11),
     lineHeight: 14,
     color: colors.lightgrey,
+    overflow: 'hidden',
     // marginTop: 5,
   },
   flatlistView: {
@@ -38,6 +40,7 @@ export const styles = StyleSheet.create({
     // marginTop: 10,
     paddingVertical: 15,
     height: 70,
+    overflow: 'hidden',
   },
   flatlistView2: {
     flexDirection: 'row',

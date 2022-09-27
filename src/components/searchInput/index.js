@@ -16,26 +16,24 @@ export default function SearchInput({
   iconSize,
   editIcon,
   editIconSize,
-  placeholderTextColor,
   onPress,
   editable,
   editIconColor,
-  borderColor,
   disableColor,
 }) {
   return (
     <>
-      <View style={[styles.searchView, {borderColor: borderColor}]}>
+      <View style={[styles.searchView, {borderColor: colors.grey}]}>
         {icon && (
           <AntDesign
             name={icon}
             size={iconSize}
-            color={colors.black}
+            color={colors.grey}
             style={{padding: 10, marginLeft: 10}}
           />
         )}
         <TextInput
-          placeholderTextColor={placeholderTextColor}
+          placeholderTextColor={colors.grey}
           style={[styles.input, {color: disableColor}]}
           placeholder={placeholder}
           onChangeText={value => onChangeText(value)}

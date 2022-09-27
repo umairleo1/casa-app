@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 
 import colors from 'src/utils/themes/global-colors';
 import {
@@ -34,13 +34,21 @@ const AddPostBottomSheet = ({onPhotoPress, onVideoPress}) => (
         Upload Photo
       </Text>
     </TouchableOpacity>
-
+    <View
+      style={{
+        height: 0.5,
+        width: '90%',
+        backgroundColor: colors.grey,
+        marginVertical: 20,
+        opacity: 0.5,
+        alignSelf: 'center',
+      }}
+    />
     <TouchableOpacity
       style={{
         flexDirection: 'row',
         alignItems: 'center',
         marginHorizontal: 20,
-        marginTop: heightPercentageToDP(1.5),
       }}
       onPress={onVideoPress}>
       <Video />

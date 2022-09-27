@@ -3,7 +3,6 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {
   heightPercentageToDP,
   heightPercentageToDP as hp,
-  widthPercentageToDP,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 import colors from 'src/utils/themes/global-colors';
@@ -34,9 +33,8 @@ export const styles = StyleSheet.create({
   },
   crossIconView: {
     position: 'absolute',
-    alignSelf: 'flex-end',
-    marginTop: 8,
-    right: widthPercentageToDP(2),
+    right: -8,
+    top: -5,
   },
   item: {
     // backgroundColor: '#f9c2ff',
@@ -74,6 +72,7 @@ export const styles = StyleSheet.create({
     fontSize: RFValue(13),
     fontWeight: 'bold',
     marginHorizontal: wp(3),
-    color: colors.lightgrey,
+    marginVertical: 10,
+    color: '#7A7A7A',
   },
 });

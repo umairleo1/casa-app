@@ -36,7 +36,7 @@ export default function Chat() {
 
   const getChatList = async searchChat => {
     try {
-      setIsLoading(true);
+      setIsLoading(false);
       const result = await chatServices.getChatListApi(searchChat);
       // console.log('Here is the chat list   ===>>>> ', result);
       setChatList(

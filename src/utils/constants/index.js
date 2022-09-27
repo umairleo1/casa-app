@@ -52,6 +52,7 @@ export default {
 
   //Gifted Chat
   GIFTED_CHAT: 'GIFTED_CHAT',
+  GIFTED_GROUP_CHAT: 'GIFTED_GROUP_CHAT',
 
   //Likes Screen
   LIKES: 'LIKES',
