@@ -418,7 +418,7 @@ PODS:
     - react-native-config/App (= 1.4.6)
   - react-native-config/App (1.4.6):
     - React-Core
-  - react-native-create-thumbnail (1.6.0):
+  - react-native-create-thumbnail (1.6.3):
     - React-Core
   - react-native-image-picker (4.10.0):
     - React-Core
@@ -818,7 +818,7 @@ SPEC CHECKSUMS:
   React-jsinspector: bb2605f98aada5d81f3494690da3ef3b4ff3b716
   React-logger: 23a50ef4c18bf9adbb51e2c979318e6b3a2e44a1
   react-native-config: 7cd105e71d903104e8919261480858940a6b9c0e
-  react-native-create-thumbnail: c8c24f46000e855ced1ab9fbdcdfce57c32cf674
+  react-native-create-thumbnail: 94e68f6cc050a870f830352d1a924c1e8d38b52f
   react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-pager-view: da490aa1f902c9a5aeecf0909cc975ad0e92e53e
   react-native-safe-area-context: b456e1c40ec86f5593d58b275bd0e9603169daca
