@@ -5,6 +5,7 @@ import {
   widthPercentageToDP,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
+import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
 
 export const styles = StyleSheet.create({
@@ -28,6 +29,7 @@ export const styles = StyleSheet.create({
     fontSize: RFValue(12),
     textAlign: 'center',
     color: colors.lightgrey,
+    fontFamily: fonts.RobotoRegular,
   },
   mainContainer: {
     marginHorizontal: wp(3),
@@ -48,6 +50,7 @@ export const styles = StyleSheet.create({
     fontSize: RFValue(12),
     color: colors.black,
     textAlign: 'center',
+    fontFamily: fonts.RobotoRegular,
   },
   crossIconView: {
     position: 'absolute',
@@ -56,7 +59,8 @@ export const styles = StyleSheet.create({
     right: widthPercentageToDP(2),
   },
   buttonView: {
-    marginTop: hp(1),
+    // marginTop: hp(1),
     // backgroundColor: 'red',
+    paddingBottom: 20,
   },
 });

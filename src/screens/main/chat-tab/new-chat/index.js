@@ -148,7 +148,7 @@ export default function NewChat() {
               style={styles.GroupIconView}
               onPress={() => navigation.navigate('CREATE_GROUP')}>
               <GroupIcon />
-              <Text style={styles.text}>Create a group</Text>
+              <Text style={styles.text}>Create a cuartos</Text>
             </TouchableOpacity>
             <View style={styles.bottomLine} />
 

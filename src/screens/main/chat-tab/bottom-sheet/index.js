@@ -1,46 +1,48 @@
 /* eslint-disable react/prop-types */
-import {Text, View, FlatList, Image} from 'react-native';
+import {Text, View, FlatList, Image, Pressable} from 'react-native';
 import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import BottomSheetButton from 'src/components/bottom-sheet-buttons';
-import {CrossIcon, AddIcon} from 'src/assets/svg/chat';
+import {AddIcon} from 'src/assets/svg/chat';
 
 import {styles} from './styles';
 import colors from 'src/utils/themes/global-colors';
 import images from 'src/assets/images';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 
-export default function MembersSheet({onPressBack, rightText, onLeavePress}) {
-  const dummyData = [
-    {
-      name: 'Maria Sanchez',
-      image: require('../../../../assets/images/chat/group.png'),
-    },
-    {
-      name: 'Maria Sanchez',
-      image: require('../../../../assets/images/chat/group.png'),
-    },
-  ];
-
+export default function MembersSheet({
+  onPressBack,
+  rightText,
+  onLeavePress,
+  data,
+  onAddPress,
+  onEditName,
+  onPhotoPress,
+}) {
   const listItem = ({item}) => {
-    if (item.id == 'add-new') {
+    if (item?.id == 'add-new') {
       return (
         <View style={styles.groupView}>
-          <AddIcon />
+          <AddIcon onPress={onAddPress} />
           <Text style={styles.name}>Add Member</Text>
         </View>
       );
     }
     return (
-      <View style={styles.mainContainer}>
+      <Pressable style={styles.mainContainer}>
         <View style={styles.groupView}>
-          <Image source={item.image} style={styles.image} />
-          <View style={styles.crossIconView}>
-            <CrossIcon onPress={undefined} />
-          </View>
-          <Text style={styles.name}>{item.name}</Text>
+          <Image
+            source={
+              item?.profileImage ? {uri: item?.profileImage} : images.people
+            }
+            style={styles.image}
+          />
+
+          <Text style={styles.name}>
+            {item?.firstName + ' ' + item?.lastName || 'Name'}
+          </Text>
         </View>
-      </View>
+      </Pressable>
     );
   };
 
@@ -53,20 +55,25 @@ export default function MembersSheet({onPressBack, rightText, onLeavePress}) {
           color={colors.black}
           onPress={onPressBack}
         />
-        <Text style={styles.memberName}>Maria, Isabel, Mario, +9</Text>
+        <Text style={styles.memberName}>
+          {data?.userIds[0]?.firstName}, {data?.userIds[1]?.firstName}
+          {data?.userIds?.length > 2 && ', '}
+          {data?.userIds[3]?.firstName}
+          {data?.userIds?.length > 3 && `, +${data?.userIds?.length - 3}`}
+        </Text>
         {rightText && <Text style={styles.memberName}>{rightText}</Text>}
       </View>
-      <Text style={styles.membersCount}>11 Members</Text>
+      <Text style={styles.membersCount}>{data?.userIds?.length} Members</Text>
 
       <View>
         <FlatList
-          data={[...dummyData, {id: 'add-new'}]}
+          data={[...data?.userIds, {id: 'add-new'}]}
           horizontal
           renderItem={listItem}
           keyExtractor={item => item.id}
           contentContainerStyle={{
-            // backgroundColor: 'red',
-            // flex: 1,
+            zIndex: 1000,
+
             paddingTop: heightPercentageToDP(0.2),
           }}
           showsHorizontalScrollIndicator={false}
@@ -76,12 +83,12 @@ export default function MembersSheet({onPressBack, rightText, onLeavePress}) {
         <BottomSheetButton
           image={images.editGroupPhoto}
           text={'Edit Group Photo'}
-          onPress={undefined}
+          onPress={onPhotoPress}
         />
         <BottomSheetButton
           image={images.editGroupPhoto}
           text={'Edit Group Name'}
-          onPress={undefined}
+          onPress={onEditName}
         />
         <BottomSheetButton
           image={images.editGroupPhoto}
