@@ -28,9 +28,9 @@ export default function CommentInput({
   return (
     <>
       <View style={styles.mainView}>
-        <TouchableOpacity onPress={onPressEmoji}>
+        {/* <TouchableOpacity onPress={onPressEmoji}>
           <Emoji />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TextInput
           placeholderTextColor={colors.placeholderColor}
           style={styles.input}
