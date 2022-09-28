@@ -29,13 +29,15 @@ import AuthContext from 'src/utils/auth-context';
 import {useRef} from 'react';
 import Emoji from 'src/components/emoji';
 import images from 'src/assets/images';
-
+const textHeight = 19;
 export default function GiftedChats() {
   const navigation = useNavigation();
   const route = useRoute();
   const ref = useRef();
+  const [heightInput, setHeightInput] = useState(50);
   const [message, setMessages] = useState([]);
   const [connected, setConnected] = useState(false);
+  const [maxHeight, setMaxHeight] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [messageText, setMessageText] = useState('');
@@ -95,7 +97,17 @@ export default function GiftedChats() {
     //   ref.current.scrollToBottom({animated: true});
     // }, 2000);
   };
-
+  const heightSetter = text => {
+    const height = text.split('\n').length;
+    setHeightInput(height * textHeight);
+    if (heightInput > 475) {
+      setMaxHeight(true);
+    } else if (text.length > 475) {
+      setMaxHeight(true);
+    } else {
+      setMaxHeight(false);
+    }
+  };
   const receiveMsg = message => {
     {
       setMessages(previousMessages =>
@@ -133,6 +145,7 @@ export default function GiftedChats() {
     // setMessages(previousMessages =>
     //   GiftedChat.append(previousMessages, messages),
     // );
+    setMaxHeight(false);
     send(messages[0]?.text);
     setMessageText('');
   }, []);
@@ -214,9 +227,15 @@ export default function GiftedChats() {
           onFocus: () => setShowEmoji(false),
           onChangeText: text => {
             setMessageText(text);
+            heightSetter(text);
           },
+
           // textAlignVertical: 'top',
-          height: Platform.OS == 'ios' ? 50 : 70,
+          ...(messageText.length > 0 &&
+            messageText.length < 2 && {
+              height: null,
+            }),
+          ...(maxHeight && {height: 400}),
         }}
         renderInputToolbar={props => MessengerBarContainer(props)}
         renderBubble={props => renderBubble(props)}
