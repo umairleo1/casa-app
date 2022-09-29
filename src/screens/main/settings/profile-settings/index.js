@@ -240,10 +240,14 @@ export default function ProfileSetting() {
     setImageModal(false);
 
     ImagePicker.openPicker({
-      width: 300,
-      height: 400,
+      // width: 113,
+      // height: 113,
       cropping: true,
       includeBase64: true,
+      avoidEmptySpaceAroundImage: true,
+      // cropperCircleOverlay: true,
+      // compressImageMaxWidth: 113,
+      // compressImageMaxHeight: 113,
     })
       .then(image => {
         if (coverPhoto) {
@@ -262,65 +266,65 @@ export default function ProfileSetting() {
   const imagePickerFromCamera = async () => {
     setImageModal(false);
 
-    // const granted =
-    //   Platform.OS == 'ios' ||
-    //   (await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-    //     title: 'App Camera Permission',
-    //     message: 'App needs access to your camera',
-    //     buttonNeutral: 'Ask Me Later',
-    //     buttonNegative: 'Cancel',
-    //     buttonPositive: 'OK',
-    //   }));
-    // if (granted) {
-    //   if (!cameraIs) {
-    //     cameraIs = true;
+    const granted =
+      Platform.OS == 'ios' ||
+      (await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+        title: 'App Camera Permission',
+        message: 'App needs access to your camera',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      }));
+    if (granted) {
+      if (!cameraIs) {
+        cameraIs = true;
 
-    //     let options = {
-    //       mediaType: 'photo',
-    //       includeBase64: true,
-    //       quality: 0.5,
-    //     };
-    //     launchCamera(options, res => {
-    //       if (res.didCancel) {
-    //         cameraIs = false;
-    //       } else if (res.errorMessage) {
-    //         cameraIs = false;
-    //       } else {
-    //         if (res.assets) {
-    //           if (coverPhoto) {
-    //             setProfile({...profile, cover: res?.assets[0]?.uri});
-    //             updateCoverPicture(res.assets[0].base64);
-    //           } else {
-    //             setProfile({...profile, dp: res?.assets[0]?.uri});
-    //             updateProfilePicture(res.assets[0].base64);
-    //           }
-    //         }
-    //         cameraIs = false;
-    //       }
-    //     });
-    //   }
-    // }
+        let options = {
+          mediaType: 'photo',
+          includeBase64: true,
+          quality: 0.5,
+        };
+        launchCamera(options, res => {
+          if (res.didCancel) {
+            cameraIs = false;
+          } else if (res.errorMessage) {
+            cameraIs = false;
+          } else {
+            if (res.assets) {
+              if (coverPhoto) {
+                setProfile({...profile, cover: res?.assets[0]?.uri});
+                updateCoverPicture(res.assets[0].base64);
+              } else {
+                setProfile({...profile, dp: res?.assets[0]?.uri});
+                updateProfilePicture(res.assets[0].base64);
+              }
+            }
+            cameraIs = false;
+          }
+        });
+      }
+    }
 
-    ImagePicker.openCamera({
-      width: 300,
-      height: 400,
-      // cropping: true,
-      includeBase64: true,
-      compressImageQuality: 0.5,
-    })
-      .then(image => {
-        console.log('img from camera ', image);
-        if (coverPhoto) {
-          setProfile({...profile, cover: image?.path}); //uri
-          updateCoverPicture(image?.data); //base64
-        } else {
-          setProfile({...profile, dp: image?.path});
-          updateProfilePicture(image?.data);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // ImagePicker.openCamera({
+    //   width: 300,
+    //   height: 400,
+    //   // cropping: true,
+    //   // includeBase64: true,
+    //   compressImageQuality: 0.5,
+    // })
+    //   .then(image => {
+    //     console.log('img from camera ', image);
+    //     if (coverPhoto) {
+    //       setProfile({...profile, cover: image?.path}); //uri
+    //       updateCoverPicture(image?.data); //base64
+    //     } else {
+    //       setProfile({...profile, dp: image?.path});
+    //       updateProfilePicture(image?.data);
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   return (

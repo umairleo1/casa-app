@@ -15,7 +15,7 @@ import {chatServices} from 'src/services/chat-services';
 import images from 'src/assets/images';
 
 import moment from 'moment';
-import ActivityIndicator from 'src/components/loader/activity-indicator';
+import ActivityIndicatorr from 'src/components/loader/activity-indicator';
 
 export default function Chat() {
   const navigation = useNavigation();
@@ -121,7 +121,7 @@ export default function Chat() {
 
   return (
     <View style={styles.Container}>
-      <ActivityIndicator visible={isLoading} />
+      <ActivityIndicatorr visible={isLoading} />
       <SearchInput
         placeholder={'Search...'}
         placeholderTextColor={colors.black}
@@ -151,6 +151,11 @@ export default function Chat() {
             }}
           />
         }
+        // ListFooterComponent={
+        //   <>
+        //     <ActivityIndicator />
+        //   </>
+        // }
         ListEmptyComponent={
           <>
             <Text

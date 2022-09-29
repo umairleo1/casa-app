@@ -55,6 +55,7 @@ export default function BackgroundImageWithImage({
             <Image
               source={image ? {uri: image} : images.people}
               style={styles.roundView}
+              // resizeMode="stretch"
               onLoadStart={() => setProfileLoader(true)}
               onLoadEnd={() => setProfileLoader(false)}
             />
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   },
   roundView: {
     borderRadius: 100,
-    borderWidth: 5,
+    borderWidth: 2,
     borderColor: colors.whiteColor,
     width: 113,
     height: 113,
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignSelf: 'center',
-    borderWidth: 5,
+    // borderWidth: 5,
     borderColor: colors.whiteColor,
   },
   edit: {

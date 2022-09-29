@@ -74,7 +74,6 @@ export default function AddGroupName() {
         setIsLoading(true);
         const result = await chatServices.editGroupApi({
           name: groupName,
-          picture: route?.params?.groupPhoto || '',
           description: '',
           members: authContext?.selectedMember?.map(item => item?._id),
           chatRoomId: route?.params?.roomId,

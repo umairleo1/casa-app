@@ -82,17 +82,17 @@ export default function MembersSheet({
       <View style={styles.buttonView}>
         <BottomSheetButton
           image={images.editGroupPhoto}
-          text={'Edit Group Photo'}
+          text={'Edit Curato Photo'}
           onPress={onPhotoPress}
         />
         <BottomSheetButton
           image={images.editGroupPhoto}
-          text={'Edit Group Name'}
+          text={'Edit Curato Name'}
           onPress={onEditName}
         />
         <BottomSheetButton
           image={images.editGroupPhoto}
-          text={'Leave Group'}
+          text={'Leave Curato'}
           onPress={onLeavePress}
         />
       </View>
