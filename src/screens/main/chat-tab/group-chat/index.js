@@ -38,7 +38,6 @@ export default function GroupChat() {
   const [isLoading, setisLoading] = React.useState(false);
   const [groupList, setGroupList] = React.useState([]);
   const [selectedGroup, setSelectedGroup] = React.useState('');
-  const [groupPhoto, setGroupPhoto] = React.useState('');
 
   useEffect(() => {
     let timeout = setTimeout(() => {
@@ -64,7 +63,6 @@ export default function GroupChat() {
   };
 
   const exitGroup = async () => {
-    // console.log();
     try {
       setisLoading(true);
       refRBSheet.current.close();
@@ -72,12 +70,26 @@ export default function GroupChat() {
         chatServices.leaveGroupApi(selectedGroup?._id),
       ]);
       console.log('Here ist he leve group ', leaveGroup);
-      setSelectedGroup('');
       getChatGroups();
     } catch (error) {
       console.log(error);
-
       setisLoading(false);
+    }
+  };
+
+  const handleUpdateGroupPic = async pic => {
+    try {
+      setisLoading(true);
+      const result = await chatServices.editGroupApi({
+        picture: pic,
+        chatRoomId: selectedGroup?._id,
+      });
+      console.log('Here is the update group success ', result);
+      getChatGroups();
+      setisLoading(false);
+    } catch (error) {
+      setisLoading(false);
+      console.log(error);
     }
   };
 
@@ -98,8 +110,9 @@ export default function GroupChat() {
           cameraIs = false;
         } else {
           console.log('Selected from gallery ', res.assets);
-          setGroupPhoto(res?.assets[0]?.base64);
+
           refRBSheet.current.close();
+          handleUpdateGroupPic(res?.assets[0]?.base64);
           cameraIs = false;
         }
       });
@@ -111,42 +124,16 @@ export default function GroupChat() {
       <View style={styles.mainContainer}>
         <View style={styles.groupView}>
           <View style={{flexDirection: 'row'}}>
-            {item?.userIds[0]?.profileImage && (
-              <Image
-                source={
-                  item?.userIds[0]?.profileImage
-                    ? {uri: item?.userIds[0]?.profileImage}
-                    : images.people
-                }
-                style={styles.image}
-              />
-            )}
-            {item?.userIds[1]?.profileImage && (
-              <Image
-                source={
-                  item?.userIds[1]?.profileImage
-                    ? {uri: item?.userIds[1]?.profileImage}
-                    : images.people
-                }
-                style={[styles.image, {marginLeft: -40}]}
-              />
-            )}
-            {item?.userIds[2]?.profileImage && (
-              <Image
-                source={
-                  item?.userIds[1]?.profileImage
-                    ? {uri: item?.userIds[2]?.profileImage}
-                    : images.people
-                }
-                style={[styles.image, {marginLeft: -40}]}
-              />
-            )}
+            <Image
+              source={item?.picture ? {uri: item?.picture} : images.people}
+              style={styles.image}
+            />
           </View>
           <Text style={[styles.groupName, {marginVertical: 10}]}>
             {item?.name}
           </Text>
           <Text style={styles.groupText}>
-            {item?.userIds?.length + ' Friends in the Cuartos'}
+            {item?.userIds?.length + ' Friends in the Cuarto'}
           </Text>
           <View style={styles.groupImages}>
             {item?.userIds[0]?.profileImage && (
@@ -176,7 +163,7 @@ export default function GroupChat() {
           </View>
           <View style={styles.buttonsView}>
             <DefaultButton
-              text={'Edit Group'}
+              text={'Edit Curato'}
               onPress={() => {
                 refRBSheet.current.open(), setSelectedGroup(item);
               }}
@@ -239,6 +226,7 @@ export default function GroupChat() {
         onChangeText={text => setSearch(text)}
       />
       <KeyboardAwareListView
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -252,11 +240,11 @@ export default function GroupChat() {
           renderItem={listItem}
           keyExtractor={item => item._id}
           ItemSeparatorComponent={ItemDivider}
+          showsVerticalScrollIndicator={false}
           contentContainerStyle={{
             paddingBottom: hp(5),
             paddingTop: 10,
           }}
-          showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <>
               <Text
@@ -313,7 +301,6 @@ export default function GroupChat() {
               update: 'Update Cuartos Members',
               groupName: selectedGroup?.name,
               roomId: selectedGroup?._id,
-              groupPhoto: groupPhoto,
             });
           }}
         />

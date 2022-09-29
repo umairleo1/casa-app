@@ -12,6 +12,7 @@ import images from 'src/assets/images';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 import AuthContext from 'src/utils/auth-context';
+import fonts from 'src/utils/themes/fonts';
 
 export default function NewChat() {
   const navigation = useNavigation();
@@ -124,14 +125,6 @@ export default function NewChat() {
           limit.currentPage <= limit.availablePages && loadMore();
         }}
         onEndReachedThreshold={0.2}
-        ListEmptyComponent={
-          <>
-            <Text
-              style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
-              No User Found
-            </Text>
-          </>
-        }
         ListHeaderComponent={
           <>
             <View style={styles.Container}>
@@ -157,6 +150,28 @@ export default function NewChat() {
               <Text style={styles.text}>Create new contact</Text>
             </TouchableOpacity>
             <Text style={[styles.text2]}>On the platform</Text>
+          </>
+        }
+        ListFooterComponent={
+          <>
+            {limit.currentPage >= limit.availablePages && (
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 18,
+                  fontFamily: fonts.RobotoRegular,
+                }}>
+                No more users
+              </Text>
+            )}
+          </>
+        }
+        ListEmptyComponent={
+          <>
+            <Text
+              style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
+              No User Found
+            </Text>
           </>
         }
         ItemSeparatorComponent={ItemDivider}
