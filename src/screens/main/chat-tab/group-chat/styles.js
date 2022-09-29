@@ -36,6 +36,8 @@ export const styles = StyleSheet.create({
   groupImages: {
     flexDirection: 'row',
     paddingTop: hp(1),
+    justifyContent: 'center',
+    width: '100%',
   },
   groupImage: {
     borderRadius: 28 / 2,
@@ -51,5 +53,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     marginTop: hp(2.5),
     paddingBottom: hp(5),
+  },
+  textAvatar: {
+    color: colors.whiteColor,
+    fontSize: 11,
+    fontWeight: 'bold',
   },
 });
