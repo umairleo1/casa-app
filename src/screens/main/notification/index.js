@@ -95,13 +95,8 @@ export default function Notification() {
       navigation.navigate('VIEW_PROFILE', {
         id: item?.fromUser?._id,
       });
-    // item?.type == 'like' ||
-    //   (item.type == 'comment' &&
-    //     navigation.navigate('COMMENTS', {
-    //       data: item?.postId,
-
-    //       isLiked: true,
-    //     }));
+    (item?.type === 'like' || item?.type === 'comment') &&
+      navigation.navigate('COMMENTS', {postId: item?.postId?._id});
   };
 
   const ListItem = ({item}) => {
@@ -120,35 +115,11 @@ export default function Notification() {
             />
             <View style={styles.flatlistView3}>
               <View style={styles.flatlistView4}>
-                {/* <Image
-                  source={item?.picture ? {uri: item?.picture} : dummyImg}
-                  style={styles.notiImage}
-                /> */}
                 <Text style={styles.flatlistName}>{item?.title}</Text>
               </View>
               <Text style={styles.mail}>{item?.message}</Text>
               {item?.type == 'follow' && isFollow == false && (
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  {/* <TouchableOpacity
-                    style={{
-                      // width: 61,
-                      backgroundColor: colors.whiteColor,
-                      borderRadius: 3,
-                      borderColor: colors.buttonColor,
-                      borderWidth: 1,
-                      marginTop: 8,
-                      paddingHorizontal: 5,
-                      padding: 5,
-                    }}>
-                    <Text
-                      style={{
-                        color: colors.buttonColor,
-                        fontSize: RFValue(10),
-                      }}>
-                      Discrad
-                    </Text>
-                  </TouchableOpacity> */}
-
                   <TouchableOpacity
                     onPress={() => {
                       onPressFollowBtn(item), setIsFollow(!isFollow);

@@ -7,7 +7,7 @@ import colors from 'src/utils/themes/global-colors';
 import {CrossIcon} from 'src/assets/svg/chat';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 import {styles} from './styles';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {peopleServices} from 'src/services/people-services';
 import AuthContext from 'src/utils/auth-context';
 import images from 'src/assets/images';
@@ -16,6 +16,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 export default function CreateGroup() {
   const navigation = useNavigation();
+  const route = useRoute();
 
   const authContext = React.useContext(AuthContext);
 
@@ -27,9 +28,13 @@ export default function CreateGroup() {
     availablePages: 1,
   });
   const [people, setPeople] = React.useState([]);
-  // const [selectedMember, setSelectedMember] = React.useState([]);
+
   React.useEffect(() => {
-    authContext?.setSelectedMember([]);
+    // route?.params?.data &&
+    //   authContext?.setSelectedMember(route?.params?.data?.userIds);
+    return () => {
+      authContext?.setSelectedMember([]);
+    };
   }, []);
 
   React.useEffect(() => {
@@ -95,7 +100,7 @@ export default function CreateGroup() {
                 onPress={() =>
                   authContext?.setSelectedMember(
                     authContext?.selectedMember?.filter(
-                      value => value !== title,
+                      value => value?._id !== title?._id,
                     ),
                   )
                 }
@@ -111,15 +116,19 @@ export default function CreateGroup() {
   //section list
   const Item = ({title}) => (
     <TouchableOpacity
-      onPress={() => {
-        authContext?.selectedMember?.includes(title)
+      onPress={() =>
+        authContext?.selectedMember?.find(element => element?._id == title?._id)
+          ?._id == title?._id
           ? authContext?.setSelectedMember(
-              authContext?.selectedMember?.filter(value => value !== title),
+              authContext?.selectedMember?.filter(
+                value => value?._id !== title?._id,
+              ),
             )
-          : authContext?.setSelectedMember(prev => [...prev, title]);
-      }}
+          : authContext?.setSelectedMember(prev => [...prev, title])
+      }
       style={styles.item}>
-      {authContext?.selectedMember?.includes(title) ? (
+      {authContext?.selectedMember?.find(element => element?._id == title?._id)
+        ?._id == title?._id ? (
         <View
           style={[
             styles.listImage,
@@ -162,13 +171,22 @@ export default function CreateGroup() {
 
   return (
     <Header
-      heading={'Add Group Members'}
+      heading={route?.params?.title || 'Add Cuartos Members'}
       onPressBack={() => navigation.goBack()}
-      rightText={authContext?.selectedMember?.length > 1 && 'Create'}
+      rightText={
+        authContext?.selectedMember?.length > 1
+          ? route?.params?.title
+            ? 'Next'
+            : 'Create'
+          : null
+      }
       onPostPress={() =>
         navigation.navigate('ADD_GROUP_NAME', {
           selectedMember: authContext?.selectedMember,
           setSelectedMember: authContext?.setSelectedMember,
+          update: route?.params?.title,
+          groupName: route?.params?.groupName,
+          roomId: route?.params?.roomId,
         })
       }>
       <ActivityIndicator visible={loader} />

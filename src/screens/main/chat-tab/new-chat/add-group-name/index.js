@@ -11,7 +11,7 @@ import Header from 'src/components/headerView';
 import {styles} from './styles';
 import colors from 'src/utils/themes/global-colors';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import images from 'src/assets/images';
 
 import AuthContext from 'src/utils/auth-context';
@@ -21,18 +21,17 @@ import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function AddGroupName() {
   const navigation = useNavigation();
+  const route = useRoute();
   const authContext = useContext(AuthContext);
-  const [groupName, setGroupName] = React.useState('');
+  const [groupName, setGroupName] = React.useState(
+    route?.params?.groupName || '',
+  );
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleCreatePress = async () => {
-    console.log(
-      'xxxx ',
-      authContext?.selectedMember.map(item => item?._id),
-    );
     if (groupName == '') {
       showMessage({
-        message: 'Group Name is Required',
+        message: 'Cuartos Name is Required',
         type: 'danger',
         floating: true,
       });
@@ -46,6 +45,41 @@ export default function AddGroupName() {
           members: authContext?.selectedMember?.map(item => item?._id),
         });
         console.log('Here is the create group success ', result);
+        authContext.setSelectedMember([]);
+        navigation.navigate('CHAT_TAB');
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error);
+      }
+    }
+  };
+
+  const handleUpdatePress = async () => {
+    console.log('route?.params?.groupPhoto ', {
+      name: groupName,
+      picture: route?.params?.groupPhoto || '',
+      description: '',
+      members: authContext?.selectedMember?.map(item => item?._id),
+      chatRoomId: route?.params?.roomId,
+    });
+    if (groupName == '') {
+      showMessage({
+        message: 'Cuartos Name is Required to Update',
+        type: 'danger',
+        floating: true,
+      });
+    } else {
+      try {
+        setIsLoading(true);
+        const result = await chatServices.editGroupApi({
+          name: groupName,
+          picture: route?.params?.groupPhoto || '',
+          description: '',
+          members: authContext?.selectedMember?.map(item => item?._id),
+          chatRoomId: route?.params?.roomId,
+        });
+        console.log('Here is the update group success ', result);
         authContext.setSelectedMember([]);
         navigation.navigate('CHAT_TAB');
         setIsLoading(false);
@@ -79,7 +113,9 @@ export default function AddGroupName() {
             style={styles.crossIcon}
             onPress={() => {
               authContext?.setSelectedMember(
-                authContext?.selectedMember.filter(value => value !== title),
+                authContext?.selectedMember.filter(
+                  value => value?._id !== title?._id,
+                ),
               );
             }}>
             <Entypo
@@ -108,9 +144,17 @@ export default function AddGroupName() {
 
   return (
     <Header
-      heading={'Add Group Name'}
-      rightText={authContext?.selectedMember?.length > 1 && 'Create'}
-      onPostPress={() => handleCreatePress()}
+      heading={'Add Cuartos Name'}
+      rightText={
+        authContext?.selectedMember?.length > 1
+          ? route?.params?.update
+            ? 'Update'
+            : 'Create'
+          : null
+      }
+      onPostPress={() =>
+        !route?.params?.update ? handleCreatePress() : handleUpdatePress()
+      }
       onPressBack={() => navigation.goBack()}>
       <ActivityIndicator visible={isLoading} />
       <View style={styles.textInpiutView}>

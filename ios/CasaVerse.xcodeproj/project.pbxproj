@@ -113,6 +113,7 @@
 		CCD1131BE65F49F1A9C129F1 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		CE5C62E928BDF47200F27E67 /* CasaVerse.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = CasaVerse.entitlements; path = CasaVerse/CasaVerse.entitlements; sourceTree = "<group>"; };
 		CE5C62EC28BDF8A000F27E67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CEA16B1428E59DBF00A1D25E /* QBImagePicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = QBImagePicker.storyboard; path = "../node_modules/react-native-image-crop-picker/ios/QBImagePicker/QBImagePicker/QBImagePicker.storyboard"; sourceTree = "<group>"; };
 		EBB3220C88794D749E1C16D9 /* Roboto-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-MediumItalic.ttf"; path = "../src/utils/themes/fonts/Roboto-MediumItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -229,6 +230,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				CEA16B1428E59DBF00A1D25E /* QBImagePicker.storyboard */,
 				CE5C62EC28BDF8A000F27E67 /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* CasaVerse */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -661,7 +663,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.4;
+				MARKETING_VERSION = 0.2.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -694,7 +696,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.4;
+				MARKETING_VERSION = 0.2.6;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

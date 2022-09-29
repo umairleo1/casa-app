@@ -1,5 +1,12 @@
-import {FlatList, Image, RefreshControl, Text, View} from 'react-native';
-import React, {useEffect, useRef} from 'react';
+import {
+  FlatList,
+  Image,
+  Platform,
+  RefreshControl,
+  Text,
+  View,
+} from 'react-native';
+import React, {useContext, useEffect, useRef} from 'react';
 import SearchInput from 'src/components/searchInput';
 import colors from 'src/utils/themes/global-colors';
 import {styles} from './styles';
@@ -15,16 +22,23 @@ import {chatServices} from 'src/services/chat-services';
 import images from 'src/assets/images';
 import {KeyboardAwareListView} from 'react-native-keyboard-aware-scrollview';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
+import AuthContext from 'src/utils/auth-context';
+import {launchImageLibrary} from 'react-native-image-picker';
+
+let cameraIs = false;
 
 export default function GroupChat() {
   const navigation = useNavigation();
   const refRBSheet = useRef();
   const isFocus = useIsFocused();
+  const aurhContext = useContext(AuthContext);
+
   const [search, setSearch] = React.useState('');
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoading, setisLoading] = React.useState(false);
   const [groupList, setGroupList] = React.useState([]);
   const [selectedGroup, setSelectedGroup] = React.useState('');
+  const [groupPhoto, setGroupPhoto] = React.useState('');
 
   useEffect(() => {
     let timeout = setTimeout(() => {
@@ -42,6 +56,7 @@ export default function GroupChat() {
       console.log('Here ist he get group chat list ', result);
       setGroupList(result.reverse());
       setRefreshing(false);
+      setisLoading(false);
     } catch (error) {
       console.log(error);
       setRefreshing(false);
@@ -59,11 +74,35 @@ export default function GroupChat() {
       console.log('Here ist he leve group ', leaveGroup);
       setSelectedGroup('');
       getChatGroups();
-      setisLoading(false);
     } catch (error) {
       console.log(error);
 
       setisLoading(false);
+    }
+  };
+
+  const imagePickerFromGallery = () => {
+    if (!cameraIs) {
+      cameraIs = true;
+      let options = {
+        mediaType: 'mixed',
+        selectionLimit: 1,
+        includeBase64: true,
+        quality: 0.5,
+        videoQuality: Platform.OS == 'ios' ? 'low' : 'medium',
+      };
+      launchImageLibrary(options, res => {
+        if (res.didCancel) {
+          cameraIs = false;
+        } else if (res.errorMessage) {
+          cameraIs = false;
+        } else {
+          console.log('Selected from gallery ', res.assets);
+          setGroupPhoto(res?.assets[0]?.base64);
+          refRBSheet.current.close();
+          cameraIs = false;
+        }
+      });
     }
   };
 
@@ -107,13 +146,13 @@ export default function GroupChat() {
             {item?.name}
           </Text>
           <Text style={styles.groupText}>
-            {item?.userIds?.length + ' Friends in the Group'}
+            {item?.userIds?.length + ' Friends in the Cuartos'}
           </Text>
           <View style={styles.groupImages}>
             {item?.userIds[0]?.profileImage && (
               <Image
                 source={{uri: item?.userIds[0]?.profileImage}}
-                style={styles.groupImage}
+                style={[styles.groupImage, {marginLeft: wp(-2)}]}
               />
             )}
             {item?.userIds[1]?.profileImage && (
@@ -155,7 +194,9 @@ export default function GroupChat() {
               text={'Open Chat'}
               onPress={() =>
                 navigation.navigate('GIFTED_GROUP_CHAT', {
-                  data: {user: {groupName: item?.name}},
+                  data: {
+                    user: {groupName: item?.name, profileImage: item?.picture},
+                  },
                   usersId: item?.userIds?.map(item => item?._id),
                   chatRoomId: item?._id,
                 })
@@ -220,7 +261,7 @@ export default function GroupChat() {
             <>
               <Text
                 style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
-                No Groups to Show Yet
+                No Cuartos to Show Yet
               </Text>
             </>
           }
@@ -229,7 +270,7 @@ export default function GroupChat() {
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
-        closeOnPressMask={false}
+        closeOnPressMask={true}
         // height={300}
         customStyles={{
           wrapper: {
@@ -239,6 +280,7 @@ export default function GroupChat() {
             backgroundColor: colors.whiteColor,
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
+            marginBottom: 20,
           },
           draggableIcon: {
             backgroundColor: '#000',
@@ -248,6 +290,32 @@ export default function GroupChat() {
           rightText
           onPressBack={() => refRBSheet.current.close()}
           onLeavePress={() => exitGroup()}
+          data={selectedGroup}
+          onPhotoPress={() => {
+            imagePickerFromGallery();
+          }}
+          onAddPress={() => {
+            refRBSheet.current.close(),
+              aurhContext?.setSelectedMember(selectedGroup?.userIds);
+            navigation.navigate('CREATE_GROUP', {
+              data: selectedGroup,
+              title: 'Update Cuartos Members',
+              groupName: selectedGroup?.name,
+              roomId: selectedGroup?._id,
+            });
+          }}
+          onEditName={() => {
+            refRBSheet.current.close(),
+              aurhContext?.setSelectedMember(selectedGroup?.userIds);
+            navigation.navigate('ADD_GROUP_NAME', {
+              selectedMember: aurhContext?.selectedMember,
+              setSelectedMember: aurhContext?.setSelectedMember,
+              update: 'Update Cuartos Members',
+              groupName: selectedGroup?.name,
+              roomId: selectedGroup?._id,
+              groupPhoto: groupPhoto,
+            });
+          }}
         />
       </RBSheet>
     </View>

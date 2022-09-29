@@ -40,6 +40,7 @@ import MultiSelectPicker from 'src/components/multi-select-picker';
 import CustomPicker from 'src/components/paper-dropdown';
 import {getCountries, getStates} from 'src/utils/functions/location';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import ImagePicker from 'react-native-image-crop-picker';
 
 let cameraIs = false;
 
@@ -91,10 +92,6 @@ export default function ProfileSetting() {
   }, [focused]);
 
   useEffect(() => {
-    console.log(
-      'authContext?.userData?.user?.heritage ',
-      authContext?.userData?.user?.heritage,
-    );
     for (var i = 0; i < getCountries().length; i++) {
       DATA.push({label: getCountries()[i], value: i + 1});
     }
@@ -109,6 +106,16 @@ export default function ProfileSetting() {
       authContext?.userData?.user?.heritage.map(e => parseInt(e)),
     );
     setBio(authContext?.userData?.user?.bio);
+
+    return () => {
+      ImagePicker.clean()
+        .then(() => {
+          console.log('removed all tmp images from tmp directory');
+        })
+        .catch(e => {
+          alert(e);
+        });
+    };
   }, []);
 
   useEffect(() => {
@@ -231,74 +238,89 @@ export default function ProfileSetting() {
 
   const imagePickerFromGallery = () => {
     setImageModal(false);
-    if (!cameraIs) {
-      cameraIs = true;
-      let options = {
-        mediaType: 'photo',
-        selectionLimit: 1,
-        includeBase64: true,
-        quality: 0.5,
-      };
-      launchImageLibrary(options, res => {
-        if (res.didCancel) {
-          cameraIs = false;
-        } else if (res.errorMessage) {
-          cameraIs = false;
+
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+      includeBase64: true,
+    })
+      .then(image => {
+        if (coverPhoto) {
+          setProfile({...profile, cover: image?.path}); //uri
+          updateCoverPicture(image?.data); //base64
         } else {
-          if (coverPhoto) {
-            setProfile({...profile, cover: res?.assets[0]?.uri});
-            updateCoverPicture(res.assets[0].base64);
-          } else {
-            setProfile({...profile, dp: res?.assets[0]?.uri});
-            updateProfilePicture(res.assets[0].base64);
-          }
-          cameraIs = false;
+          setProfile({...profile, dp: image.path});
+          updateProfilePicture(image?.data);
         }
+      })
+      .catch(error => {
+        console.log(error);
       });
-    }
   };
 
   const imagePickerFromCamera = async () => {
     setImageModal(false);
 
-    const granted =
-      Platform.OS == 'ios' ||
-      (await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
-        title: 'App Camera Permission',
-        message: 'App needs access to your camera',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
-      }));
-    if (granted) {
-      if (!cameraIs) {
-        cameraIs = true;
+    // const granted =
+    //   Platform.OS == 'ios' ||
+    //   (await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+    //     title: 'App Camera Permission',
+    //     message: 'App needs access to your camera',
+    //     buttonNeutral: 'Ask Me Later',
+    //     buttonNegative: 'Cancel',
+    //     buttonPositive: 'OK',
+    //   }));
+    // if (granted) {
+    //   if (!cameraIs) {
+    //     cameraIs = true;
 
-        let options = {
-          mediaType: 'photo',
-          includeBase64: true,
-          quality: 0.5,
-        };
-        launchCamera(options, res => {
-          if (res.didCancel) {
-            cameraIs = false;
-          } else if (res.errorMessage) {
-            cameraIs = false;
-          } else {
-            if (res.assets) {
-              if (coverPhoto) {
-                setProfile({...profile, cover: res?.assets[0]?.uri});
-                updateCoverPicture(res.assets[0].base64);
-              } else {
-                setProfile({...profile, dp: res?.assets[0]?.uri});
-                updateProfilePicture(res.assets[0].base64);
-              }
-            }
-            cameraIs = false;
-          }
-        });
-      }
-    }
+    //     let options = {
+    //       mediaType: 'photo',
+    //       includeBase64: true,
+    //       quality: 0.5,
+    //     };
+    //     launchCamera(options, res => {
+    //       if (res.didCancel) {
+    //         cameraIs = false;
+    //       } else if (res.errorMessage) {
+    //         cameraIs = false;
+    //       } else {
+    //         if (res.assets) {
+    //           if (coverPhoto) {
+    //             setProfile({...profile, cover: res?.assets[0]?.uri});
+    //             updateCoverPicture(res.assets[0].base64);
+    //           } else {
+    //             setProfile({...profile, dp: res?.assets[0]?.uri});
+    //             updateProfilePicture(res.assets[0].base64);
+    //           }
+    //         }
+    //         cameraIs = false;
+    //       }
+    //     });
+    //   }
+    // }
+
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      // cropping: true,
+      includeBase64: true,
+      compressImageQuality: 0.5,
+    })
+      .then(image => {
+        console.log('img from camera ', image);
+        if (coverPhoto) {
+          setProfile({...profile, cover: image?.path}); //uri
+          updateCoverPicture(image?.data); //base64
+        } else {
+          setProfile({...profile, dp: image?.path});
+          updateProfilePicture(image?.data);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
