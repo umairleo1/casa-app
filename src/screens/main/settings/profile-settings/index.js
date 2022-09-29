@@ -91,10 +91,6 @@ export default function ProfileSetting() {
   }, [focused]);
 
   useEffect(() => {
-    console.log(
-      'authContext?.userData?.user?.heritage ',
-      authContext?.userData?.user?.heritage,
-    );
     for (var i = 0; i < getCountries().length; i++) {
       DATA.push({label: getCountries()[i], value: i + 1});
     }
