@@ -8325,6 +8325,11 @@
   "resolved" "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz"
   "version" "0.70.3"
 
+"react-native-image-crop-picker@^0.38.0":
+  "integrity" "sha512-FaLASXOP7R23pi20vMiVlXl0Y7cwTdl7y7yBqrlrsSH9gl9ibsU5y4mYWPYRbe8x9F/3zPGUE+1F0Gj/QF/peg=="
+  "resolved" "https://registry.npmjs.org/react-native-image-crop-picker/-/react-native-image-crop-picker-0.38.0.tgz"
+  "version" "0.38.0"
+
 "react-native-image-picker@^4.8.5":
   "integrity" "sha512-QNK4ZnFLD+BdiM1QL1jh9GUALhRXm3MV97crhnTCSMv50H6E4tq3ozgfyxF5uKz0cECbNkWswg4sjgqZKEJtww=="
   "resolved" "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.10.0.tgz"
@@ -8610,7 +8615,7 @@
     "whatwg-fetch" "^3.0.0"
     "ws" "^6.1.4"
 
-"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.70 || 1000.0.0", "react-native@^0.70.0", "react-native@>=0.20.0", "react-native@>=0.25.1", "react-native@>=0.33", "react-native@>=0.35", "react-native@>=0.42.0", "react-native@>=0.46.0", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.57.0", "react-native@>=0.58.4", "react-native@>=0.59", "react-native@>=0.59.0", "react-native@>=0.6.0", "react-native@>=0.60", "react-native@>=0.60.0", "react-native@>=0.61.0", "react-native@>=0.63.2", "react-native@>=0.65.0", "react-native@>0.57.0", "react-native@0.69.3":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.70 || 1000.0.0", "react-native@^0.70.0", "react-native@>=0.20.0", "react-native@>=0.25.1", "react-native@>=0.33", "react-native@>=0.35", "react-native@>=0.40.0", "react-native@>=0.42.0", "react-native@>=0.46.0", "react-native@>=0.50.0", "react-native@>=0.57", "react-native@>=0.57.0", "react-native@>=0.58.4", "react-native@>=0.59", "react-native@>=0.59.0", "react-native@>=0.6.0", "react-native@>=0.60", "react-native@>=0.60.0", "react-native@>=0.61.0", "react-native@>=0.63.2", "react-native@>=0.65.0", "react-native@>0.57.0", "react-native@0.69.3":
   "integrity" "sha512-SyGkcoEUa/BkO+wKVnv4OsnLSNfUM5zLNXS3iT/3eXjKX91/FKBH/nfR9BE1c60X5LQe/P5QYqr6WPX3TRSQkA=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.69.3.tgz"
   "version" "0.69.3"

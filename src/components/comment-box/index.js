@@ -14,7 +14,6 @@ export default function CommentBox({
 }) {
   return (
     <>
-      {console.log('ccccc ', value)}
       <View style={styles.textAreaContainer}>
         <TextInput
           placeholderTextColor={placeholderTextColor}
