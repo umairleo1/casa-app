@@ -149,30 +149,32 @@ export default function GroupChat() {
             {item?.userIds?.length + ' Friends in the Cuartos'}
           </Text>
           <View style={styles.groupImages}>
-            {item?.userIds[0]?.profileImage && (
-              <Image
-                source={{uri: item?.userIds[0]?.profileImage}}
-                style={[styles.groupImage, {marginLeft: wp(-2)}]}
-              />
-            )}
-            {item?.userIds[1]?.profileImage && (
-              <Image
-                source={{uri: item?.userIds[1]?.profileImage}}
-                style={[styles.groupImage, {marginLeft: wp(-2)}]}
-              />
-            )}
-            {item?.userIds[2]?.profileImage && (
-              <Image
-                source={{uri: item?.userIds[2]?.profileImage}}
-                style={[styles.groupImage, {marginLeft: -8}]}
-              />
-            )}
-            {item?.userIds[3]?.profileImage && (
-              <Image
-                source={{uri: item?.userIds[3]?.profileImage}}
-                style={[styles.groupImage, {marginLeft: -8}]}
-              />
-            )}
+            {item?.userIds?.slice(0, 3)?.map(ele => {
+              return (
+                <>
+                  <Image
+                    source={{uri: ele?.profileImage}}
+                    style={[styles.groupImage, {marginLeft: wp(-2)}]}
+                  />
+                </>
+              );
+            })}
+            {item?.userIds.length > 3 ? (
+              <View
+                style={[
+                  styles.groupImage,
+                  {
+                    marginLeft: wp(-2),
+                    backgroundColor: colors.buttonColor,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  },
+                ]}>
+                <Text style={styles.textAvatar}>
+                  {item?.userIds.length - 10}+
+                </Text>
+              </View>
+            ) : null}
           </View>
           <View style={styles.buttonsView}>
             <DefaultButton
