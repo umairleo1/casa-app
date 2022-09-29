@@ -6,7 +6,7 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import {Emoji} from 'src/assets/svg/emoji';
+
 import SendIcon from 'src/assets/svg/Common/left-arrow';
 
 export default function CommentInput({
@@ -16,7 +16,7 @@ export default function CommentInput({
   onBlur,
   type,
   editable,
-  onPressEmoji,
+
   onPressSend,
   onPressIn,
   value,
@@ -28,9 +28,9 @@ export default function CommentInput({
   return (
     <>
       <View style={styles.mainView}>
-        <TouchableOpacity onPress={onPressEmoji}>
+        {/* <TouchableOpacity onPress={onPressEmoji}>
           <Emoji />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TextInput
           placeholderTextColor={colors.placeholderColor}
           style={styles.input}
