@@ -56,4 +56,7 @@ export default {
 
   //Likes Screen
   LIKES: 'LIKES',
+
+  //Video Screen
+  VIDEO: 'VIDEO',
 };

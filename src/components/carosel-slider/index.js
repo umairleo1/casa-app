@@ -9,6 +9,7 @@ import {
   Dimensions,
   Pressable,
   Platform,
+  Image,
 } from 'react-native';
 import colors from 'src/utils/themes/global-colors';
 import {createThumbnail} from 'react-native-create-thumbnail';
@@ -16,13 +17,18 @@ import FastImage from 'react-native-fast-image';
 import Video from 'react-native-video';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useNavigation} from '@react-navigation/native';
+import convertToProxyURL from 'react-native-video-cache';
 // import VideoPlayer from 'react-native-video-player';
 
 const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = React.useState(false);
   const [thumbnail, setThumbNail] = React.useState('');
-  const [play, setPlay] = React.useState(false);
+  const [play, setPlay] = React.useState(true);
   const [isFullScreen, setIsFullScreen] = React.useState(false);
+  const [mute, setMute] = React.useState(true);
+
   const videoPlayer = useRef(null);
 
   React.useEffect(() => {
@@ -90,7 +96,7 @@ const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
                   resizeMode={'center'}
                   onFullScreen={true}
                   source={{
-                    uri: item?.url,
+                    uri: convertToProxyURL(item?.url),
                   }}
                   paused={true}
                   style={[
@@ -115,11 +121,14 @@ const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
                   backgroundColor: '#ebebeb',
                 }}>
                 <Video
-                  //  onEnd={onEnd}
+                  onEnd={() => setPlay(true)}
                   //   onLoad={onLoad}
-                  //  onLoadStart={onLoadStart}
+                  onLoadStart={() => {
+                    setPlay(false);
+                  }}
                   //   onProgress={onProgress}
                   //  paused={paused}
+                  muted={mute}
                   controls={false}
                   ref={videoPlayer}
                   resizeMode={'cover'}
@@ -128,7 +137,7 @@ const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
                   // onFullScreen={isFullScreen}
                   fullscreen={isFullScreen}
                   source={{
-                    uri: item?.url,
+                    uri: convertToProxyURL(item?.url),
                   }}
                   paused={play}
                   style={[
@@ -145,9 +154,13 @@ const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
                   }}
                   volume={10}
                 />
+
                 {play ? (
                   <FontAwesome
-                    onPress={() => setPlay(false)}
+                    onPress={() => {
+                      setMute(false);
+                      setPlay(false);
+                    }}
                     name={'play'}
                     size={18}
                     color={colors.whiteColor}
@@ -159,7 +172,9 @@ const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
                   />
                 ) : (
                   <FontAwesome
-                    onPress={() => setPlay(true)}
+                    onPress={() => {
+                      setPlay(true);
+                    }}
                     name={'pause'}
                     size={18}
                     color={colors.whiteColor}
@@ -171,7 +186,11 @@ const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
                   />
                 )}
                 <MaterialCommunityIcons
-                  onPress={() => setIsFullScreen(true)}
+                  onPress={() => {
+                    setPlay(false);
+                    setMute(true);
+                    navigation.navigate('VIDEO', {uri: item?.url});
+                  }}
                   name={'fullscreen'}
                   size={30}
                   color={colors.whiteColor}

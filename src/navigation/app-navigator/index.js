@@ -19,6 +19,7 @@ import AddGroupName from 'src/screens/main/chat-tab/new-chat/add-group-name';
 import GiftedChats from 'src/screens/main/chat-tab/gifted-chat';
 import Likes from 'src/screens/main/home/likes';
 import GiftedGroupChat from 'src/screens/main/chat-tab/group-chat/gifted-group-chat';
+import VideoScreen from 'src/screens/main/video-screen';
 
 const Stack = createStackNavigator();
 const {
@@ -37,6 +38,7 @@ const {
   GIFTED_CHAT,
   LIKES,
   GIFTED_GROUP_CHAT,
+  VIDEO,
 } = SCREEN;
 
 export default function AppNavigator() {
@@ -61,6 +63,7 @@ export default function AppNavigator() {
       <Stack.Screen name={GIFTED_CHAT} component={GiftedChats} />
       <Stack.Screen name={GIFTED_GROUP_CHAT} component={GiftedGroupChat} />
       <Stack.Screen name={LIKES} component={Likes} />
+      <Stack.Screen name={VIDEO} component={VideoScreen} />
     </Stack.Navigator>
   );
 }
