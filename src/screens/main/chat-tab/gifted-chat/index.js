@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Keyboard,
   Platform,
+  Dimensions,
 } from 'react-native';
 import React, {useState, useCallback, useEffect} from 'react';
 import Header from 'src/components/headerView';
@@ -270,9 +271,11 @@ export default function GiftedChats() {
               style={{
                 flexDirection: 'row',
                 width: '90%',
-                alignItems: 'center',
+                alignItems: 'flex-end',
               }}>
-              <Composer {...props} />
+              <View style={{width: '90%', marginRight: 10}}>
+                <Composer {...props} />
+              </View>
               <TouchableOpacity
                 onPress={() => {
                   Keyboard.dismiss(), setShowEmoji(!showEmoji);
@@ -281,6 +284,7 @@ export default function GiftedChats() {
                   size={18}
                   name={showEmoji ? 'close' : 'sticker-emoji'}
                   color={colors.placeholderColor}
+                  style={{bottom: Dimensions.get('window').height * 0.02}}
                 />
               </TouchableOpacity>
             </View>
