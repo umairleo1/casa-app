@@ -83,7 +83,11 @@ export default function Chat() {
             <Text style={styles.flatlistName}>
               {item?.firstName + ' ' + item?.lastName}
             </Text>
-            <Text style={styles.message}>{item?.lastMessage?.message}</Text>
+            <Text style={styles.message}>
+              {item?.lastMessage?.message.length > 40
+                ? item?.lastMessage?.message?.slice(0, 40)?.concat(' ...')
+                : item?.lastMessage?.message}
+            </Text>
           </View>
         </View>
         <View
@@ -130,9 +134,6 @@ export default function Chat() {
         onChangeText={text => setSearchChat(text)}
       />
 
-      {/* <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-        <Text style={{fontSize: 18}}>No Chats</Text>
-      </View> */}
       <FlatList
         data={chatList}
         renderItem={listItem}
@@ -151,11 +152,19 @@ export default function Chat() {
             }}
           />
         }
-        // ListFooterComponent={
-        //   <>
-        //     <ActivityIndicator />
-        //   </>
-        // }
+        ListFooterComponent={
+          <>
+            {chatList.length > 1 && (
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 16,
+                }}>
+                No More People
+              </Text>
+            )}
+          </>
+        }
         ListEmptyComponent={
           <>
             <Text

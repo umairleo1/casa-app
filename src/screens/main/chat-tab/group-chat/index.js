@@ -149,7 +149,9 @@ export default function GroupChat() {
             })}
             {item?.userIds.length > 3 ? (
               <TouchableOpacity
-                onPress={() => refRBSheet.current.open()}
+                onPress={() => {
+                  setSelectedGroup(item), refRBSheet.current.open();
+                }}
                 style={[
                   styles.groupImage,
                   {
@@ -255,6 +257,20 @@ export default function GroupChat() {
                 style={{textAlign: 'center', fontSize: 20, marginVertical: 50}}>
                 No Cuartos to Show Yet
               </Text>
+            </>
+          }
+          ListFooterComponent={
+            <>
+              {groupList.length > 1 && (
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 20,
+                    marginVertical: 50,
+                  }}>
+                  No More Cuarto
+                </Text>
+              )}
             </>
           }
         />
