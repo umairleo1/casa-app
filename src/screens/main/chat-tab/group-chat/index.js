@@ -4,6 +4,7 @@ import {
   Platform,
   RefreshControl,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useContext, useEffect, useRef} from 'react';
@@ -147,7 +148,8 @@ export default function GroupChat() {
               );
             })}
             {item?.userIds.length > 3 ? (
-              <View
+              <TouchableOpacity
+                onPress={() => refRBSheet.current.open()}
                 style={[
                   styles.groupImage,
                   {
@@ -158,9 +160,9 @@ export default function GroupChat() {
                   },
                 ]}>
                 <Text style={styles.textAvatar}>
-                  {item?.userIds.length - 10}+
+                  +{item?.userIds.length - 3}
                 </Text>
-              </View>
+              </TouchableOpacity>
             ) : null}
           </View>
           <View style={styles.buttonsView}>
