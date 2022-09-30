@@ -1,5 +1,11 @@
 /* eslint-disable no-unused-vars */
-import {View, ActivityIndicator, Keyboard, Platform} from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  Keyboard,
+  Platform,
+  Dimensions,
+} from 'react-native';
 import React, {useState, useCallback, useEffect} from 'react';
 import Header from 'src/components/headerView';
 import {
@@ -21,6 +27,7 @@ import AuthContext from 'src/utils/auth-context';
 import Emoji from 'src/components/emoji';
 import images from 'src/assets/images';
 
+const textHeight = 19;
 export default function GiftedGroupChat() {
   const navigation = useNavigation();
   const route = useRoute();
@@ -30,6 +37,8 @@ export default function GiftedGroupChat() {
   const [showEmoji, setShowEmoji] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [messageText, setMessageText] = useState('');
+  const [maxHeight, setMaxHeight] = useState(false);
+  const [heightInput, setHeightInput] = useState(50);
   const authContext = React.useContext(AuthContext);
 
   useEffect(() => {
@@ -87,6 +96,18 @@ export default function GiftedGroupChat() {
     // }, 2000);
   };
 
+  const heightSetter = text => {
+    const height = text.split('\n').length;
+    setHeightInput(height * textHeight);
+    if (heightInput > 475) {
+      setMaxHeight(true);
+    } else if (text.length > 475) {
+      setMaxHeight(true);
+    } else {
+      setMaxHeight(false);
+    }
+  };
+
   const receiveMsg = message => {
     {
       setMessages(previousMessages =>
@@ -127,6 +148,7 @@ export default function GiftedGroupChat() {
     // setMessages(previousMessages =>
     //   GiftedChat.append(previousMessages, messages),
     // );
+    setMaxHeight(false);
     send(messages[0]?.text);
     setMessageText('');
   }, []);
@@ -204,9 +226,15 @@ export default function GiftedGroupChat() {
           onFocus: () => setShowEmoji(false),
           onChangeText: text => {
             setMessageText(text);
+            heightSetter(text);
           },
+
           // textAlignVertical: 'top',
-          height: Platform.OS == 'ios' ? 50 : 70,
+          ...(messageText.length > 0 &&
+            messageText.length < 2 && {
+              height: null,
+            }),
+          ...(maxHeight && {height: 400}),
         }}
         renderInputToolbar={props => MessengerBarContainer(props)}
         renderBubble={props => renderBubble(props)}
@@ -241,9 +269,11 @@ export default function GiftedGroupChat() {
               style={{
                 flexDirection: 'row',
                 width: '90%',
-                alignItems: 'center',
+                alignItems: 'flex-end',
               }}>
-              <Composer {...props} />
+              <View style={{width: '90%', marginRight: 10}}>
+                <Composer {...props} />
+              </View>
               <TouchableOpacity
                 onPress={() => {
                   Keyboard.dismiss(), setShowEmoji(!showEmoji);
@@ -252,6 +282,7 @@ export default function GiftedGroupChat() {
                   size={18}
                   name={showEmoji ? 'close' : 'sticker-emoji'}
                   color={colors.placeholderColor}
+                  style={{bottom: Dimensions.get('window').height * 0.02}}
                 />
               </TouchableOpacity>
             </View>

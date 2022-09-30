@@ -59,8 +59,6 @@ export const styles = StyleSheet.create({
     right: widthPercentageToDP(2),
   },
   buttonView: {
-    // marginTop: hp(1),
-    // backgroundColor: 'red',
-    paddingBottom: 20,
+    // marginTop: 10,
   },
 });

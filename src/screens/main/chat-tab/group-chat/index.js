@@ -169,7 +169,7 @@ export default function GroupChat() {
           </View>
           <View style={styles.buttonsView}>
             <DefaultButton
-              text={'Edit Curato'}
+              text={'Edit Cuarto'}
               onPress={() => {
                 refRBSheet.current.open(), setSelectedGroup(item);
               }}
@@ -275,11 +275,12 @@ export default function GroupChat() {
           }
         />
       </KeyboardAwareListView>
+
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        // height={300}
+        height={330}
         customStyles={{
           wrapper: {
             backgroundColor: `rgba(0, 0, 0, 0.2)`,
@@ -288,7 +289,7 @@ export default function GroupChat() {
             backgroundColor: colors.whiteColor,
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
-            marginBottom: 20,
+            // marginBottom: 20,
           },
           draggableIcon: {
             backgroundColor: '#000',
@@ -307,7 +308,7 @@ export default function GroupChat() {
               aurhContext?.setSelectedMember(selectedGroup?.userIds);
             navigation.navigate('CREATE_GROUP', {
               data: selectedGroup,
-              title: 'Update Cuartos Members',
+              title: 'Update Members',
               groupName: selectedGroup?.name,
               roomId: selectedGroup?._id,
             });
@@ -318,7 +319,7 @@ export default function GroupChat() {
             navigation.navigate('ADD_GROUP_NAME', {
               selectedMember: aurhContext?.selectedMember,
               setSelectedMember: aurhContext?.setSelectedMember,
-              update: 'Update Cuartos Members',
+              update: 'Update Members',
               groupName: selectedGroup?.name,
               roomId: selectedGroup?._id,
             });

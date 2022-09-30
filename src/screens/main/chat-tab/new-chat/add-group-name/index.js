@@ -143,7 +143,7 @@ export default function AddGroupName() {
 
   return (
     <Header
-      heading={'Add Cuartos Name'}
+      heading={'Add Cuarto Name'}
       rightText={
         authContext?.selectedMember?.length > 1
           ? route?.params?.update
