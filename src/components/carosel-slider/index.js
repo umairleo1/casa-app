@@ -86,6 +86,11 @@ const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
                   backgroundColor: '#ebebeb',
                 }}>
                 <Video
+                  //  onEnd={onEnd}
+                  //   onLoad={onLoad}
+                  //  onLoadStart={onLoadStart}
+                  //   onProgress={onProgress}
+                  //  paused={paused}
                   ignoreSilentSwitch="ignore"
                   controls={true}
                   ref={videoPlayer}
@@ -119,6 +124,7 @@ const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
                 <Video
                   onEnd={() => setPlay(true)}
                   //   onLoad={onLoad}
+                  ignoreSilentSwitch="ignore"
                   onLoadStart={() => {
                     setPlay(false);
                   }}

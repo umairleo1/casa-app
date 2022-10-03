@@ -77,7 +77,7 @@ export default function Comments() {
 
   const addComment = async comment => {
     Keyboard.dismiss();
-
+    console.log('comment==>', comment);
     try {
       const result = await postServices.addCommentApi(route?.params?.postId, {
         commentText: comment,
@@ -308,6 +308,7 @@ export default function Comments() {
   };
 
   const editCommemt = async comment => {
+    console.log('commentEdit', comment);
     try {
       const result = await postServices.editCommentApi(selectedComment._id, {
         commentText: comment,
@@ -332,7 +333,7 @@ export default function Comments() {
 
     try {
       const result = await postServices.deleteCommentApi(selectedComment._id);
-      console.log(result);
+      console.log('result', result);
       // setPost(result?.post1);
       setComment(result?.post1?.comments);
       getPostByid(route?.params.postId);
@@ -395,6 +396,7 @@ export default function Comments() {
               placeholder={'write a comment...'}
               onPressEmoji={undefined}
               onPressSend={comment => {
+                console.log('commentIn put', comment);
                 !text ? addComment(comment) : editCommemt(comment);
               }}
               value={text}
