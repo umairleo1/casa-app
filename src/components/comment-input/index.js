@@ -22,6 +22,7 @@ export default function CommentInput({
   value,
 }) {
   const [comment, setComment] = React.useState('');
+
   React.useEffect(() => {
     setComment(value);
   }, [value]);
@@ -46,15 +47,13 @@ export default function CommentInput({
           onPressIn={onPressIn}
         />
         <View>
-          <TouchableOpacity onPress={onPressSend}>
-            <SendIcon
-              onPress={async () => {
-                await onPressSend(comment);
-                setComment('');
-              }}
-              height={26}
-              width={26}
-            />
+          <TouchableOpacity
+            disabled={!comment ? true : false}
+            onPress={async () => {
+              await onPressSend(comment);
+              setComment('');
+            }}>
+            <SendIcon height={26} width={26} />
           </TouchableOpacity>
         </View>
       </View>
