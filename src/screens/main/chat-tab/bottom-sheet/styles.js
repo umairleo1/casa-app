@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     paddingTop: hp(1),
     paddingBottom: wp(2),
     alignItems: 'center',
-    flex: 1,
+    // flex: 1,
   },
   image: {
     height: 63,

@@ -27,6 +27,7 @@ export default function Header({
   chatIcon,
   rightText,
   onPostPress,
+  addPost,
   description,
 }) {
   return (
@@ -76,14 +77,16 @@ export default function Header({
           <Image source={rightImage} style={styles.rightImage} />
         ) : (
           <TouchableOpacity
-            disabled={description == '' ? true : false}
+            disabled={addPost?.length > 0 || description != '' ? false : true}
             onPress={onPostPress}>
             <Text
               style={{
                 fontFamily: fonts.PoppinsBold,
                 fontSize: 16,
                 color:
-                  description == '' ? colors.placeholderColor : colors.black,
+                  addPost?.length > 0 || description != ''
+                    ? colors.black
+                    : colors.placeholderColor,
               }}>
               {rightText}
             </Text>

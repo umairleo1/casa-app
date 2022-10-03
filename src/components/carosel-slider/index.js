@@ -86,11 +86,7 @@ const RenderItem = ({item, data, setZoomPicModal, setProfile}) => {
                   backgroundColor: '#ebebeb',
                 }}>
                 <Video
-                  //  onEnd={onEnd}
-                  //   onLoad={onLoad}
-                  //  onLoadStart={onLoadStart}
-                  //   onProgress={onProgress}
-                  //  paused={paused}
+                  ignoreSilentSwitch="ignore"
                   controls={true}
                   ref={videoPlayer}
                   resizeMode={'center'}

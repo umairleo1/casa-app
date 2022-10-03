@@ -83,10 +83,11 @@ export default function Chat() {
             <Text style={styles.flatlistName}>
               {item?.firstName + ' ' + item?.lastName}
             </Text>
-            <Text style={styles.message}>
-              {item?.lastMessage?.message.length > 40
+            <Text numberOfLines={1} style={[styles.message]}>
+              {item?.lastMessage?.message}
+              {/* {item?.lastMessage?.message.length > 40
                 ? item?.lastMessage?.message?.slice(0, 40)?.concat(' ...')
-                : item?.lastMessage?.message}
+                : item?.lastMessage?.message} */}
             </Text>
           </View>
         </View>

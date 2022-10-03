@@ -30,6 +30,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import colors from 'src/utils/themes/global-colors';
 import AuthContext from 'src/utils/auth-context';
+import {useNavigation} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -89,6 +90,7 @@ const HomeStack = () => {
 
 export default function BottomTab() {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const userToken = useSelector(state => state?.auth?.userToken);
   const authContext = useContext(AuthContext);
   const getUserData = async () => {
@@ -106,14 +108,6 @@ export default function BottomTab() {
   React.useState(() => {
     getUserData();
   }, []);
-
-  function HomeScreen() {
-    return (
-      <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-        <Text style={{textAlign: 'center', fontSize: 25}}>Coming Soon</Text>
-      </View>
-    );
-  }
 
   return (
     <Tab.Navigator
@@ -174,12 +168,20 @@ export default function BottomTab() {
         name="Profile"
         component={ProfileStack}
         options={{
-          unmountOnBlur: false,
+          unmountOnBlur: true,
+
           tabBarLabel: 'Profile',
+
           tabBarIcon: ({color, size, focused}) => (
             <ProfileIcon color={focused ? colors.buttonColor : '#BBBBBB'} />
             // <Ionicons name="person" color={color} size={size} />
           ),
+        }}
+        listeners={{
+          tabPress: ({preventDefault}) => {
+            preventDefault();
+            navigation.navigate('Profile', {id: undefined});
+          },
         }}
       />
     </Tab.Navigator>

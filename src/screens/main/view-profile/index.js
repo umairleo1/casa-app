@@ -61,7 +61,7 @@ export default function ViewProfile({route}) {
     /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
 
   const getProfile = async () => {
-    // console.log('route?.params?.id', route?.params?.id);
+    console.log('route?.params?.id', route?.params?.id);
     try {
       const res = await profileServices.getUserProfileById(
         route?.params?.id || '',

@@ -87,9 +87,8 @@ export const useGroupChat = ({
     ref.current = socket;
 
     return () => {
-      socket.emit('markUnread', {roomId: roomDataIdRef.current}),
-        socket.disconnect(),
-        getChatList();
+      // socket.emit('markUnread', {roomId: roomDataIdRef.current}),
+      socket.disconnect(), getChatList();
     };
   }, [userId]);
 

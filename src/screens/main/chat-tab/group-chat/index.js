@@ -1,6 +1,7 @@
 import {
   FlatList,
   Image,
+  PermissionsAndroid,
   Platform,
   RefreshControl,
   Text,
@@ -24,7 +25,7 @@ import images from 'src/assets/images';
 import {KeyboardAwareListView} from 'react-native-keyboard-aware-scrollview';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
 import AuthContext from 'src/utils/auth-context';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 
 let cameraIs = false;
 
@@ -53,7 +54,7 @@ export default function GroupChat() {
     // console.log();
     try {
       const result = await chatServices.getGroupChatListApi(search);
-      console.log('Here ist he get group chat list ', result);
+      console.log('Here ist he get group list ', result);
       setGroupList(result.reverse());
       setRefreshing(false);
       setisLoading(false);
@@ -117,6 +118,44 @@ export default function GroupChat() {
           cameraIs = false;
         }
       });
+    }
+  };
+
+  const imagePickerFromCamera = async () => {
+    const granted =
+      Platform.OS == 'ios' ||
+      (await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+        title: 'App Camera Permission',
+        message: 'App needs access to your camera',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      }));
+    if (granted) {
+      if (!cameraIs) {
+        cameraIs = true;
+
+        let options = {
+          mediaType: 'photo',
+          includeBase64: true,
+          quality: 0.5,
+        };
+        launchCamera(options, res => {
+          if (res.didCancel) {
+            cameraIs = false;
+          } else if (res.errorMessage) {
+            cameraIs = false;
+          } else {
+            if (res.assets) {
+              console.log('reee', res.assets);
+
+              refRBSheet.current.close();
+              handleUpdateGroupPic(res?.assets?.[0]?.base64);
+            }
+            cameraIs = false;
+          }
+        });
+      }
     }
   };
 
@@ -280,7 +319,7 @@ export default function GroupChat() {
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={true}
-        height={330}
+        height={370}
         customStyles={{
           wrapper: {
             backgroundColor: `rgba(0, 0, 0, 0.2)`,
@@ -312,6 +351,9 @@ export default function GroupChat() {
               groupName: selectedGroup?.name,
               roomId: selectedGroup?._id,
             });
+          }}
+          onPhotoCameraPress={() => {
+            imagePickerFromCamera();
           }}
           onEditName={() => {
             refRBSheet.current.close(),
