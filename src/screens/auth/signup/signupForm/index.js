@@ -24,8 +24,7 @@ export default function SignupForm({setShowSignUp}) {
 
   const navigation = useNavigation();
 
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/;
 
   const handleConfirm = date => {
     setSelectedDate(date);
@@ -65,7 +64,7 @@ export default function SignupForm({setShowSignUp}) {
           .min(8)
           .matches(
             passwordRegex,
-            'Atleast have one digit, one captial letter and one special character.',
+            'Atleast have one digit, one capital letter and one special character.',
           ),
       }),
     [],

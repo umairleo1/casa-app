@@ -116,99 +116,87 @@ export default function AddPost() {
 
   const handleAddNewPost = async () => {
     Keyboard.dismiss();
-    if (description == '') {
-      showMessage({
-        message: 'Post and description must not be empty',
-        type: 'danger',
-      });
-    } else {
-      let formdata = new FormData();
-      try {
-        setIsLoading(true);
 
-        for (var i = 0; i < addPost.length; i++) {
-          formdata.append('myFiles', {
-            uri: addPost[i]?.uri,
-            type: addPost[i]?.type,
-            name:
-              addPost[i]?.type == 'video/mp4'
-                ? 'video.mp4'
-                : addPost[i]?.fileName,
-          });
-        }
+    let formdata = new FormData();
+    try {
+      setIsLoading(true);
 
-        formdata.append('description', description);
-
-        const result = await postServices.addPost(formdata);
-        console.log('Success add post ', result);
-        setAddPost([]);
-        setDescription('');
-        navigation.navigate('Home');
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-        setIsLoading(false);
-        showMessage({
-          message: error.errMsg,
-          type: 'danger',
+      for (var i = 0; i < addPost.length; i++) {
+        formdata.append('myFiles', {
+          uri: addPost[i]?.uri,
+          type: addPost[i]?.type,
+          name:
+            addPost[i]?.type == 'video/mp4'
+              ? 'video.mp4'
+              : addPost[i]?.fileName,
         });
       }
+
+      formdata.append('description', description);
+
+      const result = await postServices.addPost(formdata);
+      console.log('Success add post ', result);
+      setAddPost([]);
+      setDescription('');
+      navigation.navigate('Home');
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+      showMessage({
+        message: error.errMsg,
+        type: 'danger',
+      });
     }
   };
 
   const handleEditPost = async () => {
-    if (description == '') {
+    let formdata = new FormData();
+    try {
+      setIsLoading(true);
+      //add new files
+      for (var i = 0; i < addPost.length; i++) {
+        formdata.append('myFiles', {
+          uri: addPost[i]?.uri,
+          type: addPost[i]?.type,
+          name:
+            addPost[i]?.type == 'video/mp4'
+              ? 'video.mp4'
+              : addPost[i]?.fileName,
+        });
+      }
+
+      // remove files
+      formdata.append(
+        'removeFiles',
+        JSON.stringify([...removed.map(e => e.name)]),
+      );
+      // JSON.stringify
+      formdata.append('description', description);
+      console.log(formdata);
+      const result = await postServices.editPost(
+        route?.params?.myPost?._id,
+        formdata,
+      );
+      console.log('Success edit post ', result);
+      setAddPost([]);
+      setDescription('');
+      navigation.goBack();
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
       showMessage({
-        message: 'Post and description must not be empty',
+        message: error.errMsg,
         type: 'danger',
       });
-    } else {
-      let formdata = new FormData();
-      try {
-        setIsLoading(true);
-        //add new files
-        for (var i = 0; i < addPost.length; i++) {
-          formdata.append('myFiles', {
-            uri: addPost[i]?.uri,
-            type: addPost[i]?.type,
-            name:
-              addPost[i]?.type == 'video/mp4'
-                ? 'video.mp4'
-                : addPost[i]?.fileName,
-          });
-        }
-
-        // remove files
-        formdata.append(
-          'removeFiles',
-          JSON.stringify([...removed.map(e => e.name)]),
-        );
-        // JSON.stringify
-        formdata.append('description', description);
-        console.log(formdata);
-        const result = await postServices.editPost(
-          route?.params?.myPost?._id,
-          formdata,
-        );
-        console.log('Success edit post ', result);
-        setAddPost([]);
-        setDescription('');
-        navigation.goBack();
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error);
-        setIsLoading(false);
-        showMessage({
-          message: error.errMsg,
-          type: 'danger',
-        });
-        navigation.goBack();
-      }
+      navigation.goBack();
     }
   };
 
   return (
     <Header
+      addPost={addPost}
       description={description}
       onPressBack={() => navigation.goBack()}
       heading={'Add Post'}

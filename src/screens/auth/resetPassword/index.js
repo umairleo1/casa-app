@@ -29,8 +29,7 @@ export default function ResetPassword() {
   const [confirmPasswordVisible, setConfirmPasswordVisible] =
     React.useState(true);
 
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/;
 
   const resetPasswordSchema = useMemo(
     () =>
@@ -40,7 +39,7 @@ export default function ResetPassword() {
           .min(8)
           .matches(
             passwordRegex,
-            'Atleast have one digit, one captial letter and one special character.',
+            'Atleast have one digit, one capital letter and one special character.',
           ),
         confirmPassword: Yup.string()
           .required('Confirm Password is required')

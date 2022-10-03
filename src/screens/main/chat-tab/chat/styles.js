@@ -56,9 +56,6 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
     // backgroundColor: 'red',
     width: '70%',
-    height: '100%',
-    // justifyContent: 'center',
-    // height: 50,
   },
   mainContainer: {
     // alignItems: 'center',

@@ -10,6 +10,8 @@ import colors from 'src/utils/themes/global-colors';
 import images from 'src/assets/images';
 import {heightPercentageToDP} from 'react-native-responsive-screen';
 
+import AuthContext from 'src/utils/auth-context';
+
 export default function MembersSheet({
   onPressBack,
   rightText,
@@ -18,15 +20,20 @@ export default function MembersSheet({
   onAddPress,
   onEditName,
   onPhotoPress,
+  onPhotoCameraPress,
 }) {
+  const authContext = React.useContext(AuthContext);
+
   const listItem = ({item}) => {
     if (item?.id == 'add-new') {
-      return (
-        <View style={styles.groupView}>
-          <AddIcon onPress={onAddPress} />
-          <Text style={styles.name}>Add Member</Text>
-        </View>
-      );
+      if (data?.chatInitiator == authContext?.userData?.user?._id) {
+        return (
+          <View style={styles.groupView}>
+            <AddIcon onPress={onAddPress} />
+            <Text style={styles.name}>Add Member</Text>
+          </View>
+        );
+      }
     }
     return (
       <Pressable style={styles.mainContainer}>
@@ -73,7 +80,7 @@ export default function MembersSheet({
           renderItem={listItem}
           keyExtractor={item => item.id}
           contentContainerStyle={{
-            zIndex: 1000,
+            // zIndex: 1000,
 
             paddingTop: heightPercentageToDP(0.2),
           }}
@@ -83,14 +90,21 @@ export default function MembersSheet({
       <View style={styles.buttonView}>
         <BottomSheetButton
           image={images.editGroupPhoto}
-          text={'Edit Cuarto Photo'}
+          text={'Edit Cuarto Photo from Gallery'}
           onPress={onPhotoPress}
         />
         <BottomSheetButton
           image={images.editGroupPhoto}
-          text={'Edit Cuarto Name'}
-          onPress={onEditName}
+          text={'Edit Cuarto Photo form Camera'}
+          onPress={onPhotoCameraPress}
         />
+        {data?.chatInitiator == authContext?.userData?.user?._id && (
+          <BottomSheetButton
+            image={images.editGroupPhoto}
+            text={'Edit Cuarto Name'}
+            onPress={onEditName}
+          />
+        )}
         <BottomSheetButton
           image={images.editGroupPhoto}
           text={'Leave Cuarto'}

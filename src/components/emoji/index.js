@@ -3,14 +3,17 @@ import React from 'react';
 
 import EmojiSelector from 'react-native-emoji-selector';
 
-export default function Emoji({onEmojiSelected}) {
+export default function Emoji({setMessageText}) {
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: '#fff',
       }}>
-      <EmojiSelector showSearchBar={false} onEmojiSelected={onEmojiSelected} />
+      <EmojiSelector
+        showSearchBar={false}
+        onEmojiSelected={emoji => setMessageText(msg => `${msg}${emoji}`)}
+      />
     </View>
   );
 }

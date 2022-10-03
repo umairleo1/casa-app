@@ -274,17 +274,16 @@ export default function GiftedGroupChat() {
               <View style={{width: '90%', marginRight: 10}}>
                 <Composer {...props} />
               </View>
-              <TouchableOpacity
+
+              <Icon
                 onPress={() => {
                   Keyboard.dismiss(), setShowEmoji(!showEmoji);
-                }}>
-                <Icon
-                  size={18}
-                  name={showEmoji ? 'close' : 'sticker-emoji'}
-                  color={colors.placeholderColor}
-                  style={{bottom: Dimensions.get('window').height * 0.02}}
-                />
-              </TouchableOpacity>
+                }}
+                size={18}
+                name={showEmoji ? 'close' : 'sticker-emoji'}
+                color={colors.placeholderColor}
+                style={{bottom: Dimensions.get('window').height * 0.02}}
+              />
             </View>
           );
         }}

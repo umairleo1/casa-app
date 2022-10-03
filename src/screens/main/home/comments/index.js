@@ -32,6 +32,7 @@ import FlatListCustom from 'src/components/carosel-slider';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {ZoomPicModal} from 'src/components/zoom-pic-modal';
 import fonts from 'src/utils/themes/fonts';
+import ActivityIndicator from 'src/components/loader/activity-indicator';
 
 export default function Comments() {
   const navigation = useNavigation();
@@ -48,12 +49,12 @@ export default function Comments() {
   const [zoomPicModal, setZoomPicModal] = useState(false);
   const [profile, setProfile] = useState({dp: '', cover: ''});
   const [comment, setComment] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   var expression =
     /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
 
   React.useEffect(() => {
-    console.log(route?.params.data);
     getPostByid(route?.params.postId);
   }, []);
 
@@ -95,15 +96,18 @@ export default function Comments() {
 
   const likePost = async () => {
     try {
+      // setIsLoading(true);
       const result = await postServices.likePostApi(route?.params?.postId);
       console.log(result);
       route?.params?.render();
+      // setIsLoading(false);
     } catch (error) {
       console.log(error);
       showMessage({
         message: error.errMsg,
         type: 'danger',
       });
+      setIsLoading(false);
     }
   };
 
@@ -363,6 +367,7 @@ export default function Comments() {
       leftImage={images.blueAppLogo}
       rightIcon
       onPressBack={() => navigation.goBack()}>
+      <ActivityIndicator visible={isLoading} />
       <KeyboardAwareScrollView style={{flex: 1}}>
         <View style={{flex: 0.9}}>
           <View style={styles.bottomLine} />
