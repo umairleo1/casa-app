@@ -171,7 +171,7 @@ export default function CreateGroup() {
 
   return (
     <Header
-      heading={route?.params?.title || 'Add Cuartos Members'}
+      heading={route?.params?.title || 'Add Cuarto Members'}
       onPressBack={() => navigation.goBack()}
       rightText={
         authContext?.selectedMember?.length > 1

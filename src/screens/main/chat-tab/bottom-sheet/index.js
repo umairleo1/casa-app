@@ -69,6 +69,7 @@ export default function MembersSheet({
         <FlatList
           data={[...data?.userIds, {id: 'add-new'}]}
           horizontal
+          style={{marginVertical: 10}}
           renderItem={listItem}
           keyExtractor={item => item.id}
           contentContainerStyle={{
@@ -82,17 +83,17 @@ export default function MembersSheet({
       <View style={styles.buttonView}>
         <BottomSheetButton
           image={images.editGroupPhoto}
-          text={'Edit Curato Photo'}
+          text={'Edit Cuarto Photo'}
           onPress={onPhotoPress}
         />
         <BottomSheetButton
           image={images.editGroupPhoto}
-          text={'Edit Curato Name'}
+          text={'Edit Cuarto Name'}
           onPress={onEditName}
         />
         <BottomSheetButton
           image={images.editGroupPhoto}
-          text={'Leave Curato'}
+          text={'Leave Cuarto'}
           onPress={onLeavePress}
         />
       </View>

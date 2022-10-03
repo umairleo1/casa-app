@@ -4,8 +4,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import colors from 'src/utils/themes/global-colors';
 import Chat from './chat';
 import GroupChat from './group-chat';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+
 import {useNavigation} from '@react-navigation/native';
 
 export default function ChatTab() {
@@ -22,11 +21,11 @@ export default function ChatTab() {
         sceneContainerStyle={{backgroundColor: 'transparent'}}
         screenOptions={{
           tabBarStyle: {
-            height: hp(6),
+            // height: hp(6),
           },
           tabBarLabelStyle: {
             // fontWeight: 'bold',
-            fontSize: RFValue(14),
+            fontSize: 16,
             textTransform: 'none',
           },
 

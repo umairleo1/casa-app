@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
     marginHorizontal: wp(3),
-    paddingBottom: 10,
+    // paddingBottom: 10,
+    marginVertical: 10,
+    alignItems: 'center',
   },
 });

@@ -71,7 +71,7 @@ export default function GiftedChats() {
       );
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 800);
     }
   }, [connected]);
 

@@ -141,20 +141,16 @@ export default function NewChat() {
               style={styles.GroupIconView}
               onPress={() => navigation.navigate('CREATE_GROUP')}>
               <GroupIcon />
-              <Text style={styles.text}>Create a cuartos</Text>
+              <Text style={styles.text}>Create a cuarto</Text>
             </TouchableOpacity>
             <View style={styles.bottomLine} />
 
-            <TouchableOpacity style={styles.GroupIconView2} onPress={undefined}>
-              <GroupIcon />
-              <Text style={styles.text}>Create new contact</Text>
-            </TouchableOpacity>
             <Text style={[styles.text2]}>On the platform</Text>
           </>
         }
         ListFooterComponent={
           <>
-            {limit.currentPage >= limit.availablePages && (
+            {limit.currentPage >= limit.availablePages && people?.length > 1 && (
               <Text
                 style={{
                   textAlign: 'center',
