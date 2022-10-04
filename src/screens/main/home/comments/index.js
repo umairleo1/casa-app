@@ -94,31 +94,33 @@ export default function Comments() {
     }
   };
 
-  const likePost = async () => {
-    try {
-      // setIsLoading(true);
-      const result = await postServices.likePostApi(route?.params?.postId);
-      console.log(result);
-      route?.params?.render();
-      // setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-      showMessage({
-        message: error.errMsg,
-        type: 'danger',
-      });
-      setIsLoading(false);
-    }
-  };
-
   if (post == null) return;
   const ListItem = ({item}) => {
-    console.log(item);
     const [like, setLike] = React.useState(
       post?.post?.isLiked || post?.post1?.isLiked,
     );
 
     const [likeValue, setLikeValue] = React.useState(post?.postlikes);
+
+    const likePost = async () => {
+      try {
+        // setIsLoading(true);
+        const result = await postServices.likePostApi(route?.params?.postId);
+        console.log(result);
+        setLike(!like);
+        !like ? setLikeValue(likeValue + 1) : setLikeValue(likeValue - 1);
+        route?.params?.render();
+        // setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        showMessage({
+          message: error.errMsg,
+          type: 'danger',
+        });
+        setIsLoading(false);
+      }
+    };
+
     return (
       <View style={styles.mainContainer}>
         <View style={styles.flatlistView}>
@@ -174,11 +176,8 @@ export default function Comments() {
           <View style={styles.row}>
             <TouchableOpacity
               onPress={() => {
-                !like
-                  ? setLikeValue(likeValue + 1)
-                  : setLikeValue(likeValue - 1),
-                  setLike(!like),
-                  likePost();
+                // setLike(!like),
+                likePost();
               }}>
               <Heart color={like ? colors.danger : '#BBB'} />
             </TouchableOpacity>

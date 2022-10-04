@@ -40,6 +40,7 @@ export default function GiftedGroupChat() {
   const [maxHeight, setMaxHeight] = useState(false);
   const [heightInput, setHeightInput] = useState(50);
   const authContext = React.useContext(AuthContext);
+  const [containerHeight, setContainerHeight] = useState(44);
 
   useEffect(() => {
     setIsLoading(true);
@@ -71,6 +72,10 @@ export default function GiftedGroupChat() {
       }, 1000);
     }
   }, [connected]);
+
+  useEffect(() => {
+    messageText.length > 5 ? setContainerHeight(100) : setContainerHeight(44);
+  }, [messageText]);
 
   const RenderLoader = () => (
     <View
@@ -151,6 +156,7 @@ export default function GiftedGroupChat() {
     setMaxHeight(false);
     send(messages[0]?.text);
     setMessageText('');
+    setContainerHeight(44);
   }, []);
 
   const loadMoreMessages = () => {};
@@ -250,7 +256,7 @@ export default function GiftedGroupChat() {
         listViewProps={{
           onEndReachedThreshold: 0.3, // When the top of the content is within 3/10 of the visible length of the content
           onEndReached: () => loadMoreMessages(),
-          marginBottom: Platform.OS == 'ios' ? 30 : 50,
+          // marginBottom: Platform.OS == 'ios' ? 30 : 50,
         }}
         renderSend={props => {
           return (
@@ -287,6 +293,8 @@ export default function GiftedGroupChat() {
             </View>
           );
         }}
+        // minInputToolbarHeight={containerHeight}
+        // minComposerHeight={containerHeight}
       />
       {isLoading && <RenderLoader />}
       {showEmoji && <Emoji setMessageText={setMessageText} />}

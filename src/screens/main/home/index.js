@@ -143,17 +143,6 @@ export default function Home() {
         keyExtractor={item => item._id}
         showsVerticalScrollIndicator={false}
         initialNumToRender={limit.limit}
-        // ListHeaderComponent={
-        //   <>
-        //     <PostStatus
-        //       onPressPostButton={() => handlePost()}
-        //       postButtonText={'Post Status'}
-        //       onChangeText={setStatus}
-        //       value={status}
-        //       onPressPlus={() => navigation.navigate('ADD_POST')}
-        //     />
-        //   </>
-        // }
         renderItem={({item}) => (
           <PostView
             setZoomPicModal={setZoomPicModal}

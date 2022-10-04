@@ -26,6 +26,7 @@ const ZoomPicModal = ({visible = false, iconPress, image, imageStyle}) => {
         />
       )}
       <FastImage
+        resizeMode="contain"
         onLoadStart={() => setIsLoading(true)}
         onLoadEnd={() => setIsLoading(false)}
         source={image ? {uri: image} : images.people}
