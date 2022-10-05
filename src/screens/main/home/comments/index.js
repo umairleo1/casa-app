@@ -77,7 +77,7 @@ export default function Comments() {
 
   const addComment = async comment => {
     Keyboard.dismiss();
-    console.log('comment==>', comment);
+    // console.log('comment==>', comment);
     try {
       const result = await postServices.addCommentApi(route?.params?.postId, {
         commentText: comment,
@@ -85,6 +85,7 @@ export default function Comments() {
       console.log('comment added ', result);
       setComment(result?.post1?.comments);
       route?.params?.render();
+      // scrollToBottom();
     } catch (error) {
       console.log(error);
       showMessage({
@@ -364,7 +365,7 @@ export default function Comments() {
   return (
     <Header
       leftImage={images.blueAppLogo}
-      rightIcon
+      // rightIcon
       onPressBack={() => navigation.goBack()}>
       <ActivityIndicator visible={isLoading} />
       <KeyboardAwareScrollView style={{flex: 1}}>
@@ -372,6 +373,7 @@ export default function Comments() {
           <View style={styles.bottomLine} />
           <FlatList
             data={comment}
+            // inverted
             ref={ref}
             onContentSizeChange={() => scrollToBottom()}
             ListHeaderComponent={<ListItem item={post?.post} />}
