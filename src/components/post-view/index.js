@@ -24,28 +24,20 @@ const PostView = ({item, onRefresh, setZoomPicModal, setProfile}) => {
   const [like, setLike] = useState(item?.isLiked);
   const [likeValue, setLikeValue] = React.useState(item?.postlikes);
 
-  React.useEffect(() => {
-    setLikeValue(item?.postlikes || item?.likes?.length);
-    console.log('changed ', item?.isLiked);
-    setLike(item?.isLiked);
-    // setLike(!like);
-  }, [item?.isLiked]);
-
   const onRefreshed = () => {
     onRefresh();
+    setLike(!like);
+    !like ? setLikeValue(likeValue + 1) : setLikeValue(likeValue - 1);
   };
 
   const likePost = async id => {
     try {
       const result = await postServices.likePostApi(id);
       console.log(result);
-      // !like ? setLikeValue(likeValue + 1) : setLikeValue(likeValue - 1);
+
       setLikeValue(result?.post1?.likes?.length);
 
-      // await getAllFeeds();
-      {
-        result?.post1 && setLike(!like);
-      }
+      result?.post1 && setLike(!like);
     } catch (error) {
       console.log(error);
       showMessage({

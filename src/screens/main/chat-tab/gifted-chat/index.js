@@ -8,6 +8,7 @@ import {
   Keyboard,
   Platform,
   Dimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
 import React, {useState, useCallback, useEffect} from 'react';
 import Header from 'src/components/headerView';
@@ -30,6 +31,7 @@ import AuthContext from 'src/utils/auth-context';
 import {useRef} from 'react';
 import Emoji from 'src/components/emoji';
 import images from 'src/assets/images';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 const textHeight = 19;
 export default function GiftedChats() {
   const navigation = useNavigation();
@@ -43,6 +45,7 @@ export default function GiftedChats() {
   const [isLoading, setIsLoading] = useState(false);
   const [messageText, setMessageText] = useState('');
   const authContext = React.useContext(AuthContext);
+  const [containerHeight, setContainerHeight] = useState(44);
 
   useEffect(() => {
     setIsLoading(true);
@@ -74,6 +77,10 @@ export default function GiftedChats() {
       }, 800);
     }
   }, [connected]);
+
+  useEffect(() => {
+    messageText.length > 5 ? setContainerHeight(100) : setContainerHeight(44);
+  }, [messageText]);
 
   const RenderLoader = () => (
     <View
@@ -149,11 +156,12 @@ export default function GiftedChats() {
     setMaxHeight(false);
     send(messages[0]?.text);
     setMessageText('');
+    setContainerHeight(44);
   }, []);
 
   const loadMoreMessages = () => {};
 
-  const MessengerBarContainer = props => {
+  const MessengerBarContainer = (props, height) => {
     return (
       <InputToolbar
         {...props}
@@ -167,6 +175,8 @@ export default function GiftedChats() {
           borderRadius: 32,
           borderTopColor: 'transparent',
           marginBottom: Platform.OS === 'ios' ? 4 : 8,
+          // height: 230,
+          // minHeight: 230,
         }}
       />
     );
@@ -176,6 +186,7 @@ export default function GiftedChats() {
     return (
       <Bubble
         {...props}
+        containerStyle={{backgroundColor: 'red'}}
         wrapperStyle={{
           left: {
             backgroundColor: '#F2F2F2',
@@ -214,6 +225,7 @@ export default function GiftedChats() {
       }
       onPressBack={() => navigation.goBack()}>
       <GiftedChat
+        ref={ref}
         messages={message}
         alwaysShowSend={true}
         onSend={messages => {
@@ -231,14 +243,14 @@ export default function GiftedChats() {
             heightSetter(text);
           },
 
-          // textAlignVertical: 'top',
+          textAlignVertical: 'top',
           ...(messageText.length > 0 &&
             messageText.length < 2 && {
               height: null,
             }),
-          ...(maxHeight && {height: 400}),
+          ...(maxHeight && {height: 200}),
         }}
-        renderInputToolbar={props => MessengerBarContainer(props)}
+        renderInputToolbar={props => MessengerBarContainer(props, 230)}
         renderBubble={props => renderBubble(props)}
         // loadEarlier={true}
         // isLoadingEarlier={false}
@@ -252,7 +264,8 @@ export default function GiftedChats() {
         listViewProps={{
           onEndReachedThreshold: 0.3, // When the top of the content is within 3/10 of the visible length of the content
           onEndReached: () => loadMoreMessages(),
-          marginBottom: Platform.OS == 'ios' ? 30 : 50,
+
+          // marginBottom: Platform.OS == 'ios' ? 30 : 50,
         }}
         renderSend={props => {
           return (
@@ -272,6 +285,7 @@ export default function GiftedChats() {
                 flexDirection: 'row',
                 width: '90%',
                 alignItems: 'flex-end',
+                // backgroundColor: 'red',
               }}>
               <View style={{width: '90%', marginRight: 10}}>
                 <Composer {...props} />
@@ -289,7 +303,13 @@ export default function GiftedChats() {
             </View>
           );
         }}
+        // minInputToolbarHeight={containerHeight}
+        // minComposerHeight={containerHeight}
+        // {...(messageText.length > 5 && {
+        //   minComposerHeight: containerHeight,
+        // })}
       />
+
       {isLoading && <RenderLoader />}
       {showEmoji && <Emoji setMessageText={setMessageText} />}
     </Header>
