@@ -33,6 +33,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
 import {ZoomPicModal} from 'src/components/zoom-pic-modal';
 import fonts from 'src/utils/themes/fonts';
 import ActivityIndicator from 'src/components/loader/activity-indicator';
+import {widthPercentageToDP} from 'react-native-responsive-screen';
 
 export default function Comments() {
   const navigation = useNavigation();
@@ -56,7 +57,7 @@ export default function Comments() {
 
   React.useEffect(() => {
     getPostByid(route?.params.postId);
-  }, []);
+  }, [route?.params.postId]);
 
   const getPostByid = async id => {
     try {
@@ -77,14 +78,15 @@ export default function Comments() {
 
   const addComment = async comment => {
     Keyboard.dismiss();
-    console.log('comment==>', comment);
+    // console.log('comment==>', comment);
     try {
       const result = await postServices.addCommentApi(route?.params?.postId, {
         commentText: comment,
       });
       console.log('comment added ', result);
       setComment(result?.post1?.comments);
-      route?.params?.render();
+      route?.params?.render !== 'No' && route?.params?.render();
+      // scrollToBottom();
     } catch (error) {
       console.log(error);
       showMessage({
@@ -109,7 +111,7 @@ export default function Comments() {
         console.log(result);
         setLike(!like);
         !like ? setLikeValue(likeValue + 1) : setLikeValue(likeValue - 1);
-        route?.params?.render();
+        route?.params?.render !== 'No' && route?.params?.render();
         // setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -271,13 +273,22 @@ export default function Comments() {
               />
             </TouchableOpacity>
             <View style={styles.commentView3}>
-              <Text style={styles.commentName}>
+              <Text style={styles.flatlistName}>
                 {item?.commentBy?.firstName + ' ' + item?.commentBy?.lastName}
               </Text>
-              <Text style={styles.commentTime}>
+              <Text style={styles.mail}>
                 {moment(item?.commentedAt).format('MMM DD h:mm')}
               </Text>
-              <Text style={styles.commentContent}>{item?.text}</Text>
+              <Text
+                style={[
+                  styles.content,
+                  {
+                    fontSize: widthPercentageToDP(3.5),
+                    marginTop: 3,
+                  },
+                ]}>
+                {item?.text}
+              </Text>
             </View>
 
             {item?.commentBy?._id == userProfile?.user?._id && (
@@ -364,7 +375,7 @@ export default function Comments() {
   return (
     <Header
       leftImage={images.blueAppLogo}
-      rightIcon
+      // rightIcon
       onPressBack={() => navigation.goBack()}>
       <ActivityIndicator visible={isLoading} />
       <KeyboardAwareScrollView style={{flex: 1}}>
@@ -372,6 +383,7 @@ export default function Comments() {
           <View style={styles.bottomLine} />
           <FlatList
             data={comment}
+            // inverted
             ref={ref}
             onContentSizeChange={() => scrollToBottom()}
             ListHeaderComponent={<ListItem item={post?.post} />}

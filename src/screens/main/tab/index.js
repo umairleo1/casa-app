@@ -31,6 +31,8 @@ import jwt_decode from 'jwt-decode';
 import colors from 'src/utils/themes/global-colors';
 import AuthContext from 'src/utils/auth-context';
 import {useNavigation} from '@react-navigation/native';
+import Comments from '../home/comments';
+import Likes from '../home/likes';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -43,9 +45,11 @@ const FindPeopleStack = () => {
       }}>
       <Stack.Screen name={SCREEN.SEARCH_PEOPLE} component={FindPeople} />
       <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} />
+      <Stack.Screen name={SCREEN.USER_PROFILE} component={ViewProfile} />
       {/* <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} /> */}
-
+      <Stack.Screen name={SCREEN.COMMENTS} component={Comments} />
       <Stack.Screen name={'Profile'} component={Profile} />
+      <Stack.Screen name={SCREEN.LIKES} component={Likes} />
     </Stack.Navigator>
   );
 };
@@ -58,6 +62,7 @@ const NotificationStack = () => {
       }}>
       <Stack.Screen name={'Notification'} component={Notification} />
       <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} />
+      <Stack.Screen name={SCREEN.COMMENTS} component={Comments} />
     </Stack.Navigator>
   );
 };
@@ -72,6 +77,8 @@ const ProfileStack = () => {
 
       <Stack.Screen name={'Profile'} component={Profile} />
       <Stack.Screen name={'ADD_POST'} component={AddPost} />
+      <Stack.Screen name={SCREEN.COMMENTS} component={Comments} />
+      <Stack.Screen name={SCREEN.LIKES} component={Likes} />
     </Stack.Navigator>
   );
 };
@@ -83,7 +90,10 @@ const HomeStack = () => {
         headerShown: false,
       }}>
       <Stack.Screen name={SCREEN.HOME} component={Home} />
+      <Stack.Screen name={SCREEN.USER_PROFILE} component={ViewProfile} />
       <Stack.Screen name={SCREEN.ADD_POST} component={AddPost} />
+      <Stack.Screen name={SCREEN.COMMENTS} component={Comments} />
+      <Stack.Screen name={SCREEN.LIKES} component={Likes} />
     </Stack.Navigator>
   );
 };

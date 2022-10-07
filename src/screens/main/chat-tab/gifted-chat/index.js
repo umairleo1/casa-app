@@ -243,7 +243,8 @@ export default function GiftedChats() {
             heightSetter(text);
           },
 
-          textAlignVertical: 'top',
+          // textAlignVertical: 'top',
+
           ...(messageText.length > 0 &&
             messageText.length < 2 && {
               height: null,
@@ -260,12 +261,17 @@ export default function GiftedChats() {
         scrollToBottom
         isAnimated={false}
         showAvatarForEveryMessage={true}
+        onPressAvatar={user =>
+          navigation.navigate('USER_PROFILE', {
+            id: user?._id,
+          })
+        }
         isInitialized={true}
         listViewProps={{
           onEndReachedThreshold: 0.3, // When the top of the content is within 3/10 of the visible length of the content
           onEndReached: () => loadMoreMessages(),
 
-          // marginBottom: Platform.OS == 'ios' ? 30 : 50,
+          marginBottom: Platform.OS == 'ios' ? 20 : 40,
         }}
         renderSend={props => {
           return (
@@ -284,11 +290,23 @@ export default function GiftedChats() {
               style={{
                 flexDirection: 'row',
                 width: '90%',
-                alignItems: 'flex-end',
                 // backgroundColor: 'red',
+                alignItems: 'center',
               }}>
-              <View style={{width: '90%', marginRight: 10}}>
-                <Composer {...props} />
+              <View
+                style={{
+                  width: '90%',
+                  marginRight: 10,
+                  // backgroundColor: 'green',
+                }}>
+                <Composer
+                  {...props}
+                  textInputStyle={{
+                    // backgroundColor: 'yellow',
+                    justifyContent: 'center',
+                    height: '100%',
+                  }}
+                />
               </View>
 
               <Icon
@@ -298,7 +316,12 @@ export default function GiftedChats() {
                 size={18}
                 name={showEmoji ? 'close' : 'sticker-emoji'}
                 color={colors.placeholderColor}
-                style={{bottom: Dimensions.get('window').height * 0.02}}
+                // style={{bottom: Dimensions.get('window').height * 0.02}}
+                style={{
+                  position: 'absolute',
+                  bottom: Dimensions.get('window').height * 0.02,
+                  right: 0,
+                }}
               />
             </View>
           );

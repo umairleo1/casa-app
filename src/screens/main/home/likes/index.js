@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import {Text, FlatList, View, Image} from 'react-native';
+import {Text, FlatList, View, Image, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import Header from 'src/components/headerView';
 import {styles} from './styles';
@@ -14,53 +14,21 @@ export default function Likes() {
 
   console.log('navigate ', route?.params?.post);
 
-  const listData = [
-    {
-      text: 'Maria Valdez',
-      time: '3 min ago',
-      userImage: require('../../../../assets/images/findpeople/people3.png'),
-    },
-    {
-      text: 'Maria Valdez',
-      time: '3 min ago',
-      userImage: require('../../../../assets/images/findpeople/people2.png'),
-    },
-    {
-      text: 'Maria Valdez',
-      time: '3 min ago',
-      userImage: require('../../../../assets/images/findpeople/people3.png'),
-    },
-    {
-      text: 'Maria Valdez',
-      time: '3 min ago',
-      userImage: require('../../../../assets/images/findpeople/people2.png'),
-    },
-    {
-      text: 'Maria Valdez',
-      time: '3 min ago',
-      userImage: require('../../../../assets/images/findpeople/people5.png'),
-    },
-    {
-      text: 'Maria Valdez',
-      time: '3 min ago',
-      userImage: require('../../../../assets/images/findpeople/people6.png'),
-    },
-    {
-      text: 'Maria Valdez',
-      time: '3 min ago',
-      userImage: require('../../../../assets/images/findpeople/people3.png'),
-    },
-    {
-      text: 'Maria Valdez',
-      time: '3 min ago',
-      userImage: require('../../../../assets/images/findpeople/people5.png'),
-    },
-  ];
-
   const renderLikesList = ({item}) => {
+    console.log('item ', item);
     return (
       <>
-        <View style={styles.mainContainer}>
+        <TouchableOpacity
+          onPress={() =>
+            // navigation.navigate('Profile', {
+            //   screen: 'USER_PROFILE',
+            //   params: {id: item?.likesBy?._id},
+            // })
+            navigation.navigate('USER_PROFILE', {
+              id: item?.likesBy?._id,
+            })
+          }
+          style={styles.mainContainer}>
           <View style={styles.flatlistView}>
             <View style={styles.flatlistView2}>
               <Image
@@ -81,7 +49,7 @@ export default function Likes() {
               {moment(item?.likedAt).format('MMM DD hh:mm A') || 'Month Ago'}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
       </>
     );
   };

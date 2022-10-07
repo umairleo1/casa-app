@@ -21,13 +21,19 @@ export const styles = StyleSheet.create({
     width: 42,
   },
   flatlistName: {
-    fontSize: RFValue(15),
+    fontSize: 15,
+    lineHeight: 18,
     color: colors.pureBlack,
     fontWeight: 'bold',
   },
   mail: {
-    fontSize: RFValue(12),
+    fontSize: RFValue(11),
     color: colors.lightgrey,
+    // fontFamily: fonts.RobotoRegular,
+  },
+  desc: {
+    fontFamily: fonts.RobotoRegular,
+    fontSize: RFValue(14),
   },
   flatlistView2: {
     flexDirection: 'row',
@@ -41,7 +47,7 @@ export const styles = StyleSheet.create({
     // marginHorizontal: 20,
   },
   content: {
-    fontSize: RFValue(12),
+    fontSize: wp(3),
     color: colors.pureBlack,
     textAlign: 'justify',
     marginTop: 10,
@@ -102,16 +108,19 @@ export const styles = StyleSheet.create({
     fontSize: RFValue(15),
     color: colors.pureBlack,
     fontWeight: 'bold',
+    fontFamily: fonts.RobotoRegular,
   },
   commentTime: {
     fontSize: RFValue(12),
     color: colors.lightgrey,
+    fontFamily: fonts.RobotoRegular,
   },
   commentContent: {
-    fontSize: RFValue(15),
+    fontSize: RFValue(12),
     color: colors.pureBlack,
     textAlign: 'justify',
     paddingTop: 5,
+    fontFamily: fonts.RobotoRegular,
   },
   footerView: {
     // position: 'absolute',

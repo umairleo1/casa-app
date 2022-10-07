@@ -25,6 +25,7 @@ export default function MembersSheet({
   const authContext = React.useContext(AuthContext);
 
   const listItem = ({item}) => {
+    // console.log('hahahha ', item);
     if (item?.id == 'add-new') {
       if (data?.chatInitiator == authContext?.userData?.user?._id) {
         return (
@@ -33,6 +34,8 @@ export default function MembersSheet({
             <Text style={styles.name}>Add Member</Text>
           </View>
         );
+      } else {
+        return null;
       }
     }
     return (

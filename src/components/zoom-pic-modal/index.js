@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     backgroundColor: `rgba(0, 0, 0, 0.7)`,
+    // backgroundColor: '#3D3D3D',
     top: 0,
     left: 0,
     right: 0,

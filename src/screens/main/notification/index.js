@@ -90,13 +90,16 @@ export default function Notification() {
   };
 
   const handleNotification = item => {
-    console.log('notification ======>  ', item);
+    // console.log('notification ======>  ', item);
     item?.type == 'follow' &&
       navigation.navigate('VIEW_PROFILE', {
         id: item?.fromUser?._id,
       });
     (item?.type === 'like' || item?.type === 'comment') &&
-      navigation.navigate('COMMENTS', {postId: item?.postId?._id});
+      navigation.navigate('COMMENTS', {
+        postId: item?.postId?._id,
+        render: 'No',
+      });
   };
 
   const ListItem = ({item}) => {
