@@ -5,6 +5,7 @@ import {
 } from 'react-native-responsive-screen';
 import fonts from 'src/utils/themes/fonts';
 import colors from 'src/utils/themes/global-colors';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
   Container: {
@@ -41,8 +42,9 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   mail: {
-    fontSize: 12,
+    fontSize: RFValue(11),
     color: colors.lightgrey,
+    // fontFamily: fonts.RobotoRegular,
   },
   flatlistView2: {
     flexDirection: 'row',

@@ -261,6 +261,11 @@ export default function GiftedChats() {
         scrollToBottom
         isAnimated={false}
         showAvatarForEveryMessage={true}
+        onPressAvatar={user =>
+          navigation.navigate('USER_PROFILE', {
+            id: user?._id,
+          })
+        }
         isInitialized={true}
         listViewProps={{
           onEndReachedThreshold: 0.3, // When the top of the content is within 3/10 of the visible length of the content

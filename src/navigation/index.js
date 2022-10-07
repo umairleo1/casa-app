@@ -110,12 +110,18 @@ export default function CasaVerseNavigator() {
       }
 
       notification?.channelId !== 'channel-id' &&
+        Platform.OS !== 'ios' &&
         PushNotification.localNotification({
           channelId: 'channel-id',
           foreground: true,
           ignoreInForeground: notification?.title === 'Casa-App' ? false : true,
           userInteraction: false,
           autoCancel: true,
+          playSound: true,
+          soundName: 'default',
+          importance: Importance.HIGH,
+          vibrate: true,
+
           // bigText: 'notification.data.body',
           title: notification.title,
           // message: JSON.parse(notification.message).messages,

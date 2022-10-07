@@ -207,6 +207,20 @@ export default function FindPeople() {
           onEndReached={() => {
             limit.currentPage <= limit.availablePages && loadMore();
           }}
+          ListEmptyComponent={
+            <>
+              {!loder && (
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 20,
+                    marginVertical: 50,
+                  }}>
+                  No Mi Gente Found
+                </Text>
+              )}
+            </>
+          }
           onEndReachedThreshold={0.2}
         />
       </Header>
