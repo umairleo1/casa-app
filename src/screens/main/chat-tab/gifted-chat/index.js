@@ -32,6 +32,7 @@ import {useRef} from 'react';
 import Emoji from 'src/components/emoji';
 import images from 'src/assets/images';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+import fonts from 'src/utils/themes/fonts';
 const textHeight = 19;
 export default function GiftedChats() {
   const navigation = useNavigation();
@@ -93,9 +94,9 @@ export default function GiftedChats() {
         bottom: 0,
         left: 0,
         right: 0,
+        marginVertical: 100,
       }}>
       <ActivityIndicator size="small" color="#000000" />
-      {/* <Text style={{transform: [{scaleY: -1}]}}>Say hello to your buddy</Text> */}
     </View>
   );
 
@@ -334,6 +335,28 @@ export default function GiftedChats() {
       />
 
       {isLoading && <RenderLoader />}
+
+      {!isLoading && message.length == 0 && (
+        <View
+          style={{
+            // flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            marginVertical: 100,
+          }}>
+          <Text
+            style={{
+              color: colors.placeholderColor,
+            }}>
+            No Messages
+          </Text>
+        </View>
+      )}
       {showEmoji && <Emoji setMessageText={setMessageText} />}
     </Header>
   );

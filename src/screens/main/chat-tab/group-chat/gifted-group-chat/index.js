@@ -5,6 +5,7 @@ import {
   Keyboard,
   Platform,
   Dimensions,
+  Text,
 } from 'react-native';
 import React, {useState, useCallback, useEffect} from 'react';
 import Header from 'src/components/headerView';
@@ -88,6 +89,7 @@ export default function GiftedGroupChat() {
         bottom: 0,
         left: 0,
         right: 0,
+        marginVertical: 100,
       }}>
       <ActivityIndicator size="small" color="#000000" />
       {/* <Text style={{transform: [{scaleY: -1}]}}>Say hello to your buddy</Text> */}
@@ -307,6 +309,27 @@ export default function GiftedGroupChat() {
         // minComposerHeight={containerHeight}
       />
       {isLoading && <RenderLoader />}
+      {!isLoading && message.length == 0 && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            marginVertical: 100,
+          }}>
+          <Text
+            style={{
+              color: colors.placeholderColor,
+            }}>
+            No Messages
+          </Text>
+        </View>
+      )}
       {showEmoji && <Emoji setMessageText={setMessageText} />}
     </Header>
   );
