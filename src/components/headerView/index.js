@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {styles} from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -10,6 +10,7 @@ import {NewChatIcon} from 'src/assets/svg/chat';
 import colors from 'src/utils/themes/global-colors';
 import MultiChat from 'assets/svg/Common/multiChat';
 import fonts from 'src/utils/themes/fonts';
+import AuthContext from 'src/utils/auth-context';
 
 export default function Header({
   children,
@@ -29,7 +30,9 @@ export default function Header({
   onPostPress,
   addPost,
   description,
+  userId,
 }) {
+  const authContext = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
@@ -54,12 +57,16 @@ export default function Header({
               onPress={onPressInbox}
               style={{marginRight: 15}}
             />
-            <Feather
-              name="settings"
-              size={24}
-              color={colors.black}
-              onPress={onPress}
-            />
+
+            {authContext?.userData?.user?._id ==
+              (userId || authContext?.userData?.user?._id) && (
+              <Feather
+                name="settings"
+                size={24}
+                color={colors.black}
+                onPress={onPress}
+              />
+            )}
           </View>
         ) : // {feather ? (
         //   <>

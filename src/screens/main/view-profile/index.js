@@ -375,7 +375,8 @@ export default function ViewProfile({route}) {
           data: data,
         })
       }
-      onPress={() => navigation.navigate('SETTING')}>
+      onPress={() => navigation.navigate('SETTING')}
+      userId={route?.params?.id}>
       <ActivityIndicatorr visible={isLoading} />
       <ZoomPicModal
         visible={showimage}
