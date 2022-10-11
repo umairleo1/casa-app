@@ -53,10 +53,15 @@ const PostView = ({item, onRefresh, setZoomPicModal, setProfile}) => {
         <View style={styles.flatlistView2}>
           <TouchableOpacity
             style={{width: 50}}
+            // onPress={() =>
+            //   navigation.navigate('Profile', {
+            //     screen: 'USER_PROFILE',
+            //     params: {id: item?.postedBy?._id},
+            //   })
+            // }
             onPress={() =>
-              navigation.navigate('Profile', {
-                screen: 'USER_PROFILE',
-                params: {id: item?.postedBy?._id},
+              navigation.navigate('USER_PROFILE', {
+                id: item?.postedBy?._id,
               })
             }>
             <Image
