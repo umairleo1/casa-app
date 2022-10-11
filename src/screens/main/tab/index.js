@@ -90,11 +90,13 @@ const HomeStack = () => {
         headerShown: false,
       }}>
       <Stack.Screen name={SCREEN.HOME} component={Home} />
+
       <Stack.Screen name={SCREEN.USER_PROFILE} component={ViewProfile} />
-      <Stack.Screen name={'Profile'} component={Profile} />
+
       <Stack.Screen name={SCREEN.ADD_POST} component={AddPost} />
       <Stack.Screen name={SCREEN.COMMENTS} component={Comments} />
       <Stack.Screen name={SCREEN.LIKES} component={Likes} />
+      <Stack.Screen name={'Profile'} component={Profile} />
     </Stack.Navigator>
   );
 };
