@@ -49,7 +49,8 @@ export default function ForgotPassword() {
     <Background
       image={images.appLogo}
       title="Welcome to a social networking app built for the community."
-      description="We are a social networking app built for the collective community of people that are latino/a, hispanic, latinx, chicano, and so on.  Our main goal is to share, connect, and write about ideas that are centered in our individual, separate, and collective communities. Share your world with others as they share their world with you.">
+      // description="We are a social networking app built for the collective community of people that are latino/a, hispanic, latinx, chicano, and so on.  Our main goal is to share, connect, and write about ideas that are centered in our individual, separate, and collective communities. Share your world with others as they share their world with you."
+    >
       <View style={styles.mainView}>
         <Text style={styles.forgotPassword}>Forgot Password</Text>
         <View style={styles.borderLine} />
@@ -83,6 +84,12 @@ export default function ForgotPassword() {
                   <Button
                     text="Forgot Password"
                     onPress={handleSubmit}
+                    backgroundColor={colors.buttonColor}
+                    loader={isLoading}
+                  />
+                  <Button
+                    text="Go Back"
+                    onPress={() => navigation.goBack()}
                     backgroundColor={colors.buttonColor}
                     loader={isLoading}
                   />

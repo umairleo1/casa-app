@@ -513,9 +513,7 @@ export default function ProfileSetting() {
                   value={bio}
                   onChangeText={setBio}
                   placeholderTextColor={colors.black}
-                  borderColor={
-                    bio?.length > 0 ? colors.pureBlack : colors.innerBorder
-                  }
+                  borderColor={colors.innerBorder}
                 />
               </View>
             </View>

@@ -35,4 +35,7 @@ export const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginTop: hp(1),
   },
+  SearchInputView: {
+    marginVertical: 10,
+  },
 });

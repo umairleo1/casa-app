@@ -40,6 +40,7 @@ export default function Datepicker({
           </View>
         ) : null}
         <DateTimePickerModal
+          maximumDate={new Date()}
           isVisible={isVisible}
           mode="date"
           onConfirm={handleConfirm}

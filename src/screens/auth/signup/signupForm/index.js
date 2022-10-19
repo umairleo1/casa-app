@@ -13,6 +13,9 @@ import {userService} from 'src/services/auth-service';
 import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 import {PromoCodeModal} from 'src/components/promo-code-modal';
+import CountryPickerModal from 'src/components/country-picker';
+import MultiSelectPicker from 'src/components/multi-select-picker';
+import {getCountries, getStates} from 'src/utils/functions/location';
 
 export default function SignupForm({setShowSignUp}) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -21,10 +24,24 @@ export default function SignupForm({setShowSignUp}) {
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [openPromoCode, setOpenPromoCode] = useState(false);
   const [promoCode, setPromoCode] = useState('');
+  const [countryCode, setCountryCode] = React.useState({
+    cca2: 'US',
+    flag: 'flag-us',
+    name: 'United States',
+    region: 'Americas',
+  });
+  const [DATA, setDAta] = React.useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   const navigation = useNavigation();
 
   const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/;
+
+  React.useEffect(() => {
+    for (var i = 0; i < getCountries().length; i++) {
+      DATA.push({label: getCountries()[i], value: i + 1});
+    }
+  }, []);
 
   const handleConfirm = date => {
     setSelectedDate(date);
@@ -36,6 +53,10 @@ export default function SignupForm({setShowSignUp}) {
   };
   const showDatePicker = () => {
     setDatePickerVisibility(true);
+  };
+
+  const onSelect = Country => {
+    setCountryCode(Country);
   };
 
   const signupFormSchema = useMemo(
@@ -88,6 +109,7 @@ export default function SignupForm({setShowSignUp}) {
           password: values.password,
           dob: moment(selectedDate).format('YYYY-MM-DD'),
           ...(promoCode && {promoCode}),
+          ...(selectedItems && {heritage: selectedItems}),
         };
 
         const result = await userService.signup(signupData);
@@ -112,7 +134,7 @@ export default function SignupForm({setShowSignUp}) {
   return (
     <>
       <View style={styles.scrollView}>
-        <Text style={styles.text}>Register to Casa App</Text>
+        <Text style={styles.text}>Register for the CasaApp</Text>
         <View style={styles.borderLine} />
         <View style={styles.mainView}>
           <Formik
@@ -187,16 +209,30 @@ export default function SignupForm({setShowSignUp}) {
                   placeholder={!selectedDate}
                   error={touched.birthDate ? errors.birthDate : ''}
                 />
+                {/* <View style={styles.SearchInputView}>
+                  <CountryPickerModal
+                    onSelect={Country => onSelect(Country)}
+                    countryText={countryCode?.name}
+                    countryCode={countryCode?.cca2}
+                  />
+                </View> */}
                 {/* <Dropdown
                       selectedValue={values.gender}
                       onValueChange={handleChange('gender')}
                       error={touched.gender ? errors.gender : ''}
                     /> */}
+                <View style={{marginVertical: 10}}>
+                  <MultiSelectPicker
+                    multiSelect={selectedItems}
+                    setMultiSelect={setSelectedItems}
+                    data={DATA}
+                  />
+                </View>
                 <TouchableOpacity
                   onPress={() => setOpenPromoCode(true)}
                   style={styles.promoCodeView}>
                   <Text style={styles.promoCode}>
-                    Do You Have A PromoCode ?
+                    Do You Have A Invite Code ?
                   </Text>
                 </TouchableOpacity>
                 <Button

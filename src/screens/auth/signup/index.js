@@ -18,7 +18,8 @@ export default function Signup() {
       <Background
         image={images.appLogo}
         title="Welcome to a social networking app built for the community."
-        description="We are a social networking app built for the collective community of people that are latino/a, hispanic, latinx, chicano, and so on.  Our main goal is to share, connect, and write about ideas that are centered in our individual, separate, and collective communities. Share your world with others as they share their world with you.">
+        // description="We are a social networking app built for the collective community of people that are latino/a, hispanic, latinx, chicano, and so on.  Our main goal is to share, connect, and write about ideas that are centered in our individual, separate, and collective communities. Share your world with others as they share their world with you."
+      >
         <View
           style={{
             // width: '100%',
@@ -28,8 +29,6 @@ export default function Signup() {
             borderBottomWidth: 1,
             borderBottomColor: '#E6ECF5',
             marginHorizontal: 20,
-            marginTop: 8,
-            // marginLeft:20
           }}>
           <TouchableOpacity
             style={{

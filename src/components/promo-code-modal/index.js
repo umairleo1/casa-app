@@ -30,7 +30,7 @@ const PromoCodeModal = ({
         color={'white'}
       />
       <View style={styles.view}>
-        <Text style={styles.text}>Promo Code</Text>
+        <Text style={styles.text}>Invite Code</Text>
         <OtpInput onCodeChange={onCodeChange} count={4} />
 
         <View style={styles.buttonView}>
