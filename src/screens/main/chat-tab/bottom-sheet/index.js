@@ -98,7 +98,7 @@ export default function MembersSheet({
         />
         <BottomSheetButton
           image={images.editGroupPhoto}
-          text={'Edit Cuarto Photo form Camera'}
+          text={'Edit Cuarto Photo from Camera'}
           onPress={onPhotoCameraPress}
         />
         {data?.chatInitiator == authContext?.userData?.user?._id && (

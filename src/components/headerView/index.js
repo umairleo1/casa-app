@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React, {useContext} from 'react';
+import {useNavigation} from '@react-navigation/native';
+
 import {styles} from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -33,6 +35,7 @@ export default function Header({
   userId,
 }) {
   const authContext = useContext(AuthContext);
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
@@ -68,17 +71,7 @@ export default function Header({
               />
             )}
           </View>
-        ) : // {feather ? (
-        //   <>
-        //    <Feather
-        //     name="settings"
-        //     size={24}
-        //     color={colors.black}
-        //     onPress={onPress}
-        //   />
-        //   </>
-
-        newChatIcon ? (
+        ) : newChatIcon ? (
           <NewChatIcon onPress={onPressNewChat} />
         ) : rightImage ? (
           <Image source={rightImage} style={styles.rightImage} />
@@ -101,9 +94,14 @@ export default function Header({
         )}
 
         {rightIcon && (
-          <TouchableOpacity style={{padding: 10}} onPress={onPressChat}>
-            <MultiChat />
-          </TouchableOpacity>
+          <View style={{padding: 10, flexDirection: 'row'}}>
+            <TouchableOpacity style={{marginRight: 10}} onPress={onPressChat}>
+              <MultiChat height={25} width={25} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('SETTING')}>
+              <Feather name="settings" size={24} color={colors.black} />
+            </TouchableOpacity>
+          </View>
         )}
       </View>
       {children}

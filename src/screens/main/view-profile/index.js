@@ -9,7 +9,6 @@ import {
   Image,
   TouchableOpacity,
   RefreshControl,
-  ActivityIndicator,
   Linking,
 } from 'react-native';
 import React, {useEffect} from 'react';
@@ -39,6 +38,8 @@ import {
 } from 'src/components/zoom-pic-modal';
 import FlatListCustom from 'src/components/carosel-slider';
 
+import {getCountries, getStates} from 'src/utils/functions/location';
+
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
   const focused = useIsFocused();
@@ -61,12 +62,11 @@ export default function ViewProfile({route}) {
     /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
 
   const getProfile = async () => {
-    console.log('route?.params?.id', route?.params?.id);
     try {
       const res = await profileServices.getUserProfileById(
         route?.params?.id || '',
       );
-      // console.log('res-------------', res);
+      console.log('res-------------', res);
       setData(res);
     } catch (error) {
       console.log('error -------', error);
@@ -402,9 +402,23 @@ export default function ViewProfile({route}) {
         <Text style={styles.name}>
           {(data?.user?.firstName || '') + ' ' + (data?.user?.lastName || '')}
         </Text>
-        <Text style={[styles.description, {margin: 10}]}>
-          {data?.user?.bio}
-        </Text>
+        {data?.user?.bio && (
+          <Text style={[styles.description, {margin: 10}]}>
+            {data?.user?.bio}
+          </Text>
+        )}
+        {data?.user?.heritage?.length > 0 && (
+          <Text style={[styles.description, {marginHorizontal: 20}]}>
+            <Text style={{fontWeight: 'bold'}}>Heritage: </Text>
+            {data?.user?.heritage?.map((item, index) => (
+              // eslint-disable-next-line react/jsx-key
+              <Text>
+                {getCountries()[item - 1]}
+                {index < data?.user?.heritage?.length - 1 ? ', ' : '.'}
+              </Text>
+            ))}
+          </Text>
+        )}
         {route?.params?.id && (
           <FollowButton
             onPress={() => onPressFollowBtn()}

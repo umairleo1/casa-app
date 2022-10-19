@@ -28,7 +28,7 @@ export default function CountryPickerModal({
             onBackgroundTextColor: colors.black,
             fontSize: 15,
           }}
-          placeholder={'Select Countries'}
+          placeholder={'Select Country'}
           // onValueChange={(value)=>setValue(value)}
         />
         {countryText && <Text style={styles.text}>{countryText}</Text>}

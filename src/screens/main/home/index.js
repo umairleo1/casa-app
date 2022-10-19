@@ -134,6 +134,7 @@ export default function Home() {
     <Header
       leftImage={images.blueAppLogo}
       rightIcon
+      // feather={'setting'}
       onPressChat={() => navigation.navigate('CHAT_TAB')}
       onPressBack={() => navigation.goBack()}>
       <ActivityIndicatorr visible={isLoading} />

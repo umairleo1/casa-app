@@ -251,16 +251,14 @@ export default function Comments() {
   };
 
   const commentsList = ({item}) => {
-    // console.log('xxxxfddfdfdf ', item);
     return (
       <View style={[styles.mainContainer, {marginHorizontal: 10}]}>
         <View style={styles.commentView}>
           <View style={styles.commentView2}>
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('Profile', {
-                  screen: 'USER_PROFILE',
-                  params: {id: item?.commentBy?._id},
+                navigation.navigate('USER_PROFILE', {
+                  id: item?.commentBy?._id,
                 })
               }>
               <Image
@@ -318,7 +316,6 @@ export default function Comments() {
   };
 
   const editCommemt = async comment => {
-    console.log('commentEdit', comment);
     try {
       const result = await postServices.editCommentApi(selectedComment._id, {
         commentText: comment,

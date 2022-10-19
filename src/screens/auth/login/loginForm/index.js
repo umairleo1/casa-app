@@ -56,7 +56,6 @@ export default function LoginForm() {
   );
 
   const handleLogin = async value => {
-    console.log('FCM token on login ', fcmToken);
     try {
       setIsLoading(true);
       const result = await userService.login({

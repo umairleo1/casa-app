@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    color: colors.placeholderColor,
   },
   selectedTextStyle: {
     fontSize: 14,

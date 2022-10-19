@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   },
   mainView: {
     backgroundColor: colors.whiteColor,
-    marginTop: 20,
+    // marginTop: 20,
     borderRadius: 3,
     marginHorizontal: 20,
   },

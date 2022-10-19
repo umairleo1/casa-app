@@ -61,7 +61,7 @@ const NotificationStack = () => {
         headerShown: false,
       }}>
       <Stack.Screen name={'Notification'} component={Notification} />
-      <Stack.Screen name={SCREEN.VIEW_PROFILE} component={ViewProfile} />
+      <Stack.Screen name={SCREEN.USER_PROFILE} component={ViewProfile} />
       <Stack.Screen name={SCREEN.COMMENTS} component={Comments} />
     </Stack.Navigator>
   );
