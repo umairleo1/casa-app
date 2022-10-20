@@ -100,4 +100,9 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.RobotoRegular,
     fontSize: wp(3.3),
   },
+  heritageView: {
+    marginHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
 });
