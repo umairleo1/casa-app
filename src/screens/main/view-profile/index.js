@@ -425,18 +425,6 @@ export default function ViewProfile({route}) {
           </View>
         )}
 
-        {/* {data?.user?.heritage?.length > 0 && (
-          <Text style={[styles.description, {marginHorizontal: 20}]}>
-            <Text style={{fontWeight: 'bold'}}>Heritage: </Text>
-            {data?.user?.heritage?.map((item, index) => (
-              // eslint-disable-next-line react/jsx-key
-              <Text>
-                {getCountries()[item - 1]}
-                {index < data?.user?.heritage?.length - 1 ? ', ' : '.'}
-              </Text>
-            ))}
-          </Text>
-        )} */}
         {route?.params?.id && (
           <FollowButton
             onPress={() => onPressFollowBtn()}
