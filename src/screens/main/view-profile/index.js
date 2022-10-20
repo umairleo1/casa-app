@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -17,6 +18,7 @@ import {styles} from './styles';
 import Header from 'src/components/headerView';
 import BackgroundImageWithImage from 'src/components/backgroundWithImage';
 import PFF from 'src/components/pFF/Iindex';
+import CountryFlag from 'react-native-country-flag';
 
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 
@@ -38,7 +40,11 @@ import {
 } from 'src/components/zoom-pic-modal';
 import FlatListCustom from 'src/components/carosel-slider';
 
-import {getCountries, getStates} from 'src/utils/functions/location';
+import {
+  getCountries,
+  getIsoCodes,
+  getStates,
+} from 'src/utils/functions/location';
 
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
@@ -408,6 +414,18 @@ export default function ViewProfile({route}) {
           </Text>
         )}
         {data?.user?.heritage?.length > 0 && (
+          <View style={styles.heritageView}>
+            {data?.user?.heritage?.map(item => (
+              <CountryFlag
+                isoCode={getIsoCodes(getCountries()[item - 1])}
+                size={14}
+                style={{marginRight: 10}}
+              />
+            ))}
+          </View>
+        )}
+
+        {/* {data?.user?.heritage?.length > 0 && (
           <Text style={[styles.description, {marginHorizontal: 20}]}>
             <Text style={{fontWeight: 'bold'}}>Heritage: </Text>
             {data?.user?.heritage?.map((item, index) => (
@@ -418,7 +436,7 @@ export default function ViewProfile({route}) {
               </Text>
             ))}
           </Text>
-        )}
+        )} */}
         {route?.params?.id && (
           <FollowButton
             onPress={() => onPressFollowBtn()}
