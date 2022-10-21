@@ -11,7 +11,7 @@ const request = axios.create({
     Accept: 'application/json',
   },
 });
-
+console.log('Check Env ', process.env.REACT_API_URL);
 const onSuccess = function (response) {
   // console.log(response);
   return response.data;

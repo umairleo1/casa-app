@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+import './shim';
 import React, {useState} from 'react';
 import {SafeAreaView, StatusBar, useColorScheme, LogBox} from 'react-native';
 import {Provider} from 'react-redux';
@@ -11,7 +12,6 @@ import CasaVerseNavigator from 'src/navigation';
 import colors from 'src/utils/themes/global-colors';
 import {Store} from 'src/redux/store/index';
 import AuthContext from 'src/utils/auth-context';
-// import ErrorBoundary from 'src/components/error-boundaries';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -28,6 +28,7 @@ const App = () => {
 
   return (
     // <ErrorBoundary>
+
     <Provider store={Store}>
       <AuthContext.Provider
         value={{
@@ -52,6 +53,7 @@ const App = () => {
         </SafeAreaView>
       </AuthContext.Provider>
     </Provider>
+
     // </ErrorBoundary>
   );
 };
