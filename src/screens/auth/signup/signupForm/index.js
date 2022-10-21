@@ -423,14 +423,14 @@ export default function SignupForm({setShowSignUp}) {
                   onPress={handleSubmit}
                   backgroundColor={colors.buttonColor}
                 />
-                <Button
+                {/* <Button
                   loader={isLoading}
                   text="Signup Metamask"
                   onPress={() => {
                     connect();
                   }}
                   backgroundColor={colors.buttonColor}
-                />
+                /> */}
               </>
             )}
           </Formik>
