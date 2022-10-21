@@ -32,6 +32,29 @@ export default function SignupForm({setShowSignUp}) {
   });
   const [DATA, setDAta] = React.useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const heritageList = [
+    'Mexico',
+    'El Salvador',
+    'Guatemala',
+    'Honduras',
+    'Nicaragua',
+    'Panama',
+    'Argentina',
+    'Bolivia',
+    'Brazil',
+    'Chile',
+    'Colombia',
+    'Ecuador',
+    'Guyana',
+    'Paraguay',
+    'Peru',
+    'Suriname',
+    'Uruguay',
+    'Venezuela',
+    'Cuba',
+    'Haiti',
+    'Dominican Republic',
+  ];
 
   const navigation = useNavigation();
 
@@ -39,7 +62,8 @@ export default function SignupForm({setShowSignUp}) {
 
   React.useEffect(() => {
     for (var i = 0; i < getCountries().length; i++) {
-      DATA.push({label: getCountries()[i], value: i + 1});
+      heritageList?.includes(getCountries()[i]) &&
+        DATA.push({label: getCountries()[i], value: i + 1});
     }
   }, []);
 
@@ -241,6 +265,12 @@ export default function SignupForm({setShowSignUp}) {
                   onPress={handleSubmit}
                   backgroundColor={colors.buttonColor}
                 />
+                {/* <Button
+                  loader={isLoading}
+                  text="Signup Metamask"
+                  onPress={() => console.log('Meta mask')}
+                  backgroundColor={colors.buttonColor}
+                /> */}
               </>
             )}
           </Formik>

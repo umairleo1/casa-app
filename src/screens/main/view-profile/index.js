@@ -64,6 +64,30 @@ export default function ViewProfile({route}) {
   const [zoomPicModal, setZoomPicModal] = React.useState(false);
   const [profile, setProfile] = React.useState({dp: '', cover: ''});
 
+  const heritageList = [
+    'Mexico',
+    'El Salvador',
+    'Guatemala',
+    'Honduras',
+    'Nicaragua',
+    'Panama',
+    'Argentina',
+    'Bolivia',
+    'Brazil',
+    'Chile',
+    'Colombia',
+    'Ecuador',
+    'Guyana',
+    'Paraguay',
+    'Peru',
+    'Suriname',
+    'Uruguay',
+    'Venezuela',
+    'Cuba',
+    'Haiti',
+    'Dominican Republic',
+  ];
+
   var expression =
     /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/gi;
 
@@ -415,13 +439,16 @@ export default function ViewProfile({route}) {
         )}
         {data?.user?.heritage?.length > 0 && (
           <View style={styles.heritageView}>
-            {data?.user?.heritage?.map(item => (
-              <CountryFlag
-                isoCode={getIsoCodes(getCountries()[item - 1])}
-                size={14}
-                style={{marginRight: 10}}
-              />
-            ))}
+            {data?.user?.heritage?.map(
+              item =>
+                heritageList.includes(getCountries()[item - 1]) && (
+                  <CountryFlag
+                    isoCode={getIsoCodes(getCountries()[item - 1])}
+                    size={14}
+                    style={{marginRight: 10}}
+                  />
+                ),
+            )}
           </View>
         )}
 

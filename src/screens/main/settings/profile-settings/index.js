@@ -80,6 +80,29 @@ export default function ProfileSetting() {
   const [countryCode, setCountryCode] = React.useState('');
   const [DATA, setDAta] = React.useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const heritageList = [
+    'Mexico',
+    'El Salvador',
+    'Guatemala',
+    'Honduras',
+    'Nicaragua',
+    'Panama',
+    'Argentina',
+    'Bolivia',
+    'Brazil',
+    'Chile',
+    'Colombia',
+    'Ecuador',
+    'Guyana',
+    'Paraguay',
+    'Peru',
+    'Suriname',
+    'Uruguay',
+    'Venezuela',
+    'Cuba',
+    'Haiti',
+    'Dominican Republic',
+  ];
 
   const onSelect = Country => {
     console.log(Country);
@@ -93,7 +116,8 @@ export default function ProfileSetting() {
 
   useEffect(() => {
     for (var i = 0; i < getCountries().length; i++) {
-      DATA.push({label: getCountries()[i], value: i + 1});
+      heritageList?.includes(getCountries()[i]) &&
+        DATA.push({label: getCountries()[i], value: i + 1});
     }
     setFirstName(authContext?.userData?.user?.firstName);
     setLastName(authContext?.userData?.user?.lastName);
