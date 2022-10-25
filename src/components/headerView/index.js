@@ -14,6 +14,7 @@ import MultiChat from 'assets/svg/Common/multiChat';
 import fonts from 'src/utils/themes/fonts';
 import AuthContext from 'src/utils/auth-context';
 import {PromoCodeIcon} from 'src/assets/svg/settings';
+import Settings from 'src/assets/svg/settings/settings';
 
 export default function Header({
   children,
@@ -100,7 +101,8 @@ export default function Header({
               <MultiChat color={colors?.buttonColor} height={20} width={20} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('SETTING')}>
-              <Feather name="settings" size={24} color={colors.black} />
+              {/* <Feather name="settings" size={24} color={colors.black} /> */}
+              <Settings color={colors?.buttonColor} height={20} width={20} />
             </TouchableOpacity>
           </View>
         )}
