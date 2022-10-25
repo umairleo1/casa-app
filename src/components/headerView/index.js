@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {styles} from './styles';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {NewChatIcon} from 'src/assets/svg/chat';
 
@@ -13,13 +13,12 @@ import colors from 'src/utils/themes/global-colors';
 import MultiChat from 'assets/svg/Common/multiChat';
 import fonts from 'src/utils/themes/fonts';
 import AuthContext from 'src/utils/auth-context';
-import {PromoCodeIcon} from 'src/assets/svg/settings';
+
 import Settings from 'src/assets/svg/settings/settings';
 
 export default function Header({
   children,
   heading,
-  onPress,
   feather,
   onPressBack,
   leftImage,
@@ -65,12 +64,7 @@ export default function Header({
 
             {authContext?.userData?.user?._id ==
               (userId || authContext?.userData?.user?._id) && (
-              <Feather
-                name="settings"
-                size={24}
-                color={colors.black}
-                onPress={onPress}
-              />
+              <Settings color={colors?.buttonColor} height={19} width={19} />
             )}
           </View>
         ) : newChatIcon ? (
@@ -101,8 +95,7 @@ export default function Header({
               <MultiChat color={colors?.buttonColor} height={20} width={20} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('SETTING')}>
-              {/* <Feather name="settings" size={24} color={colors.black} /> */}
-              <Settings color={colors?.buttonColor} height={20} width={20} />
+              <Settings color={colors?.buttonColor} height={19} width={19} />
             </TouchableOpacity>
           </View>
         )}
