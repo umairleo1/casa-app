@@ -118,6 +118,8 @@ export default function ProfileSetting() {
     for (var i = 0; i < getCountries().length; i++) {
       heritageList?.includes(getCountries()[i]) &&
         DATA.push({label: getCountries()[i], value: i + 1});
+      i == getCountries().length - 1 &&
+        DATA.push({label: 'Others', value: i + 1});
     }
     setFirstName(authContext?.userData?.user?.firstName);
     setLastName(authContext?.userData?.user?.lastName);

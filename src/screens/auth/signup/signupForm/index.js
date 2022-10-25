@@ -86,6 +86,8 @@ export default function SignupForm({setShowSignUp}) {
     for (var i = 0; i < getCountries().length; i++) {
       heritageList?.includes(getCountries()[i]) &&
         DATA.push({label: getCountries()[i], value: i + 1});
+      i == getCountries().length - 1 &&
+        DATA.push({label: 'Others', value: i + 1});
     }
   }, []);
 
@@ -144,7 +146,13 @@ export default function SignupForm({setShowSignUp}) {
         message: 'Dob must not be empty',
         type: 'danger',
       });
+    } else if (promoCode == '') {
+      showMessage({
+        message: 'Invitation Code is required',
+        type: 'danger',
+      });
     } else {
+      console.log("(promoCode == '') ", promoCode);
       try {
         setIsLoading(true);
         const signupData = {
@@ -423,14 +431,14 @@ export default function SignupForm({setShowSignUp}) {
                   onPress={handleSubmit}
                   backgroundColor={colors.buttonColor}
                 />
-                {/* <Button
-                  loader={isLoading}
+                <Button
+                  // loader={isLoading}
                   text="Signup Metamask"
                   onPress={() => {
                     connect();
                   }}
                   backgroundColor={colors.buttonColor}
-                /> */}
+                />
               </>
             )}
           </Formik>

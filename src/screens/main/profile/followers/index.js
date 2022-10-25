@@ -1,14 +1,23 @@
 /* eslint-disable react/prop-types */
-import {Text, View, Image, FlatList, RefreshControl} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  FlatList,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import {styles} from './styles';
 import RemoveButton from 'src/components/remove-button';
 import colors from 'src/utils/themes/global-colors';
 import {profileServices} from 'src/services/profile-services';
 import {useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 export default function Followers() {
   const route = useRoute();
+  const navigation = useNavigation();
 
   const [followers, setFollowers] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -85,7 +94,9 @@ export default function Followers() {
   const listItem = ({item}) => {
     return (
       <View style={styles.flatlistView}>
-        <View style={styles.flatlistView2}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('USER_PROFILE', {id: item?._id})}
+          style={styles.flatlistView2}>
           <Image
             source={
               item?.profileImage ? {uri: item?.profileImage} : defaultImage
@@ -99,7 +110,7 @@ export default function Followers() {
               }>{`${item?.firstName} ${item?.lastName}`}</Text>
             <Text style={styles.mail}>{item?.userName || 'No Username'}</Text>
           </View>
-        </View>
+        </TouchableOpacity>
         {!route?.params?.id && (
           <RemoveButton
             onPress={() => removeFollowers(item?._id)}

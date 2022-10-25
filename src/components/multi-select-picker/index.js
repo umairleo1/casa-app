@@ -14,7 +14,7 @@ const MultiSelectPicker = ({multiSelect, setMultiSelect, data}) => {
   const renderDataItem = item => {
     return (
       <View style={styles.item}>
-        <Text style={styles.selectedTextStyle}>{item.label}</Text>
+        <Text>{item.label}</Text>
         <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
       </View>
     );
@@ -23,6 +23,7 @@ const MultiSelectPicker = ({multiSelect, setMultiSelect, data}) => {
   return (
     <View style={styles.container}>
       <MultiSelect
+        dropdownPosition="top"
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
@@ -31,14 +32,13 @@ const MultiSelectPicker = ({multiSelect, setMultiSelect, data}) => {
         data={data}
         labelField="label"
         valueField="value"
-        placeholder="Heritage"
+        placeholder="Collective Heritage"
         value={multiSelect}
         search
         searchPlaceholder="Search..."
         onChange={value => {
           setMultiSelect(value), console.log(value);
         }}
-        dropdownPosition="auto"
         // renderLeftIcon={() => (
         //     <AntDesign
         //         style={styles.icon}
@@ -51,7 +51,7 @@ const MultiSelectPicker = ({multiSelect, setMultiSelect, data}) => {
         renderSelectedItem={(item, unSelect) => (
           <TouchableOpacity onPress={() => unSelect && unSelect(item)}>
             <View style={styles.selectedStyle}>
-              <Text style={styles.textSelectedStyle}>{item.label}</Text>
+              <Text style={[styles.textSelectedStyle]}>{item.label}</Text>
               <AntDesign color="black" name="delete" size={15} />
             </View>
           </TouchableOpacity>

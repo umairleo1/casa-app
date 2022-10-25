@@ -48,6 +48,7 @@ export default function AppNavigator() {
         headerShown: false,
       }}>
       <Stack.Screen name={BOTTOM_TAB} component={BottomTab} />
+
       <Stack.Screen name={SETTING} component={Settings} />
       <Stack.Screen name={PROFILE_SETTING} component={ProfileSetting} />
 
@@ -62,7 +63,7 @@ export default function AppNavigator() {
       <Stack.Screen name={ADD_GROUP_NAME} component={AddGroupName} />
       <Stack.Screen name={GIFTED_CHAT} component={GiftedChats} />
       <Stack.Screen name={GIFTED_GROUP_CHAT} component={GiftedGroupChat} />
-      <Stack.Screen name={SCREEN.USER_PROFILE} component={ViewProfile} />
+      {/* <Stack.Screen name={SCREEN.USER_PROFILE} component={ViewProfile} /> */}
       <Stack.Screen name={VIDEO} component={VideoScreen} />
     </Stack.Navigator>
   );

@@ -371,7 +371,7 @@ export default function Comments() {
 
   return (
     <Header
-      leftImage={images.blueAppLogo}
+      // leftImage={images.blueAppLogo}
       // rightIcon
       onPressBack={() => navigation.goBack()}>
       <ActivityIndicator visible={isLoading} />

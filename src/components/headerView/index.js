@@ -13,6 +13,7 @@ import colors from 'src/utils/themes/global-colors';
 import MultiChat from 'assets/svg/Common/multiChat';
 import fonts from 'src/utils/themes/fonts';
 import AuthContext from 'src/utils/auth-context';
+import {PromoCodeIcon} from 'src/assets/svg/settings';
 
 export default function Header({
   children,
@@ -38,7 +39,7 @@ export default function Header({
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <View style={styles.headerView}>
+      <View style={[styles.headerView, {height: leftImage ? 90 : 60}]}>
         {leftImage ? (
           <Image source={leftImage} style={styles.image} />
         ) : (
@@ -96,7 +97,7 @@ export default function Header({
         {rightIcon && (
           <View style={{padding: 10, flexDirection: 'row'}}>
             <TouchableOpacity style={{marginRight: 10}} onPress={onPressChat}>
-              <MultiChat height={25} width={25} />
+              <MultiChat color={colors?.buttonColor} height={20} width={20} />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('SETTING')}>
               <Feather name="settings" size={24} color={colors.black} />
