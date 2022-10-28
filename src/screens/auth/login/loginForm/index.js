@@ -1,12 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {
-  Text,
-  View,
-  Pressable,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import {Text, View, Pressable} from 'react-native';
 import React, {useMemo, useState, useRef} from 'react';
 import {styles} from './styles';
 import Input from 'src/components/textinput';
@@ -25,7 +18,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 
 // eslint-disable-next-line react/prop-types
-export default function LoginForm() {
+export default function LoginForm({isMetaLoading, connect}) {
   const navigation = useNavigation();
   const ref = useRef();
   const scrollToBottom = () => ref.current.scrollToEnd({animated: true});
@@ -138,6 +131,14 @@ export default function LoginForm() {
                   onPress={handleSubmit}
                   backgroundColor={colors.buttonColor}
                   loader={isLoading}
+                />
+                <Button
+                  loader={isMetaLoading}
+                  text="Login With Metamask"
+                  onPress={() => {
+                    connect();
+                  }}
+                  backgroundColor={colors.buttonColor}
                 />
               </View>
             </>

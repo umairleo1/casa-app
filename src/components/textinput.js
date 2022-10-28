@@ -18,6 +18,7 @@ export default function Input({
   onPressEye,
   onPressIn,
   onFocus,
+  maxLength,
 }) {
   return (
     <>
@@ -29,6 +30,7 @@ export default function Input({
           onChangeText={onChangeText}
           onChange={onChange}
           value={value}
+          maxLength={maxLength}
           secureTextEntry={secureTextEntry}
           onBlur={onBlur}
           keyboardType={type}

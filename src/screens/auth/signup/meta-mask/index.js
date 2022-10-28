@@ -1,13 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React, {useState} from 'react';
 
-import Background from 'src/components/background';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import SignupForm from './signupForm';
-import Login from '../login';
-import colors from 'src/utils/themes/global-colors';
-import images from 'src/assets/images';
-import {Text, View, TouchableOpacity} from 'react-native';
+import React from 'react';
+
+import {userService} from 'src/services/auth-service';
+import {useNavigation} from '@react-navigation/native';
 
 import MetaMaskSDK from '@metamask/sdk';
 import {Linking} from 'react-native';
@@ -18,8 +14,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 
 import asyncStorage from 'utils/async-storage/index';
-import {userService} from 'src/services/auth-service';
-import {useNavigation} from '@react-navigation/native';
+
+// import ErrorBoundary from 'src/components/error-boundaries';
 
 const MMSDK = new MetaMaskSDK({
   openDeeplink: link => {
@@ -28,7 +24,7 @@ const MMSDK = new MetaMaskSDK({
   timer: BackgroundTimer, // To keep the app alive once it goes to background
   dappMetadata: {
     name: 'Casa App', // The name of your application
-    url: 'https://CasaApp.io', // The url of your website
+    url: 'https://CasaApp.com', // The url of your website
   },
 });
 
@@ -36,15 +32,11 @@ const ethereum = MMSDK.getProvider();
 
 const provider = new ethers.providers.Web3Provider(ethereum);
 
-export default function Signup() {
-  const Tab = createMaterialTopTabNavigator();
+export default function MetaMask() {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const fcmToken = useSelector(state => state?.auth?.fcmToken);
-
-  const [showSignUp, setShowSignUp] = useState(true);
-
   const [isMetaLoading, setIsMetaLoading] = React.useState(false);
 
   const getBalance = async () => {
@@ -70,12 +62,12 @@ export default function Signup() {
   }, []);
 
   const connect = async () => {
-    // const isInstalled = await Linking.canOpenURL('yourUrl');
-    // if (isInstalled) {
-    //   return alert(
-    //     'MetaMask not detected. Please try again after installing MetaMask.',
-    //   );
-    // }
+    const isInstalled = await Linking.canOpenURL('yourUrl');
+    if (isInstalled) {
+      return alert(
+        'MetaMask not detected. Please try again after installing MetaMask.',
+      );
+    }
     try {
       const result = await ethereum.request({method: 'eth_requestAccounts'});
 
@@ -211,71 +203,4 @@ export default function Signup() {
     // setResponse(resp);
     console.log('ethereum.request ', resp);
   };
-
-  return (
-    <View>
-      <Background
-        image={images.appLogo}
-        title="Welcome to a social networking app built for the community."
-        // description="We are a social networking app built for the collective community of people that are latino/a, hispanic, latinx, chicano, and so on.  Our main goal is to share, connect, and write about ideas that are centered in our individual, separate, and collective communities. Share your world with others as they share their world with you."
-      >
-        <View
-          style={{
-            // width: '100%',
-            flexDirection: 'row',
-            height: 60,
-            backgroundColor: '#fff',
-            borderBottomWidth: 1,
-            borderBottomColor: '#E6ECF5',
-            marginHorizontal: 20,
-          }}>
-          <TouchableOpacity
-            style={{
-              width: '50%',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRightWidth: 1,
-              borderRightColor: '#E6ECF5',
-            }}
-            onPress={() => setShowSignUp(true)}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 17,
-                color: showSignUp ? '#0A2540' : '#C0C4D8',
-              }}>
-              Sign Up
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{
-              width: '50%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => setShowSignUp(false)}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 17,
-                color: !showSignUp ? '#0A2540' : '#C0C4D8',
-              }}>
-              Login
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {showSignUp ? (
-          <SignupForm
-            isMetaLoading={isMetaLoading}
-            connect={connect}
-            setShowSignUp={setShowSignUp}
-          />
-        ) : (
-          <Login isMetaLoading={isMetaLoading} connect={connect} />
-        )}
-      </Background>
-    </View>
-  );
 }

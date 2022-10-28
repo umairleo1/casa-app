@@ -50,14 +50,14 @@ export {PromoCodeModal};
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    backgroundColor: `rgba(0, 0, 0, 0.7)`,
+    backgroundColor: '#00000050',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'center',
     zIndex: 100,
-    height: Dimensions.get('screen').height,
+    // height: Dimensions.get('screen').height,
   },
   view: {
     backgroundColor: colors.whiteColor,

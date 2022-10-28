@@ -527,6 +527,7 @@ export default function ProfileSetting() {
 
               <View>
                 <MultiSelectPicker
+                  color={colors.black}
                   multiSelect={selectedItems}
                   setMultiSelect={setSelectedItems}
                   data={DATA}

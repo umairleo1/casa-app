@@ -10,7 +10,7 @@ import {MultiSelect} from 'react-native-element-dropdown';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors from 'src/utils/themes/global-colors';
 
-const MultiSelectPicker = ({multiSelect, setMultiSelect, data}) => {
+const MultiSelectPicker = ({multiSelect, setMultiSelect, data, color}) => {
   const renderDataItem = item => {
     return (
       <View style={styles.item}>
@@ -25,8 +25,12 @@ const MultiSelectPicker = ({multiSelect, setMultiSelect, data}) => {
       <MultiSelect
         dropdownPosition="top"
         style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        placeholderStyle={[
+          styles.placeholderStyle,
+          {color: color || colors.placeholderColor},
+        ]}
+        // selectedTextStyle={styles.selectedTextStyle}
+        selectedTextStyle={{color: 'red'}}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data}
@@ -35,18 +39,11 @@ const MultiSelectPicker = ({multiSelect, setMultiSelect, data}) => {
         placeholder="Collective Heritage"
         value={multiSelect}
         search
+        activeColor={'#EDF1F0'}
         searchPlaceholder="Search..."
         onChange={value => {
           setMultiSelect(value), console.log(value);
         }}
-        // renderLeftIcon={() => (
-        //     <AntDesign
-        //         style={styles.icon}
-        //         color="black"
-        //         name="Safety"
-        //         size={20}
-        //     />
-        // )}
         renderItem={renderDataItem}
         renderSelectedItem={(item, unSelect) => (
           <TouchableOpacity onPress={() => unSelect && unSelect(item)}>
@@ -76,10 +73,12 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
-    color: colors.placeholderColor,
+    // color: colors.placeholderColor,
   },
   selectedTextStyle: {
     fontSize: 14,
+    color: 'red',
+    // fontWeight: 'bold',
   },
   iconStyle: {
     width: 20,

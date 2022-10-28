@@ -62,10 +62,18 @@ export default function Header({
               style={{marginRight: 15}}
             />
 
-            {authContext?.userData?.user?._id ==
-              (userId || authContext?.userData?.user?._id) && (
-              <Settings color={colors?.buttonColor} height={19} width={19} />
-            )}
+            <TouchableOpacity
+              style={{justifyContent: 'center'}}
+              onPress={() => navigation.navigate('SETTING')}>
+              {authContext?.userData?.user?._id ==
+                (userId || authContext?.userData?.user?._id) && (
+                <Settings
+                  color={colors?.placeholderColor}
+                  height={19}
+                  width={19}
+                />
+              )}
+            </TouchableOpacity>
           </View>
         ) : newChatIcon ? (
           <NewChatIcon onPress={onPressNewChat} />
@@ -92,10 +100,18 @@ export default function Header({
         {rightIcon && (
           <View style={{padding: 10, flexDirection: 'row'}}>
             <TouchableOpacity style={{marginRight: 10}} onPress={onPressChat}>
-              <MultiChat color={colors?.buttonColor} height={20} width={20} />
+              <MultiChat
+                color={colors?.placeholderColor}
+                height={20}
+                width={20}
+              />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('SETTING')}>
-              <Settings color={colors?.buttonColor} height={19} width={19} />
+              <Settings
+                color={colors?.placeholderColor}
+                height={19}
+                width={19}
+              />
             </TouchableOpacity>
           </View>
         )}
