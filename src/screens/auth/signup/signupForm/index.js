@@ -10,25 +10,26 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import colors from 'src/utils/themes/global-colors';
 import {userService} from 'src/services/auth-service';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 import {showMessage} from 'react-native-flash-message';
 import {PromoCodeModal} from 'src/components/promo-code-modal';
 import MultiSelectPicker from 'src/components/multi-select-picker';
 import {getCountries} from 'src/utils/functions/location';
 
 import {useDispatch, useSelector} from 'react-redux';
+import {useMetaMask} from 'src/utils/functions/useMetaMask';
 
-export default function SignupForm({setShowSignUp, connect, isMetaLoading}) {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
+export default function SignupForm({setShowSignUp}) {
+  // const dispatch = useDispatch();
+  // const navigation = useNavigation();
   const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/;
 
-  const fcmToken = useSelector(state => state?.auth?.fcmToken);
+  // const fcmToken = useSelector(state => state?.auth?.fcmToken);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [isLoading, setIsLoading] = React.useState(false);
-  // const [isMetaLoading, setIsMetaLoading] = React.useState(false);
+  const [isMetaLoading, setIsMetaLoading] = React.useState(false);
   const [passwordVisible, setPasswordVisible] = useState(true);
   const [openPromoCode, setOpenPromoCode] = useState(false);
   const [promoCode, setPromoCode] = useState('');
@@ -64,6 +65,8 @@ export default function SignupForm({setShowSignUp, connect, isMetaLoading}) {
     'Haiti',
     'Dominican Republic',
   ];
+
+  const {connect} = useMetaMask({setIsMetaLoading});
 
   React.useEffect(() => {
     for (var i = 0; i < getCountries().length; i++) {
@@ -290,7 +293,7 @@ export default function SignupForm({setShowSignUp, connect, isMetaLoading}) {
                 />
                 <Button
                   loader={isMetaLoading}
-                  text="Signup With Metamask"
+                  text="Signup With MetaMask"
                   onPress={() => {
                     connect();
                   }}

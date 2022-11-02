@@ -12,15 +12,20 @@ import {handleLogout} from 'src/redux/auth/auth-actions';
 import Button from 'src/components/button';
 import colors from 'src/utils/themes/global-colors';
 import {profileServices} from 'src/services/profile-services';
-// import {showMessage} from 'react-native-flash-message';
+
+import ActivityIndicator from 'src/components/loader/activity-indicator';
+import {useMetaMask} from 'src/utils/functions/useMetaMask';
 
 export default function Settings() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const [isMetaLoading, setIsMetaLoading] = React.useState(false);
+
+  const {connecMM} = useMetaMask({setIsMetaLoading});
+
   const logout = async () => {
     const fcm = await asyncStorage.getfcmToken();
-    console.log('Check fcm Token logout ', fcm);
 
     try {
       const result = await profileServices.logoutApi({
@@ -44,6 +49,7 @@ export default function Settings() {
 
   return (
     <Header heading={'Settings'} onPressBack={() => navigation.goBack()}>
+      <ActivityIndicator visible={isMetaLoading} />
       <View style={styles.settingSectionView}>
         <SettingSection
           leftIcon={images.profile}
@@ -60,6 +66,16 @@ export default function Settings() {
           name={'Referral Invite'}
           rightIconSize={15}
           onPress={() => navigation.navigate('PROMO_CODE')}
+        />
+      </View>
+      <View style={styles.settingSectionView}>
+        <SettingSection
+          imgStyle={{height: 20, width: 20}}
+          leftIcon={images.mM}
+          rightIcon={'arrow-right'}
+          name={'Connect With Metamask'}
+          rightIconSize={15}
+          onPress={() => connecMM()}
         />
       </View>
 

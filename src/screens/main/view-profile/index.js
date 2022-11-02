@@ -63,6 +63,7 @@ export default function ViewProfile({route}) {
   const [showCover, setShowCover] = React.useState(false);
   const [zoomPicModal, setZoomPicModal] = React.useState(false);
   const [profile, setProfile] = React.useState({dp: '', cover: ''});
+  const [showPA, setShowPA] = React.useState(false);
 
   const heritageList = [
     'Mexico',
@@ -450,6 +451,26 @@ export default function ViewProfile({route}) {
                 ),
             )}
           </View>
+        )}
+        {data?.user?.publicAddress && (
+          <TouchableOpacity
+            onPress={() => setShowPA(!showPA)}
+            style={styles.publicAddress}>
+            {showPA ? (
+              <Text style={styles.metaAddress}>
+                {data?.user?.publicAddress.substring(0, 6) +
+                  '.....' +
+                  data?.user?.publicAddress.substring(
+                    data?.user?.publicAddress.length - 4,
+                    data?.user?.publicAddress.length,
+                  )}
+              </Text>
+            ) : (
+              <Text style={styles.metaAddress}>
+                {data?.user?.publicAddress}
+              </Text>
+            )}
+          </TouchableOpacity>
         )}
 
         {route?.params?.id && (

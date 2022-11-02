@@ -17,6 +17,7 @@ const {LOGIN, SIGNUP, SPLASH, FORGOT_PASSWORD, OTP, RESET_PASSWORD} = SCREEN;
 export default function AuthNavigator() {
   return (
     <Stack.Navigator
+      // initialRouteName="MetaSignUP"
       screenOptions={{
         headerShown: false,
       }}>

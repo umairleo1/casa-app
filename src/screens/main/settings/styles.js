@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
   },
   settingSectionView2: {
     marginHorizontal: 20,
-    marginVertical: hp(3),
+    marginTop: hp(3),
   },
   logoutText: {
     color: colors.whiteColor,

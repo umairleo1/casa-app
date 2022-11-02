@@ -2,6 +2,7 @@ const images = {
   splash: require('./splash/Logo.png'),
   background: require('./signup/Background.png'),
   profile: require('./settings/profile.png'),
+  mM: require('./settings/MetaMask_Fox.png'),
   promoCode: require('./settings/promoCode.png'),
   people: require('./findpeople/people.png'),
   viewProfile: require('./viewProfile/background.png'),

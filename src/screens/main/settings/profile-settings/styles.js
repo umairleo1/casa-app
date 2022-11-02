@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.RobotoRegular,
     fontSize: 15,
     marginTop: hp(8),
+    fontWeight: 'bold',
   },
   SearchInputView: {
     marginVertical: 10,

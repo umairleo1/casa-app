@@ -19,6 +19,7 @@ export default function Input({
   onPressIn,
   onFocus,
   maxLength,
+  multiline,
 }) {
   return (
     <>
@@ -38,6 +39,7 @@ export default function Input({
           editable={editable}
           onPressIn={onPressIn}
           onFocus={onFocus}
+          multiline={multiline}
         />
         <View>
           <Ionicons

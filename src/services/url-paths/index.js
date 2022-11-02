@@ -2,6 +2,7 @@ const API_URLS = {
   //Auth constants
   SIGNUP: '/api/auth/signup',
   META_MAST_SIGNUP: '/api/auth/verify-login',
+  SET_META_MAST_PUBLIC_ADDRESS: '/api/auth/update-meta-mask',
   LOGIN: '/api/auth/login',
   FORGOT_PASSWORD: '/api/auth/forget-password',
   OTP_VERIFICATION: '/api/auth/otp-varification',

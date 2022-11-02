@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import {Text, View, ScrollView} from 'react-native';
+import {Text, View, ScrollView, Platform} from 'react-native';
 import React from 'react';
 import Header from 'src/components/headerView';
 import {PromoCodeImage} from 'src/assets/svg/promo-code';
@@ -68,10 +68,15 @@ export default function PromoCode() {
               code !== '' && copyToClipboard();
             }}
           />
-          <Text
-            style={[styles.description, {color: limit >= 3 && colors.danger}]}>
-            Referral Invite Limit {limit < 3 ? `${limit} / 3` : 'Exceeds'}
-          </Text>
+          {code !== '0000' && (
+            <Text
+              style={[
+                styles.description,
+                {color: limit >= 3 && colors.danger},
+              ]}>
+              Referral Invite Limit {limit < 3 ? `${limit} / 3` : 'Exceeds'}
+            </Text>
+          )}
         </View>
       </ScrollView>
       <View style={styles.buttonView}>
@@ -82,7 +87,13 @@ export default function PromoCode() {
             await onShare({
               title:
                 'Share this referral code with friends to invite then in Casa',
-              url: `Share this ${code} code with your friends to invite then in Casa.`,
+              ...(Platform.OS == 'ios'
+                ? {
+                    message: `Share this ${code} code with your friends to invite then in Casa.`,
+                  }
+                : {
+                    url: `Share this ${code} code with your friends to invite then in Casa.`,
+                  }),
             });
           }}
         />

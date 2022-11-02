@@ -16,9 +16,10 @@ import asyncStorage from 'utils/async-storage/index';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserReduxToken} from 'src/redux/auth/auth-actions';
+import {useMetaMask} from 'src/utils/functions/useMetaMask';
 
 // eslint-disable-next-line react/prop-types
-export default function LoginForm({isMetaLoading, connect}) {
+export default function LoginForm() {
   const navigation = useNavigation();
   const ref = useRef();
   const scrollToBottom = () => ref.current.scrollToEnd({animated: true});
@@ -27,9 +28,12 @@ export default function LoginForm({isMetaLoading, connect}) {
 
   const [isLoading, setIsLoading] = React.useState(false);
   const fcmToken = useSelector(state => state?.auth?.fcmToken);
+  const [isMetaLoading, setIsMetaLoading] = React.useState(false);
 
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  const {connect} = useMetaMask({setIsMetaLoading});
 
   const loginFormSchema = useMemo(
     () =>
@@ -134,7 +138,7 @@ export default function LoginForm({isMetaLoading, connect}) {
                 />
                 <Button
                   loader={isMetaLoading}
-                  text="Login With Metamask"
+                  text="Login With MetaMask"
                   onPress={() => {
                     connect();
                   }}

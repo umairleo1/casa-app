@@ -26,6 +26,11 @@ const metaSignUpVerify = publicAddress => {
   return client.get(`${API_URLS.META_MAST_SIGNUP}/${publicAddress}`);
 };
 
+const setMetaMaskPublicAddress = obj => {
+  console.log('Update MM ', obj);
+  return client.post(API_URLS.SET_META_MAST_PUBLIC_ADDRESS, obj);
+};
+
 export const userService = {
   signup,
   login,
@@ -33,4 +38,5 @@ export const userService = {
   otpVerification,
   resetPassword,
   metaSignUpVerify,
+  setMetaMaskPublicAddress,
 };

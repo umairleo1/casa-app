@@ -11,12 +11,17 @@ export default function SettingSection({
   leftIcon,
   rightIconSize,
   onPress,
+  imgStyle,
 }) {
   return (
     <TouchableOpacity style={styles.mainView} onPress={onPress}>
-      <View style={styles.view}>
-        <Image source={leftIcon} style={styles.leftImage} />
-        <Text style={styles.text}>{name}</Text>
+      <View style={{flexDirection: 'row'}}>
+        <View style={styles.imgView}>
+          <Image source={leftIcon} style={[styles.leftImage, imgStyle]} />
+        </View>
+        <View style={{width: '80%'}}>
+          <Text style={styles.text}>{name}</Text>
+        </View>
       </View>
       <SimpleLineIcons
         name={rightIcon}
@@ -28,9 +33,10 @@ export default function SettingSection({
 }
 
 const styles = StyleSheet.create({
-  view: {
-    flexDirection: 'row',
+  imgView: {
+    width: '10%',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   leftImage: {
     marginLeft: 10,

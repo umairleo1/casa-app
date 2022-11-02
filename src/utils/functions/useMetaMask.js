@@ -1,9 +1,6 @@
 /* eslint-disable no-unused-vars */
-
-import React from 'react';
-
-import {userService} from 'src/services/auth-service';
-import {useNavigation} from '@react-navigation/native';
+// ES6 import or TypeScript
+import {useEffect} from 'react';
 
 import MetaMaskSDK from '@metamask/sdk';
 import {Linking} from 'react-native';
@@ -14,8 +11,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setUserReduxToken} from 'src/redux/auth/auth-actions';
 
 import asyncStorage from 'utils/async-storage/index';
+import {userService} from 'src/services/auth-service';
+import {useNavigation} from '@react-navigation/native';
 
-// import ErrorBoundary from 'src/components/error-boundaries';
+import {showMessage} from 'react-native-flash-message';
 
 const MMSDK = new MetaMaskSDK({
   openDeeplink: link => {
@@ -24,7 +23,7 @@ const MMSDK = new MetaMaskSDK({
   timer: BackgroundTimer, // To keep the app alive once it goes to background
   dappMetadata: {
     name: 'Casa App', // The name of your application
-    url: 'https://CasaApp.com', // The url of your website
+    url: 'https://CasaApp.io', // The url of your website
   },
 });
 
@@ -32,12 +31,11 @@ const ethereum = MMSDK.getProvider();
 
 const provider = new ethers.providers.Web3Provider(ethereum);
 
-export default function MetaMask() {
+export const useMetaMask = ({setIsMetaLoading}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const fcmToken = useSelector(state => state?.auth?.fcmToken);
-  const [isMetaLoading, setIsMetaLoading] = React.useState(false);
 
   const getBalance = async () => {
     if (!ethereum.selectedAddress) {
@@ -48,7 +46,7 @@ export default function MetaMask() {
     console.log('getBalance ', ethers.utils.formatEther(bal));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     ethereum.on('chainChanged', chain => {
       console.log('chain ', chain);
       // setChain(chain);
@@ -62,17 +60,17 @@ export default function MetaMask() {
   }, []);
 
   const connect = async () => {
-    const isInstalled = await Linking.canOpenURL('yourUrl');
-    if (isInstalled) {
-      return alert(
-        'MetaMask not detected. Please try again after installing MetaMask.',
-      );
-    }
+    // const isInstalled = await Linking.canOpenURL('yourUrl');
+    // if (isInstalled) {
+    //   return alert(
+    //     'MetaMask not detected. Please try again after installing MetaMask.',
+    //   );
+    // }
     try {
       const result = await ethereum.request({method: 'eth_requestAccounts'});
 
       checkIfExists(result);
-      // console.log('RESULT public address ', result);
+      console.log('RESULT public address ', result);
       // sign();
 
       // setAccount(result?.[0]);
@@ -99,6 +97,39 @@ export default function MetaMask() {
       setIsMetaLoading(false);
     } catch (error) {
       setIsMetaLoading(false);
+      console.log(error);
+    }
+  };
+
+  const connecMM = async () => {
+    try {
+      console.log(ethereum.isConnected());
+      const result = await ethereum.request({method: 'eth_requestAccounts'});
+
+      setUserPublicAdress(result);
+    } catch (e) {
+      console.log('ERROR', e);
+    }
+  };
+
+  const setUserPublicAdress = async publicAddress => {
+    console.log('PA ', publicAddress);
+    try {
+      setIsMetaLoading(true);
+      const result = await userService.setMetaMaskPublicAddress({
+        publicAddress: publicAddress[0],
+      });
+      showMessage({
+        message: 'MetaMask is successfully connected',
+        type: 'success',
+      });
+      setIsMetaLoading(false);
+    } catch (error) {
+      setIsMetaLoading(false);
+      showMessage({
+        message: error.errMsg,
+        type: 'error',
+      });
       console.log(error);
     }
   };
@@ -203,4 +234,9 @@ export default function MetaMask() {
     // setResponse(resp);
     console.log('ethereum.request ', resp);
   };
-}
+
+  return {
+    connect,
+    connecMM,
+  };
+};

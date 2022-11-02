@@ -105,4 +105,18 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  publicAddress: {
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    backgroundColor: '#E7F1FB',
+
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    borderRadius: 20,
+  },
+  metaAddress: {
+    fontFamily: fonts.RobotoRegular,
+    fontSize: 12,
+  },
 });

@@ -22,7 +22,10 @@ export default function MetaSignUP({route}) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})/;
+
   const [isLoading, setIsLoading] = React.useState(false);
+  const [passwordVisible, setPasswordVisible] = React.useState(true);
 
   const fcmToken = useSelector(state => state?.auth?.fcmToken);
 
@@ -47,6 +50,17 @@ export default function MetaSignUP({route}) {
         inviteCode: Yup.string()
           .trim('The contact name cannot include leading and trailing spaces')
           .required('Invite code is required'),
+
+        email: Yup.string()
+          .required('Email is required')
+          .email('Email format is incorrect'),
+        password: Yup.string()
+          .required('Password is required')
+          .min(8)
+          .matches(
+            passwordRegex,
+            'Atleast have one digit, one capital letter and one special character.',
+          ),
       }),
     [],
   );
@@ -58,6 +72,8 @@ export default function MetaSignUP({route}) {
         firstName: values.firstName,
         lastName: values.lastName,
         userName: values.userName,
+        email: values.email,
+        password: values.password,
         promoCode: values.inviteCode,
         publicAddress: route?.params?.publicAddress[0],
         fcmToken,
@@ -98,6 +114,8 @@ export default function MetaSignUP({route}) {
               firstName: '',
               lastName: '',
               userName: '',
+              email: '',
+              password: '',
               inviteCode: '',
             }}
             onSubmit={values => handleSignup(values)}
@@ -131,6 +149,25 @@ export default function MetaSignUP({route}) {
                   error={touched.userName ? errors.userName : ''}
                   onChangeText={handleChange('userName')}
                   onBlur={() => setFieldTouched('userName')}
+                />
+
+                <Input
+                  placeholder={'Your Email'}
+                  value={values.email}
+                  error={touched.email ? errors.email : ''}
+                  onChangeText={handleChange('email')}
+                  onBlur={() => setFieldTouched('email')}
+                  type="email-address"
+                />
+                <Input
+                  placeholder={'Your Password'}
+                  secureTextEntry={passwordVisible}
+                  value={values.password}
+                  error={touched.password ? errors.password : ''}
+                  onChangeText={handleChange('password')}
+                  onBlur={() => setFieldTouched('password')}
+                  eyeIcon={!passwordVisible ? 'eye' : 'eye-off'}
+                  onPressEye={() => setPasswordVisible(!passwordVisible)}
                 />
 
                 <Input
