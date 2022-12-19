@@ -26,7 +26,7 @@ export default function PromoCode() {
   const copyToClipboard = () => {
     Clipboard.setString(code);
     showMessage({
-      message: 'Code coppied successfully',
+      message: 'Code copied successfully',
       type: 'success',
     });
   };

@@ -45,6 +45,7 @@ import {
   getIsoCodes,
   getStates,
 } from 'src/utils/functions/location';
+import Clipboard from '@react-native-community/clipboard';
 
 export default function ViewProfile({route}) {
   const navigation = useNavigation();
@@ -218,6 +219,14 @@ export default function ViewProfile({route}) {
       console.log('catchres', res);
       setData(res);
     }
+  };
+
+  const copyToClipboard = () => {
+    Clipboard.setString(data?.user?.publicAddress);
+    showMessage({
+      message: 'Code copied successfully',
+      type: 'success',
+    });
   };
 
   const ListItem = ({item}) => {
@@ -454,9 +463,10 @@ export default function ViewProfile({route}) {
         )}
         {data?.user?.publicAddress && (
           <TouchableOpacity
+            onLongPress={() => copyToClipboard()}
             onPress={() => setShowPA(!showPA)}
             style={styles.publicAddress}>
-            {showPA ? (
+            {!showPA ? (
               <Text style={styles.metaAddress}>
                 {data?.user?.publicAddress.substring(0, 6) +
                   '.....' +

@@ -26,22 +26,20 @@ export default function FollowButton({text, onPress, backgroundColor, loder}) {
 }
 const styles = StyleSheet.create({
   buttonText: {
-    fontSize: hp(2),
+    fontSize: 14,
     color: colors.whiteColor,
-    lineHeight: hp(5),
+
     fontFamily: fonts.RobotoRegular,
     textAlign: 'center',
   },
   button: {
     justifyContent: 'center',
     height: 40,
-    // width: 100,
-    paddingHorizontal: 10,
+    width: 100,
+    padding: 10,
+    marginTop: 10,
     borderRadius: 4,
-    marginBottom: 10,
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: hp(1),
-    flexDirection: 'row',
   },
 });
